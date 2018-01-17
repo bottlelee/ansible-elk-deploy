@@ -33,3 +33,6 @@
 1. `ansible-playbook deploy_elasticsearch.yml`
 1. `ansible-playbook deploy_kibana.yml`
 1. `ansible-playbook deploy_logstash.yml`
+
+# TODO
+1. Add haproxy for load balance

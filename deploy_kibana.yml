@@ -30,8 +30,3 @@
       private: no
   roles:
     - deploy.Kibana
-  post_tasks:
-    - name: '等待 {{ kibana_new_port }} 启用'
-      wait_for:
-          host: "{{ hostvars[inventory_hostname]['ansible_host'] | default(ansible_default_ipv4.address ) }}"
-          port: '{{ kibana_new_port }}'
