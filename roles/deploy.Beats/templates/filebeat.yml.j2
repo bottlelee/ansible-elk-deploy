@@ -1,0 +1,66 @@
+#============================= Filebeat modules ===============================
+filebeat.config.modules:
+  # Glob pattern for configuration loading
+  path: /etc/filebeat/modules.d/*.yml
+
+  # Set to true to enable config reloading
+  reload.enabled: false
+
+  # Period on which files under path should be checked for changes
+  #reload.period: 10s
+
+#------------------------------ Log prospector --------------------------------
+filebeat.prospectors:
+{# ------------------- nodes ------------------- #}
+- type: log
+  enabled: true
+  paths:
+    - /var/log/monit.log
+  multiline.pattern: '^\[CST'
+  multiline.negate: true
+  multiline.match: after
+  tags: [
+    "monit"
+  ]
+
+- type: log
+  enabled: true
+  paths:
+    - /var/log/filebeat/filebeat
+    - /var/log/metricbeat/metricbeat
+    - /var/log/packetbeat/packetbeat
+  exclude_lines: ["connection reset by peer"]
+  tags: [
+    "beats-log"
+  ]
+
+#============================== Output =====================================
+
+output.logstash:
+  hosts: [
+{% for item in groups['logstash'] %}
+    "{{ hostvars[item]['ansible_host']|default(inventory_hostname) }}:{{ logstash_beats_port }}",
+{% endfor %}
+  ]
+  loadbalance: true
+  slow_start: true
+
+#================================ General =====================================
+
+logging:
+  to_files: true
+  level: error
+  files:
+    rotateeverybytes: 10485760 # = 10MB
+    keepfiles: 7
+name: {{ inventory_hostname }}
+tags: [
+{% for item in group_names %}
+  "{{ item }}",
+{% endfor %}
+]
+
+setup:
+  template:
+    overwrite: true
+    enabled: true

@@ -1,0 +1,8 @@
+- name: 上传安装包
+  copy:
+    src: '{{ target }}-{{ elk_version }}-x86_64.rpm'
+    dest: /tmp/
+
+- name: 安装中……
+  yum:
+    name: '/tmp/{{ target }}-{{ elk_version }}-x86_64.rpm'

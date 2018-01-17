@@ -1,0 +1,31 @@
+# ES 计算节点，必填。
+[elasticMaster]
+centos7 ansible_host=192.168.1.146 ansible_ssh_port=22
+ubuntu16 ansible_host=192.168.3.231 ansible_ssh_port=22
+
+# ES 数据节点，选填。
+[elasticNodeOnly]
+
+# LogStash 部署节点，选填。
+[logstash]
+centos7
+ubuntu16
+
+# Kibana 部署节点，选填。
+[kibana]
+centos7
+ubuntu16
+
+# HaProxy 负载均衡，选填。
+[haproxy]
+centos7
+ubuntu16
+
+[elastic:children]
+elasticMaster
+elasticNodeOnly
+
+[all:vars]
+ansible_user=nsc
+ansible_ssh_pass=quanduan
+ansible_sudo_pass=quanduan

@@ -1,0 +1,9 @@
+- block:
+    - name: Checking '{{ target }}'
+      command: '{{ target }} --version'
+      changed_when: false
+  rescue:
+    - include_tasks: '{{ ansible_os_family }}.yml'
+
+- include_tasks: '{{ target }}_templates.yml'
+  tags: beats.config

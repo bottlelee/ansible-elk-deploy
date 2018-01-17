@@ -1,0 +1,44 @@
+#==========================  Modules configuration ============================
+
+metricbeat.config.modules:
+  # Glob pattern for configuration loading
+  path: /etc/metricbeat/modules.d/*.yml
+
+  # Set to true to enable config reloading
+  reload.enabled: false
+
+  # Period on which files under path should be checked for changes
+  #reload.period: 10s
+metricbeat.max_start_delay: 10s
+
+#================================ Outputs =====================================
+
+output.logstash:
+  hosts: [
+{% for item in groups['logstash'] %}
+{% if loop.nextitem is defined %}
+    "{{ hostvars[item]['ansible_host']|default(inventory_hostname) }}:{{ logstash_beats_port }}",
+{% else %}
+    "{{ hostvars[item]['ansible_host']|default(inventory_hostname) }}:{{ logstash_beats_port }}"
+{% endif %}
+{% endfor %}
+  ]
+  loadbalance: true
+  slow_start: true
+
+#================================ Logging =====================================
+
+logging.to_files: true
+logging.level: error
+logging.files:
+  rotateeverybytes: 10485760 # = 10MB
+  keepfiles: 7
+
+#================================ General =====================================
+
+name: {{ inventory_hostname }}
+tags: [
+{% for item in group_names %}
+  "{{ item }}",
+{% endfor %}
+]

@@ -1,0 +1,17 @@
+- block:
+    - name: 检查 kibana 命令是否存在
+      command: '/usr/share/kibana/bin/kibana -V'
+      changed_when: false
+  rescue:
+    - include_tasks: '{{ ansible_os_family }}.yml'
+
+- include_tasks: net_check.yml
+  when: "kibana_port != kibana_new_port"
+
+- name: 更新 kibana 相关配置文件
+  template:
+    src: '{{ item }}.j2'
+    dest: '/etc/kibana/{{ item }}'
+  with_items:
+    - kibana.yml
+  notify: Restart kibana service

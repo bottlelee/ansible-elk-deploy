@@ -1,0 +1,9 @@
+- name: 上传安装包
+  copy:
+    src: 'kibana-{{ elk_version }}-x86_64.rpm'
+    dest: /tmp/
+
+- name: 安装中……
+  yum:
+    name: '/tmp/kibana-{{ elk_version }}-x86_64.rpm'
+    state: present

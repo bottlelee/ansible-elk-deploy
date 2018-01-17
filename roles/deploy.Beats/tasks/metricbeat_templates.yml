@@ -1,0 +1,31 @@
+- name: 'Updating metricbeat.yml'
+  template:
+    src: 'metricbeat.yml.j2'
+    dest: '/etc/metricbeat/metricbeat.yml'
+    mode: 0600
+
+- name: Updating modules config
+  template:
+    src: 'metricbeat_{{ item }}.yml.j2'
+    dest: '/etc/metricbeat/modules.d/{{ item }}.yml'
+    mode: 0600
+  with_items:
+    - system
+  register: configSt
+
+- name: 'Testing metricbeat'
+  command: 'metricbeat test {{ item }}'
+  with_items:
+    - output
+    - modules
+    - config
+  register: testSt
+
+- name: 'Restarting metricbeat'
+  service:
+    name: 'metricbeat'
+    enabled: yes
+    state: restarted
+  when:
+    - testSt|succeeded
+    - configSt|changed

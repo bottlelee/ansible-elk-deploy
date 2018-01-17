@@ -1,0 +1,6 @@
+- include_tasks: '{{ target }}.yml'
+  with_items:
+    - system
+    - jre
+  loop_control:
+    loop_var: target

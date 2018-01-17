@@ -1,0 +1,41 @@
+- hosts: elastic
+  become: yes
+  serial:
+    - 1
+    - 10
+  vars_prompt:
+    - name: "notice"
+      prompt: |
+          ==============================================================
+          请确认：
+          1. 你已经仔细阅读了 README。
+          2. 编辑 hosts 文件，分配机器。
+          3. 已执行过 ansible-playbook env_init.yml 初始化系统环境。
+          4. 目标机器如果是 Ubuntu xenial 版本以上系统，需要手动安装
+             python-minimal 以支持 ansible 运行。因为它默认只有 python3。
+
+          建议：
+          1. 最好给 ElasticSearch 的数据存储目录分配独占的磁盘，
+             挂载参数为 defaults,noatime,nodiratime 0 0。推荐使用 zfs
+             分区。
+
+          你可以按回车键继续，或 Ctrl+C 中止部署。
+          ==============================================================
+    - name: "elastic_data_path"
+      prompt: "「数据」存储路径："
+      default: "/var/lib/elasticsearch"
+      private: no
+    - name: "elastic_log_path"
+      prompt: "「日志」存储路径："
+      default: "/var/log/elasticsearch"
+      private: no
+    - name: "elastic_cluster_name"
+      prompt: "集群名称："
+      default: "quanduan"
+      private: no
+    - name: "elastic_http_new_port"
+      prompt: "HTTP 监听端口（请勿使用 9300 或其它标准服务端口）："
+      default: "9200"
+      private: no
+  roles:
+    - deploy.ElasticSearch

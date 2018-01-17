@@ -1,0 +1,28 @@
+- wait_for:
+    host: "{{ ansible_default_ipv4.address }}"
+    port: 9200
+
+- name: Checking if the node has been back to cluster or not.
+  uri:
+    url: 'http://{{ ansible_default_ipv4.address }}:9200/_cat/nodes'
+    return_content: yes
+  register: nodesSt
+  until: "(ansible_hostname in nodesSt.content) or (hostvars[inventory_hostname]['ansible_host'] in nodesSt.content)"
+  retries: 300
+  delay: 10
+
+- name: Enable shard allocation.
+  uri:
+    url: "http://{{ ansible_default_ipv4.address }}:9200/_cluster/settings"
+    method: PUT
+    body: "{{ lookup('file','enable_shard.json') }}"
+    body_format: json
+
+- name: Checking if the cluster is green or not.
+  uri:
+    url: 'http://{{ ansible_default_ipv4.address }}:9200/_cat/health'
+    return_content: yes
+  register: healthSt
+  until: "'green' in healthSt.content"
+  retries: 300
+  delay: 10

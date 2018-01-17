@@ -1,0 +1,4 @@
+elk_version: '6.1.2'
+elastic_http_port: 9200
+logstash_beats_port: '5044'
+kibana_port: '5601'

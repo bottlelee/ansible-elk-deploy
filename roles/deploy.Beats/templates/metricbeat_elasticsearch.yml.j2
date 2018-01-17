@@ -1,0 +1,6 @@
+{% if 'sh1' != region_name %}
+- module: elasticsearch
+  metricsets: ["node", "node_stats"]
+  period: 120s
+  hosts: ["localhost:9200"]
+{% endif %}

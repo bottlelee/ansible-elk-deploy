@@ -1,0 +1,9 @@
+- name: 上传安装包
+  copy:
+    src: 'logstash-{{ elk_version }}.rpm'
+    dest: /tmp/
+
+- name: 安装中……
+  yum:
+    name: '/tmp/logstash-{{ elk_version }}.rpm'
+    state: present

@@ -1,0 +1,34 @@
+- name: 'Updating filebeat.yml'
+  template:
+    src: 'filebeat.yml.j2'
+    dest: '/etc/filebeat/filebeat.yml'
+    mode: 0600
+  register: configSt
+
+- name: Updating modules config
+  template:
+    src: 'filebeat_{{ item }}.yml.j2'
+    dest: '/etc/filebeat/modules.d/{{ item }}.yml'
+    mode: 0600
+  with_items:
+    - system
+    - auditd
+  register: modulesSt
+
+- name: 'Testing filebeat'
+  command: 'filebeat test {{ item }}'
+  changed_when: false
+  with_items:
+    # - output
+    - config
+  register: testSt
+  when: "configSt|changed or modules|changed"
+
+- name: 'Restarting filebeat'
+  service:
+    name: 'filebeat'
+    enabled: yes
+    state: restarted
+  when:
+    - testSt|succeeded
+    - "configSt|changed or modules|changed"

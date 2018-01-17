@@ -1,0 +1,42 @@
+packetbeat.interfaces:
+  device: {{ ansible_default_ipv4.interface }}
+  snaplen: 65536
+  type: af_packet
+  buffer_size_mb: 100
+  with_vlans: yes
+
+packetbeat.flows:
+  enabled: true
+  timeout: 30s
+  period: 120s
+
+packetbeat.protocols.icmp:
+  enabled: false
+
+packetbeat.protocols.dns:
+  enabled: false
+  period: 120s
+  include_authorities: true
+  include_additionals: true
+  ports: [53]
+
+output.logstash:
+  hosts: [
+{% for item in groups['logstash'] %}
+    "{{ hostvars[item]['ansible_host']|default(inventory_hostname) }}:{{ logstash_beats_port }}",
+{% endfor %}
+  ]
+  loadbalance: true
+  slow_start: true
+
+logging.to_files: true
+logging.level: error
+logging.files:
+  rotateeverybytes: 10485760 # = 10MB
+  keepfiles: 7
+name: {{ inventory_hostname }}
+tags: [
+{% for item in group_names %}
+  "{{ item }}",
+{% endfor %}
+]

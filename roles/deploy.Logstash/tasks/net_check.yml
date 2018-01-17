@@ -1,0 +1,21 @@
+- name: '检查 {{ logstash_beats_port }} 端口是否全局可用'
+  wait_for:
+    host: '{{ item }}'
+    port: '{{ logstash_beats_port }}'
+    state: stopped
+    timeout: 3
+  with_items:
+    - 127.0.0.1
+    - '{{ ansible_all_ipv4_addresses }}'
+  when: "logstash_beats_port != '5044'"
+  register: portSt
+
+- name: '写入本地全局变量文件 group_vars/all.yml'
+  run_once: true
+  lineinfile:
+    path: group_vars/all.yml
+    regexp: '^logstash_beats_port'
+    line: 'logstash_beats_port: {{ logstash_beats_port }}'
+  when: portSt|succeeded
+  delegate_to: localhost
+  become: no

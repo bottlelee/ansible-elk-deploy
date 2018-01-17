@@ -1,0 +1,6 @@
+- name: Restart elasticsearch service
+  service:
+    name: elasticsearch
+    state: restarted
+    enabled: yes
+    daemon_reload: yes

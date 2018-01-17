@@ -1,0 +1,17 @@
+- name: 停止索引分片
+  uri:
+    url: "http://{{ ansible_default_ipv4.address }}:9200/_cluster/settings"
+    method: PUT
+    body: "{{ lookup('file','disable_shard.json') }}"
+    body_format: json
+
+- name: 停止服务
+  service:
+    name: elasticsearch
+    state: stopped
+
+- name: 等待端口断开
+  wait_for:
+    host: "{{ ansible_default_ipv4.address }}"
+    port: 9200
+    state: stopped

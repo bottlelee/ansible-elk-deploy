@@ -1,0 +1,28 @@
+- block:
+    - name: 检查 logstash 命令是否存在
+      command: '/usr/share/logstash/bin/logstash -V'
+      changed_when: false
+  rescue:
+    - include_tasks: '{{ ansible_os_family }}.yml'
+
+- include_tasks: net_check.yml
+  when: "logstash_beats_port != logstash_new_beats_port"
+
+- name: 更新 logstash 相关配置文件
+  template:
+    src: '{{ item }}.j2'
+    dest: '/etc/logstash/{{ item }}'
+  with_items:
+    # - jvm.options
+    - logstash.yml
+  notify: Restart logstash service
+
+- name: 更新 pipline 配置文件
+  template:
+    src: '{{ item }}.conf.j2'
+    dest: '/etc/logstash/conf.d/{{ item }}.conf'
+  with_items:
+    - 000-input
+    - 500-system
+    - 999-output
+  notify: Restart logstash service

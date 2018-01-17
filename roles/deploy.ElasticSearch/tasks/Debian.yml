@@ -1,0 +1,48 @@
+- block:
+    - name: 检查是否已有安装包
+      stat:
+        path: "roles/deploy.ElasticSearch/files/elasticsearch-{{ elk_version }}.deb"
+        get_attributes: no
+        get_checksum: no
+        get_md5: no
+        get_mime: no
+      register: fileSt
+      failed_when: not fileSt.stat.exists
+      delegate_to: localhost
+      become: no
+      run_once: yes
+  rescue:
+    - name: 下载安装包
+      get_url:
+        url: "https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-{{ elk_version }}.deb"
+        dest: "roles/deploy.ElasticSearch/files/elasticsearch-{{ elk_version }}.deb"
+      delegate_to: localhost
+      become: no
+      run_once: yes
+
+- name: 上传安装包
+  copy:
+    src: 'elasticsearch-{{ elk_version }}.deb'
+    dest: /tmp/
+
+- name: 安装中……
+  apt:
+    deb: '/tmp/elasticsearch-{{ elk_version }}.deb'
+
+- name: 更新 elasticsearch.service 配置
+  ini_file:
+    path: /usr/lib/systemd/system/elasticsearch.service
+    section: Service
+    option: LimitMEMLOCK
+    value: infinity
+
+- name: 启动 ElasticSearch 服务
+  service:
+    name: elasticsearch
+    daemon_reload: yes
+    enabled: yes
+    state: started
+
+- wait_for:
+    host: '{{ ansible_default_ipv4.address }}'
+    port: 9200

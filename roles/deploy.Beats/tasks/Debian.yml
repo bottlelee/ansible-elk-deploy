@@ -1,0 +1,8 @@
+- name: 上传安装包
+  copy:
+    src: '{{ target }}-{{ elk_version }}-amd64.deb'
+    dest: /tmp/
+
+- name: 安装中……
+  apt:
+    deb: '/tmp/{{ target }}-{{ elk_version }}-amd64.deb'

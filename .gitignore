@@ -1,0 +1,5 @@
+retry
+*.deb
+*.rpm
+*.tar.gz
+hosts

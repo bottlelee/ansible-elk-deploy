@@ -1,0 +1,37 @@
+- hosts: kibana
+  become: yes
+  serial:
+    - 1
+    - 10
+  vars_prompt:
+    - name: "notice"
+      prompt: |
+          ==============================================================
+          请确认：
+          1. 你已经仔细阅读了 README。
+          2. 编辑 hosts 文件，分配机器。
+          3. 已执行过 ansible-playbook env_init.yml 初始化系统环境。
+          4. 目标机器如果是 Ubuntu xenial 版本以上系统，需要手动安装
+             python-minimal 以支持 ansible 运行。因为它默认只有 python3。
+
+          你可以按回车键继续，或 Ctrl+C 中止部署。
+          ==============================================================
+    # - name: "kibana_data_path"
+    #   prompt: "「数据」存储路径："
+    #   default: "/var/lib/kibana"
+    #   private: no
+    # - name: "kibana_log_path"
+    #   prompt: "「日志」存储路径："
+    #   default: "/var/log/kibana"
+    #   private: no
+    - name: "kibana_new_port"
+      prompt: "监听端口："
+      default: "5601"
+      private: no
+  roles:
+    - deploy.Kibana
+  post_tasks:
+    - name: '等待 {{ kibana_new_port }} 启用'
+      wait_for:
+          host: "{{ hostvars[inventory_hostname]['ansible_host'] | default(ansible_default_ipv4.address ) }}"
+          port: '{{ kibana_new_port }}'
