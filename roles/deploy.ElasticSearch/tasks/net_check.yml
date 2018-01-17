@@ -1,4 +1,4 @@
-- name: '检查 {{ elastic_http_new_port }} 端口是否全局可用'
+- name: 'check if port {{ elastic_http_new_port }} available'
   wait_for:
     host: '{{ item }}'
     port: '{{ elastic_http_new_port }}'
@@ -10,7 +10,7 @@
   when: "elastic_http_port != elastic_http_new_port"
   register: portSt
 
-- name: '写入本地全局变量文件 group_vars/all.yml'
+- name: writing port number into group_vars/all.yml
   run_once: true
   lineinfile:
     path: group_vars/all.yml

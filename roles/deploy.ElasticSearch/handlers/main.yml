@@ -1,4 +1,4 @@
-- name: Restart elasticsearch service
+- name: restarting elasticsearch service
   service:
     name: elasticsearch
     state: restarted

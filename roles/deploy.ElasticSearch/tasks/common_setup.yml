@@ -1,0 +1,17 @@
+- name: updating ElasticSearch service configuration
+  ini_file:
+    path: /usr/lib/systemd/system/elasticsearch.service
+    section: Service
+    option: LimitMEMLOCK
+    value: infinity
+
+- name: starting ElasticSearch service
+  service:
+    name: elasticsearch
+    daemon_reload: yes
+    enabled: yes
+    state: started
+
+- wait_for:
+    host: '{{ ansible_default_ipv4.address }}'
+    port: 9200

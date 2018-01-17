@@ -1,12 +1,12 @@
 - block:
-    - name: 检查 ElasticSearch 进程是否存在
+    - name: checking process 'elasticsearch'
       shell: ps xua | grep -v grep | grep -i elasticsearch
       changed_when: false
   rescue:
     - include_tasks: env_check.yml
     - include_tasks: '{{ ansible_os_family }}.yml'
 
-- name: 更新 ElasticSearch 相关配置文件
+- name: updating ElasticSearch configuration
   template:
     src: '{{ item }}.j2'
     dest: '/etc/elasticsearch/{{ item }}'
@@ -15,7 +15,7 @@
     - elasticsearch.yml
   register: configSt
 
-- name: 重启 ElasticSearch 服务
+- name: restarting ElasticSearch service
   service:
     name: elasticsearch
     state: restarted
@@ -32,7 +32,7 @@
     - 9200
 
 - block:
-    - name: 检查 ElasticSearch 版本
+    - name: checking ElasticSearch version
       uri:
         url: 'http://{{ ansible_default_ipv4.address }}:9200'
         return_content: yes
