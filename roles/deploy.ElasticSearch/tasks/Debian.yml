@@ -29,11 +29,4 @@
   apt:
     deb: '/tmp/elasticsearch-{{ elk_version }}.deb'
 
-- name: updating elasticsearch service configuration
-  ini_file:
-    path: /usr/lib/systemd/system/elasticsearch.service
-    section: Service
-    option: LimitMEMLOCK
-    value: infinity
-
 - include_tasks: common_setup.yml

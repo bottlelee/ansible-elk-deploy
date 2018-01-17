@@ -6,6 +6,19 @@
     - include_tasks: env_check.yml
     - include_tasks: '{{ ansible_os_family }}.yml'
 
+- block:
+    - name: checking ElasticSearch version
+      uri:
+        url: 'http://{{ ansible_default_ipv4.address }}:9200'
+        return_content: yes
+      register: versionCheck
+      changed_when: false
+      failed_when: elk_version > versionCheck.json.version.number
+  rescue:
+    - include_tasks: pre_upgrade.yml
+    - include_tasks: '{{ ansible_os_family }}.yml'
+    - include_tasks: post_upgrade.yml
+
 - name: updating ElasticSearch configuration
   template:
     src: '{{ item }}.j2'
@@ -30,16 +43,3 @@
   with_items:
     - 9300
     - 9200
-
-- block:
-    - name: checking ElasticSearch version
-      uri:
-        url: 'http://{{ ansible_default_ipv4.address }}:9200'
-        return_content: yes
-      register: versionCheck
-      changed_when: false
-      failed_when: elk_version > versionCheck.json.version.number
-  rescue:
-    - include_tasks: pre_upgrade.yml
-    - include_tasks: '{{ ansible_os_family }}.yml'
-    - include_tasks: post_upgrade.yml

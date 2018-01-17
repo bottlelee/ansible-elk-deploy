@@ -5,10 +5,32 @@
 
 - name: checking if total RAM is greater than 8GB
   fail:
-    msg: 'Total RAM is lower than {{ ansible_memtotal_mb }}MB'
+    msg: 'Total RAM is {{ ansible_memtotal_mb }}MB'
   when: "ansible_memtotal_mb <= 7500"
 
 - name: checking if free RAM is greater than 4GB
   fail:
-    msg: 'Free RAM is lower than {{ ansible_memfree_mb }}MB'
+    msg: 'Free RAM is {{ ansible_memfree_mb }}MB
   when: "ansible_memfree_mb < 4096"
+
+- name: 'check if port {{ elastic_http_new_port }} available'
+  wait_for:
+    host: '{{ item }}'
+    port: '{{ elastic_http_new_port }}'
+    state: stopped
+    timeout: 3
+  with_items:
+    - 127.0.0.1
+    - '{{ ansible_all_ipv4_addresses }}'
+  # when: "elastic_http_port != elastic_http_new_port"
+  register: portSt
+
+- name: writing port number into group_vars/all.yml
+  run_once: true
+  lineinfile:
+    path: group_vars/all.yml
+    regexp: '^elastic_http_port'
+    line: 'elastic_http_port: {{ elastic_http_new_port }}'
+  when: portSt|succeeded
+  delegate_to: localhost
+  become: no
