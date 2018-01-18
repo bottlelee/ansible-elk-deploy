@@ -30,3 +30,7 @@
       private: no
   roles:
     - deploy.Logstash
+  post_tasks:
+    - wait_for:
+        host: '{{ ansible_default_ipv4.address }}'
+        port: '{{ logstash_new_beats_port }}'
