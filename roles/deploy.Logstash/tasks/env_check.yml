@@ -1,4 +1,9 @@
-- name: 'checking if port {{ logstash_new_beats_port }} is available'
+- name: checking if free RAM is greater than 2GB
+  fail:
+    msg: 'Free RAM is {{ ansible_memfree_mb }}MB
+  when: "ansible_memfree_mb < 2048"
+
+- name: 'check if port {{ logstash_new_beats_port }} available'
   wait_for:
     host: '{{ item }}'
     port: '{{ logstash_new_beats_port }}'
@@ -9,7 +14,7 @@
     - '{{ ansible_all_ipv4_addresses }}'
   register: portSt
 
-- name: 'writing port number into group_vars/all.yml'
+- name: writing port number into group_vars/all.yml
   run_once: true
   lineinfile:
     path: group_vars/all.yml
