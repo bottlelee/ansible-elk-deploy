@@ -25,7 +25,7 @@
     #   default: "/var/log/kibana"
     #   private: no
     - name: "kibana_new_port"
-      prompt: "监听端口："
+      prompt: "监听端口(listen port)："
       default: "5601"
       private: no
   roles:
