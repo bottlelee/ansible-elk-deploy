@@ -4,3 +4,4 @@ retry
 *.tar.gz
 hosts
 609-hosts
+.~lock.*
