@@ -1,17 +1,10 @@
-# - name: 检查操作系统是否是 64 位
-#   fail:
-#     msg: '操作系统不是 64 位'
-#   when: "ansible_architecture != 'x86_64'"
-
-- name: checking if total RAM is greater than 8GB
-  fail:
-    msg: 'Total RAM is {{ ansible_memtotal_mb }}MB'
-  when: "ansible_memtotal_mb <= 7500"
-
-- name: checking if free RAM is greater than 4GB
-  fail:
-    msg: 'Free RAM is {{ ansible_memfree_mb }}MB
-  when: "ansible_memfree_mb < 4096"
+- name: checking if target is suitable for deploy
+  assert:
+    that:
+      - "ansible_memtotal_mb >= 7000"
+      - "ansible_memory_mb.nocache.free >= 4000"
+      - "ansible_processor_vcpus >= 8"
+      - "ansible_architecture == 'x86_64'"
 
 - name: 'check if port {{ elastic_http_new_port }} available'
   wait_for:
