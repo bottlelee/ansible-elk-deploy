@@ -1,9 +1,14 @@
-- name: updating ElasticSearch service configuration
+- name: config /usr/lib/systemd/system/elasticsearch.service
   ini_file:
     path: /usr/lib/systemd/system/elasticsearch.service
     section: Service
     option: LimitMEMLOCK
     value: infinity
+
+- name: updating ElasticSearch config
+  template:
+    src: elasticsearch.yml.j2
+    dest: /etc/elasticsearch/elasticsearch.yml
 
 - name: starting ElasticSearch service
   service:

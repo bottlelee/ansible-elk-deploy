@@ -54,11 +54,7 @@ bootstrap.memory_lock: true
 #
 # Set the bind address to a specific IP (IPv4 or IPv6):
 #
-{% for item in groups['elasticMaster'] %}
-{% if item == inventory_hostname %}
-network.host: {{ hostvars[item]['ansible_host'] }}
-{% endif %}
-{% endfor %}
+network.host: 0.0.0.0
 #
 # Set a custom port for HTTP:
 #

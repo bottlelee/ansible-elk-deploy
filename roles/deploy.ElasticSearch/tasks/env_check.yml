@@ -23,7 +23,7 @@
   lineinfile:
     path: group_vars/all.yml
     regexp: '^elastic_http_port'
-    line: 'elastic_http_port: {{ elastic_http_new_port }}'
+    line: "elastic_http_port: '{{ elastic_http_new_port }}'"
   when: portSt|succeeded
   delegate_to: localhost
   become: no
