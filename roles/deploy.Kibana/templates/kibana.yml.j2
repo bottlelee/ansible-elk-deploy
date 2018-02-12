@@ -20,9 +20,11 @@ server.host: "{{ hostvars[item]['ansible_host'] }}"
 server.name: "{{ ansible_hostname }}"
 
 # The URL of the Elasticsearch instance to use for all your queries.
-{% for item in groups['elasticMaster'] %}{% if item|first() %}
+{% for item in groups['elasticMaster'] %}
+{% if item|first() %}
 elasticsearch.url: "http://{{ hostvars[item]['ansible_host'] }}:{{ elastic_http_port }}"
-{% endif %}{% endfor %}
+{% endif %}
+{% endfor %}
 
 # When this setting's value is true Kibana uses the hostname specified in the server.host
 # setting. When the value of this setting is false, Kibana uses the hostname of the host

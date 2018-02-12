@@ -1,19 +1,19 @@
 - block:
     - name: checking command 'kibana'
-      command: '/usr/share/kibana/bin/kibana -V'
+      command: "/usr/share/kibana/bin/kibana -V"
       changed_when: false
-      register: versionCheck
-      failed_when: elk_version not in versionCheck.stdout
+      register: verChk
+      failed_when: "elk_version > verChk.stdout"
   rescue:
     - include_tasks: '{{ ansible_os_family }}.yml'
-    - name: starting kibana service
-      service:
-        name: kibana
-        state: started
-        enabled: yes
-    - wait_for:
-          host: "{{ hostvars[inventory_hostname]['ansible_host'] | default(ansible_default_ipv4.address ) }}"
-          port: '{{ kibana_new_port }}'
+    # - name: starting kibana service
+    #   service:
+    #     name: kibana
+    #     state: started
+    #     enabled: yes
+    # - wait_for:
+    #       host: "{{ hostvars[inventory_hostname]['ansible_host'] | default(ansible_default_ipv4.address ) }}"
+    #       port: '{{ kibana_new_port }}'
 
 - include_tasks: port_check.yml
   when: "kibana_port != kibana_new_port"

@@ -7,7 +7,6 @@
   with_items:
     - 127.0.0.1
     - '{{ ansible_all_ipv4_addresses }}'
-  when: "kibana_port != kibana_new_port"
   register: portSt
 
 - name: 'writing port number into group_vars/all.yml'
