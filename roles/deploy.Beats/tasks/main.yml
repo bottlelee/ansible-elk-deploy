@@ -1,7 +1,9 @@
 - block:
-    - name: Checking '{{ target }}'
-      command: '{{ target }} --version'
+    - name: "Checking {{ target }}"
+      shell: "{{ target }} version"
       changed_when: false
+      register: verChk
+      failed_when: 'elk_version not in verChk.stdout'
   rescue:
     - include_tasks: '{{ ansible_os_family }}.yml'
 

@@ -1,8 +1,16 @@
-- name: 上传安装包
-  copy:
-    src: '{{ target }}-{{ elk_version }}-amd64.deb'
-    dest: /tmp/
-
-- name: 安装中……
-  apt:
-    deb: '/tmp/{{ target }}-{{ elk_version }}-amd64.deb'
+- block:
+    - name: "uploading {{ target }}-{{ elk_version }}-amd64.deb(上传中...)"
+      copy:
+        src: "{{ target }}-{{ elk_version }}-amd64.deb"
+        dest: "/tmp/{{ target }}-{{ elk_version }}-amd64.deb"
+    - name: "installing {{ target }}-{{ elk_version }}-amd64.deb(安装中...)"
+      apt:
+        deb: "/tmp/{{ target }}-{{ elk_version }}-amd64.deb"
+  rescue:
+    - name: "downloading {{ target }}-{{ elk_version }}-amd64.deb(下载中...)"
+      get_url:
+        url: "https://artifacts.elastic.co/downloads/beats/{{ target }}/{{ target }}-{{ elk_version }}-amd64.deb"
+        dest: "roles/deploy.Beats/files/{{ target }}-{{ elk_version }}-amd64.deb"
+      delegate_to: localhost
+      become: no
+    - include_tasks: Debian.yml

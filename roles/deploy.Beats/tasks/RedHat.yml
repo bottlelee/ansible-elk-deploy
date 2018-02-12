@@ -1,8 +1,19 @@
-- name: 上传安装包
-  copy:
-    src: '{{ target }}-{{ elk_version }}-x86_64.rpm'
-    dest: /tmp/
+- block:
+    - name: "uploading {{ target }}-{{ elk_version }}-x86_64.rpm(上传中...)"
+      copy:
+        src: "{{ target }}-{{ elk_version }}-x86_64.rpm"
+        dest: "/tmp/{{ target }}-{{ elk_version }}-x86_64.rpm"
+    - name: "installing {{ target }}-{{ elk_version }}-x86_64.rpm(安装中...)"
+      apt:
+        deb: "/tmp/{{ target }}-{{ elk_version }}-x86_64.rpm"
+  rescue:
+    - name: "downloading {{ target }}-{{ elk_version }}-x86_64.rpm(下载中...)"
+      get_url:
+        url: "https://artifacts.elastic.co/downloads/beats/{{ target }}/{{ target }}-{{ elk_version }}-x86_64.rpm"
+        dest: "roles/deploy.Beats/files/{{ target }}-{{ elk_version }}-x86_64.rpm"
+      delegate_to: localhost
+      become: no
+    - include_tasks: RedHat.yml
 
-- name: 安装中……
-  yum:
-    name: '/tmp/{{ target }}-{{ elk_version }}-x86_64.rpm'
+- name: importing templates(导入 kibana 模板)
+  command: {{ target }} setup --template -E output.logstash.enabled=false -E 'output.elasticsearch.hosts=["{{ groups['elasticMaster'][0]['ansible_host'] | default(groups['elasticMaster'][0]) }}:{{ elastic_http_port }}"]'
