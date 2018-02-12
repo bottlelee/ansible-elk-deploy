@@ -3,9 +3,13 @@
 # Xms represents the initial size of total heap space
 # Xmx represents the maximum size of total heap space
 
--Xms256m
--Xmx8g
--Xss4096k
+{% if ansible_memtotal_mb >= 65536 %}
+-Xms32g
+-Xmx32g
+{% else %}
+-Xms{{ ansible_memory_mb.nocache.free // 2048 | int() }}g
+-Xmx{{ ansible_memory_mb.nocache.free // 2048 | int() }}g
+{% endif %}
 
 ################################################################
 ## Expert settings

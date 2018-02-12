@@ -1,9 +1,11 @@
-- name: checking if free RAM is greater than 2GB
-  fail:
-    msg: 'Free RAM is {{ ansible_memfree_mb }}MB
-  when: "ansible_memfree_mb < 2048"
+- name: checking if target is suitable for deploy
+  assert:
+    that:
+      - "ansible_memory_mb.nocache.free >= 2048"
+      - "ansible_processor_vcpus >= 4"
+      - "ansible_architecture == 'x86_64'"
 
-- name: 'check if port {{ logstash_new_beats_port }} available'
+- name: check if port available
   wait_for:
     host: '{{ item }}'
     port: '{{ logstash_new_beats_port }}'
@@ -19,7 +21,7 @@
   lineinfile:
     path: group_vars/all.yml
     regexp: '^logstash_beats_port'
-    line: 'logstash_beats_port: {{ logstash_new_beats_port }}'
+    line: "logstash_beats_port: '{{ logstash_new_beats_port }}'"
   when: portSt|succeeded
   delegate_to: localhost
   become: no
