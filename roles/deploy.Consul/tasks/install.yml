@@ -1,0 +1,18 @@
+- block:
+    - name: uploading command file
+      copy:
+        src: roles/deploy.Consul/files/consul
+        dest: /usr/bin/
+        mode: 755
+        owner: root
+        group: root
+  rescue:
+    - name: downloading consul
+      unarchive:
+        src: "https://releases.hashicorp.com/consul/{{ version }}/consul_{{ version }}_linux_amd64.zip"
+        dest: roles/deploy.Consul/files/
+        remote_src: yes
+      delegate_to: localhost
+      become: no
+      run_once: yes
+    - include_tasks: install.yml

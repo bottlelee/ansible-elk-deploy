@@ -1,0 +1,7 @@
+- block:
+    - name: checking consul command
+      shell: consul version | head -n1 | awk '{ gsub("v","") ; print $2 }'
+      register: verChk
+      failed_when: "version > verChk.stdout"
+  rescue:
+    - include_tasks: install.yml
