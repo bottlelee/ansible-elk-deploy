@@ -20,9 +20,9 @@
     - 'ulimit -n 65536'
     - 'fsize unlimited'
 
-- name: 设置时区为 Asia/Shanghai
+- name: "Setup timezone(设置时区为 {{ timezone }})"
   timezone:
-    name: Asia/Shanghai
+    name: '{{ timezone }}'
 
 - name: 禁止 firewalld 服务
   service:
@@ -32,3 +32,12 @@
   when:
     - "ansible_distribution == 'CentOS'"
     - "ansible_distribution_major_version >= '7'"
+
+- name: Setup /etc/hosts
+  template:
+    src: hosts.j2
+    dest: /etc/hosts
+
+- name: Setup hostname
+  hostname:
+    name: "{{ inventory_hostname }}"
