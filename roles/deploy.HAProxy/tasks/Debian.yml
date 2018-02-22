@@ -1,8 +1,0 @@
-- name: 上传安装包
-  copy:
-    src: haproxy_1.6.3-1ubuntu0.1_amd64.deb
-    dest: /tmp/
-
-- name: 安装中……
-  apt:
-    deb: /tmp/haproxy_1.6.3-1ubuntu0.1_amd64.deb

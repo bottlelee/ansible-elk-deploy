@@ -1,0 +1,6 @@
+- hosts: all
+  become: yes
+  vars:
+    version: '1.0.6'
+  roles:
+    - deploy.Consul

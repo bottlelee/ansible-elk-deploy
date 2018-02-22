@@ -1,4 +1,9 @@
 - hosts: all
   become: yes
+  vars_prompt:
+    - name: "timezone"
+      prompt: "设置时区为："
+      default: "Asia/Shanghai"
+      private: no
   roles:
     - init

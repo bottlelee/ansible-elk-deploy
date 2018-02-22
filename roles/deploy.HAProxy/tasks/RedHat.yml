@@ -1,8 +1,0 @@
-- name: 上传安装包
-  copy:
-    src: haproxy-1.5.18-6.el7.x86_64.rpm
-    dest: /tmp/
-
-- name: 安装中……
-  yum:
-    name: /tmp/haproxy-1.5.18-6.el7.x86_64.rpm
