@@ -16,3 +16,10 @@
       become: no
       run_once: yes
     - include_tasks: install.yml
+  always:
+    - name: creating /etc/consul.d
+      file:
+        path: /etc/consul.d
+        state: directory
+    - name: starting consul
+      command: consul agent -config-dir=/etc/consul.d
