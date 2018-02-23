@@ -1,6 +1,6 @@
 - name: stopping shards
   uri:
-    url: "http://{{ ansible_default_ipv4.address }}:9200/_cluster/settings"
+    url: "http://{{ ansible_default_ipv4.address | default(ansible_all_ipv4_addresses[0]) }}:9200/_cluster/settings"
     method: PUT
     body: "{{ lookup('file','disable_shard.json') }}"
     body_format: json
@@ -12,6 +12,6 @@
 
 - name: waiting for port down
   wait_for:
-    host: "{{ ansible_default_ipv4.address }}"
+    host: "{{ ansible_default_ipv4.address | default(ansible_all_ipv4_addresses[0]) }}"
     port: 9200
     state: stopped

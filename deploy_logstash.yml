@@ -32,5 +32,5 @@
     - deploy.Logstash
   post_tasks:
     - wait_for:
-        host: '{{ ansible_default_ipv4.address }}'
+        host: '{{ ansible_default_ipv4.address | default(ansible_all_ipv4_addresses[0]) }}'
         port: '{{ logstash_new_beats_port }}'

@@ -9,7 +9,7 @@
 - block:
     - name: checking ElasticSearch version
       uri:
-        url: 'http://{{ ansible_default_ipv4.address }}:9200'
+        url: 'http://{{ ansible_default_ipv4.address | default(ansible_all_ipv4_addresses[0]) }}:9200'
         return_content: yes
       register: versionCheck
       changed_when: false
@@ -38,7 +38,7 @@
     - configSt|changed
 
 - wait_for:
-    host: "{{ ansible_default_ipv4.address }}"
+    host: "{{ ansible_default_ipv4.address | default(ansible_all_ipv4_addresses[0]) }}"
     port: '{{ item }}'
   with_items:
     - 9300

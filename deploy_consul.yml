@@ -2,5 +2,7 @@
   become: yes
   vars:
     version: '1.0.6'
+    datacenter_name: 'elk'
+    consul_key: '7MP5ygc7Yet03djoh+3Xow=='
   roles:
     - deploy.Consul
