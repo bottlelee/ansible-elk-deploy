@@ -6,6 +6,5 @@
   rescue:
     - include_tasks: install.yml
 
-- include_tasks: "start_agents.yml node={{ item }}"
-  with_items:
-    - "{{ groups['all'] }}"
+- include_tasks: bootstrap.yml
+  when: consul_bootstrap is defined

@@ -1,11 +1,9 @@
 - block:
     - name: uploading command file
       copy:
-        src: roles/deploy.Consul/files/consul
+        src: consul
         dest: /usr/bin/
         mode: 755
-        owner: root
-        group: root
   rescue:
     - name: downloading consul
       unarchive:
@@ -17,9 +15,22 @@
       run_once: yes
     - include_tasks: install.yml
   always:
+    - name: creating user 'consul'
+      user:
+        name: consul
     - name: creating /etc/consul.d
       file:
-        path: /etc/consul.d
+        path: "/etc/consul.d/{{ item }}"
         state: directory
-    - name: starting consul
-      command: consul agent -config-dir=/etc/consul.d
+      with_items:
+        - bootstrap
+        - server
+        - client
+    - name: creating /var/consul
+      file:
+        path: /var/consul
+        state: directory
+        owner: consul
+        group: consul
+    - name: bootstrap the cluster
+      include_tasks: bootstrap.yml

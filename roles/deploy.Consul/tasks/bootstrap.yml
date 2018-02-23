@@ -1,0 +1,8 @@
+- name: creating bootstrap config
+  template:
+    src: bootstrap_config.json.j2
+    dest: /etc/consul.d/bootstrap/config.json
+
+- name: bootstrap the first consul node
+  become_user: consul
+  shell: "consul agent -config-dir=/etc/consul.d/bootstrap &"
