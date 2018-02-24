@@ -1,0 +1,19 @@
+- block:
+    - name: "uploading plugin {{ target }}"
+      copy:
+        src: "downloaded_files/{{ target }}-{{ elk_version }}.zip"
+        dest: "/tmp/{{ target }}-{{ elk_version }}.zip"
+    - name: "installing plugin {{ target }}"
+      command: "{{ item }}"
+      with_items:
+        - "/usr/share/elasticsearch/bin/elasticsearch-plugin remove {{ target }}"
+        - "/usr/share/elasticsearch/bin/elasticsearch-plugin install file:///tmp/{{ target }}-{{ elk_version }}.zip"
+  rescue:
+    - name: "downloading plugin {{ target }}"
+      get_url:
+        url: "https://artifacts.elastic.co/downloads/elasticsearch-plugins/{{ target }}/{{ target }}-{{ elk_version }}.zip"
+        dest: downloaded_files/{{ target }}-{{ elk_version }}.zip
+      delegate_to: localhost
+      become: no
+      run_once: true
+    - include_tasks: plugins.yml

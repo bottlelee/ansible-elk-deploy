@@ -10,6 +10,13 @@
     src: elasticsearch.yml.j2
     dest: /etc/elasticsearch/elasticsearch.yml
 
+- include_tasks: "plugins.yml target={{ target }}"
+  with_items:
+    - ingest-geoip
+    - ingest-user-agent
+  loop_control:
+    loop_var: target
+
 - name: starting ElasticSearch service
   service:
     name: elasticsearch
