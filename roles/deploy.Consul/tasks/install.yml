@@ -23,7 +23,6 @@
         path: "/etc/consul.d/{{ item }}"
         state: directory
       with_items:
-        - bootstrap
         - server
         - client
     - name: creating /var/consul

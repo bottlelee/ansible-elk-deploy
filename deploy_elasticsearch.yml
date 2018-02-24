@@ -33,9 +33,5 @@
       prompt: "集群名称："
       default: "quanduan"
       private: no
-    - name: "elastic_http_new_port"
-      prompt: "HTTP 监听端口（请勿使用 9300 或其它标准服务端口）："
-      default: "9200"
-      private: no
   roles:
     - deploy.ElasticSearch

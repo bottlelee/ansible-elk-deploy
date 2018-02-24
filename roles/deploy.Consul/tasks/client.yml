@@ -1,30 +1,26 @@
-- include_tasks: keygen.yml
-  delegate_to: localhost
-  run_once: true
-  become: no
-  when: bootstrap
-
 - include_vars:
     file: key.yml
 
-- name: stop and remove consul-client service
+- name: stop and remove consul-server service
   service:
-    name: consul-client
+    name: consul-server
     state: stopped
     enabled: false
     daemon_reload: true
   ignore_errors: true
 
-- name: updating server config
+- name: updating client config
   template:
     src: 'config.json.j2'
-    dest: '/etc/consul.d/server/config.json'
+    dest: '/etc/consul.d/client/config.json'
+    validate: consul validate %s
   register: config
 
 - name: updating services config
   template:
     src: '{{ item }}.json.j2'
-    dest: '/etc/consul.d/server/{{ item }}.json'
+    dest: '/etc/consul.d/client/{{ item }}.json'
+    validate: consul validate %s
   when: "item in group_names"
   with_items:
     - elastic
@@ -33,6 +29,6 @@
   register: services
 
 - name: validate config
-  command: consul validate -quiet /etc/consul.d/server/
+  command: consul validate -quiet /etc/consul.d/client/
   when: config.changed or services.changed
-  notify: Restart consul server
+  notify: Restart consul client

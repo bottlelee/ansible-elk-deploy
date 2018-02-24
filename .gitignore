@@ -2,6 +2,7 @@ retry
 *.deb
 *.rpm
 *.tar.gz
+*.zip
 hosts
 609-hosts
 .~lock.*

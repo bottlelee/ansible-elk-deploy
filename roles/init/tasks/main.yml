@@ -1,6 +1,8 @@
-- include_tasks: '{{ target }}.yml'
-  with_items:
-    - system
-    - jre
-  loop_control:
-    loop_var: target
+- include_tasks: system.yml
+
+- block:
+    - name: checking java command
+      command: /usr/bin/java -version
+      changed_when: false
+  rescue:
+    - include_tasks: jre.yml

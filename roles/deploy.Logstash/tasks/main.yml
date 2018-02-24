@@ -1,13 +1,13 @@
 - block:
-    - name: checking command 'logstash'
-      command: '/usr/share/logstash/bin/logstash -V'
+    - name: Checking logstash
+      shell: /usr/share/logstash/bin/logstash -V | awk '{ print $2 }'
       changed_when: false
+      register: verChk
+      failed_when: elk_version > verChk.stdout
   rescue:
     - include_tasks: env_check.yml
+      when: verChk.rc == 1
     - include_tasks: '{{ ansible_os_family }}.yml'
-
-- include_tasks: net_check.yml
-  when: "logstash_beats_port != logstash_new_beats_port"
 
 - name: updating logstash configuration
   template:

@@ -16,17 +16,5 @@
 
           你可以按回车键继续，或 Ctrl+C 中止部署。
           ==============================================================
-    # - name: "kibana_data_path"
-    #   prompt: "「数据」存储路径："
-    #   default: "/var/lib/kibana"
-    #   private: no
-    # - name: "kibana_log_path"
-    #   prompt: "「日志」存储路径："
-    #   default: "/var/log/kibana"
-    #   private: no
-    - name: "kibana_new_port"
-      prompt: "监听端口(listen port)："
-      default: "5601"
-      private: no
   roles:
     - deploy.Kibana

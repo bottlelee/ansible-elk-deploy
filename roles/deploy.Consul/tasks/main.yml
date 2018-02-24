@@ -7,13 +7,13 @@
   rescue:
     - include_tasks: install.yml
 
-- include_tasks: bootstrap.yml
-  when:
-    - bootstrap
-    - "'kibana' in group_names"
+# - include_tasks: bootstrap.yml
+#   when:
+#     - bootstrap
+#     - "'kibana' in group_names"
 
 - include_tasks: server.yml
-  when: "'kibana' in group_names"
+  when: "'consulserver' in group_names"
 
-- include_tasks: agent.yml
-  when: "'kibana' not in group_names"
+- include_tasks: client.yml
+  when: "'consulserver' not in group_names"

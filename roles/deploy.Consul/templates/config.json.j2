@@ -1,0 +1,25 @@
+{
+{% if bootstrap == true and consul_bootstrap is defined %}
+  "bootstrap": true,
+{% endif %}
+{% if 'consulserver' in group_names %}
+  "server": true,
+  "start_join": [
+    {%- for item in groups['consulserver'] if item != ansible_nodename -%}
+      "{{ hostvars[item]['ansible_host'] | default(item) }}"{%- if loop.nextitem is defined -%},{%- endif -%}
+    {%- endfor -%}
+  ],
+{% else %}
+  "server": false,
+  "start_join": [
+    {%- for item in groups['consulserver'] -%}
+      "{{ hostvars[item]['ansible_host'] | default(item) }}"{%- if loop.nextitem is defined -%},{%- endif -%}
+    {%- endfor -%}
+  ],
+{% endif %}
+  "datacenter": "{{ datacenter_name }}",
+  "data_dir": "/var/consul",
+  "encrypt": "{{ consul_key }}",
+  "log_level": "WARN",
+  "enable_syslog": true
+}

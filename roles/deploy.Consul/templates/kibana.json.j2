@@ -3,10 +3,10 @@
     {
       "name": "kibana",
       "address": "",
-      "port": 5601,
+      "port": {{ kibana_port }},
       "checks": [
         {
-          "http": "http://{{ ansible_default_ipv4.address | default(ansible_all_ipv4_addresses[0]) }}:5601",
+          "http": "http://{{ ansible_default_ipv4.address | default(ansible_all_ipv4_addresses[0]) }}:{{ kibana_port }}",
           "interval": "30s",
           "timeout": "1s"
         }

@@ -1,30 +1,17 @@
 - block:
-    - name: 'checking kibana-{{ elk_version }}-amd64.deb file'
-      stat:
-        path: "roles/deploy.Kibana/files/kibana-{{ elk_version }}-amd64.deb"
-        get_attributes: no
-        get_checksum: no
-        get_md5: no
-        get_mime: no
-      register: fileSt
-      failed_when: not fileSt.stat.exists
-      delegate_to: localhost
-      become: no
-      run_once: yes
+    - name: 'uploading kibana-{{ elk_version }}-amd64.deb'
+      copy:
+        src: 'downloaded_files/kibana-{{ elk_version }}-amd64.deb'
+        dest: /tmp/
+    - name: 'installing kibana-{{ elk_version }}-amd64.deb'
+      apt:
+        deb: '/tmp/kibana-{{ elk_version }}-amd64.deb'
   rescue:
     - name: 'downloading kibana-{{ elk_version }}-amd64.deb'
       get_url:
         url: "https://artifacts.elastic.co/downloads/kibana/kibana-{{ elk_version }}-amd64.deb"
-        dest: "roles/deploy.Kibana/files/kibana-{{ elk_version }}-amd64.deb"
+        dest: "downloaded_files/kibana-{{ elk_version }}-amd64.deb"
       delegate_to: localhost
       become: no
       run_once: yes
-
-- name: 'uploading kibana-{{ elk_version }}-amd64.deb'
-  copy:
-    src: 'kibana-{{ elk_version }}-amd64.deb'
-    dest: /tmp/
-
-- name: 'installing kibana-{{ elk_version }}-amd64.deb'
-  apt:
-    deb: '/tmp/kibana-{{ elk_version }}-amd64.deb'
+    - include_tasks: '{{ ansible_os_family }}.yml'

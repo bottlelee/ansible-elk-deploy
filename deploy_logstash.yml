@@ -24,13 +24,9 @@
       prompt: "「日志」存储路径："
       default: "/var/log/logstash"
       private: no
-    - name: "logstash_new_beats_port"
-      prompt: "beats 监听端口："
-      default: "5044"
-      private: no
   roles:
     - deploy.Logstash
   post_tasks:
     - wait_for:
         host: '{{ ansible_default_ipv4.address | default(ansible_all_ipv4_addresses[0]) }}'
-        port: '{{ logstash_new_beats_port }}'
+        port: '{{ logstash_beats_port }}'

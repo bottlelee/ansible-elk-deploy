@@ -1,41 +1,24 @@
 - block:
-    - name: 检查 jre-8u161-linux-x64.tar.gz 安装包是否存在
-      stat:
-        path: roles/init/files/jre-8u161-linux-x64.tar.gz
-        get_attributes: no
-        get_checksum: no
-        get_md5: no
-        get_mime: no
-      register: fileSt
-      failed_when: not fileSt.stat.exists
-      delegate_to: localhost
-      become: no
-      run_once: yes
-  rescue:
-    - name: 下载 jre-8u161-linux-x64.tar.gz 安装包
-      get_url:
-        url: http://javadl.oracle.com/webapps/download/AutoDL?BundleId=230532_2f38c3b165be4555a1fa6e98c45e0808
-        # headers: 'Cookie:oraclelicense=accept-securebackup-cookie'
-        dest: roles/init/files/jre-8u161-linux-x64.tar.gz
-      delegate_to: localhost
-      become: no
-      run_once: yes
-
-- block:
-    - name: 检查 java 命令是否存在
-      command: /usr/bin/java -version
-      changed_when: false
-  rescue:
-    - name: 解压 jre-8u161-linux-x64.tar.gz 到目标机器
+    - name: extracting jre-8u161-linux-x64.tar.gz
       unarchive:
-        src: jre-8u161-linux-x64.tar.gz
+        src: downloaded_files/jre-8u161-linux-x64.tar.gz
         dest: /opt/
         owner: root
         group: root
-    - name: 建立 java 软链
+    - name: create soft link
       file:
         src: /opt/jre1.8.0_161/bin/java
         dest: /usr/bin/java
         owner: root
         group: root
         state: link
+  rescue:
+    - name: downloading jre-8u161-linux-x64.tar.gz
+      get_url:
+        url: http://javadl.oracle.com/webapps/download/AutoDL?BundleId=230532_2f38c3b165be4555a1fa6e98c45e0808
+        # headers: 'Cookie:oraclelicense=accept-securebackup-cookie'
+        dest: downloaded_files/jre-8u161-linux-x64.tar.gz
+      delegate_to: localhost
+      become: no
+      run_once: yes
+    - include_tasks: jre.yml

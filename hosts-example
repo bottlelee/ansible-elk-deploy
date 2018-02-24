@@ -3,22 +3,22 @@
 centos7 ansible_host=192.168.1.146 ansible_ssh_port=22
 ubuntu16 ansible_host=192.168.3.231 ansible_ssh_port=22
 
-# ES 数据节点，选填。(Option)
+# ES 数据节点，选填。(Optional)
 [elasticNodeOnly]
 
-# LogStash 部署节点，选填。(Option)
+# LogStash 部署节点，必填。(Needed)
 [logstash]
 centos7
 ubuntu16
 
-# Kibana 部署节点，选填。(Option)
+# Kibana 部署节点，必填。(Needed)
 [kibana]
 centos7
 ubuntu16
 
-# HaProxy 负载均衡，选填。(Option)
-[haproxy]
-centos7
+# consul server nodes，必填。(Needed)
+[consulserver]
+centos7 consul_bootstrap=true
 ubuntu16
 
 [elastic:children]

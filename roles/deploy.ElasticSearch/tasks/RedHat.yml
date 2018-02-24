@@ -1,33 +1,20 @@
 - block:
-    - name: 'checking elasticsearch-{{ elk_version }}.rpm'
-      stat:
-        path: "roles/deploy.ElasticSearch/files/elasticsearch-{{ elk_version }}.rpm"
-        get_attributes: no
-        get_checksum: no
-        get_md5: no
-        get_mime: no
-      register: fileSt
-      failed_when: not fileSt.stat.exists
-      delegate_to: localhost
-      become: no
-      run_once: yes
+    - name: 'uploading elasticsearch-{{ elk_version }}.rpm'
+      copy:
+        src: 'downloaded_files/elasticsearch-{{ elk_version }}.rpm'
+        dest: /tmp/
+    - name: 'installing elasticsearch-{{ elk_version }}.rpm'
+      yum:
+        name: '/tmp/elasticsearch-{{ elk_version }}.rpm'
+        state: present
   rescue:
     - name: 'downloading elasticsearch-{{ elk_version }}.rpm'
       get_url:
         url: "https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-{{ elk_version }}.rpm"
-        dest: "roles/deploy.ElasticSearch/files/elasticsearch-{{ elk_version }}.deb"
+        dest: "downloaded_files/elasticsearch-{{ elk_version }}.deb"
       delegate_to: localhost
       become: no
       run_once: yes
-
-- name: 'uploading elasticsearch-{{ elk_version }}.rpm'
-  copy:
-    src: 'elasticsearch-{{ elk_version }}.rpm'
-    dest: /tmp/
-
-- name: 'installing elasticsearch-{{ elk_version }}.rpm'
-  yum:
-    name: '/tmp/elasticsearch-{{ elk_version }}.rpm'
-    state: present
+    - include_tasks: '{{ ansible_os_family }}.yml'
 
 - include_tasks: common_setup.yml

@@ -1,30 +1,17 @@
 - block:
-    - name: 'checking logstash-{{ elk_version }}.rpm file'
-      stat:
-        path: "roles/deploy.Logstash/files/logstash-{{ elk_version }}.rpm"
-        get_attributes: no
-        get_checksum: no
-        get_md5: no
-        get_mime: no
-      register: fileSt
-      failed_when: not fileSt.stat.exists
-      delegate_to: localhost
-      become: no
-      run_once: yes
+    - name: 'uploading logstash-{{ elk_version }}.rpm'
+      copy:
+        src: 'downloaded_files/logstash-{{ elk_version }}.rpm'
+        dest: /tmp/
+    - name: 'installing logstash-{{ elk_version }}.rpm'
+      yum:
+        name: '/tmp/logstash-{{ elk_version }}.rpm'
   rescue:
     - name: 'downloading logstash-{{ elk_version }}.rpm'
       get_url:
         url: "https://artifacts.elastic.co/downloads/logstash/logstash-{{ elk_version }}.rpm"
-        dest: "roles/deploy.Logstash/files/logstash-{{ elk_version }}.rpm"
+        dest: "downloaded_files/logstash-{{ elk_version }}.rpm"
       delegate_to: localhost
       become: no
       run_once: yes
-
-- name: 'uploading logstash-{{ elk_version }}.rpm'
-  copy:
-    src: 'logstash-{{ elk_version }}.rpm'
-    dest: /tmp/
-
-- name: 'installing logstash-{{ elk_version }}.rpm'
-  yum:
-    name: '/tmp/logstash-{{ elk_version }}.rpm'
+    - include_tasks: '{{ ansible_os_family }}.yml'
