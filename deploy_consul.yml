@@ -1,8 +1,17 @@
 - hosts: all
   become: yes
-  vars:
-    version: '1.0.6'
-    datacenter_name: 'elk'
-    consul_key: '7MP5ygc7Yet03djoh+3Xow=='
+  vars_prompt:
+    - name: "bootstrap"
+      prompt: "First time to deploy?(enter 'true' if yes)"
+      default: false
+      private: no
+    - name: "version"
+      prompt: "Which consul version do you want to deploy?"
+      default: "1.0.6"
+      private: no
+    - name: "datacenter_name"
+      prompt: "What is the consul datacenter name?"
+      default: "elk"
+      private: no
   roles:
     - deploy.Consul

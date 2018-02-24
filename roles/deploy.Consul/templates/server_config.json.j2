@@ -7,10 +7,8 @@
   "log_level": "INFO",
   "enable_syslog": true,
   "start_join": [
-{% for item in groups['consul'] %}
-{% if item != inventory_hostname %}
-  "{{ hostvars[item][ansible_host] | default(item) }}"{% if loop.nextitem is defined %},{% endif %}
-{% endif %}
-{% endfor %}
+{%- for item in groups['kibana'] if item != ansible_nodename -%}
+  "{{ hostvars[item][ansible_host] | default(item) }}"{%- if loop.nextitem is defined -%},{%- endif -%}
+{%- endfor -%}
   ]
 }

@@ -2,7 +2,7 @@
     - name: uploading command file
       copy:
         src: consul
-        dest: /usr/bin/
+        dest: /usr/local/bin/
         mode: 755
   rescue:
     - name: downloading consul
@@ -32,5 +32,3 @@
         state: directory
         owner: consul
         group: consul
-    - name: bootstrap the cluster
-      include_tasks: bootstrap.yml

@@ -1,0 +1,16 @@
+[Unit]
+Description=consul agent
+Requires=network-online.target
+After=network-online.target
+
+[Service]
+Type=simple
+User=consul
+Group=consul
+EnvironmentFile=-/etc/default/consul
+Restart=on-failure
+ExecStart=/usr/local/bin/consul agent -config-dir=/etc/consul.d/server
+ExecReload=/bin/kill -HUP $MAINPID
+
+[Install]
+WantedBy=multi-user.target

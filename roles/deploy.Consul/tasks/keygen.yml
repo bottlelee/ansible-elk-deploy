@@ -1,0 +1,19 @@
+- block:
+    - file:
+        path: roles/deploy.Consul/vars/key.yml
+        state: touch
+    - name: generating consul key
+      command: roles/deploy.Consul/files/consul keygen
+      register: keySt
+    - name: write consul key into vars file
+      lineinfile:
+        path: roles/deploy.Consul/vars/key.yml
+        regexp: '^consul_key'
+        line: "consul_key: '{{ keySt.stdout }}'"
+  rescue:
+    - name: downloading consul
+      unarchive:
+        src: "https://releases.hashicorp.com/consul/{{ version }}/consul_{{ version }}_linux_amd64.zip"
+        dest: roles/deploy.Consul/files/
+        remote_src: yes
+    - include_tasks: keygen.yml

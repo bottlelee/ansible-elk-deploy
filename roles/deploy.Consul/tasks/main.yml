@@ -2,9 +2,15 @@
     - name: checking consul command
       shell: consul version | head -n1 | awk '{ gsub("v","") ; print $2 }'
       register: verChk
+      changed_when: false
       failed_when: "version > verChk.stdout"
   rescue:
     - include_tasks: install.yml
 
 - include_tasks: bootstrap.yml
-  when: consul_bootstrap is defined
+  when:
+    - bootstrap
+    - "'kibana' in group_names"
+
+- include_tasks: agent.yml
+  when: "'kibana' not in group_names"

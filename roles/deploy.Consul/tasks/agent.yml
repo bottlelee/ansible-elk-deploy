@@ -1,0 +1,27 @@
+- include_vars:
+    file: key.yml
+
+- name: stop and remove consul-server service
+  service:
+    name: consul-server
+    state: stopped
+    enabled: false
+    daemon_reload: true
+  ignore_errors: true
+
+- name: start the consul client
+  block:
+    - template:
+        src: client_config.json.j2
+        dest: /etc/consul.d/client/config.json
+      register: configSt
+    - template:
+        src: consul-client.service.j2
+        dest: /etc/systemd/system/consul-client.service
+      register: serviceSt
+    - service:
+        name: consul-client
+        state: restarted
+        enabled: true
+        daemon_reload: true
+      when: configSt.changed or serviceSt.changed
