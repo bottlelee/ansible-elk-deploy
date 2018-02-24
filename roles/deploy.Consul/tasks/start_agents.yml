@@ -1,6 +1,0 @@
-- block:
-    - name: starting consul agent
-      command: "consul agent -config-dir=/etc/consul.d/agent"
-  rescue:
-    - command: pkill consul
-    - include_tasks: start_agents.yml

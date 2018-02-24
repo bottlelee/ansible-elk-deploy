@@ -5,8 +5,8 @@
     - 30%
   vars_prompt:
     - name: "bootstrap"
-      prompt: "First time to deploy?(enter 'true' if yes)"
-      default: false
+      prompt: "First time to deploy?(y/N)"
+      default: 'N'
       private: no
     - name: "version"
       prompt: "Which consul version do you want to deploy?"

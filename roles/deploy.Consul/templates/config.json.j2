@@ -1,8 +1,8 @@
 {
-{% if bootstrap == true and consul_bootstrap is defined %}
+{% if bootstrap == 'y' and consul_bootstrap is defined %}
   "bootstrap": true,
-{% endif %}
-{% if 'consulserver' in group_names %}
+  "server": true,
+{% elif 'consulserver' in group_names %}
   "server": true,
   "start_join": [
     {%- for item in groups['consulserver'] if item != ansible_nodename -%}

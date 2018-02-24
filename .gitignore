@@ -6,3 +6,4 @@ retry
 hosts
 609-hosts
 .~lock.*
+temp.yml
