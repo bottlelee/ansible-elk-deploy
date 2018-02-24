@@ -12,5 +12,8 @@
     - bootstrap
     - "'kibana' in group_names"
 
+- include_tasks: server.yml
+  when: "'kibana' in group_names"
+
 - include_tasks: agent.yml
   when: "'kibana' not in group_names"

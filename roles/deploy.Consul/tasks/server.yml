@@ -1,9 +1,9 @@
 - include_vars:
     file: key.yml
 
-- name: stop and remove consul-server service
+- name: stop and remove consul-client service
   service:
-    name: consul-server
+    name: consul-client
     state: stopped
     enabled: false
     daemon_reload: true
@@ -12,11 +12,11 @@
 - name: updating config
   block:
     - template:
-        src: client_config.json.j2
-        dest: /etc/consul.d/client/config.json
+        src: server_config.json.j2
+        dest: /etc/consul.d/server/config.json
     - template:
         src: 'service_{{ item }}.json.j2'
-        dest: '/etc/consul.d/client/{{ item }}.json'
+        dest: '/etc/consul.d/server/{{ item }}.json'
       when: "item in group_names"
       with_items:
         - elastic
@@ -25,6 +25,6 @@
       register: config
 
 - name: testing config
-  command: consul validate /etc/consul.d/client
-  notify: Restart consul client
+  command: consul validate /etc/consul.d/server
+  notify: Restart consul server
   when: config.changed

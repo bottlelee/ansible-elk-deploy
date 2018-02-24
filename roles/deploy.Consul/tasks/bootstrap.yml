@@ -34,24 +34,7 @@
         timeout: 30
   when: consul_bootstrap is defined
 
-- name: start other consul servers and join in the cluster
-  block:
-    - template:
-        src: server_config.json.j2
-        dest: /etc/consul.d/server/config.json
-    - template:
-        src: consul-server.service.j2
-        dest: /etc/systemd/system/consul-server.service
-    - service:
-        name: consul-server
-        state: restarted
-        enabled: true
-        daemon_reload: true
-    - wait_for:
-        host: 0.0.0.0
-        port: 8300
-        state: started
-        timeout: 30
+- include_tasks: server.yml
   when: consul_bootstrap is not defined
 
 - name: start the first consul server
@@ -62,20 +45,5 @@
         port: 8300
         state: stopped
         timeout: 30
-    - template:
-        src: server_config.json.j2
-        dest: /etc/consul.d/server/config.json
-    - template:
-        src: consul-server.service.j2
-        dest: /etc/systemd/system/consul-server.service
-    - service:
-        name: consul-server
-        state: restarted
-        enabled: true
-        daemon_reload: true
-    - wait_for:
-        host: 0.0.0.0
-        port: 8300
-        state: started
-        timeout: 30
+    - include_tasks: server.yml
   when: consul_bootstrap is defined

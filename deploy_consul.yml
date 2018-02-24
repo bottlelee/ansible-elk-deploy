@@ -1,5 +1,8 @@
 - hosts: all
   become: yes
+  serial:
+    - 1
+    - 30%
   vars_prompt:
     - name: "bootstrap"
       prompt: "First time to deploy?(enter 'true' if yes)"

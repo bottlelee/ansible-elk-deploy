@@ -1,0 +1,16 @@
+{
+  "services": [
+    {
+      "name": "logstash",
+      "address": "",
+      "port": 5044,
+      "checks": [
+        {
+          "tcp": "{{ ansible_default_ipv4.address | default(ansible_all_ipv4_addresses[0]) }}:5044",
+          "interval": "30s",
+          "timeout": "1s"
+        }
+      ]
+    }
+  ]
+}
