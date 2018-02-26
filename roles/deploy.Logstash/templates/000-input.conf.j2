@@ -1,5 +1,6 @@
 input {
   beats {
     port => "{{ logstash_beats_port }}"
+    client_inactivity_timeout => "300"
   }
 }

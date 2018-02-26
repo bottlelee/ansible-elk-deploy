@@ -211,3 +211,10 @@ path.logs: {{ logstash_log_path }}
 #
 # Where to find custom plugins
 # path.plugins: []
+
+slowlog:
+  threshold:
+    warn: 2s
+    info: 1s
+    debug: 500ms
+    trace: 100ms

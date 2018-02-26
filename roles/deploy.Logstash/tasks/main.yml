@@ -24,5 +24,6 @@
     dest: '/etc/logstash/conf.d/{{ item }}.conf'
   with_items:
     - 000-input
+    - 001-logstash
     - 999-output
   notify: Restart logstash service

@@ -1,14 +1,6 @@
 output {
   elasticsearch {
-    hosts => [
-{% for item in groups.elasticMaster|sort() %}
-{% if loop.nextitem is defined %}
-      "{{ hostvars[item]['ansible_host'] | default(inventory_hostname) }}:{{ elastic_http_port }}",
-{% else %}
-      "{{ hostvars[item]['ansible_host'] | default(inventory_hostname) }}:{{ elastic_http_port }}"
-{% endif %}
-{% endfor %}
-    ]
+    hosts => ["elasticsearch.service.consul:{{ elastic_http_port }}"]
     index => "%{[@metadata][beat]}-%{+YYYY.MM.dd}"
   }
 }
