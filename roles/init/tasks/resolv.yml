@@ -1,0 +1,6 @@
+- name: updating /etc/resolvconf/resolv.conf.d/base
+  template:
+    src: consul_dns.j2
+    dest: /etc/resolvconf/resolv.conf.d/base
+  notify: Restart resolvconf service
+  when: ansible_os_family == 'Debian'

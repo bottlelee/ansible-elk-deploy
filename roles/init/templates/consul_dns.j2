@@ -1,0 +1,3 @@
+{% for item in groups['consulserver'] %}
+nameserver {{ hostvars[item]['ansible_host'] | default(item) }}
+{% endfor %}

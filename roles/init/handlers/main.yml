@@ -1,0 +1,5 @@
+- name: Restart resolvconf service
+  service:
+    name: resolvconf
+    state: restarted
+  when: ansible_os_family == 'Debian'
