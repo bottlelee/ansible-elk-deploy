@@ -9,7 +9,7 @@ User=consul
 Group=consul
 EnvironmentFile=-/etc/default/consul
 Restart=on-failure
-ExecStart=/usr/local/bin/consul agent -config-dir=/etc/consul.d/client
+ExecStart=/usr/local/bin/consul agent -pid-file=/var/consul/consul.pid -config-dir=/etc/consul.d/
 ExecReload=/bin/kill -HUP $MAINPID
 
 [Install]

@@ -4,3 +4,22 @@ elk_version: '6.2.2'
 elastic_http_port: '9200'
 logstash_beats_port: '5044'
 kibana_port: '5601'
+
+# Consul
+consul_version: '1.0.6'
+
+# Monit
+monit_version: '5.25.1'
+smtp_host: ''
+smtp_user: ''
+smtp_pass: ''
+network_interface: 'enp0s3'
+recipients:
+  - {
+    name: '李海滨',
+    email: 'haibin.lee@foxmail.com',
+    cellphone: '12345678901'
+  }
+
+# filebeat
+filebeat_modules: ""

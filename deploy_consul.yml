@@ -8,13 +8,14 @@
       prompt: "First time to deploy?(y/N)"
       default: 'N'
       private: no
-    - name: "version"
-      prompt: "Which consul version do you want to deploy?"
-      default: "1.0.6"
-      private: no
     - name: "datacenter_name"
       prompt: "What is the consul datacenter name?"
       default: "elk"
       private: no
   roles:
     - deploy.Consul
+  post_tasks:
+    - name: checking consul status
+      wait_for:
+        port: 8600
+        timeout: 3

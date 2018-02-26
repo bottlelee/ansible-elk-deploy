@@ -8,7 +8,7 @@
     - name: downloading consul
       unarchive:
         src: "https://releases.hashicorp.com/consul/{{ version }}/consul_{{ version }}_linux_amd64.zip"
-        dest: roles/deploy.Consul/files/
+        dest: downloaded_files/
         remote_src: yes
       delegate_to: localhost
       become: no
@@ -20,21 +20,18 @@
         name: consul
     - name: creating /etc/consul.d
       file:
-        path: "/etc/consul.d/{{ item }}"
+        path: "/etc/consul.d/"
         state: directory
-      with_items:
-        - server
-        - client
     - name: creating /var/consul
       file:
         path: /var/consul
         state: directory
         owner: consul
         group: consul
-    - name: creating service config file
-      template:
-        src: "consul-{{ item }}.service.j2"
-        dest: "/etc/systemd/system/consul-{{ item }}.service"
+    - name: enable DNS port forwarding
+      command: '{{ item }}'
       with_items:
-        - server
-        - client
+        - iptables -t nat -A PREROUTING -p udp -m udp --dport 53 -j REDIRECT --to-ports 8600
+        - iptables -t nat -A PREROUTING -p tcp -m tcp --dport 53 -j REDIRECT --to-ports 8600
+        - iptables -t nat -A OUTPUT -d localhost -p udp -m udp --dport 53 -j REDIRECT --to-ports 8600
+        - iptables -t nat -A OUTPUT -d localhost -p tcp -m tcp --dport 53 -j REDIRECT --to-ports 8600

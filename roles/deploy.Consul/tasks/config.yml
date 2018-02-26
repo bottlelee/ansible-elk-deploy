@@ -1,0 +1,34 @@
+- include_vars:
+    file: key.yml
+
+- name: updating server config
+  template:
+    src: '{{ item.src }}.j2'
+    dest: '{{ item.dest }}'
+  with_items:
+    - src: config.json
+      dest: /etc/consul.d/config.json
+    - src: consul.service
+      dest: /etc/systemd/system/consul.service
+  register: config
+
+- name: updating services config
+  template:
+    src: '{{ item }}.json.j2'
+    dest: '/etc/consul.d/{{ item }}.json'
+  when: "item in group_names"
+  with_items:
+    - elastic
+    - logstash
+    - kibana
+  register: services
+
+- name: validate config
+  command: consul validate -quiet /etc/consul.d/
+  when: config.changed or services.changed
+  notify: Restart consul service
+
+- name: updating nameserver list
+  include_role:
+    name: init
+    tasks_from: resolv

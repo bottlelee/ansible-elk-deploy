@@ -1,13 +1,6 @@
-- name: Restart consul server
+- name: Restart consul service
   service:
-    name: consul-server
-    state: restarted
-    enabled: true
-    daemon_reload: true
-
-- name: Restart consul client
-  service:
-    name: consul-client
+    name: consul
     state: restarted
     enabled: true
     daemon_reload: true

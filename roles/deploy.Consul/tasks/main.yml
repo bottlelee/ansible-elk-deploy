@@ -3,17 +3,13 @@
       shell: consul version | head -n1 | awk '{ gsub("v","") ; print $2 }'
       register: verChk
       changed_when: false
-      failed_when: "version > verChk.stdout"
+      failed_when: "consul_version > verChk.stdout"
     - name: checking consul port
       wait_for:
         host: 0.0.0.0
-        port: 8301
+        port: 8600
         timeout: 3
   rescue:
     - include_tasks: install.yml
 
-- include_tasks: server.yml
-  when: "'consulserver' in group_names"
-
-- include_tasks: client.yml
-  when: "'consulserver' not in group_names"
+- include_tasks: config.yml
