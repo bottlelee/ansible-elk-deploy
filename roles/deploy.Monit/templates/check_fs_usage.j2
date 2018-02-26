@@ -1,0 +1,37 @@
+check filesystem ROOT with path / for every 5 cycles
+  if space usage > 80% for 5 cycles then alert
+  if inode usage > 90% then alert
+
+{% for item in ansible_mounts %}
+{% if '/' != item.mount %}
+check filesystem {{ item.mount | regex_replace('.*?\/', '') | upper }} with path {{ item.device }} for every 5 cycles
+  if space usage > 80% for 5 cycles then alert
+  if inode usage > 90% then alert
+  if changed fsflags then alert
+  if does not exist then unmonitor
+{% endif %}
+{% endfor %}
+
+check file resolvconf with path /etc/resolv.conf
+  if changed checksum then alert
+
+check file hostname with path /etc/hostname
+  if changed checksum then alert
+
+check file passwd with path /etc/passwd
+  if changed checksum then alert
+  if does not exist then unmonitor
+  if failed permission 0644 then exec "/bin/chmod 0644 /etc/passwd"
+  if failed uid "root" then alert
+  if failed gid "root" then alert
+
+check file shadow with path /etc/shadow
+  if changed checksum then alert
+  if does not exist then unmonitor
+  if failed permission 0640 then exec "/bin/chmod 0640 /etc/shadow"
+  if failed uid "root" then alert
+{% if ansible_os_family == "Debian" %}
+  if failed gid "shadow" then alert
+{% elif ansible_os_family == "RedHat" %}
+  if failed gid "root" then alert
+{% endif %}

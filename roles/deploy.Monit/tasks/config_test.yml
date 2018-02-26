@@ -1,0 +1,17 @@
+- name: Test monit config
+  command: monit -t
+  register: monitTest
+
+- block:
+    - name: Reload monit
+      service:
+        name: monit
+        state: reloaded
+      when: monitTest|succeeded
+  rescue:
+    - name: Start monit
+      service:
+        name: monit
+        state: started
+        enabled: true
+        daemon_reload: yes

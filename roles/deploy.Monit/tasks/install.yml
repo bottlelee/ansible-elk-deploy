@@ -1,0 +1,44 @@
+- block:
+    - name: Extracting monit file
+      unarchive:
+        src: downloaded_files/monit-{{ monit_version }}-linux-x64.tar.gz
+        dest: /tmp/
+  rescue:
+    - name: downloading monit binary file
+      get_url:
+        url: https://mmonit.com/monit/dist/binary/{{ monit_version }}/monit-{{ monit_version }}-linux-x64.tar.gz
+        dest: downloaded_files
+      delegate_to: localhost
+      become: no
+
+- name: Copy files into system
+  copy:
+    src: '/tmp/monit-{{ monit_version }}/{{ item.src }}'
+    dest: '{{ item.dest }}'
+    mode: '{{ item.mode }}'
+    remote_src: yes
+  with_items:
+    - { src: 'bin/monit', dest: '/usr/local/bin/monit', mode: 544 }
+    - { src: 'man/man1/monit.1', dest: '/usr/share/man/man1/monit.1', mode: 644 }
+
+- name: Create DNS forwarding script
+  copy:
+    src: dns_forwarding.sh
+    dest: /usr/local/bin/dns_forwarding.sh
+    mode: 0744
+
+- name: Create monit.service
+  copy:
+    src: monit.service
+    dest: /lib/systemd/system/monit.service
+
+- name: Create /etc/monit.d
+  file:
+    path: /etc/monit.d
+    state: directory
+
+- name: Starting monit
+  systemd:
+    name: monit
+    state: started
+    daemon_reload: yes

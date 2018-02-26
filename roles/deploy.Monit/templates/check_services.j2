@@ -1,0 +1,5 @@
+check host consul with address 127.0.0.1
+  if failed
+    port 53
+    for 3 cycles
+  then exec "/usr/local/bin/dns_forwarding.sh"

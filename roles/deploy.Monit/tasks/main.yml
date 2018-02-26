@@ -1,0 +1,14 @@
+- block:
+    - name: Checking monit versioin
+      shell: /usr/local/bin/monit -V | head -n1 | awk '{ print $5 }'
+      changed_when: false
+      register: verChk
+      failed_when: monit_version > verChk.stdout
+  rescue:
+    - include_tasks: install.yml
+
+- block:
+    - include_tasks: config_all.yml
+      tags: monit.config.common
+  tags:
+    - monit.config.all
