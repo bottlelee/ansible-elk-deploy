@@ -54,11 +54,11 @@ bootstrap.memory_lock: true
 #
 # Set the bind address to a specific IP (IPv4 or IPv6):
 #
-network.host: 0.0.0.0
+network.host: _site_
+network.bind_host: 0.0.0.0
 #
 # Set a custom port for HTTP:
 #
-http.host: _site_
 http.port: {{ elastic_http_port | default('9200') }}
 #
 # For more information, consult the network module documentation.
@@ -69,14 +69,15 @@ http.port: {{ elastic_http_port | default('9200') }}
 # The default list of hosts is ["127.0.0.1", "[::1]"]
 #
 discovery.zen.ping.unicast.hosts:
-{% for item in groups['elasticMaster'] %}
+  - elasticsearch.service.consul
+{# {% for item in groups['elasticMaster'] %}
   - "{{ hostvars[item]['ansible_host'] | default(inventory_hostname) }}"
-{% endfor %}
+{% endfor %} #}
 #
 # Prevent the "split brain" by configuring the majority of nodes (total number of master-eligible nodes / 2 + 1):
 #
-{% if groups.elastic|count() >= 2 %}
-discovery.zen.minimum_master_nodes: {{ groups.elastic|count() // 2 + 1 }}
+{% if groups.elasticsearch|count() >= 2 %}
+discovery.zen.minimum_master_nodes: {{ groups.elasticsearch|count() // 2 + 1 }}
 {% else %}
 discovery.zen.minimum_master_nodes: 1
 {% endif %}
@@ -87,8 +88,8 @@ discovery.zen.minimum_master_nodes: 1
 #
 # Block initial recovery after a full cluster restart until N nodes are started:
 #
-{% if groups.elastic|count() > 2 %}
-gateway.recover_after_nodes: {{ groups.elastic|count() // 2 + 1 }}
+{% if groups.elasticsearch|count() > 2 %}
+gateway.recover_after_nodes: {{ groups.elasticsearch|count() // 2 + 1 }}
 {% else %}
 gateway.recover_after_nodes: 1
 {% endif %}
