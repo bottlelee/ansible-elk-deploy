@@ -1,5 +1,9 @@
 # Off-line way to deploy ElasticSearch/Logstash/Kibana
 
+## What we have in here?
+1. Easy scale and rolling upgrade for ELK components
+1. [Consul](https://www.consul.io/) as internal DNS service. Scale your ELK without updating the beats output configuration.
+
 ## Tested on these OS with [ansible](http://docs.ansible.com/ansible/latest/intro_installation.html)
 * Ubuntu 16.04 LTS（xenial）
 * CentOS 7
@@ -16,6 +20,7 @@
 1. `ansible-playbook deploy_kibana.yml`
 1. `ansible-playbook deploy_logstash.yml`
 1. `ansible-playbook deploy_beats.yml`
+1. `ansible-playbook deploy_monit.yml`
 
 ## Maintain
 ### Upgrade
@@ -46,6 +51,7 @@
 1. `ansible-playbook deploy_kibana.yml`
 1. `ansible-playbook deploy_logstash.yml`
 1. `ansible-playbook deploy_beats.yml`
+1. `ansible-playbook deploy_monit.yml`
 
 ## 维护更新
 ### 升级

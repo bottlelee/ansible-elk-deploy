@@ -1,6 +1,14 @@
 output {
-  elasticsearch {
-    hosts => ["elasticsearch.service.consul:{{ elastic_http_port }}"]
-    index => "%{[@metadata][beat]}-%{+YYYY.MM.dd}"
+  if [@metadata][beat] {
+    elasticsearch {
+      hosts => ["elasticsearch.service.consul:{{ elastic_http_port }}"]
+      index => "%{[@metadata][beat]}-%{[beat][version]}-%{+YYYY.MM.dd}"
+    }
+  } else {
+    elasticsearch {
+      hosts => ["elasticsearch.service.consul:{{ elastic_http_port }}"]
+      index => "%{logstash-%{+YYYY.MM.dd}"
+    }
   }
+
 }

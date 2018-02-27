@@ -2,7 +2,7 @@
   become: yes
   serial:
     - 1
-    - 10
+    - 10%
   vars_prompt:
     - name: "notice"
       prompt: |
