@@ -12,6 +12,14 @@
       dest: /etc/systemd/system/consul.service
   register: config
 
+- name: starting consul service
+  service:
+    name: consul
+    state: started
+    enabled: true
+    daemon_reload: true
+  when: bootstrap == 'y'
+
 - name: updating services config
   template:
     src: '{{ item }}.json.j2'
@@ -24,11 +32,6 @@
   register: services
 
 - name: validate config
-  command: consul validate -quiet /etc/consul.d/
+  command: /usr/local/bin/consul validate -quiet /etc/consul.d/
   when: config.changed or services.changed
   notify: Restart consul service
-
-- name: updating nameserver list
-  include_role:
-    name: init
-    tasks_from: resolv

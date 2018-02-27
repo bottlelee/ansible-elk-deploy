@@ -1,6 +1,6 @@
 - block:
     - name: checking consul command
-      shell: consul version | head -n1 | awk '{ gsub("v","") ; print $2 }'
+      shell: /usr/local/bin/consul version | head -n1 | awk '{ gsub("v","") ; print $2 }'
       register: verChk
       changed_when: false
       failed_when: "consul_version > verChk.stdout"
@@ -13,3 +13,4 @@
     - include_tasks: install.yml
 
 - include_tasks: config.yml
+- include_tasks: resolv.yml

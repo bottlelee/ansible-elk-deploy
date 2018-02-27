@@ -4,3 +4,9 @@
     state: restarted
     enabled: true
     daemon_reload: true
+
+- name: Restart resolvconf service
+  service:
+    name: resolvconf
+    state: restarted
+  when: ansible_os_family == 'Debian'
