@@ -19,3 +19,10 @@
       become: no
       run_once: yes
     - include_tasks: '{{ ansible_os_family }}.yml'
+  always:
+    - name: create /var/run/kibana
+      file:
+        path: /var/run/kibana
+        state: directory
+        owner: kibana
+        group: kibana
