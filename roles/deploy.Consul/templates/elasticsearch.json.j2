@@ -4,6 +4,9 @@
       "name": "elasticsearch",
       "address": "",
       "port": {{ elastic_http_port }},
+      "tags": [
+        "elk"
+      ],
       "checks": [
         {
           "http": "http://{{ ansible_default_ipv4.address | default(ansible_all_ipv4_addresses[0]) }}:{{ elastic_http_port }}/",

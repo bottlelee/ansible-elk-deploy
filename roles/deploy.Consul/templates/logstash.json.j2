@@ -4,6 +4,9 @@
       "name": "logstash",
       "address": "",
       "port": {{ logstash_beats_port }},
+      "tags": [
+        "elk"
+      ],
       "checks": [
         {
           "tcp": "{{ ansible_default_ipv4.address | default(ansible_all_ipv4_addresses[0]) }}:{{ logstash_beats_port }}",

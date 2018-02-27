@@ -4,6 +4,7 @@
   "server": true,
 {% elif 'consulserver' in group_names %}
   "server": true,
+  "ui": true,
   "start_join": [
     {%- for item in groups['consulserver'] if item != ansible_nodename -%}
       "{{ hostvars[item]['ansible_host'] | default(item) }}"{%- if loop.nextitem is defined -%},{%- endif -%}
