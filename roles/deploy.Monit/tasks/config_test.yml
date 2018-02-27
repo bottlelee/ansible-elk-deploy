@@ -1,5 +1,5 @@
 - name: Test monit config
-  command: monit -t
+  command: /usr/local/bin/monit -t
   register: monitTest
 
 - block:

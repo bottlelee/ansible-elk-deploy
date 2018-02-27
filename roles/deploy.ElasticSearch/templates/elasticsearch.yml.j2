@@ -69,10 +69,9 @@ http.port: {{ elastic_http_port | default('9200') }}
 # The default list of hosts is ["127.0.0.1", "[::1]"]
 #
 discovery.zen.ping.unicast.hosts:
-  - elasticsearch.service.consul
-{# {% for item in groups['elasticMaster'] %}
+{% for item in groups['elasticMaster'] %}
   - "{{ hostvars[item]['ansible_host'] | default(inventory_hostname) }}"
-{% endfor %} #}
+{% endfor %}
 #
 # Prevent the "split brain" by configuring the majority of nodes (total number of master-eligible nodes / 2 + 1):
 #

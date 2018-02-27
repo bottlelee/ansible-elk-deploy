@@ -10,7 +10,11 @@
     - name: 'downloading logstash-{{ elk_version }}.rpm'
       get_url:
         url: "https://artifacts.elastic.co/downloads/logstash/logstash-{{ elk_version }}.rpm"
-        dest: "downloaded_files/logstash-{{ elk_version }}.rpm"
+        dest: "downloaded_files/"
+      register: download
+      until: download|succeeded
+      retries: 5
+      delay: 10
       delegate_to: localhost
       become: no
       run_once: yes

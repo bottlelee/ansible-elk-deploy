@@ -10,11 +10,12 @@
     - name: "downloading {{ target }}-{{ elk_version }}-amd64.deb(下载中...)"
       get_url:
         url: "https://artifacts.elastic.co/downloads/beats/{{ target }}/{{ target }}-{{ elk_version }}-amd64.deb"
-        dest: "downloaded_files/{{ target }}-{{ elk_version }}-amd64.deb"
+        dest: "downloaded_files/"
+      register: download
+      until: download|succeeded
+      retries: 5
+      delay: 10
       delegate_to: localhost
       become: no
       run_once: true
     - include_tasks: Debian.yml
-
-- name: importing templates(导入 kibana 模板)
-  command: "{{ target }} setup --template -E output.logstash.enabled=false -E output.elasticsearch.hosts=['elasticsearch.service.consul:{{ elastic_http_port }}']"
