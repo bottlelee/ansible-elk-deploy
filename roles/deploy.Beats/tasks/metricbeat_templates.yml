@@ -3,29 +3,21 @@
     src: 'metricbeat.yml.j2'
     dest: '/etc/metricbeat/metricbeat.yml'
     mode: 0600
-
-- name: Updating modules config
-  template:
-    src: 'metricbeat_{{ item }}.yml.j2'
-    dest: '/etc/metricbeat/modules.d/{{ item }}.yml'
-    mode: 0600
-  with_items:
-    - system
   register: configSt
+
+- name: Enable metricbeat modules
+  command: "metricbeat modules enable {{ item }}"
+  when: "item in group_names"
+  with_items:
+    - logstash
+    - kibana
+    - elasticsearch
+  register: moduleSt
 
 - name: 'Testing metricbeat'
   command: 'metricbeat test {{ item }}'
   with_items:
     - output
-    - modules
     - config
-  register: testSt
-
-- name: 'Restarting metricbeat'
-  service:
-    name: 'metricbeat'
-    enabled: yes
-    state: restarted
-  when:
-    - testSt|succeeded
-    - configSt|changed
+  notify: Restart metricbeat service
+  when: configSt.changed or moduleSt.changed

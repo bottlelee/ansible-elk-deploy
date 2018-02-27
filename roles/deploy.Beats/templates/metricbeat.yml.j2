@@ -14,15 +14,7 @@ metricbeat.max_start_delay: 10s
 #================================ Outputs =====================================
 
 output.logstash:
-  hosts: [
-{% for item in groups['logstash'] %}
-{% if loop.nextitem is defined %}
-    "{{ hostvars[item]['ansible_host']|default(inventory_hostname) }}:{{ logstash_beats_port }}",
-{% else %}
-    "{{ hostvars[item]['ansible_host']|default(inventory_hostname) }}:{{ logstash_beats_port }}"
-{% endif %}
-{% endfor %}
-  ]
+  hosts: ["logstash.service.consul:{{ logstash_beats_port }}"]
   loadbalance: true
   slow_start: true
 
@@ -38,7 +30,7 @@ logging.files:
 
 name: {{ inventory_hostname }}
 tags: [
-{% for item in group_names %}
+{%- for item in group_names -%}
   "{{ item }}",
-{% endfor %}
+{%- endfor -%}
 ]

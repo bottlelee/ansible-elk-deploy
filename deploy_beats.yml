@@ -6,3 +6,8 @@
       target: filebeat,
       tags: filebeat
     }
+    - {
+      role: deploy.Beats,
+      target: metricbeat,
+      tags: metricbeat
+    }

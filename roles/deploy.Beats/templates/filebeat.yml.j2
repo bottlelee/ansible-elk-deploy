@@ -38,6 +38,7 @@ filebeat.prospectors:
 
 output.logstash:
   hosts: ["logstash.service.consul:{{ logstash_beats_port }}"]
+  loadbalance: true
   compression_level: 5
   timeout: 300
   slow_start: true
@@ -52,16 +53,7 @@ logging:
     keepfiles: 7
 name: {{ inventory_hostname }}
 tags: [
-{% for item in group_names %}
+{%- for item in group_names -%}
   "{{ item }}",
-{% endfor %}
+{%- endfor -%}
 ]
-
-setup:
-  dashboards:
-    enabled: true
-  template:
-    overwrite: true
-    enabled: true
-  kibana:
-    host: kibana.service.consul:5601

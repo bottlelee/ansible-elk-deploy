@@ -21,11 +21,7 @@ packetbeat.protocols.dns:
   ports: [53]
 
 output.logstash:
-  hosts: [
-{% for item in groups['logstash'] %}
-    "{{ hostvars[item]['ansible_host']|default(inventory_hostname) }}:{{ logstash_beats_port }}",
-{% endfor %}
-  ]
+  hosts: ["logstash.service.consul:{{ logstash_beats_port }}"]
   loadbalance: true
   slow_start: true
 
@@ -36,7 +32,7 @@ logging.files:
   keepfiles: 7
 name: {{ inventory_hostname }}
 tags: [
-{% for item in group_names %}
+{%- for item in group_names -%}
   "{{ item }}",
-{% endfor %}
+{%- endfor -%}
 ]
