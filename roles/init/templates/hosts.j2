@@ -5,8 +5,6 @@
 ff02::1 ip6-allnodes
 ff02::2 ip6-allrouters
 
-{% for item in groups['all'] %}
-{% if hostvars[item]['ansible_host'] is defined %}
+{% for item in groups['all'] if hostvars[item]['ansible_host'] is defined %}
 {{ hostvars[item]['ansible_host'] }} {{ item }}
-{% endif %}
 {% endfor %}
