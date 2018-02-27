@@ -1,0 +1,15 @@
+- name: Setup /etc/hosts
+  template:
+    src: hosts.j2
+    dest: /etc/hosts
+
+- name: Setup hostname
+  hostname:
+    name: "{{ inventory_hostname }}"
+
+- name: Setup rsyslog hostname
+  lineinfile:
+    path: /etc/rsyslog.d/01-hostname.conf
+    line: "$LocalHostName {{ inventory_hostname }}"
+    regexp: "^$LocalHostName"
+    create: yes
