@@ -17,10 +17,3 @@
   with_items:
     - kibana.yml
   notify: Restart kibana service
-
-- name: create /var/run/kibana
-  file:
-    path: /var/run/kibana
-    state: directory
-    owner: kibana
-    group: kibana

@@ -1,5 +1,21 @@
 check host consul with address 127.0.0.1
   if failed
     port 53
-    for 3 cycles
+    for 2 cycles
   then exec "/usr/local/bin/dns_forwarding.sh"
+
+check host logstash with address 127.0.0.1
+  if failed
+    port {{ logstash_beats_port }}
+    for 3 cycles
+  then exec "/usr/sbin/service logstash restart"
+  if 3 restarts within 10 cycles then stop
+
+check process kibana with pidfile "/var/run/kibana/kibana.pid"
+  start program = "/usr/sbin/service kibana start"
+  stop program = "/usr/sbin/service kibana stop"
+  if failed port {{ kibana_port }} for 3 cycles then restart
+  if 3 restarts within 10 cycles then stop
+
+check process elasticsearch with pidfile "/var/run/elasticsearch/elasticsearch.pid"
+  if failed port {{ elastic_http_port }} for 3 cycles then alert

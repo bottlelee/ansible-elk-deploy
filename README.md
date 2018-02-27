@@ -3,6 +3,7 @@
 ## What we have in here?
 1. Easy scale and rolling upgrade for ELK components
 1. [Consul](https://www.consul.io/) as internal DNS service. Scale your ELK without updating the beats output configuration.
+1. [Monit](https://mmonit.com/monit/documentation/monit.html) as monitoring service. Auto fix common issue, free you hands.
 
 ## Tested on these OS with [ansible](http://docs.ansible.com/ansible/latest/intro_installation.html)
 * Ubuntu 16.04 LTS（xenial）

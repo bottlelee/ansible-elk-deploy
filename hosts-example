@@ -21,7 +21,7 @@ ubuntu16
 centos7 consul_bootstrap=true
 ubuntu16
 
-[elastic:children]
+[elasticsearch:children]
 elasticMaster
 elasticNodeOnly
 
