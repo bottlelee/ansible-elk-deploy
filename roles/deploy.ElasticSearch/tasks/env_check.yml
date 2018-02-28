@@ -3,7 +3,7 @@
     that:
       - "ansible_memtotal_mb >= 7000"
       - "ansible_memory_mb.nocache.free >= 4000"
-      - "ansible_processor_vcpus >= 8"
+      - "ansible_processor_vcpus >= 4"
       - "ansible_architecture == 'x86_64'"
 
 - name: 'check if port {{ elastic_http_port }} available'

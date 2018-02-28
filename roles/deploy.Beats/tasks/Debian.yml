@@ -3,9 +3,6 @@
       copy:
         src: "downloaded_files/{{ target }}-{{ elk_version }}-amd64.deb"
         dest: "/tmp/{{ target }}-{{ elk_version }}-amd64.deb"
-    - name: "installing {{ target }}-{{ elk_version }}-amd64.deb(安装中...)"
-      apt:
-        deb: "/tmp/{{ target }}-{{ elk_version }}-amd64.deb"
   rescue:
     - name: "downloading {{ target }}-{{ elk_version }}-amd64.deb(下载中...)"
       get_url:
@@ -19,3 +16,10 @@
       become: no
       run_once: true
     - include_tasks: Debian.yml
+
+- block:
+    - name: 'installing {{ target }}-{{ elk_version }}-amd64.deb'
+      apt:
+        deb: '/tmp/{{ target }}-{{ elk_version }}-amd64.deb'
+  rescue:
+    - command: "dpkg -i /tmp/{{ target }}-{{ elk_version }}-amd64.deb"

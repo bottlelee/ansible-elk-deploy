@@ -19,9 +19,3 @@
       become: no
       run_once: yes
     - include_tasks: '{{ ansible_os_family }}.yml'
-
-# - include_tasks: "plugins.yml target={{ target }}"
-#   with_items:
-#     - logstash-output-xmpp
-#   loop_control:
-#     loop_var: target
