@@ -32,12 +32,3 @@
   when:
     - "ansible_distribution == 'CentOS'"
     - "ansible_distribution_major_version >= '7'"
-
-- name: Install python-apt
-  block:
-    - copy:
-        src: python-apt_1.1.0~beta1ubuntu0.16.04.1_amd64.deb
-        dest: /tmp
-    - command: dpkg -i /tmp/python-apt_1.1.0~beta1ubuntu0.16.04.1_amd64.deb
-  when:
-    - "ansible_distribution == 'Ubuntu'"

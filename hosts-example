@@ -16,7 +16,7 @@ ubuntu16
 centos7
 ubuntu16
 
-# consul server nodes，必填。(Needed)
+# Consul server nodes，必填。(Needed)
 [consulserver]
 centos7 consul_bootstrap=true
 ubuntu16
@@ -24,6 +24,13 @@ ubuntu16
 [elasticsearch:children]
 elasticMaster
 elasticNodeOnly
+
+# Add ubuntu xenial servers in this group to use python3
+[ubuntu]
+ubuntu16
+
+[ubuntu:vars]
+ansible_python_interpreter=/usr/bin/python3
 
 [all:vars]
 ansible_user=nsc

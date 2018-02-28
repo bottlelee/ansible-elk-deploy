@@ -4,9 +4,3 @@ check system {{ ansible_hostname }}-{{ ansible_default_ipv4.address | default(an
   if cpu usage > 85% for 5 cycles then alert
   if memory usage > 85% for 10 cycles then alert
   if swap usage > 75% for 10 cycles then alert
-
-check network {{ ansible_default_ipv4.interface | default(network_interface) | replace(".", "-") }} with interface {{ ansible_default_ipv4.interface | default(network_interface) }}
-  start program = "/sbin/ifup {{ ansible_default_ipv4.interface | default(network_interface) }}"
-  stop program = "/sbin/ifdown {{ ansible_default_ipv4.interface | default(network_interface) }}"
-  if failed link for 3 cycles then restart
-  if saturation > 90% for 3 cycles then alert

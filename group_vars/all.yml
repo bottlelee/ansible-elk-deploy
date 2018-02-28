@@ -13,7 +13,6 @@ monit_version: '5.25.1'
 smtp_host: ''
 smtp_user: ''
 smtp_pass: ''
-network_interface: 'enp0s3'
 recipients:
   - {
     name: '李海滨',
