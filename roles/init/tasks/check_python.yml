@@ -1,0 +1,15 @@
+- block:
+    - name: testing python2
+      raw: test -e /usr/bin/python || (apt -y update && apt install -y python-minimal)
+  rescue:
+    - name: testing python3
+      raw: test -e /usr/bin/python3
+    - name: set python3 as default python command
+      lineinfile:
+        path: hosts
+        line: '{{ inventory_hostname }} ansible_python_interpreter=/usr/bin/python3'
+        insertafter: '\[ubuntu_hosts\]'
+      delegate_to: localhost
+      become: no
+    - meta: clear_host_errors
+    - meta: refresh_inventory

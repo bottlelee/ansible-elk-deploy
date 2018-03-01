@@ -1,16 +1,12 @@
 - hosts: all
   become: yes
   gather_facts: no
-  pre_tasks:
-    - block:
-        - name: Install python2 for Ansible
-          raw: test -e /usr/bin/python || (apt -y update && apt install -y python-minimal)
-          changed_when: false
-      rescue:
-        - name: Create soft link from /usr/bin/python3 to /usr/bin/python
-          raw: test -e /usr/bin/python3 | ln -sf /usr/bin/python3 /usr/bin/python
-          changed_when: false
-      always:
-        - setup:
+  tasks:
+    - include_role:
+        name: init
+        tasks_from: check_python.yml
+
+- hosts: all
+  become: yes
   roles:
     - init

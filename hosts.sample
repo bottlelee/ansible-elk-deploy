@@ -29,3 +29,6 @@ elasticNodeOnly
 ansible_user=nsc
 ansible_ssh_pass=quanduan
 ansible_sudo_pass=quanduan
+
+# The ubuntu xenial servers which use python3 as default interpreter
+[ubuntu_hosts]
