@@ -10,10 +10,10 @@
 * CentOS 7
 
 ## Requirements
-1. On ubuntu 16.04 LTS(xenial), you have to install `python-minimal` before ansible python scripts could be run on it remotely. Or, you need to add the ubuntu xenial servers into group 'ubuntu' of file 'hosts', to make sure python3 is the default python command, for a ubuntu xenial server which bare install and without internet connect.
+1. At least 4 CPUs, 8GB ram, 100G free disk space.
 
 ## Steps ##
-1. Copy `hosts-example` to `hosts`, and edit it base on your real environment.
+1. Copy `hosts.sample` to `hosts`, and edit it base on your real environment.
 1. Run `ansible-playbook 00-download.yml`
 1. Run `ansible-playbook 01-env_init.yml`
 1. Run `ansible-playbook 02-deploy_consul.yml`
@@ -30,8 +30,6 @@
   1. `ansible-playbook deploy_kibana.yml`
   1. `ansible-playbook deploy_logstash.yml`
 
-1. If any node added, removed or moved to other groups in `hosts` file, make sure you run the whole [Steps](#steps) again.
-
 ---
 
 # 离线部署 ELK 服务。
@@ -41,10 +39,10 @@
 * CentOS 7
 
 ## 前提条件
-1. Ubuntu 16.04 LTS（xenial） 需要安装 python-minimal，增加 python2.7 的支持。或者，在 hosts 文件里，把所有 ubuntu xenial 服务器加入到 ‘ubuntu’ 组，这样可以默认使用 python3。
+1. 服务器至少需要 4 CPUs, 8GB 内存, 100G 空闲磁盘空间.
 
 ## 执行步骤
-1. 按照 hosts-example 模板，同目录新建一个 hosts 文件， 根据实际环境填写机器信息。
+1. 按照 hosts.sample 模板，同目录新建一个 hosts 文件， 根据实际环境填写机器信息。
 1. 执行 `ansible-playbook 00-download.yml`
 1. 执行 `ansible-playbook 01-env_init.yml`
 1. 执行 `ansible-playbook 02-deploy_consul.yml`
@@ -57,4 +55,5 @@
 ## 维护更新
 ### 升级
 1. 修改 group_vars/all.yml 里的 elk_version 值，依次执行 elk 的 aplaybooks 即可滚动升级到最新版本。
-1. 任何节点的增删，都需要重新按顺序执行一次所有 playbooks
+
+[新致云](https://cloud.newtouch.com)，助你真正用好云计算。

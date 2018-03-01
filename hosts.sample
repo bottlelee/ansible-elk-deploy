@@ -25,13 +25,6 @@ ubuntu16
 elasticMaster
 elasticNodeOnly
 
-# Add ubuntu xenial servers in this group to use python3
-[ubuntu]
-ubuntu16
-
-[ubuntu:vars]
-ansible_python_interpreter=/usr/bin/python3
-
 [all:vars]
 ansible_user=nsc
 ansible_ssh_pass=quanduan
