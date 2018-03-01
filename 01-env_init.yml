@@ -1,21 +1,16 @@
 - hosts: all
   become: yes
   gather_facts: no
-  vars_prompt:
-    - name: "timezone"
-      prompt: "设置时区为："
-      default: "Asia/Shanghai"
-      private: no
   pre_tasks:
     - block:
         - name: Install python2 for Ansible
           raw: test -e /usr/bin/python || (apt -y update && apt install -y python-minimal)
           changed_when: false
-        - setup:
       rescue:
         - name: Create soft link from /usr/bin/python3 to /usr/bin/python
           raw: test -e /usr/bin/python3 | ln -sf /usr/bin/python3 /usr/bin/python
           changed_when: false
+      always:
         - setup:
   roles:
     - init
