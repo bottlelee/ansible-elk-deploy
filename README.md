@@ -25,7 +25,7 @@
 
 ## Maintain
 ### Upgrade
-1. Set the value of 'elk_version' in `group_vars/all.yml`, then run following commands will rolling upgrade your services to the new version.
+1. Set the value of 'elk_version' in `group_vars/all.yml`, then run step 03 to 05 will rolling upgrade your services to the new version.
   1. `ansible-playbook deploy_elasticsearch.yml`
   1. `ansible-playbook deploy_kibana.yml`
   1. `ansible-playbook deploy_logstash.yml`
@@ -54,6 +54,7 @@
 
 ## 维护更新
 ### 升级
-1. 修改 group_vars/all.yml 里的 elk_version 值，依次执行 elk 的 aplaybooks 即可滚动升级到最新版本。
+1. 修改 group_vars/all.yml 里的 elk_version 值，依次执行 03-05 即可滚动升级到最新版本。
 
+## 鸣谢
 [新致云](https://cloud.newtouch.com)，助你真正用好云计算。

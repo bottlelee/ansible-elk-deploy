@@ -30,5 +30,6 @@ ansible_user=nsc
 ansible_ssh_pass=quanduan
 ansible_sudo_pass=quanduan
 
-# The ubuntu xenial servers which use python3 as default interpreter
+# The ubuntu xenial servers which use python3 as default interpreter.
+# DO NOT REMOVE THE NEXT LINE. But you can remove the servers under the group.
 [ubuntu_hosts]

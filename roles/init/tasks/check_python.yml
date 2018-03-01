@@ -1,6 +1,7 @@
 - block:
     - name: testing python2
-      raw: test -e /usr/bin/python || (apt -y update && apt install -y python-minimal)
+      raw: test -e /usr/bin/python
+      when: ansible_python_interpreter is not defined
   rescue:
     - name: testing python3
       raw: test -e /usr/bin/python3
