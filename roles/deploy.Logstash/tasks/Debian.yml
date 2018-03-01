@@ -7,15 +7,5 @@
       apt:
         deb: '/tmp/logstash-{{ elk_version }}.deb'
   rescue:
-    - name: 'downloading logstash-{{ elk_version }}.deb'
-      get_url:
-        url: "https://artifacts.elastic.co/downloads/logstash/logstash-{{ elk_version }}.deb"
-        dest: "downloaded_files/"
-      register: download
-      until: download|succeeded
-      retries: 5
-      delay: 10
-      delegate_to: localhost
-      become: no
-      run_once: yes
+    - include_tasks: download.yml format=deb
     - include_tasks: '{{ ansible_os_family }}.yml'

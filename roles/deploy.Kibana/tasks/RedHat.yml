@@ -8,17 +8,7 @@
         name: '/tmp/kibana-{{ elk_version }}-x86_64.rpm'
         state: present
   rescue:
-    - name: 'downloading kibana-{{ elk_version }}-x86_64.rpm'
-      get_url:
-        url: "https://artifacts.elastic.co/downloads/kibana/kibana-{{ elk_version }}-x86_64.rpm"
-        dest: "downloaded_files/"
-      register: download
-      until: download|succeeded
-      retries: 5
-      delay: 10
-      delegate_to: localhost
-      become: no
-      run_once: yes
+    - include_tasks: download.yml format=rpm
     - include_tasks: '{{ ansible_os_family }}.yml'
   always:
     - name: create /var/run/kibana

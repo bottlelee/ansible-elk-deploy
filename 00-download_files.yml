@@ -1,0 +1,40 @@
+- hosts: localhost
+  connection: local
+  become: no
+  gather_facts: no
+  vars_prompt:
+    - name: "format"
+      prompt: "What type of files do you need?[rpm|deb]"
+      default: "rpm"
+      private: no
+  tasks:
+    - include_role:
+        name: deploy.ElasticSearch
+        tasks_from: download
+      tags: elasticsearch
+    - include_role:
+        name: deploy.Kibana
+        tasks_from: download
+      tags: kibana
+    - include_role:
+        name: deploy.Logstash
+        tasks_from: download
+      tags: logstash
+    - include_role:
+        name: deploy.Monit
+        tasks_from: download
+      tags: monit
+    - include_role:
+        name: deploy.Consul
+        tasks_from: download
+      tags: consul
+    - include_role:
+        name: deploy.Beats
+        tasks_from: download
+      with_items:
+        - filebeat
+        - metricbeat
+        - packetbeat
+      loop_control:
+        loop_var: target
+      tags: beats

@@ -10,18 +10,18 @@
 * CentOS 7
 
 ## Requirements
-1. On ubuntu 16.04 LTS(xenial), you have to install `python-minimal` before ansible python scripts could be run on it remotely.
-1. It's better if you have Internet access on this computer. otherwise, you need to download packages manually and copy into relate directories.
+1. On ubuntu 16.04 LTS(xenial), you have to install `python-minimal` before ansible python scripts could be run on it remotely. Or, you need to add the ubuntu xenial servers into group 'ubuntu' of file 'hosts', to make sure python3 is the default python command, for a ubuntu xenial server which bare install and without internet connect.
 
 ## Steps ##
 1. Copy `hosts-example` to `hosts`, and edit it base on your real environment.
-1. `ansible-playbook env_init.yml`
-1. `ansible-playbook deploy_consul.yml`
-1. `ansible-playbook deploy_elasticsearch.yml`
-1. `ansible-playbook deploy_kibana.yml`
-1. `ansible-playbook deploy_logstash.yml`
-1. `ansible-playbook deploy_beats.yml`
-1. `ansible-playbook deploy_monit.yml`
+1. Run `ansible-playbook 00-download.yml`
+1. Run `ansible-playbook 01-env_init.yml`
+1. Run `ansible-playbook 02-deploy_consul.yml`
+1. Run `ansible-playbook 03-deploy_elasticsearch.yml`
+1. Run `ansible-playbook 04-deploy_kibana.yml`
+1. Run `ansible-playbook 05-deploy_logstash.yml`
+1. Run `ansible-playbook 06-deploy_beats.yml`
+1. Run `ansible-playbook 07-deploy_monit.yml`
 
 ## Maintain
 ### Upgrade
@@ -41,18 +41,18 @@
 * CentOS 7
 
 ## 前提条件
-1. Ubuntu 16.04 LTS（xenial） 需要安装 python-minimal，增加 python2.7 的支持。
-1. 本机最好是有互联网访问权限。否则请自行下载对应的包并拷贝到相关目录里。
+1. Ubuntu 16.04 LTS（xenial） 需要安装 python-minimal，增加 python2.7 的支持。或者，在 hosts 文件里，把所有 ubuntu xenial 服务器加入到 ‘ubuntu’ 组，这样可以默认使用 python3。
 
 ## 执行步骤
 1. 按照 hosts-example 模板，同目录新建一个 hosts 文件， 根据实际环境填写机器信息。
-1. `ansible-playbook env_init.yml`
-1. `ansible-playbook deploy_consul.yml`
-1. `ansible-playbook deploy_elasticsearch.yml`
-1. `ansible-playbook deploy_kibana.yml`
-1. `ansible-playbook deploy_logstash.yml`
-1. `ansible-playbook deploy_beats.yml`
-1. `ansible-playbook deploy_monit.yml`
+1. 执行 `ansible-playbook 00-download.yml`
+1. 执行 `ansible-playbook 01-env_init.yml`
+1. 执行 `ansible-playbook 02-deploy_consul.yml`
+1. 执行 `ansible-playbook 03-deploy_elasticsearch.yml`
+1. 执行 `ansible-playbook 04-deploy_kibana.yml`
+1. 执行 `ansible-playbook 05-deploy_logstash.yml`
+1. 执行 `ansible-playbook 06-deploy_beats.yml`
+1. 执行 `ansible-playbook 07-deploy_monit.yml`
 
 ## 维护更新
 ### 升级

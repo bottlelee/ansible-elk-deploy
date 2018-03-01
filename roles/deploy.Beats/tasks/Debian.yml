@@ -1,21 +1,9 @@
-- block:
-    - name: "uploading {{ target }}-{{ elk_version }}-amd64.deb(上传中...)"
-      copy:
-        src: "downloaded_files/{{ target }}-{{ elk_version }}-amd64.deb"
-        dest: "/tmp/{{ target }}-{{ elk_version }}-amd64.deb"
-  rescue:
-    - name: "downloading {{ target }}-{{ elk_version }}-amd64.deb(下载中...)"
-      get_url:
-        url: "https://artifacts.elastic.co/downloads/beats/{{ target }}/{{ target }}-{{ elk_version }}-amd64.deb"
-        dest: "downloaded_files/"
-      register: download
-      until: download|succeeded
-      retries: 5
-      delay: 10
-      delegate_to: localhost
-      become: no
-      run_once: true
-    - include_tasks: Debian.yml
+- include_tasks: download.yml format='deb'
+
+- name: "uploading {{ target }}-{{ elk_version }}-amd64.deb"
+  copy:
+    src: "downloaded_files/{{ target }}-{{ elk_version }}-amd64.deb"
+    dest: "/tmp/{{ target }}-{{ elk_version }}-amd64.deb"
 
 - block:
     - name: 'installing {{ target }}-{{ elk_version }}-amd64.deb'

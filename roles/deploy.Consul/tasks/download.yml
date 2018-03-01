@@ -1,0 +1,18 @@
+- block:
+    - stat:
+        path: downloaded_files/consul_{{ consul_version }}_linux_amd64.zip
+      register: p
+      failed_when: p.stat.exists == false
+  rescue:
+    - name: downloading consul
+      unarchive:
+        src: "https://releases.hashicorp.com/consul/{{ consul_version }}/consul_{{ consul_version }}_linux_amd64.zip"
+        dest: downloaded_files/
+        remote_src: yes
+      register: download
+      until: download|succeeded
+      retries: 5
+      delay: 10
+      delegate_to: localhost
+      become: no
+      run_once: yes

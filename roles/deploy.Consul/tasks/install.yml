@@ -5,18 +5,7 @@
         dest: /usr/local/bin/consul
         mode: 0755
   rescue:
-    - name: downloading consul
-      unarchive:
-        src: "https://releases.hashicorp.com/consul/{{ consul_version }}/consul_{{ consul_version }}_linux_amd64.zip"
-        dest: downloaded_files/
-        remote_src: yes
-      register: download
-      until: download|succeeded
-      retries: 5
-      delay: 10
-      delegate_to: localhost
-      become: no
-      run_once: yes
+    - include_tasks: download.yml
     - include_tasks: install.yml
   always:
     - name: creating user 'consul'

@@ -4,17 +4,8 @@
         src: downloaded_files/monit-{{ monit_version }}-linux-x64.tar.gz
         dest: /tmp/
   rescue:
-    - name: downloading monit binary file
-      get_url:
-        url: https://mmonit.com/monit/dist/binary/{{ monit_version }}/monit-{{ monit_version }}-linux-x64.tar.gz
-        dest: downloaded_files
-      register: download
-      until: download|succeeded
-      retries: 5
-      delay: 10
-      delegate_to: localhost
-      become: no
-      run_once: true
+    - include_tasks: download.yml
+    - include_tasks: install.yml
 
 - name: Copy files into system
   copy:
