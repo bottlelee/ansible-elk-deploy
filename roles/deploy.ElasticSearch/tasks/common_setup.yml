@@ -25,5 +25,4 @@
     state: started
 
 - wait_for:
-    host: '{{ ansible_default_ipv4.address | default(ansible_all_ipv4_addresses[0]) }}'
-    port: 9200
+    port: '{{ elastic_http_port }}'

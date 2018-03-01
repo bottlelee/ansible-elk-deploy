@@ -9,6 +9,17 @@
       when: verChk.rc == 1
     - include_tasks: '{{ ansible_os_family }}.yml'
 
+- name: set /var/lib/logstash ownership
+  file:
+    path: '{{ item }}'
+    state: directory
+    owner: logstash
+    group: logstash
+    recurse: yes
+  with_items:
+    - '{{ logstash_log_path }}'
+    - '{{ logstash_data_path }}'
+
 - name: updating logstash configuration
   template:
     src: '{{ item }}.j2'
@@ -25,5 +36,6 @@
   with_items:
     - 000-input
     - 001-logstash
+    - 002-monit
     - 999-output
   notify: Restart logstash service

@@ -1,6 +1,6 @@
 - name: checking if the node has been back to cluster or not.
   uri:
-    url: 'http://{{ ansible_default_ipv4.address | default(ansible_all_ipv4_addresses[0]) }}:9200/_cat/nodes'
+    url: 'http://{{ ansible_default_ipv4.address | default(ansible_all_ipv4_addresses[0]) }}:{{ elastic_http_port }}/_cat/nodes'
     return_content: yes
   register: nodesSt
   until: "(ansible_hostname in nodesSt.content) or (hostvars[inventory_hostname]['ansible_host'] in nodesSt.content)"
@@ -9,14 +9,14 @@
 
 - name: enable shard allocation.
   uri:
-    url: "http://{{ ansible_default_ipv4.address | default(ansible_all_ipv4_addresses[0]) }}:9200/_cluster/settings"
+    url: "http://{{ ansible_default_ipv4.address | default(ansible_all_ipv4_addresses[0]) }}:{{ elastic_http_port }}/_cluster/settings"
     method: PUT
     body: "{{ lookup('file','enable_shard.json') }}"
     body_format: json
 
 - name: checking if the cluster is green or not.
   uri:
-    url: 'http://{{ ansible_default_ipv4.address | default(ansible_all_ipv4_addresses[0]) }}:9200/_cat/health'
+    url: 'http://{{ ansible_default_ipv4.address | default(ansible_all_ipv4_addresses[0]) }}:{{ elastic_http_port }}/_cat/health'
     return_content: yes
   register: healthSt
   until: "'green' in healthSt.content"

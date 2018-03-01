@@ -1,0 +1,25 @@
+filter {
+  if "monit" in [tags] {
+    grok {
+      match => { "message" => "\[CST %{SYSLOGTIMESTAMP:[monit][timestamp]}\]%{SPACE}%{LOGLEVEL:[monit][level]}%{SPACE}\:%{SPACE}%{GREEDYDATA:[monit][log]}" }
+      remove_field => "message"
+    }
+    if "read error" in [monit][log] or "Error receiving data" in [monit][log] {
+      drop {}
+    }
+    if [monit][level] == "error" {
+      throttle {
+        before_count => -1 # 最小值
+        after_count => 1 # 最大值
+        period => 1800 # 统计周期
+        max_age => 3600 # 有效周期, 这个时间内不再触发同一个条件。
+        key => "%{[monit][log]}" # 要统计的字段
+        add_tag => "monit-alert"
+      }
+    }
+    date {
+      match => [ "[monit][timestamp]", "MMM dd HH:mm:ss" ]
+      remove_field => "[monit][timestamp]"
+    }
+  }
+}

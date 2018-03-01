@@ -18,3 +18,15 @@
           ==============================================================
   roles:
     - deploy.Kibana
+  post_tasks:
+    - block:
+        - wait_for:
+            port: '{{ kibana_port }}'
+            timeout: 5
+      rescue:
+        - service:
+            name: kibana
+            state: started
+        - wait_for:
+            port: '{{ kibana_port }}'
+            timeout: 60

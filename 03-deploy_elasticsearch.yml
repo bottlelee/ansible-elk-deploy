@@ -35,3 +35,15 @@
       private: no
   roles:
     - deploy.ElasticSearch
+  post_tasks:
+    - block:
+        - wait_for:
+            port: '{{ elastic_http_port }}'
+            timeout: 5
+      rescue:
+        - service:
+            name: elasticsearch
+            state: started
+        - wait_for:
+            port: '{{ elastic_http_port }}'
+            timeout: 120

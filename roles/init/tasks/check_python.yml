@@ -1,10 +1,12 @@
 - block:
     - name: testing python2
       raw: test -e /usr/bin/python
+      changed_when: false
       when: ansible_python_interpreter is not defined
   rescue:
     - name: testing python3
       raw: test -e /usr/bin/python3
+      changed_when: false
     - name: set python3 as default python command
       lineinfile:
         path: hosts
