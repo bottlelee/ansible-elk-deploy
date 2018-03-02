@@ -20,7 +20,7 @@ cluster.name: {{ elastic_cluster_name }}
 #
 # Use a descriptive name for the node:
 #
-node.name: {{ inventory_hostname | default(ansible_default_ipv4.address) }}
+node.name: {{ inventory_hostname }}
 #
 # Add custom attributes to the node:
 #
@@ -76,7 +76,7 @@ discovery.zen.ping.unicast.hosts:
 # Prevent the "split brain" by configuring the majority of nodes (total number of master-eligible nodes / 2 + 1):
 #
 {% if groups.elasticsearch|count() >= 2 %}
-discovery.zen.minimum_master_nodes: {{ groups.elasticsearch|count() // 2 + 1 }}
+discovery.zen.minimum_master_nodes: {{ groups.elasticMaster|count() // 2 + 1 }}
 {% else %}
 discovery.zen.minimum_master_nodes: 1
 {% endif %}
@@ -88,7 +88,7 @@ discovery.zen.minimum_master_nodes: 1
 # Block initial recovery after a full cluster restart until N nodes are started:
 #
 {% if groups.elasticsearch|count() > 2 %}
-gateway.recover_after_nodes: {{ groups.elasticsearch|count() // 2 + 1 }}
+gateway.recover_after_nodes: {{ groups.elasticMaster|count() // 2 + 1 }}
 {% else %}
 gateway.recover_after_nodes: 1
 {% endif %}
