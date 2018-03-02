@@ -37,7 +37,7 @@ filebeat.prospectors:
 #============================== Output =====================================
 
 output.logstash:
-  hosts: ["logstash.service.consul:{{ logstash_beats_port }}"]
+  hosts: ["logstash.service.{{ consul_dc_name }}.consul:{{ logstash_beats_port }}"]
   loadbalance: true
   compression_level: 5
   timeout: 300

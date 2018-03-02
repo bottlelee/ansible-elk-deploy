@@ -8,6 +8,7 @@ kibana_port: '5601'
 
 # Consul
 consul_version: '1.0.6'
+consul_dc_name: 'elk'
 
 # Monit
 monit_version: '5.25.1'

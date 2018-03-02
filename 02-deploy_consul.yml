@@ -8,9 +8,5 @@
       prompt: "First time to deploy?(y/N)"
       default: 'N'
       private: no
-    - name: "datacenter_name"
-      prompt: "What is the consul datacenter name?"
-      default: "elk"
-      private: no
   roles:
     - deploy.Consul

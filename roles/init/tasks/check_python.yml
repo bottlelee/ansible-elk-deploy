@@ -12,6 +12,7 @@
         path: hosts
         line: '{{ inventory_hostname }} ansible_python_interpreter=/usr/bin/python3'
         insertafter: '\[ubuntu_hosts\]'
+        state: present
       delegate_to: localhost
       become: no
     - meta: clear_host_errors

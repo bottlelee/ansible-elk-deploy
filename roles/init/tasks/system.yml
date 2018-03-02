@@ -1,4 +1,4 @@
-- name: 设置 sysctl
+- name: Setup sysctl
   sysctl:
     name: '{{ item.name }}'
     value: '{{ item.value }}'
@@ -9,26 +9,32 @@
     - {name: fs.file-max, value: 65536}
     - {name: net.ipv4.ip_forward, value: 1}
 
-- name: 设置 limit.conf
+- name: Disable swap
+  command: swapoff -a
+
+- name: Config limit.conf
   lineinfile:
     path: /etc/security/limits.conf
     line: '{{ item }}'
   with_items:
-    - 'elastic soft memlock unlimited'
-    - 'elastic hard memlock unlimited'
-    - 'elastic - nofile 65536'
+    - 'elasticsearch soft memlock unlimited'
+    - 'elasticsearch hard memlock unlimited'
+    - 'elasticsearch - nofile 65536'
     - 'ulimit -n 65536'
     - 'fsize unlimited'
 
-- name: "Setup timezone(设置时区为 {{ timezone }})"
+- name: "Setup timezone to {{ timezone }}"
   timezone:
     name: '{{ timezone }}'
 
-- name: 禁止 firewalld 服务
-  service:
-    name: firewalld
-    state: stopped
-    enabled: no
+- name: Disable firewalld and selinux
+  block:
+    - service:
+        name: firewalld
+        state: stopped
+        enabled: no
+    - selinux:
+        state: disabled
   when:
     - "ansible_distribution == 'CentOS'"
     - "ansible_distribution_major_version >= '7'"

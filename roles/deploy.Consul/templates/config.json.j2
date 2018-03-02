@@ -18,7 +18,7 @@
     {%- endfor -%}
   ],
 {% endif %}
-  "datacenter": "{{ datacenter_name }}",
+  "datacenter": "{{ consul_dc_name }}",
   "data_dir": "/var/consul",
   "encrypt": "{{ consul_key }}",
   "log_level": "WARN",
