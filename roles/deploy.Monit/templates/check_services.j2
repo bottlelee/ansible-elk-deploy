@@ -14,7 +14,7 @@ check host logstash with address 127.0.0.1
 check process kibana with pidfile "/var/run/kibana/kibana.pid"
   start program = "/usr/sbin/service kibana start"
   stop program = "/usr/sbin/service kibana stop"
-  if failed port {{ kibana_port }} for 3 cycles then restart
+  if failed port {{ kibana_port }} for 2 cycles then restart
   if 3 restarts within 10 cycles then stop
 
 check process elasticsearch with pidfile "/var/run/elasticsearch/elasticsearch.pid"

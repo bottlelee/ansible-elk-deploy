@@ -10,7 +10,7 @@
       "checks": [
         {
           "http": "http://{{ ansible_default_ipv4.address | default(ansible_all_ipv4_addresses[0]) }}:{{ kibana_port }}",
-          "interval": "30s",
+          "interval": "10s",
           "timeout": "1s"
         }
       ]

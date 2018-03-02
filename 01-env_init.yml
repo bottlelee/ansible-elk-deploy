@@ -1,12 +1,10 @@
 - hosts: all
   become: yes
   gather_facts: no
-  tasks:
+  pre_tasks:
     - include_role:
         name: init
         tasks_from: check_python.yml
-
-- hosts: all
-  become: yes
+    - setup:
   roles:
     - init

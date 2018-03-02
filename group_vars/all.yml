@@ -11,9 +11,9 @@ consul_version: '1.0.6'
 
 # Monit
 monit_version: '5.25.1'
-smtp_host: ''
-smtp_user: ''
-smtp_pass: ''
+smtp_host: '127.0.0.1'
+smtp_user: 'user'
+smtp_pass: 'pass'
 recipients:
   - {
     name: '李海滨',
