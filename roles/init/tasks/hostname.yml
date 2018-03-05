@@ -11,6 +11,6 @@
   lineinfile:
     path: /etc/rsyslog.d/01-hostname.conf
     line: "$LocalHostName {{ inventory_hostname }}"
-    regexp: "^$LocalHostName"
+    regexp: "^.*LocalHostName "
     create: yes
   notify: Restart rsyslog service
