@@ -30,7 +30,7 @@
     - block:
         - wait_for:
             port: '{{ logstash_beats_port }}'
-            timeout: 5
+            timeout: 120
       rescue:
         - service:
             name: logstash

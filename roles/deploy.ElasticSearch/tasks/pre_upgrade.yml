@@ -1,3 +1,15 @@
+- name: checking cluster health status
+  uri:
+    url: http://elasticsearch.service.consul:9200/_cluster/health
+    method: GET
+    return_content: yes
+    body_format: json
+  register: health
+
+- fail:
+    msg: "Current cluster status is not 'green', please fix it before upgrade."
+  when: health.json.status != "green"
+
 - name: stopping shards
   uri:
     url: "http://{{ ansible_default_ipv4.address | default(ansible_all_ipv4_addresses[0]) }}:{{ elastic_http_port }}/_cluster/settings"

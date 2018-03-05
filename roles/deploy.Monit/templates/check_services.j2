@@ -1,21 +1,28 @@
-check host consul with address 127.0.0.1
+check host consul-dns with address 127.0.0.1
   if failed
     port 53
-    for 2 cycles
   then exec "/usr/local/bin/dns_forwarding.sh"
 
-check host logstash with address 127.0.0.1
+check host LOGSTASH with address 127.0.0.1
+  start program = "/usr/sbin/service logstash start"
+  stop program = "/usr/sbin/service logstash stop"
   if failed
     port {{ logstash_beats_port }}
     for 3 cycles
-  then exec "/usr/sbin/service logstash restart"
+  then restart
   if 3 restarts within 10 cycles then stop
 
-check process kibana with pidfile "/var/run/kibana/kibana.pid"
+check host KIBANA with address 127.0.0.1
   start program = "/usr/sbin/service kibana start"
   stop program = "/usr/sbin/service kibana stop"
-  if failed port {{ kibana_port }} for 2 cycles then restart
+  if failed port {{ kibana_port }} then restart
   if 3 restarts within 10 cycles then stop
 
-check process elasticsearch with pidfile "/var/run/elasticsearch/elasticsearch.pid"
+check host ELASTICSEARCH with address 127.0.0.1
   if failed port {{ elastic_http_port }} for 3 cycles then alert
+
+check host CONSUL with address 127.0.0.1
+  start program = "/usr/sbin/service consul start"
+  stop program = "/usr/sbin/service consul stop"
+  if failed port 8600 for 2 cycles then restart
+  if 3 restarts within 10 cycles then stop

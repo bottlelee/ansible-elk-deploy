@@ -1,5 +1,9 @@
 # Off-line way to deploy ElasticSearch/Logstash/Kibana
 
+## Note
+This is a baseline example. I re-command you to have at least 3 nodes(8CPUs, 16GB memory, 100GB disk space) to deploy your ELK cluster.
+It's not ready for huge business before doing some tune up.
+
 ## What we have in here?
 1. Easy scale and rolling upgrade for ELK components
 1. [Consul](https://www.consul.io/) as internal DNS service. Scale your ELK without updating the beats output configuration.
@@ -10,7 +14,7 @@
 * CentOS 7
 
 ## Requirements
-1. At least 4 CPUs, 8GB ram, 100G free disk space.
+1. At least 4 CPUs, 8GB ram, 148G free disk space.
 
 ## Steps ##
 1. Copy `hosts.sample` to `hosts`, and edit it base on your real environment.
@@ -34,12 +38,16 @@
 
 # 离线部署 ELK 服务。
 
+## 注意
+本项目只适用于小型应用，建议在 3 个节点（至少 8 CPUs，16GB 内存，128GB 可用磁盘空间）上部署。
+如果需要适配更高的业务需求，请联系 [新致云](https://cloud.newtouch.com) 市场部。
+
 ## 本项目在以下操作系统测试通过。
 * Ubuntu 16.04 LTS（xenial）
 * CentOS 7
 
 ## 前提条件
-1. 服务器至少需要 4 CPUs, 8GB 内存, 100G 空闲磁盘空间.
+1. 最小配置：4 CPUs, 8GB 内存, 148G 空闲磁盘空间.
 
 ## 执行步骤
 1. 按照 hosts.sample 模板，同目录新建一个 hosts 文件， 根据实际环境填写机器信息。

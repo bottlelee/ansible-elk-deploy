@@ -22,11 +22,12 @@
     - block:
         - wait_for:
             port: '{{ kibana_port }}'
-            timeout: 5
+            timeout: 120
       rescue:
         - service:
             name: kibana
             state: started
+            enabled: yes
         - wait_for:
             port: '{{ kibana_port }}'
-            timeout: 60
+            timeout: 120
