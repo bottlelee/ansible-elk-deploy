@@ -4,7 +4,9 @@
       register: p
       failed_when: p.stat.exists == False
       when: format == 'deb'
-  rescue:
+      delegate_to: localhost
+      become: no
+  rescue: 
     - name: "downloading https://artifacts.elastic.co/downloads/beats/{{ target }}/{{ target }}-{{ elk_version }}-amd64.deb"
       get_url:
         url: "https://artifacts.elastic.co/downloads/beats/{{ target }}/{{ target }}-{{ elk_version }}-amd64.deb"
@@ -23,6 +25,8 @@
       register: p
       when: format == 'rpm'
       failed_when: p.stat.exists == false
+      delegate_to: localhost
+      become: no
   rescue:
     - name: "downloading https://artifacts.elastic.co/downloads/beats/{{ target }}/{{ target }}-{{ elk_version }}-x86_64.rpm"
       get_url:
