@@ -3,29 +3,10 @@
   serial:
     - 1
     - 10%
-  vars_prompt:
-    - name: "notice"
-      prompt: |
-          ==============================================================
-          请确认：
-          1. 你已经仔细阅读了 README。
-          2. 编辑 hosts 文件，分配机器。
-          3. 已执行过 ansible-playbook env_init.yml 初始化系统环境。
-          4. 目标机器如果是 Ubuntu xenial 版本以上系统，需要手动安装
-             python-minimal 以支持 ansible 运行。因为它默认只有 python3。
-
-          你可以按回车键继续，或 Ctrl+C 中止部署。
-          ==============================================================
-    - name: "logstash_data_path"
-      prompt: "「数据」存储路径："
-      default: "/var/lib/logstash"
-      private: no
-    - name: "logstash_log_path"
-      prompt: "「日志」存储路径："
-      default: "/var/log/logstash"
-      private: no
   roles:
     - deploy.Logstash
+    - deploy.Consul
+    - deploy.Monit
   post_tasks:
     - block:
         - wait_for:

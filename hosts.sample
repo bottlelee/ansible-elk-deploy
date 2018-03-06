@@ -1,35 +1,47 @@
 # ES 计算节点，必填。(Needed)
 [elasticMaster]
-centos7 ansible_host=192.168.1.146 ansible_ssh_port=22
-ubuntu16 ansible_host=192.168.3.231 ansible_ssh_port=22
+elk1 ansible_host=172.23.56.107 ansible_ssh_port=22
+elk2 ansible_host=172.23.56.106 ansible_ssh_port=22
+elk3 ansible_host=172.23.56.104 ansible_ssh_port=22
 
-# ES 数据节点，选填。(Optional)
-[elasticNodeOnly]
+# Data node(Optional)
+# Read more on https://www.elastic.co/guide/en/elasticsearch/reference/6.2/modules-node.html#data-node
+[elasticDataNode]
+
+
+# Master-eligible node(Optional)
+# Read more on https://www.elastic.co/guide/en/elasticsearch/reference/6.2/modules-node.html#master-node
+[elasticEligibleNode]
+
+
+# Ingest node(Optional)
+# Read more on https://www.elastic.co/guide/en/elasticsearch/reference/6.2/modules-node.html#node-ingest-node
+[elasticIngestNode]
+
 
 # LogStash 部署节点，必填。(Needed)
 [logstash]
-centos7
-ubuntu16
+kibana1
 
 # Kibana 部署节点，必填。(Needed)
 [kibana]
-centos7
-ubuntu16
+kibana1 ansible_host=172.23.56.102
 
 # Consul server nodes，必填。(Needed)
 [consulserver]
-centos7 consul_bootstrap=true
-ubuntu16
+elk1 consul_bootstrap=true
+elk2
+elk3
 
 [elasticsearch:children]
 elasticMaster
-elasticNodeOnly
+elasticDataNode
 
 [all:vars]
 ansible_user=nsc
 ansible_ssh_pass=quanduan
 ansible_sudo_pass=quanduan
 
-# The ubuntu xenial servers which use python3 as default interpreter.
-# DO NOT REMOVE THE NEXT LINE. But you can remove the servers under the group.
 [ubuntu_hosts]
+kibana1 ansible_python_interpreter=/usr/bin/python3
+elk3 ansible_python_interpreter=/usr/bin/python3

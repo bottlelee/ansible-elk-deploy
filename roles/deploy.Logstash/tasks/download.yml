@@ -3,6 +3,9 @@
         path: downloaded_files/logstash-{{ elk_version }}.{{ format }}
       register: p
       failed_when: p.stat.exists == false
+      delegate_to: localhost
+      become: no
+      run_once: true
   rescue:
     - name: 'downloading logstash-{{ elk_version }}.{{ format }}'
       get_url:

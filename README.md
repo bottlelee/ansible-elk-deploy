@@ -27,6 +27,13 @@ It's not ready for huge business before doing some tune up.
 1. Run `ansible-playbook 06-deploy_beats.yml`
 1. Run `ansible-playbook 07-deploy_monit.yml`
 
+## DNS config
+Any host that have `consul` installed，could be an internal DNS server. Please setup your system nameservers according different OS, or take a look at roles/deploy.Consul/tasks/resolv.yml
+
+## How to send datas from outside hosts to ELK
+1. Make sure outside hosts can access the ELK network.
+1. Assume you are using beats as data collect client, use the `logstash` hosts' IP in output section, or you can use logstash.service.consul after you setup the [nameservers](#DNS config)
+
 ## Maintain
 ### Upgrade
 1. Set the value of 'elk_version' in `group_vars/all.yml`, then run step 03 to 05 will rolling upgrade your services to the new version.
@@ -59,6 +66,13 @@ It's not ready for huge business before doing some tune up.
 1. 执行 `ansible-playbook 05-deploy_logstash.yml`
 1. 执行 `ansible-playbook 06-deploy_beats.yml`
 1. 执行 `ansible-playbook 07-deploy_monit.yml`
+
+## DNS 设置
+任意部署了 consul 服务的节点，都可以作为内部 DNS 服务器。请根据操作系统的不同，做相关的配置，或参考 roles/deploy.Consul/tasks/resolv.yml 里的用法。
+
+## ELK 集群之外的机器，如果需要推送数据，需要满足以下条件：
+1. 可访问本次部署的 ELK 集群网络。
+1. 以 beats 为例，output 可以直接使用多个 logstash 节点的 IP。也可以在配置内部 DNS 后，使用 logstash.service.consul 来访问。
 
 ## 维护更新
 ### 升级

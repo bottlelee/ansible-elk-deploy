@@ -26,6 +26,20 @@ node.name: {{ inventory_hostname }}
 #
 #node.attr.rack: r1
 #
+{% if 'kibana' in group_names %}
+# Load Balancing Across Multiple Elasticsearch Nodes
+node.master: false
+node.data: false
+node.ingest: false
+search.remote.connect: false
+{% elif 'elasticDataNode' in group_names %}
+# Data nodes hold the shards that contain the documents you have indexed. Data nodes handle data related operations like CRUD, search, and aggregations. These operations are I/O-, memory-, and CPU-intensive. It is important to monitor these resources and to add more data nodes if they are overloaded.
+# The main benefit of having dedicated data nodes is the separation of the master and data roles.
+node.master: false
+node.data: true
+node.ingest: false
+search.remote.connect: false
+{% endif %}
 # ----------------------------------- Paths ------------------------------------
 #
 # Path to directory where to store the data (separate multiple locations by comma):

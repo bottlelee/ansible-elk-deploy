@@ -1,5 +1,5 @@
 - block:
-    - name: Checking logstash
+    - name: checking logstash
       shell: /usr/share/logstash/bin/logstash -V | awk '{ print $2 }'
       changed_when: false
       register: verChk
@@ -27,7 +27,7 @@
   with_items:
     - jvm.options
     - logstash.yml
-  notify: Restart logstash service
+  register: configSt
 
 - name: updating piplines
   template:
@@ -38,4 +38,9 @@
     - 001-logstash
     - 002-monit
     - 999-output
+  register: pipelineSt
+
+- name: checking logstash configuration
+  command: /usr/share/logstash/bin/logstash -t --path.settings=/etc/logstash
   notify: Restart logstash service
+  when: configSt.changed or pipelineSt.changed

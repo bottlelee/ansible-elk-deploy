@@ -12,17 +12,6 @@
 - name: Disable swap
   command: swapoff -a
 
-- name: Config limit.conf
-  lineinfile:
-    path: /etc/security/limits.conf
-    line: '{{ item }}'
-  with_items:
-    - 'elasticsearch soft memlock unlimited'
-    - 'elasticsearch hard memlock unlimited'
-    - 'elasticsearch - nofile 65536'
-    - 'ulimit -n 65536'
-    - 'fsize unlimited'
-
 - name: "Setup timezone to {{ timezone }}"
   timezone:
     name: '{{ timezone }}'
