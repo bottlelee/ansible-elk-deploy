@@ -23,8 +23,8 @@
 -Xms32g
 -Xmx32g
 {% else %}
--Xms{{ ansible_memtotal_mb // 2048 | int() }}g
--Xmx{{ ansible_memtotal_mb // 2048 | int() }}g
+-Xms{{ ansible_memtotal_mb // 2048 + 1 | int() }}g
+-Xmx{{ ansible_memtotal_mb // 2048 + 1 | int() }}g
 {% endif %}
 
 ################################################################
