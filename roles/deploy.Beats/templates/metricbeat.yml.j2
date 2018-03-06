@@ -5,10 +5,11 @@ metricbeat.config.modules:
   path: /etc/metricbeat/modules.d/*.yml
 
   # Set to true to enable config reloading
-  reload.enabled: false
+  reload.enabled: true
 
   # Period on which files under path should be checked for changes
-  #reload.period: 10s
+  reload.period: 30s
+
 metricbeat.max_start_delay: 10s
 
 #================================ Outputs =====================================
@@ -31,6 +32,6 @@ logging.files:
 name: {{ inventory_hostname }}
 tags: [
 {%- for item in group_names -%}
-  "{{ item }}",
+  "{{ item }}"{%- if loop.nextitem is defined -%},{%- endif -%}
 {%- endfor -%}
 ]

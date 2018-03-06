@@ -4,10 +4,10 @@ filebeat.config.modules:
   path: /etc/filebeat/modules.d/*.yml
 
   # Set to true to enable config reloading
-  reload.enabled: false
+  reload.enabled: true
 
   # Period on which files under path should be checked for changes
-  #reload.period: 10s
+  reload.period: 30s
 
 #------------------------------ Log prospector --------------------------------
 filebeat.prospectors:
@@ -19,9 +19,7 @@ filebeat.prospectors:
   multiline.pattern: '^\[CST'
   multiline.negate: true
   multiline.match: after
-  tags: [
-    "monit"
-  ]
+  tags: ["monit"]
 
 - type: log
   enabled: true
@@ -30,9 +28,7 @@ filebeat.prospectors:
     - /var/log/metricbeat/metricbeat
     - /var/log/packetbeat/packetbeat
   exclude_lines: ["connection reset by peer"]
-  tags: [
-    "beats-log"
-  ]
+  tags: ["beats-log"]
 
 #============================== Output =====================================
 
@@ -54,6 +50,6 @@ logging:
 name: {{ inventory_hostname }}
 tags: [
 {%- for item in group_names -%}
-  "{{ item }}",
+  "{{ item }}"{%- if loop.nextitem is defined -%},{%- endif -%}
 {%- endfor -%}
 ]

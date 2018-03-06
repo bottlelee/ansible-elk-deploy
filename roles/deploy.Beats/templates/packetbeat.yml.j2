@@ -33,6 +33,6 @@ logging.files:
 name: {{ inventory_hostname }}
 tags: [
 {%- for item in group_names -%}
-  "{{ item }}",
+  "{{ item }}"{%- if loop.nextitem is defined -%},{%- endif -%}
 {%- endfor -%}
 ]

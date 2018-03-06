@@ -7,12 +7,12 @@
 
 - name: Enable metricbeat modules
   command: "metricbeat modules enable {{ item }}"
+  changed_when: false
   when: "item in group_names"
   with_items:
     - logstash
     - kibana
     - elasticsearch
-  register: moduleSt
 
 - name: 'Testing metricbeat'
   command: 'metricbeat test {{ item }}'
@@ -20,4 +20,4 @@
     - output
     - config
   notify: Restart metricbeat service
-  when: configSt.changed or moduleSt.changed
+  when: configSt.changed

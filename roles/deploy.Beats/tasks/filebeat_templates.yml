@@ -3,18 +3,20 @@
     src: 'filebeat.yml.j2'
     dest: '/etc/filebeat/filebeat.yml'
     mode: 0600
+  register: configSt
 
 - name: Enable filebeat modules
   command: "filebeat modules enable {{ item }}"
+  changed_when: false
   with_items:
     - system
     - auditd
     - '{{ filebeat_modules }}'
-  register: moduleSt
 
 - name: 'Testing filebeat'
   command: 'filebeat test {{ item }}'
   with_items:
     - output
     - config
+  when: configSt.changed
   notify: Restart filebeat service
