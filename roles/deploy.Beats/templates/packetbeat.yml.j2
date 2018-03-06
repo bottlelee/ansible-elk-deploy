@@ -20,8 +20,8 @@ packetbeat.protocols.dns:
   include_additionals: true
   ports: [53]
 
-output.logstash:
-  hosts: ["logstash.service.{{ consul_dc_name }}.consul:{{ logstash_beats_port }}"]
+output.elasticsearch:
+  hosts: ["elasticsearch.service.{{ consul_dc_name }}.consul:{{ elastic_http_port }}"]
   loadbalance: true
   slow_start: true
 
