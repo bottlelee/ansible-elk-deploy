@@ -1,0 +1,2 @@
+check file ES with patch /var/log/elasticsearch/{{ elastic_cluster_name }}.log
+  if content = "?.*ERROR.*" then alert

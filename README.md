@@ -20,12 +20,10 @@ It's not ready for huge business before doing some tune up.
 1. Copy `hosts.sample` to `hosts`, and edit it base on your real environment.
 1. Run `ansible-playbook 00-download.yml`
 1. Run `ansible-playbook 01-env_init.yml`
-1. Run `ansible-playbook 02-deploy_consul.yml`
 1. Run `ansible-playbook 03-deploy_elasticsearch.yml`
 1. Run `ansible-playbook 04-deploy_kibana.yml`
 1. Run `ansible-playbook 05-deploy_logstash.yml`
 1. Run `ansible-playbook 06-deploy_beats.yml`
-1. Run `ansible-playbook 07-deploy_monit.yml`
 
 ## DNS config
 Any host that have `consul` installed，could be an internal DNS server. Please setup your system nameservers according different OS, or take a look at roles/deploy.Consul/tasks/resolv.yml
@@ -47,7 +45,7 @@ Any host that have `consul` installed，could be an internal DNS server. Please 
 
 ## 注意
 本项目只适用于小型应用，建议在 3 个节点（至少 8 CPUs，16GB 内存，128GB 可用磁盘空间）上部署。
-如果需要适配更高的业务需求，请联系 [新致云](https://cloud.newtouch.com) 市场部。
+如果需要适配更高的业务需求，请联系 [新致云市场部](https://cloud.newtouch.com/support/business)。
 
 ## 本项目在以下操作系统测试通过。
 * Ubuntu 16.04 LTS（xenial）
@@ -60,12 +58,10 @@ Any host that have `consul` installed，could be an internal DNS server. Please 
 1. 按照 hosts.sample 模板，同目录新建一个 hosts 文件， 根据实际环境填写机器信息。
 1. 执行 `ansible-playbook 00-download.yml`
 1. 执行 `ansible-playbook 01-env_init.yml`
-1. 执行 `ansible-playbook 02-deploy_consul.yml`
 1. 执行 `ansible-playbook 03-deploy_elasticsearch.yml`
 1. 执行 `ansible-playbook 04-deploy_kibana.yml`
 1. 执行 `ansible-playbook 05-deploy_logstash.yml`
 1. 执行 `ansible-playbook 06-deploy_beats.yml`
-1. 执行 `ansible-playbook 07-deploy_monit.yml`
 
 ## DNS 设置
 任意部署了 consul 服务的节点，都可以作为内部 DNS 服务器。请根据操作系统的不同，做相关的配置，或参考 roles/deploy.Consul/tasks/resolv.yml 里的用法。
@@ -79,4 +75,4 @@ Any host that have `consul` installed，could be an internal DNS server. Please 
 1. 修改 group_vars/all.yml 里的 elk_version 值，依次执行 03-05 即可滚动升级到最新版本。
 
 ## 鸣谢
-[新致云](https://cloud.newtouch.com)，助你真正用好云计算。
+本脚本在“新致云”提供的云主机上测试通过。[新致云](https://cloud.newtouch.com)，助你真正用好云计算。
