@@ -2,7 +2,7 @@
   become: yes
   serial:
     - 1
-    - 10
+    - 30%
   roles:
     - deploy.Kibana
     - deploy.Consul
@@ -15,7 +15,7 @@
       rescue:
         - service:
             name: kibana
-            state: started
+            state: restarted
             enabled: yes
         - wait_for:
             port: '{{ kibana_port }}'

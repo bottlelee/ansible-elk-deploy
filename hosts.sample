@@ -1,41 +1,53 @@
-# ES 计算节点，必填。(Needed)
-[elasticMaster]
-elk1 ansible_host=172.23.56.107 ansible_ssh_port=22
-elk2 ansible_host=172.23.56.106 ansible_ssh_port=22
-elk3 ansible_host=172.23.56.104 ansible_ssh_port=22
+# ElasticSearch master nodes and Consul servers.
+# IMPORTANT: At least 3 nodes to avoid brain-split.
+# Read more on https://www.elastic.co/guide/en/elasticsearch/reference/current/modules-node.html#master-node
+# More settings in `group_vars/elasticMasterNode.yml` file.
+[elasticMasterNode]
+es-master-1 ansible_host=172.23.56.103
+es-master-2 ansible_host=172.23.56.105
+es-master-3 ansible_host=172.23.56.108
 
-# Data node(Optional)
-# Read more on https://www.elastic.co/guide/en/elasticsearch/reference/6.2/modules-node.html#data-node
-[elasticDataNode]
-
-
-# Master-eligible node(Optional)
-# Read more on https://www.elastic.co/guide/en/elasticsearch/reference/6.2/modules-node.html#master-node
-[elasticEligibleNode]
-
-
-# Ingest node(Optional)
-# Read more on https://www.elastic.co/guide/en/elasticsearch/reference/6.2/modules-node.html#node-ingest-node
+# ElasticSearch ingest node.(Optional)
+# IMPORTANT: At least 1 nodes. If you don't need this group, please set `node_data: true` in `group_vars/elasticMasterNode.yml` file.
+# Read more on https://www.elastic.co/guide/en/elasticsearch/reference/current/modules-node.html#node-ingest-node
+# More settings in `group_vars/elasticIngestNode.yml` file.
 [elasticIngestNode]
+es-ingest-1 ansible_host=172.23.56.109
+es-ingest-2 ansible_host=172.23.56.110
 
+# ElasticSearch hot data node, where data will be send to.
+# IMPORTANT: At least 3 nodes
+# Read more on https://www.elastic.co/blog/hot-warm-architecture
+# More settings in `group_vars/elasticDataNode.yml` file.
+[elasticHotNode]
+es-hot-1 ansible_host=172.23.56.111
+es-hot-2 ansible_host=172.23.56.112
+es-hot-3 ansible_host=172.23.56.113
 
-# LogStash 部署节点，必填。(Needed)
+# ElasticSearch warm data node(Optional)
+# More settings in `group_vars/elasticDataNode.yml` file.
+[elasticWarmNode]
+
+[elasticDataNode:children]
+elasticHotNode
+elasticWarmNode
+
+# Logstash
+# IMPORTANT: At least 1 node, DO NOT run with any ElasticSearch node on the same host.
 [logstash]
-kibana1
+logstash-1 ansible_host=172.23.56.114
 
-# Kibana 部署节点，必填。(Needed)
+# Kibana
+# IMPORTANT: At least 1 node, and will be install an ElasticSearch instance with 'Cross Cluster Search' settings.
+# Read more on https://www.elastic.co/guide/en/elasticsearch/reference/current/modules-cross-cluster-search.html#cross-cluster-search-settings
 [kibana]
-kibana1 ansible_host=172.23.56.102
-
-# Consul server nodes，必填。(Needed)
-[consulserver]
-elk1 consul_bootstrap=true
-elk2
-elk3
+kibana-1 ansible_host=172.23.56.115
 
 [elasticsearch:children]
-elasticMaster
-elasticDataNode
+elasticMasterNode
+elasticIngestNode
+elasticHotNode
+elasticWarmNode
 
 [all:vars]
 ansible_user=nsc
@@ -43,5 +55,6 @@ ansible_ssh_pass=quanduan
 ansible_sudo_pass=quanduan
 
 [ubuntu_hosts]
-kibana1 ansible_python_interpreter=/usr/bin/python3
-elk3 ansible_python_interpreter=/usr/bin/python3
+es-ingest-2 ansible_python_interpreter=/usr/bin/python3
+es-hot-1 ansible_python_interpreter=/usr/bin/python3
+es-master-3 ansible_python_interpreter=/usr/bin/python3

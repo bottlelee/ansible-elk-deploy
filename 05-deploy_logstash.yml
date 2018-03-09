@@ -15,7 +15,7 @@
       rescue:
         - service:
             name: logstash
-            state: started
+            state: restarted
         - wait_for:
             port: '{{ logstash_beats_port }}'
             timeout: 120

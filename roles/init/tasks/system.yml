@@ -11,6 +11,7 @@
 
 - name: Disable swap
   command: swapoff -a
+  when: "'elasticsearch' in group_names"
 
 - name: "Setup timezone to {{ timezone }}"
   timezone:

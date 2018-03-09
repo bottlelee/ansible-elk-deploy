@@ -24,22 +24,17 @@ node.name: {{ inventory_hostname }}
 #
 # Add custom attributes to the node:
 #
-#node.attr.rack: r1
-#
-{% if 'kibana' in group_names %}
-# Load Balancing Across Multiple Elasticsearch Nodes
-node.master: false
-node.data: false
-node.ingest: false
-search.remote.connect: false
-{% elif 'elasticDataNode' in group_names %}
-# Data nodes hold the shards that contain the documents you have indexed. Data nodes handle data related operations like CRUD, search, and aggregations. These operations are I/O-, memory-, and CPU-intensive. It is important to monitor these resources and to add more data nodes if they are overloaded.
-# The main benefit of having dedicated data nodes is the separation of the master and data roles.
-node.master: false
-node.data: true
-node.ingest: false
-search.remote.connect: false
+{% if 'elasticHotNode ' in group_names %}
+node.box_type: hot
+{% elif 'elasticWarmNode' in group_names %}
+node.box_type: warm
 {% endif %}
+# Role of the node in cluster:
+#
+node.master: {{ node_master }}
+node.data: {{ node_data }}
+node.ingest: {{ node_ingest }}
+search.remote.connect: {{ search_remote_connect }}
 # ----------------------------------- Paths ------------------------------------
 #
 # Path to directory where to store the data (separate multiple locations by comma):
@@ -83,14 +78,14 @@ http.port: {{ elastic_http_port | default('9200') }}
 # The default list of hosts is ["127.0.0.1", "[::1]"]
 #
 discovery.zen.ping.unicast.hosts:
-{% for item in groups['elasticMaster'] %}
+{% for item in groups['elasticMasterNode'] %}
   - "{{ hostvars[item]['ansible_host'] | default(inventory_hostname) }}"
 {% endfor %}
 #
 # Prevent the "split brain" by configuring the majority of nodes (total number of master-eligible nodes / 2 + 1):
 #
 {% if groups.elasticsearch|count() >= 2 %}
-discovery.zen.minimum_master_nodes: {{ groups.elasticMaster|count() // 2 + 1 }}
+discovery.zen.minimum_master_nodes: {{ groups.elasticMasterNode|count() // 2 + 1 }}
 {% else %}
 discovery.zen.minimum_master_nodes: 1
 {% endif %}
@@ -102,7 +97,7 @@ discovery.zen.minimum_master_nodes: 1
 # Block initial recovery after a full cluster restart until N nodes are started:
 #
 {% if groups.elasticsearch|count() > 2 %}
-gateway.recover_after_nodes: {{ groups.elasticMaster|count() // 2 + 1 }}
+gateway.recover_after_nodes: {{ groups.elasticMasterNode|count() // 2 + 1 }}
 {% else %}
 gateway.recover_after_nodes: 1
 {% endif %}

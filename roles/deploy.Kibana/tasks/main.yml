@@ -5,14 +5,11 @@
       register: verChk
       failed_when: "elk_version > verChk.stdout"
     - name: checking kibana service status
-      command: service kibana status
-      register: status
-      failed_when: "'running' not in status.stdout"
+      wait_for:
+        port: '{{ kibana_port }}'
+        timeout: 10
   rescue:
     - include_tasks: '{{ ansible_os_family }}.yml'
-
-- include_tasks: port_check.yml
-  when: verChk.rc == 1
 
 - name: update kibana configuration
   template:

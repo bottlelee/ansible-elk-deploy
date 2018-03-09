@@ -1,5 +1,8 @@
 - hosts: all
   become: yes
+  serial:
+    - 1
+    - 30%
   gather_facts: no
   pre_tasks:
     - include_role:

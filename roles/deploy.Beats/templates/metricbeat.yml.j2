@@ -15,7 +15,7 @@ metricbeat.max_start_delay: 10s
 #================================ Outputs =====================================
 
 output.elasticsearch:
-  hosts: ["elasticsearch.service.{{ consul_dc_name }}.consul:{{ elastic_http_port }}"]
+  hosts: ["{{ hostvars[groups['elasticIngestNode'][0]]['consul_service_name'] }}.service.{{ consul_dc_name }}.consul:{{ elastic_http_port }}"]
   loadbalance: true
   slow_start: true
 

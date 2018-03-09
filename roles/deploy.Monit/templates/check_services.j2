@@ -3,6 +3,13 @@ check host consul-dns with address 127.0.0.1
     port 53
   then exec "/usr/local/bin/dns_forwarding.sh"
 
+check host CONSUL with address 127.0.0.1
+  start program = "/usr/sbin/service consul start"
+  stop program = "/usr/sbin/service consul stop"
+  if failed port 8600 for 2 cycles then restart
+  if 3 restarts within 10 cycles then stop
+
+{% if 'logstash' in group_names %}
 check host LOGSTASH with address 127.0.0.1
   start program = "/usr/sbin/service logstash start"
   stop program = "/usr/sbin/service logstash stop"
@@ -11,18 +18,18 @@ check host LOGSTASH with address 127.0.0.1
     for 3 cycles
   then restart
   if 3 restarts within 10 cycles then stop
-
+{% endif %}
+{% if 'kibana' in group_names %}
 check host KIBANA with address 127.0.0.1
   start program = "/usr/sbin/service kibana start"
   stop program = "/usr/sbin/service kibana stop"
-  if failed port {{ kibana_port }} then restart
+  if failed
+    port {{ kibana_port }}
+    for 2 cycles
+  then restart
   if 3 restarts within 10 cycles then stop
-
+{% endif %}
+{% if 'elasticsearch' in group_names %}
 check host ELASTICSEARCH with address 127.0.0.1
   if failed port {{ elastic_http_port }} for 3 cycles then alert
-
-check host CONSUL with address 127.0.0.1
-  start program = "/usr/sbin/service consul start"
-  stop program = "/usr/sbin/service consul stop"
-  if failed port 8600 for 2 cycles then restart
-  if 3 restarts within 10 cycles then stop
+{% endif %}

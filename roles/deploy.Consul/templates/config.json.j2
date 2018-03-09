@@ -1,19 +1,19 @@
 {
-{% if bootstrap == 'y' and consul_bootstrap is defined %}
+{% if bootstrap == 'y' and inventory_hostname == groups['elasticMasterNode'][0] %}
   "bootstrap": true,
-  "server": true,
-{% elif 'consulserver' in group_names %}
+{% endif %}
+{% if 'elasticMasterNode' in group_names %}
   "server": true,
   "ui": true,
   "start_join": [
-    {%- for item in groups['consulserver'] if item != ansible_nodename -%}
+    {%- for item in groups['elasticMasterNode'] if item != ansible_nodename -%}
       "{{ hostvars[item]['ansible_host'] | default(item) }}"{%- if loop.nextitem is defined -%},{%- endif -%}
     {%- endfor -%}
   ],
 {% else %}
   "server": false,
   "start_join": [
-    {%- for item in groups['consulserver'] -%}
+    {%- for item in groups['elasticMasterNode'] -%}
       "{{ hostvars[item]['ansible_host'] | default(item) }}"{%- if loop.nextitem is defined -%},{%- endif -%}
     {%- endfor -%}
   ],

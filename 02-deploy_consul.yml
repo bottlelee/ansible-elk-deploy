@@ -10,3 +10,15 @@
       private: no
   roles:
     - deploy.Consul
+  post_tasks:
+    - block:
+        - wait_for:
+            port: 8600
+            timeout: 30
+      rescue:
+        - service:
+            name: consul
+            status: restarted
+        - wait_for:
+            port: 8600
+            timeout: 30

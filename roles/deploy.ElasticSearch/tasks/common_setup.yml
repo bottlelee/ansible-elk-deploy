@@ -16,6 +16,7 @@
     - ingest-user-agent
   loop_control:
     loop_var: target
+  when: node_ingest is defined and node_ingest == true
 
 - name: starting ElasticSearch service
   service:

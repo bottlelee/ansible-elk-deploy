@@ -1,0 +1,17 @@
+- name: Setup vm.overcommit_memory = 1
+  sysctl:
+    name: vm.overcommit_memory
+    value: 1
+    state: present
+    sysctl_set: yes
+
+- block:
+    - name: Disable Transparent Huge Pages
+      copy:
+        src: disable-transparent-hugepages
+        dest: /etc/init.d/disable-transparent-hugepages
+        mode: 0755
+    - shell: disable-transparent-hugepages
+      args:
+        chdir: /etc/init.d/
+    - command: update-rc.d disable-transparent-hugepages defaults

@@ -15,7 +15,7 @@
       rescue:
         - service:
             name: elasticsearch
-            state: started
+            state: restarted
         - wait_for:
             port: '{{ elastic_http_port }}'
             timeout: 120

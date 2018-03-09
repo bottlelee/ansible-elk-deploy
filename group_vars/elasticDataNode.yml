@@ -1,0 +1,11 @@
+# ElasticSearch data only node
+node_master: false
+node_data: true
+node_ingest: false
+search_remote_connect: false
+
+env_check_memtotal_mb: 1000
+env_check_memory_mb_nocache_free: 512
+env_check_processor_vcpus: 1
+
+consul_service_name: elastic-data
