@@ -9,7 +9,7 @@
 - block:
     - name: checking ElasticSearch version
       uri:
-        url: 'http://{{ ansible_default_ipv4.address | default(ansible_all_ipv4_addresses[0]) }}:{{ elastic_http_port }}'
+        url: 'http://localhost:{{ elastic_http_port }}'
         return_content: yes
       register: versionCheck
       changed_when: false

@@ -6,6 +6,12 @@
     - name: 'installing elasticsearch-{{ elk_version }}.deb'
       apt:
         deb: '/tmp/elasticsearch-{{ elk_version }}.deb'
+    - name: starting elasticsearch service
+      service:
+        name: elasticsearch
+        state: started
+        enabled: yes
+        daemon_reload: yes
   rescue:
     - include_tasks: download.yml format=deb
     - include_tasks: '{{ ansible_os_family }}.yml'

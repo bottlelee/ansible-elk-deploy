@@ -1,11 +1,9 @@
 - hosts: elasticsearch
   become: yes
-  serial:
-    - 1
-    - 10%
+  serial: 1
   roles:
-    - deploy.ElasticSearch
     - deploy.Consul
+    - deploy.ElasticSearch
     - deploy.Monit
   post_tasks:
     - block:

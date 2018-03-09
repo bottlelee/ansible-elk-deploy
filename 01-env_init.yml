@@ -11,8 +11,3 @@
     - setup:
   roles:
     - init
-  post_tasks:
-    - pause:
-        prompt: |
-          You should reboot the systems before next move if they are new.
-          Press ENTER to continue.

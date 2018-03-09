@@ -9,7 +9,8 @@ kibana_port: '5601'
 # Elasticsearch configure
 elastic_cluster_name: 'quanduan'
 elastic_log_path: '/var/log/elasticsearch'
-elastic_data_path: '/var/lib/elasticsearch'
+elastic_data_path:
+  - /var/lib/elasticsearch
 
 # LogStash configure
 logstash_data_path: '/var/lib/logstash'
