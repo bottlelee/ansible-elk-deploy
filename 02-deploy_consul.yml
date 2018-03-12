@@ -18,7 +18,7 @@
       rescue:
         - service:
             name: consul
-            status: restarted
+            state: restarted
         - wait_for:
             port: 8600
             timeout: 30
