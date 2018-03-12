@@ -1,8 +1,9 @@
 - block:
-    - stat:
-        path: downloaded_files/consul_{{ consul_version }}_linux_amd64.zip
-      register: p
-      failed_when: p.stat.exists == false
+    - name: checking local consul command
+      shell: downloaded_files/consul version | head -n1 | awk '{ gsub("v","") ; print $2 }'
+      register: verChk
+      changed_when: false
+      failed_when: "consul_version > verChk.stdout"
       delegate_to: localhost
       become: no
       run_once: true

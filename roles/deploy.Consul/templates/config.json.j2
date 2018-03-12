@@ -1,16 +1,28 @@
 {
 {% if bootstrap == 'y' and inventory_hostname == groups['elasticMasterNode'][0] %}
   "bootstrap": true,
-{% endif %}
-{% if 'elasticMasterNode' in group_names %}
   "server": true,
-  "ui": true,
+{% endif %}
+{# ---------------- #}
+{% if bootstrap == 'N' and inventory_hostname == groups['elasticMasterNode'][0] %}
+"server": true,
+"start_join": [
+  {%- for item in groups['elasticMasterNode'] if item != ansible_nodename -%}
+    "{{ hostvars[item]['ansible_host'] | default(item) }}"{%- if loop.nextitem is defined -%},{%- endif -%}
+  {%- endfor -%}
+],
+{% endif %}
+{# ---------------- #}
+{% if 'elasticMasterNode' in group_names and inventory_hostname != groups['elasticMasterNode'][0] %}
+  "server": true,
   "start_join": [
     {%- for item in groups['elasticMasterNode'] if item != ansible_nodename -%}
       "{{ hostvars[item]['ansible_host'] | default(item) }}"{%- if loop.nextitem is defined -%},{%- endif -%}
     {%- endfor -%}
   ],
-{% else %}
+{% endif %}
+{# ---------------- #}
+{% if 'elasticMasterNode' not in group_names %}
   "server": false,
   "start_join": [
     {%- for item in groups['elasticMasterNode'] -%}
@@ -18,6 +30,7 @@
     {%- endfor -%}
   ],
 {% endif %}
+{# ---------------- #}
   "datacenter": "{{ consul_dc_name }}",
   "data_dir": "/var/consul",
   "encrypt": "{{ consul_key }}",

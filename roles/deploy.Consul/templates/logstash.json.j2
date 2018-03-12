@@ -9,7 +9,7 @@
       ],
       "checks": [
         {
-          "tcp": "{{ ansible_default_ipv4.address | default(ansible_all_ipv4_addresses[0]) }}:{{ logstash_beats_port }}",
+          "tcp": "localhost:{{ logstash_beats_port }}",
           "interval": "10s",
           "timeout": "1s"
         }
