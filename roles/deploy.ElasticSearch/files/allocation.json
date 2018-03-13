@@ -1,0 +1,14 @@
+PUT _template/active-logs
+{
+  "index_patterns": "filebeat-*",
+  "settings": {
+    "number_of_shards":   3,
+    "number_of_replicas": 1,
+    "routing.allocation.require.box_type": "hot",
+    "routing.allocation.total_shards_per_node": 2
+  },
+  "aliases": {
+    "active-logs":  {},
+    "search-logs": {}
+  }
+}

@@ -5,7 +5,7 @@
     - 30%
   vars_prompt:
     - name: "bootstrap"
-      prompt: "First time to deploy?(y/N)"
+      prompt: "Bootstrap a consul cluster?(y/N)"
       default: 'N'
       private: no
   roles:
@@ -18,7 +18,7 @@
       rescue:
         - service:
             name: consul
-            status: restarted
+            state: restarted
         - wait_for:
             port: 8600
             timeout: 30

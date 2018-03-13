@@ -4,8 +4,8 @@
     - 1
     - 10%
   roles:
-    - deploy.Logstash
     - deploy.Consul
+    - deploy.Logstash
     - deploy.Monit
   post_tasks:
     - block:

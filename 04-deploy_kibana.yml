@@ -4,8 +4,8 @@
     - 1
     - 30%
   roles:
-    - deploy.Kibana
     - deploy.Consul
+    - deploy.Kibana
     - deploy.Monit
   post_tasks:
     - block:

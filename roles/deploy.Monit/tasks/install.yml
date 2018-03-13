@@ -27,6 +27,7 @@
   copy:
     src: monit.service
     dest: /lib/systemd/system/monit.service
+  notify: Enable monit service
 
 - name: Create /etc/monit.d
   file:

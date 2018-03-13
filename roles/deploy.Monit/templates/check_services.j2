@@ -7,7 +7,6 @@ check host CONSUL with address 127.0.0.1
   start program = "/usr/sbin/service consul start"
   stop program = "/usr/sbin/service consul stop"
   if failed port 8600 for 2 cycles then restart
-  if 3 restarts within 10 cycles then stop
 
 {% if 'logstash' in group_names %}
 check host LOGSTASH with address 127.0.0.1
