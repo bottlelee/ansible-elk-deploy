@@ -3,11 +3,11 @@
   serial:
     - 1
     - 30%
-  vars_prompt:
-    - name: "bootstrap"
-      prompt: "Bootstrap a consul cluster?(y/N)"
-      default: 'N'
-      private: no
+  # vars_prompt:
+  #   - name: "bootstrap"
+  #     prompt: "Bootstrap a consul cluster?(y/N)"
+  #     default: 'N'
+  #     private: no
   roles:
     - deploy.Consul
   post_tasks:
