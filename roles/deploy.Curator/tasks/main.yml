@@ -1,0 +1,10 @@
+- include_tasks: 'install.yml target={{ item }}'
+  with_items:
+    - setuptools-38.5.2
+    - certifi-2018.1.18
+    - click-6.7
+    - PyYAML-3.12
+    - voluptuous-0.11.1
+    - urllib3-1.22
+    - elasticsearch-6.1.1
+    - elasticsearch-curator-5.4.1

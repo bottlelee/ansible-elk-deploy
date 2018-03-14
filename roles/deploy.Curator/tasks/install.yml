@@ -1,0 +1,9 @@
+- name: 'uploading {{ target }} files'
+  unarchive:
+    src: '{{ target }}.tar'
+    dest: /tmp/
+
+- name: 'installing {{ target }}'
+  command: python setup.py install
+  args:
+    chdir: '/tmp/{{ target }}/'
