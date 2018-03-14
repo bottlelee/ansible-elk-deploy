@@ -1,12 +1,12 @@
 output {
   if [@metadata][beat] {
     elasticsearch {
-      hosts => ["{{ hostvars[groups['elasticIngestNode'][0]]['consul_service_name'] }}.service.{{ consul_dc_name }}.consul:{{ elastic_http_port }}"]
+      hosts => ["elastic-ingest.service.{{ consul_dc_name }}.consul:{{ elastic_http_port }}"]
       index => "%{[@metadata][beat]}-%{[beat][version]}-%{+YYYY.MM.dd}"
     }
   } else {
     elasticsearch {
-      hosts => ["{{ hostvars[groups['elasticIngestNode'][0]]['consul_service_name'] }}.service.{{ consul_dc_name }}.consul:{{ elastic_http_port }}"]
+      hosts => ["elastic-ingest.service.{{ consul_dc_name }}.consul:{{ elastic_http_port }}"]
       index => "logstash-%{+YYYY.MM.dd}"
     }
   }
