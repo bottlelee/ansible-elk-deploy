@@ -18,6 +18,3 @@
   with_items:
     - kibana.yml
   notify: Restart kibana service
-
-- include_role:
-    name: deploy.ElasticSearch
