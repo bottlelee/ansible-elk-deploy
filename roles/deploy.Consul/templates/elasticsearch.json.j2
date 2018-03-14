@@ -4,7 +4,7 @@
 {% if node_ingest is defined and node_ingest == 'true' %}
       "name": "elastic-ingest",
 {% else %}
-      "name": "{{ consul_service_name }}",
+      "name": "{{ consul_service_name | default('elastic-unknown') }}",
 {% endif %}
       "address": "",
       "port": {{ elastic_http_port }},
@@ -15,7 +15,7 @@
         {
           "http": "http://localhost:{{ elastic_http_port }}",
           "interval": "10s",
-          "timeout": "1s"
+          "timeout": "3s"
         }
       ]
     }

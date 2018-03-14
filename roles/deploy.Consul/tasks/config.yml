@@ -12,14 +12,6 @@
       dest: /etc/systemd/system/consul.service
   register: config
 
-- name: starting consul service
-  service:
-    name: consul
-    state: started
-    enabled: true
-    daemon_reload: true
-  when: bootstrap == 'y'
-
 - name: updating services config
   template:
     src: '{{ item }}.json.j2'
