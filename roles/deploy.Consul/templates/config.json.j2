@@ -7,9 +7,7 @@
       "{{ hostvars[item]['ansible_host'] | default(item) }}"{%- if loop.nextitem is defined -%},{%- endif -%}
     {%- endfor -%}
   ],
-{% endif %}
-{# ---------------- #}
-{% if 'elasticMasterNode' not in group_names %}
+{% else %}
   "server": false,
   "retry_join": [
     {%- for item in groups['elasticMasterNode'] -%}
