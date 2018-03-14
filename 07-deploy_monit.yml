@@ -5,3 +5,16 @@
     - 30%
   roles:
     - deploy.Monit
+  post_tasks:
+    - block:
+        - name: waiting for service started
+          wait_for:
+            port: 2812
+            timeout: 30
+      rescue:
+        - service:
+            name: monit
+            state: restarted
+        - wait_for:
+            port: 2812
+            timeout: 120
