@@ -24,7 +24,7 @@ node.name: {{ inventory_hostname }}
 #
 # Add custom attributes to the node:
 #
-{% if 'elasticHotNode ' in group_names %}
+{% if 'elasticHotNode' in group_names %}
 node.attr.box_type: hot
 {% elif 'elasticWarmNode' in group_names %}
 node.attr.box_type: warm

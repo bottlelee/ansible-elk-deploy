@@ -25,5 +25,14 @@
     enabled: yes
     state: started
 
-- wait_for:
+- name: waiting for service started
+  wait_for:
     port: '{{ elastic_http_port }}'
+
+- name: setup index default settings
+  uri:
+    url: http://localhost:{{ elastic_http_port }}/_template/active-logs
+    method: PUT
+    body: "{{ lookup('file', 'indices_default_settings.json') }}"
+    body_format: json
+  when: inventory_hostname == groups['elasticMasterNode'][0]

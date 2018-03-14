@@ -1,0 +1,14 @@
+{
+  "index_patterns": [
+    "*"
+  ],
+  "settings": {
+    "number_of_shards": 5,
+    "number_of_replicas": 1,
+    "index.routing.allocation.require.box_type": "hot",
+    "index.unassigned.node_left.delayed_timeout": "5m"
+  },
+  "aliases": {
+    "active-logs": {}
+  }
+}
