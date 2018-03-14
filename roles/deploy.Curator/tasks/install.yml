@@ -1,0 +1,17 @@
+- name: 'uploading {{ target }} files'
+  unarchive:
+    src: '{{ target }}.tar'
+    dest: /tmp/
+  changed_when: false
+
+- name: 'installing {{ target }}'
+  shell: "python setup.py install || python3 setup.py install"
+  args:
+    chdir: '/tmp/{{ target }}/'
+  changed_when: false
+
+- name: 'deleting /tmp/{{ target }}'
+  file:
+    path: '/tmp/{{ target }}/'
+    state: absent
+  changed_when: false

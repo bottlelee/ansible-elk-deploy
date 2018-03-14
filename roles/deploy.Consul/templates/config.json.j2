@@ -1,21 +1,8 @@
 {
-{% if bootstrap == 'y' and inventory_hostname == groups['elasticMasterNode'][0] %}
-  "bootstrap": true,
+{% if 'elasticMasterNode' in group_names %}
   "server": true,
-{% endif %}
-{# ---------------- #}
-{% if bootstrap == 'N' and inventory_hostname == groups['elasticMasterNode'][0] %}
-"server": true,
-"start_join": [
-  {%- for item in groups['elasticMasterNode'] if item != ansible_nodename -%}
-    "{{ hostvars[item]['ansible_host'] | default(item) }}"{%- if loop.nextitem is defined -%},{%- endif -%}
-  {%- endfor -%}
-],
-{% endif %}
-{# ---------------- #}
-{% if 'elasticMasterNode' in group_names and inventory_hostname != groups['elasticMasterNode'][0] %}
-  "server": true,
-  "start_join": [
+  "bootstrap_expect": 3,
+  "retry_join": [
     {%- for item in groups['elasticMasterNode'] if item != ansible_nodename -%}
       "{{ hostvars[item]['ansible_host'] | default(item) }}"{%- if loop.nextitem is defined -%},{%- endif -%}
     {%- endfor -%}
@@ -24,7 +11,7 @@
 {# ---------------- #}
 {% if 'elasticMasterNode' not in group_names %}
   "server": false,
-  "start_join": [
+  "retry_join": [
     {%- for item in groups['elasticMasterNode'] -%}
       "{{ hostvars[item]['ansible_host'] | default(item) }}"{%- if loop.nextitem is defined -%},{%- endif -%}
     {%- endfor -%}
@@ -36,6 +23,7 @@
   "encrypt": "{{ consul_key }}",
   "log_level": "WARN",
   "enable_syslog": true,
+  "enable_script_checks": true,
   "addresses": {
     "dns": "0.0.0.0"
   }

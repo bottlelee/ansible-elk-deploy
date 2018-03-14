@@ -1,0 +1,23 @@
+---
+actions:
+  1:
+    action: allocation
+    description: "Move older indices to warm node."
+    options:
+      key: box_type
+      value: warm
+      allocation_type: require
+      wait_for_completion: false
+      timeout_override: 21600
+      ignore_empty_list: true
+      disable_action: false
+    filters:
+      - filtertype: alias
+        aliases: active-logs
+      - filtertype: period
+        period_type: relative
+        source: name
+        range_from: {{ hot_to_warm_range_from }}
+        range_to: {{ hot_to_warm_range_to }}
+        timestring: '%Y.%m.%d'
+        unit: days

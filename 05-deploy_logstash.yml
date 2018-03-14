@@ -9,7 +9,8 @@
     - deploy.Monit
   post_tasks:
     - block:
-        - wait_for:
+        - name: waiting for service started
+          wait_for:
             port: '{{ logstash_beats_port }}'
             timeout: 120
       rescue:

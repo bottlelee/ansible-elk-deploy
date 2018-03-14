@@ -1,7 +1,7 @@
-# ElasticSearch data only node
+# ElasticSearch data node
 node_master: false
 node_data: true
-node_ingest: false
+node_ingest: true
 search_remote_connect: false
 
 env_check_memtotal_mb: 1000
