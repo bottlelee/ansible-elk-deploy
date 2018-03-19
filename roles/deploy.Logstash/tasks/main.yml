@@ -37,6 +37,8 @@
     - 000-input
     - 001-logstash
     - 002-monit
+    - 003-syslog
+    - 004-auditd
     - 999-output
   register: pipelineSt
 
