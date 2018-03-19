@@ -1,9 +1,9 @@
 - name: checking if target is suitable for deploy
   assert:
     that:
-      - "ansible_memtotal_mb >= {{ env_check_memtotal_mb | default('2048') }}"
-      - "ansible_memory_mb.nocache.free >= {{ env_check_memory_mb_nocache_free | default('1024') }}"
-      - "ansible_processor_vcpus >= {{ env_check_processor_vcpus | default('1')}}"
+      - "ansible_memtotal_mb|int >= {{ env_check_memtotal_mb|default('2048')|int }}"
+      - "ansible_memory_mb.nocache.free|int >= {{ env_check_memory_mb_nocache_free|default('1024')|int }}"
+      - "ansible_processor_vcpus|int >= {{ env_check_processor_vcpus|default('1')|int }}"
       - "ansible_architecture == 'x86_64'"
   when: "'elasticsearch' in group_names"
 
