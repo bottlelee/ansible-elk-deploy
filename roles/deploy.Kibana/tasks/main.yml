@@ -10,6 +10,18 @@
         timeout: 10
   rescue:
     - include_tasks: '{{ ansible_os_family }}.yml'
+    - name: create /var/run/kibana
+      file:
+        path: /var/run/kibana
+        state: directory
+        owner: kibana
+        group: kibana
+    - name: starting kibana service
+      service:
+        name: kibana
+        state: restarted
+        enabled: yes
+        daemon_reload: yes
 
 - name: update kibana configuration
   template:
