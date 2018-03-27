@@ -13,7 +13,7 @@
         url: "https://artifacts.elastic.co/downloads/kibana/kibana-{{ elk_version }}-amd64.deb"
         dest: "downloaded_files/"
       register: download
-      until: downloadis succeeded
+      until: download is succeeded
       retries: 5
       delay: 10
       delegate_to: localhost
@@ -36,7 +36,7 @@
         url: "https://artifacts.elastic.co/downloads/kibana/kibana-{{ elk_version }}-x86_64.rpm"
         dest: "downloaded_files/"
       register: download
-      until: downloadis succeeded
+      until: download is succeeded
       retries: 5
       delay: 10
       delegate_to: localhost

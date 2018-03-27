@@ -12,7 +12,7 @@
         url: "https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-{{ elk_version }}.{{ format }}"
         dest: "downloaded_files/"
       register: download
-      until: downloadis succeeded
+      until: download is succeeded
       retries: 5
       delay: 10
       delegate_to: localhost

@@ -9,7 +9,7 @@ It's not ready for huge business before doing some tune up.
 1. [Consul](https://www.consul.io/) as internal DNS service. Scale your ELK without updating the beats output configuration.
 1. [Monit](https://mmonit.com/monit/documentation/monit.html) as monitoring service. Auto fix common issue, free you hands.
 
-## Tested on these OS with [ansible](http://docs.ansible.com/ansible/latest/intro_installation.html)
+## Tested on these OS with [ansible 2.5.0](http://docs.ansible.com/ansible/latest/intro_installation.html)
 * Ubuntu 16.04 LTS（xenial）
 * CentOS 7
 
@@ -47,7 +47,7 @@ Any host that have `consul` installed，could be an internal DNS server. Please 
 本项目只适用于小型应用，建议在 3 个节点（至少 8 CPUs，16GB 内存，128GB 可用磁盘空间）上部署。
 如果需要适配更高的业务需求，请联系 [新致云市场部](https://cloud.newtouch.com/support/business)。
 
-## 本项目在以下操作系统测试通过。
+## 本项目基于 [ansible 2.5.0](http://docs.ansible.com/ansible/latest/intro_installation.html) 在以下操作系统测试通过。
 * Ubuntu 16.04 LTS（xenial）
 * CentOS 7
 
