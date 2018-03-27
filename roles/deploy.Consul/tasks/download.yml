@@ -14,7 +14,7 @@
         dest: downloaded_files/
         remote_src: yes
       register: download
-      until: download|succeeded
+      until: downloadis succeeded
       retries: 5
       delay: 10
       delegate_to: localhost

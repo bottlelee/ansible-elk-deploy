@@ -22,6 +22,6 @@
 #     path: group_vars/all.yml
 #     regexp: '^logstash_beats_port'
 #     line: "logstash_beats_port: '{{ logstash_new_beats_port }}'"
-#   when: portSt|succeeded
+#   when: portStis succeeded
 #   delegate_to: localhost
 #   become: no

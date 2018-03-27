@@ -13,7 +13,7 @@
         url: "https://artifacts.elastic.co/downloads/beats/{{ target }}/{{ target }}-{{ elk_version }}-amd64.deb"
         dest: "downloaded_files/"
       register: download
-      until: download|succeeded
+      until: downloadis succeeded
       retries: 5
       delay: 10
       delegate_to: localhost
@@ -35,7 +35,7 @@
         url: "https://artifacts.elastic.co/downloads/beats/{{ target }}/{{ target }}-{{ elk_version }}-x86_64.rpm"
         dest: "downloaded_files/"
       register: download
-      until: download|succeeded
+      until: downloadis succeeded
       retries: 5
       delay: 10
       delegate_to: localhost

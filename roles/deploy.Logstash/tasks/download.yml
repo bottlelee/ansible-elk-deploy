@@ -12,7 +12,7 @@
         url: "https://artifacts.elastic.co/downloads/logstash/logstash-{{ elk_version }}.{{ format }}"
         dest: "downloaded_files/"
       register: download
-      until: download|succeeded
+      until: downloadis succeeded
       retries: 5
       delay: 10
       delegate_to: localhost
