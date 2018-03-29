@@ -4,6 +4,8 @@
     - 1
     - 30%
   gather_facts: no
+  vars:
+    check_groups: true
   pre_tasks:
     - include_role:
         name: init
