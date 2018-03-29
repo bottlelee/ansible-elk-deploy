@@ -5,10 +5,13 @@
     option: LimitMEMLOCK
     value: infinity
 
-- name: updating ElasticSearch config
+- name: updating ElasticSearch configuration
   template:
-    src: elasticsearch.yml.j2
-    dest: /etc/elasticsearch/elasticsearch.yml
+    src: '{{ item }}.j2'
+    dest: '/etc/elasticsearch/{{ item }}'
+  with_items:
+    - jvm.options
+    - elasticsearch.yml
 
 - include_tasks: "plugins.yml target={{ target }}"
   with_items:
@@ -27,6 +30,7 @@
 
 - name: waiting for service started
   wait_for:
+    host: "{{ hostvars[inventory_hostname]['ansible_' + bond_interface]['ipv4']['address'] }}"
     port: '{{ elastic_http_port }}'
 
 - name: setup index default settings

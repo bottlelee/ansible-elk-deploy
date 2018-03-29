@@ -4,14 +4,14 @@
   "bootstrap_expect": 3,
   "retry_join": [
     {%- for item in groups['elasticMasterNode'] if item != ansible_nodename -%}
-      "{{ hostvars[item]['ansible_host'] | default(item) }}"{%- if loop.nextitem is defined -%},{%- endif -%}
+      "{{ hostvars[item]['ansible_' + bond_interface]['ipv4']['address'] }}"{%- if loop.nextitem is defined -%},{%- endif -%}
     {%- endfor -%}
   ],
 {% else %}
   "server": false,
   "retry_join": [
     {%- for item in groups['elasticMasterNode'] -%}
-      "{{ hostvars[item]['ansible_host'] | default(item) }}"{%- if loop.nextitem is defined -%},{%- endif -%}
+      "{{ hostvars[item]['ansible_' + bond_interface]['ipv4']['address'] }}"{%- if loop.nextitem is defined -%},{%- endif -%}
     {%- endfor -%}
   ],
 {% endif %}
@@ -22,6 +22,7 @@
   "log_level": "WARN",
   "enable_syslog": true,
   "enable_script_checks": true,
+  "bind_addr": "{{ hostvars[inventory_hostname]['ansible_' + bond_interface]['ipv4']['address'] }}",
   "addresses": {
     "dns": "0.0.0.0"
   }

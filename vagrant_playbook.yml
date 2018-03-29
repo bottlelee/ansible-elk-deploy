@@ -1,0 +1,6 @@
+- hosts: all
+  become: yes
+  roles:
+    - init
+    - deploy.Consul
+    - deploy.ElasticSearch

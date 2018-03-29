@@ -1,5 +1,6 @@
 elk_version: '6.2.2'
 timezone: 'Asia/Shanghai'
+bond_interface: enp0s8
 
 # Do NOT edit the following lines unless you know why.
 elastic_http_port: '9200'
