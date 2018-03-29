@@ -1,7 +1,7 @@
 {
   "services": [
     {
-{% if node_ingest is defined and node_ingest == 'true' %}
+{% if node_ingest is defined and node_ingest == true %}
       "name": "elastic-ingest",
 {% else %}
       "name": "{{ consul_service_name | default('elastic-unknown') }}",
