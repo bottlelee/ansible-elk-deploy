@@ -1,0 +1,20 @@
+filter {
+  if [fileset][module] == "auditd" {
+    grok {
+      match => {
+        "message" => "type=%{DATA:[auditd][type]} msg=audit\(%{GREEDYDATA}\)\: %{GREEDYDATA:[auditd][message]}"
+      }
+      remove_field => "message"
+    }
+    kv {
+      source => "[auditd][message]"
+      include_brackets => false
+      target => "auditd"
+    }
+    kv {
+      source => "[auditd][msg]"
+      target => "auditd"
+      exclude_keys => ["pid", "ses", " old-auid", "old-ses", "fp", "spid", "rport"]
+    }
+  }
+}

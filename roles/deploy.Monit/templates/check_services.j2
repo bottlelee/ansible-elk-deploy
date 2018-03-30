@@ -19,7 +19,7 @@ check host LOGSTASH with address 127.0.0.1
   if 3 restarts within 10 cycles then stop
 {% endif %}
 {% if 'kibana' in group_names %}
-check host KIBANA with address 127.0.0.1
+check process KIBANA with pidfile /tmp/kibana.pid
   start program = "/usr/sbin/service kibana start"
   stop program = "/usr/sbin/service kibana stop"
   if failed

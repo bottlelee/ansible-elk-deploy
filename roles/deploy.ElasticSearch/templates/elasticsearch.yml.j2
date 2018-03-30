@@ -66,13 +66,14 @@ bootstrap.memory_lock: true
 #
 # Set the bind address to a specific IP (IPv4 or IPv6):
 #
-{% if node_ingest is defined and node_ingest == true %}
-network.host: _site_
-network.bind_host: 0.0.0.0
-{% else %}
-transport.host: _site_
-transport.bind_host: 0.0.0.0
-{% endif %}
+network.host: _{{ bond_interface }}_
+network.bind_host: {{ hostvars[inventory_hostname]['ansible_' + bond_interface]['ipv4']['address'] }}
+
+network.publish_host: {{ hostvars[inventory_hostname]['ansible_' + bond_interface]['ipv4']['address'] }}
+
+transport.host: _{{ bond_interface }}_
+transport.bind_host: {{ hostvars[inventory_hostname]['ansible_' + bond_interface]['ipv4']['address'] }}
+
 #
 # Set a custom port for HTTP:
 #
@@ -87,7 +88,7 @@ http.port: {{ elastic_http_port | default('9200') }}
 #
 discovery.zen.ping.unicast.hosts:
 {% for item in groups['elasticMasterNode'] %}
-  - "{{ hostvars[item]['ansible_host'] | default(inventory_hostname) }}"
+  - "{{ hostvars[item]['ansible_' + bond_interface]['ipv4']['address'] }}"
 {% endfor %}
 #
 # Prevent the "split brain" by configuring the majority of nodes (total number of master-eligible nodes / 2 + 1):

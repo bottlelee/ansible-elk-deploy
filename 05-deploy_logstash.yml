@@ -1,3 +1,6 @@
+- hosts: all
+  tasks: []
+
 - hosts: logstash
   become: yes
   serial:
@@ -14,6 +17,16 @@
             port: '{{ logstash_beats_port }}'
             timeout: 120
       rescue:
+        - name: set /var/lib/logstash ownership
+          file:
+            path: '{{ item }}'
+            state: directory
+            owner: logstash
+            group: logstash
+            recurse: yes
+          with_items:
+            - '{{ logstash_log_path }}'
+            - '{{ logstash_data_path }}'
         - service:
             name: logstash
             state: restarted

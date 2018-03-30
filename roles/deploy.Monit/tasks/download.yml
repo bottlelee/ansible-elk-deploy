@@ -12,7 +12,7 @@
         url: https://mmonit.com/monit/dist/binary/{{ monit_version }}/monit-{{ monit_version }}-linux-x64.tar.gz
         dest: downloaded_files
       register: download
-      until: download|succeeded
+      until: download is succeeded
       retries: 5
       delay: 10
       delegate_to: localhost

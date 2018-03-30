@@ -12,4 +12,5 @@
     - modules
     - config
   when: configSt.changed
+  changed_when: false
   notify: Restart packetbeat service

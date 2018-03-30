@@ -4,12 +4,12 @@
         src: "downloaded_files/{{ target }}-{{ elk_version }}.zip"
         dest: "/tmp/{{ target }}-{{ elk_version }}.zip"
     - name: "installing plugin {{ target }}"
-      command: "{{ item }}"
-      with_items:
-        - "/usr/share/elasticsearch/bin/elasticsearch-plugin remove {{ target }}"
-        - "/usr/share/elasticsearch/bin/elasticsearch-plugin install file:///tmp/{{ target }}-{{ elk_version }}.zip"
-      ignore_errors: yes
+      command: "/usr/share/elasticsearch/bin/elasticsearch-plugin install file:///tmp/{{ target }}-{{ elk_version }}.zip"
+      register: install
   rescue:
+    - name: "uninstalling plugin {{ target }}"
+      command: "/usr/share/elasticsearch/bin/elasticsearch-plugin remove {{ target }}"
+      ignore_errors: yes
     - name: "downloading plugin {{ target }}"
       get_url:
         url: "https://artifacts.elastic.co/downloads/elasticsearch-plugins/{{ target }}/{{ target }}-{{ elk_version }}.zip"

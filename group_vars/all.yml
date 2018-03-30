@@ -1,5 +1,6 @@
 elk_version: '6.2.2'
 timezone: 'Asia/Shanghai'
+bond_interface: 'enp0s8'
 
 # Do NOT edit the following lines unless you know why.
 elastic_http_port: '9200'
@@ -29,8 +30,7 @@ smtp_pass: 'pass'
 recipients:
   - {
     name: '李海滨',
-    email: 'haibin.lee@foxmail.com',
-    cellphone: '12345678901'
+    email: 'haibin.lee@foxmail.com'
   }
 
 # global beats' modules list

@@ -10,7 +10,7 @@
       dest: /etc/consul.d/config.json
     - src: consul.service
       dest: /etc/systemd/system/consul.service
-  register: config
+  notify: validate config
 
 - name: updating services config
   template:
@@ -21,9 +21,4 @@
     - elasticsearch
     - logstash
     - kibana
-  register: services
-
-- name: validate config
-  command: /usr/local/bin/consul validate -quiet /etc/consul.d/
-  when: config.changed or services.changed
-  notify: Restart consul service
+  notify: validate config

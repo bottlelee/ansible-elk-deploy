@@ -20,4 +20,5 @@
     - output
     - config
   notify: Restart metricbeat service
+  changed_when: false
   when: configSt.changed

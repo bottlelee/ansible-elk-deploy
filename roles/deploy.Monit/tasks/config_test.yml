@@ -7,7 +7,7 @@
       service:
         name: monit
         state: reloaded
-      when: monitTest|succeeded
+      when: monitTest is succeeded
   rescue:
     - name: Start monit
       service:

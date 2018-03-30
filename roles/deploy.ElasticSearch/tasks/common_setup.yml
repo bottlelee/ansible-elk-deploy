@@ -5,10 +5,13 @@
     option: LimitMEMLOCK
     value: infinity
 
-- name: updating ElasticSearch config
+- name: updating ElasticSearch configuration
   template:
-    src: elasticsearch.yml.j2
-    dest: /etc/elasticsearch/elasticsearch.yml
+    src: '{{ item }}.j2'
+    dest: '/etc/elasticsearch/{{ item }}'
+  with_items:
+    - jvm.options
+    - elasticsearch.yml
 
 - include_tasks: "plugins.yml target={{ target }}"
   with_items:
@@ -23,15 +26,16 @@
     name: elasticsearch
     daemon_reload: yes
     enabled: yes
-    state: started
+    state: restarted
 
 - name: waiting for service started
   wait_for:
-    port: '{{ elastic_http_port }}'
+    host: "{{ hostvars[inventory_hostname]['ansible_' + bond_interface]['ipv4']['address'] }}"
+    port: '9200'
 
 - name: setup index default settings
   uri:
-    url: http://localhost:{{ elastic_http_port }}/_template/active-logs
+    url: http://{{ hostvars[inventory_hostname]['ansible_' + bond_interface]['ipv4']['address'] }}:{{ elastic_http_port }}/_template/active-logs
     method: PUT
     body: "{{ lookup('file', 'indices_default_settings.json') }}"
     body_format: json

@@ -12,6 +12,7 @@
 - name: Disable swap
   command: swapoff -a
   when: "'elasticsearch' in group_names"
+  changed_when: false
 
 - name: "Setup timezone to {{ timezone }}"
   timezone:
@@ -28,3 +29,8 @@
   when:
     - "ansible_distribution == 'CentOS'"
     - "ansible_distribution_major_version >= '7'"
+
+- name: "Checking {{ bond_interface }}"
+  fail:
+    msg: "interface {{ bond_interface }} has no IP address"
+  when: hostvars[inventory_hostname]['ansible_' + bond_interface]['ipv4']['address'] == ''

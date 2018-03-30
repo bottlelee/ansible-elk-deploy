@@ -19,7 +19,7 @@
         # headers: 'Cookie:oraclelicense=accept-securebackup-cookie'
         dest: downloaded_files/jre-8u161-linux-x64.tar.gz
       register: download
-      until: download|succeeded
+      until: download is succeeded
       retries: 5
       delay: 10
       delegate_to: localhost

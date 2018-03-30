@@ -1,0 +1,2 @@
+metricbeat_modules:
+  - elasticsearch

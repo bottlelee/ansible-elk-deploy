@@ -18,7 +18,7 @@ server.host: "0.0.0.0"
 server.name: "{{ ansible_hostname }}"
 
 # The URL of the Elasticsearch instance to use for all your queries.
-elasticsearch.url: "http://localhost:9200"
+elasticsearch.url: "http://{{ hostvars[inventory_hostname]['ansible_' + bond_interface]['ipv4']['address'] }}:9200"
 
 # When this setting's value is true Kibana uses the hostname specified in the server.host
 # setting. When the value of this setting is false, Kibana uses the hostname of the host
@@ -80,7 +80,7 @@ elasticsearch.requestTimeout: 120000
 #elasticsearch.startupTimeout: 5000
 
 # Specifies the path where Kibana creates the process ID file.
-# pid.file: /tmp/kibana.pid
+pid.file: /tmp/kibana.pid
 
 # Enables you specify a file where Kibana stores log output.
 #logging.dest: stdout

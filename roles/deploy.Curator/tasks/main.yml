@@ -22,8 +22,6 @@
         - template:
             src: 'curator.yml.j2'
             dest: '{{ ansible_user_dir }}/.curator/curator.yml'
-        - command: curator_cli show_indices
-          changed_when: false
 
 - include_tasks: 'action_files.yml target={{ item }}'
   with_items:
