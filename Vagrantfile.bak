@@ -19,7 +19,12 @@ Vagrant.configure("2") do |config|
   end
 
   (1..$instances).each do |instance_id|
-    config.vm.define vm_name = "elk-#{instance_id}" do |config|
+    if instance_id <=3
+      put vm_name = "es-master-#{instance_id}"
+    else
+      put vm_name = "elk-#{instance_id}"
+    end
+    config.vm.define vm_name do |config|
       config.vm.hostname = vm_name
       config.vm.network "private_network", type: "dhcp"
       config.vm.provider "virtualbox" do |vb|

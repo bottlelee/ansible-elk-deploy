@@ -31,7 +31,7 @@
 - name: waiting for service started
   wait_for:
     host: "{{ hostvars[inventory_hostname]['ansible_' + bond_interface]['ipv4']['address'] }}"
-    port: '9300'
+    port: '9200'
 
 - name: setup index default settings
   uri:
