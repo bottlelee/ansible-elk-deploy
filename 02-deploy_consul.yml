@@ -1,4 +1,7 @@
 - hosts: all
+  tasks: []
+  
+- hosts: all
   become: yes
   serial:
     - 1

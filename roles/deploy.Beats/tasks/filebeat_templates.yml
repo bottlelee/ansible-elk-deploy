@@ -18,5 +18,6 @@
   with_items:
     - output
     - config
+  changed_when: false
   when: configSt.changed
   notify: Restart filebeat service

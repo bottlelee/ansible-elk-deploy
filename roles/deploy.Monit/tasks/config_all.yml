@@ -15,7 +15,16 @@
     - check_fs_usage
     - check_sysload
     - check_services
-  register: config
+  register: configAll
+
+- name: Install/update config on elastic master nodes
+  template:
+    src: '{{ item }}.j2'
+    dest: '/etc/monit.d/{{ item }}'
+    mode: 0600
+  with_items:
+    - check_hosts
+  register: configEsMaster
 
 - include_tasks: config_test.yml
-  when: config.changed
+  when: (configAll is changed) or (configEsMaster is changed)

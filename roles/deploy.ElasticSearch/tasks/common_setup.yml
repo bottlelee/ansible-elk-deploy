@@ -26,16 +26,16 @@
     name: elasticsearch
     daemon_reload: yes
     enabled: yes
-    state: started
+    state: restarted
 
 - name: waiting for service started
   wait_for:
     host: "{{ hostvars[inventory_hostname]['ansible_' + bond_interface]['ipv4']['address'] }}"
-    port: '{{ elastic_http_port }}'
+    port: '9300'
 
 - name: setup index default settings
   uri:
-    url: http://localhost:{{ elastic_http_port }}/_template/active-logs
+    url: http://{{ hostvars[inventory_hostname]['ansible_' + bond_interface]['ipv4']['address'] }}:{{ elastic_http_port }}/_template/active-logs
     method: PUT
     body: "{{ lookup('file', 'indices_default_settings.json') }}"
     body_format: json

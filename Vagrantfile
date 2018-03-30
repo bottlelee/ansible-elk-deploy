@@ -2,7 +2,7 @@ ENV["LC_ALL"] = "en_US.UTF-8"
 
 Vagrant.require_version ">= 2.0.0"
 
-$instances = 3
+$instances = 11
 $bond_interface = "enp0s8"
 
 Vagrant.configure("2") do |config|
@@ -25,28 +25,22 @@ Vagrant.configure("2") do |config|
         vb.name = vm_name
       end
 
-      #
-      # $forwarded_ports.each do |guest, host|
-      #   config.vm.network "forwarded_port", guest: guest, host: host, auto_correct: true
-      # end
       if instance_id == $instances
         config.vm.provision "ansible" do |ansible|
           ansible.extra_vars = {
             ansible_python_interpreter: "/usr/bin/python3",
-            check_groups: false,
-            node_master: true,
-            node_data: true,
-            node_ingest: true,
             bond_interface: $bond_interface
           }
 
           ansible.groups = {
-            "elasticMasterNode" => ["elk-[1:#{$instances}]"],
-            "elasticHotNode" => ["elk-[1:#{$instances}]"],
-            "elasticWarmNode" => ["elk-[1:#{$instances}]"],
-            "kibana" => ["elk-[1:#{$instances}]"],
-            "logstash" => ["elk-[1:#{$instances}]"],
-            "elasticsearch:children" => ["elasticMasterNode","elasticHotNode","elasticWarmNode"]
+            "elasticMasterNode" => ["elk-[1:3]"],
+            "elasticHotNode" => ["elk-[4:6]"],
+            "elasticWarmNode" => ["elk-[7:8]"],
+            "elasticIngestNode" => ["elk-9"],
+            "kibana" => ["elk-10"],
+            "logstash" => ["elk-11"],
+            "elasticsearch:children" => ["elasticMasterNode","elasticHotNode","elasticWarmNode"],
+            "elasticDataNode:children" => ["elasticHotNode","elasticWarmNode"]
           }
 
           ansible.limit = "all"

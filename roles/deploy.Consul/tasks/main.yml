@@ -3,7 +3,7 @@
       shell: /usr/local/bin/consul version | head -n1 | awk '{ gsub("v","") ; print $2 }'
       register: verChk
       changed_when: false
-      failed_when: "consul_version > verChk.stdout"
+      failed_when: "consul_version|int > verChk.stdout|int"
     - name: checking consul port
       wait_for:
         host: 0.0.0.0

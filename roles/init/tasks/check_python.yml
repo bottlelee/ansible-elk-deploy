@@ -8,13 +8,14 @@
       raw: test -e /usr/bin/python3
       changed_when: false
     - name: add host into group 'ubuntu_hosts'
-      lineinfile:
-        path: hosts
-        line: '{{ inventory_hostname }} ansible_python_interpreter=/usr/bin/python3'
-        insertafter: '\[ubuntu_hosts\]'
-        state: present
-      delegate_to: localhost
-      become: no
+      block:
+        - lineinfile:
+            path: hosts.ini
+            line: '{{ inventory_hostname }} ansible_python_interpreter=/usr/bin/python3'
+            insertafter: '\[ubuntu_hosts\]'
+            state: present
+          delegate_to: localhost
+          become: no
     - meta: clear_host_errors
     - meta: refresh_inventory
 
@@ -29,7 +30,7 @@
       changed_when: false
     - name: remove host from group 'ubuntu_hosts'
       lineinfile:
-        path: hosts
+        path: hosts.ini
         line: '{{ inventory_hostname }} ansible_python_interpreter=/usr/bin/python3'
         state: absent
       delegate_to: localhost

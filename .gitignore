@@ -10,3 +10,4 @@ temp.yml
 downloaded_files
 .vagrant
 *.log
+fact_caching

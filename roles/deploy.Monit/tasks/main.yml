@@ -3,7 +3,7 @@
       shell: /usr/local/bin/monit -V | head -n1 | awk '{ print $5 }'
       changed_when: false
       register: verChk
-      failed_when: monit_version > verChk.stdout
+      failed_when: monit_version not in verChk.stdout
   rescue:
     - include_tasks: install.yml
 

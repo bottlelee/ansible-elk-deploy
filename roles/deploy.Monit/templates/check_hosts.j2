@@ -1,0 +1,4 @@
+{% for item in groups['all'] %}
+check host {{ item }} with address {{ hostvars[item]['ansible_' + bond_interface]['ipv4']['address'] }}
+  if failed ping4 count 5 with timeout 10 seconds then alert
+{% endfor %}

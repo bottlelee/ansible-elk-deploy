@@ -9,7 +9,7 @@
       ],
       "checks": [
         {
-          "http": "http://localhost:{{ kibana_port }}",
+          "http": "http://{{ hostvars[inventory_hostname]['ansible_' + bond_interface]['ipv4']['address'] }}:{{ kibana_port }}",
           "interval": "10s",
           "timeout": "3s"
         }

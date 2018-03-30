@@ -1,9 +1,12 @@
 - hosts: all
+  tasks: []
+
+- hosts: all
   become: yes
+  gather_facts: no
   serial:
     - 1
     - 30%
-  gather_facts: no
   vars:
     check_groups: true
   pre_tasks:
