@@ -9,4 +9,4 @@
   args:
     chdir: '{{ ansible_user_dir }}/.curator'
   changed_when: false
-  when: update.changed
+  when: update is changed

@@ -1,3 +1,8 @@
+- name: "Checking {{ bond_interface }}"
+  fail:
+    msg: "interface {{ bond_interface }} has no IP address"
+  when: hostvars[inventory_hostname]['ansible_' + bond_interface]['ipv4']['address'] == ''
+
 - name: Setup sysctl
   sysctl:
     name: '{{ item.name }}'
@@ -29,8 +34,3 @@
   when:
     - "ansible_distribution == 'CentOS'"
     - "ansible_distribution_major_version >= '7'"
-
-- name: "Checking {{ bond_interface }}"
-  fail:
-    msg: "interface {{ bond_interface }} has no IP address"
-  when: hostvars[inventory_hostname]['ansible_' + bond_interface]['ipv4']['address'] == ''

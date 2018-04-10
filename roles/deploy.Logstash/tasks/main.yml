@@ -45,4 +45,4 @@
 - name: checking logstash configuration
   command: /usr/share/logstash/bin/logstash -t --path.settings=/etc/logstash
   notify: Restart logstash service
-  when: configSt.changed or pipelineSt.changed
+  when: configSt is changed or pipelineSt is changed
