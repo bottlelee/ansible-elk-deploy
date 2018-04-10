@@ -35,8 +35,8 @@
 
 - name: setup index default settings
   uri:
-    url: http://{{ hostvars[inventory_hostname]['ansible_' + bond_interface]['ipv4']['address'] }}:{{ elastic_http_port }}/_template/active-logs
+    url: http://elastic-ingest.service.consul:{{ elastic_http_port }}/_template/active-logs
     method: PUT
     body: "{{ lookup('file', 'indices_default_settings.json') }}"
     body_format: json
-  when: inventory_hostname == groups['elasticMasterNode'][0]
+  when: inventory_hostname == groups['kibana'][0]
