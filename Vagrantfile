@@ -5,26 +5,24 @@ ENV["LC_ALL"] = "en_US.UTF-8"
 
 Vagrant.require_version ">= 2.0.0"
 
-# $vm_box = "ubuntu/xenial64"
-$vm_box = "centos/7"
+$vm_box = "ubuntu/xenial64"
+# $vm_box = "centos/7"
 $instances = 11
+$python_command = "/usr/bin/python"
+$bond_interface = "eth0"
 
 if $vm_box == "ubuntu/xenial64"
   $bond_interface = "enp0s8"
   $python_command = "/usr/bin/python3"
 elsif $vm_box == "centos/7"
   $bond_interface = "eth1"
-  $python_command = "/usr/bin/python"
-else
-  $bond_interface = "eth0"
-  $python_command = "/usr/bin/python"
 end
 
 Vagrant.configure("2") do |config|
   # always use Vagrants insecure key
   config.ssh.insert_key = false
-  config.vm.box = "centos/7"
   config.vm.box_check_update = false
+  config.vm.box = $vm_box
   # plugin conflict
   if Vagrant.has_plugin?("vagrant-vbguest") then
     config.vbguest.auto_update = false
