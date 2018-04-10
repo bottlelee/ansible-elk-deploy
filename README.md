@@ -1,11 +1,11 @@
-# Deploy ELK stack, ready for production
+# Deploy ELK stack, ready for production.
 
 ## Note
-All settings are defaults value. I re-command you to have at least 3 nodes(8CPUs, 16GB memory, 128GB free disk space) to deploy your ELK cluster.
+All settings are use default value. I re-command you to have at least 3 nodes(8CPUs, 16GB memory, 128GB free disk space) to deploy your ELK cluster.
 
 It's not ready for huge business before doing some tune up.
 
-For test only, you can run `vagrant up`. You need 22GB RAM and 22 CPUs.
+For test only, you can run `vagrant up`. You need [vagrant](https://www.vagrantup.com/), 22GB RAM and 22 CPUs on your single host.
 
 ## What we have in here?
 1. Easy scale and rolling upgrade for ELK stack.
@@ -51,7 +51,7 @@ Any host that have `consul` installed，could be an internal DNS server. Please 
 
 如果需要适配更高的业务需求，请联系 [新致云市场部](https://cloud.newtouch.com/support/business)。
 
-测试本架构，运行`vagrant up`。这将会消耗 22GB 内存和 22 个 CPU 线程。
+测试本架构，运行`vagrant up`（你需要 [vagrant](https://www.vagrantup.com/)）。这将会消耗 22GB 内存和 22 个 CPU 线程。
 
 ## 本项目基于 [ansible 2.5.0](http://docs.ansible.com/ansible/latest/intro_installation.html) 在以下操作系统测试通过。
 * Ubuntu 16.04 LTS（xenial）

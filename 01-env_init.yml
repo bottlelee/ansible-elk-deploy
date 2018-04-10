@@ -16,3 +16,4 @@
     - setup:
   roles:
     - init
+    - deploy.Chrony
