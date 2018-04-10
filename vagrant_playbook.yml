@@ -11,9 +11,10 @@
   roles:
     - init
     - deploy.Consul
+    - deploy.Chrony
   post_tasks:
     - block:
-        - name: waiting for service started
+        - name: waiting for service consul started
           wait_for:
             host: "{{ hostvars[inventory_hostname]['ansible_' + bond_interface]['ipv4']['address'] }}"
             port: 8600

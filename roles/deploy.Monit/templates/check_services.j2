@@ -1,7 +1,16 @@
-check host consul-dns with address {{ hostvars[inventory_hostname]['ansible_' + bond_interface]['ipv4']['address'] }}
+check host consul-dns with address 127.0.0.1
   if failed
     port 53
   then exec "/usr/local/bin/dns_forwarding.sh"
+
+check host chronyd with address 127.0.0.1
+  start program = "/usr/sbin/service chronyd start"
+  stop program = "/usr/sbin/service chronyd stop"
+  if failed
+    port 123
+    type udp
+    for 2 cycles
+  then restart
 
 check host CONSUL with address {{ hostvars[inventory_hostname]['ansible_' + bond_interface]['ipv4']['address'] }}
   start program = "/usr/sbin/service consul start"

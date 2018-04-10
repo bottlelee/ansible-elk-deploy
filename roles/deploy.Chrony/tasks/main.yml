@@ -1,0 +1,8 @@
+- block:
+    - name: Checking chronyd command
+      command: "test -e /usr/sbin/chronyd"
+      changed_when: false
+  rescue:
+    - include_tasks: install.yml
+
+- include_tasks: config.yml

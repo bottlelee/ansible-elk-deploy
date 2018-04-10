@@ -1,8 +1,11 @@
-# Off-line way to deploy ElasticSearch/Logstash/Kibana
+# Deploy ELK stack, ready for production.
 
 ## Note
-This is a baseline example. I re-command you to have at least 3 nodes(8CPUs, 16GB memory, 100GB disk space) to deploy your ELK cluster.
+All settings are use default value. I re-command you to have at least 3 nodes(8CPUs, 16GB memory, 128GB free disk space) to deploy your ELK cluster.
+
 It's not ready for huge business before doing some tune up.
+
+For test only, you can run `vagrant up`. You need [vagrant](https://www.vagrantup.com/), 22GB RAM and 22 CPUs on your single host.
 
 ## What we have in here?
 1. Easy scale and rolling upgrade for ELK stack.
@@ -44,8 +47,11 @@ Any host that have `consul` installed，could be an internal DNS server. Please 
 # 离线部署 ELK 服务。
 
 ## 注意
-本项目只适用于小型应用，建议在 3 个节点（至少 8 CPUs，16GB 内存，128GB 可用磁盘空间）上部署。
+本项目适用于中型生产应用，建议在 3 个节点（至少 8 CPUs，16GB 内存，128GB 可用磁盘空间）上部署。
+
 如果需要适配更高的业务需求，请联系 [新致云市场部](https://cloud.newtouch.com/support/business)。
+
+测试本架构，运行`vagrant up`（你需要 [vagrant](https://www.vagrantup.com/)）。这将会消耗 22GB 内存和 22 个 CPU 线程。
 
 ## 本项目基于 [ansible 2.5.0](http://docs.ansible.com/ansible/latest/intro_installation.html) 在以下操作系统测试通过。
 * Ubuntu 16.04 LTS（xenial）

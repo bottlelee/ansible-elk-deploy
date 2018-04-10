@@ -1,0 +1,22 @@
+{% if 'elasticMasterNode' in group_names %}
+
+{% for item in groups['elasticMasterNode'] if item != inventory_hostname %}
+server {{ item }}
+{% endfor %}
+local stratum 8 orphan
+smoothtime 400 0.01
+manual
+initstepslew 1 {% for item in groups['elasticMasterNode'] if item != inventory_hostname %}{{ item }} {% endfor %}
+
+{% else %}
+
+{% for item in groups['elasticMasterNode'] %}
+server {{ item }} iburst
+{% endfor %}
+makestep 1.0 3
+
+{% endif %}
+
+allow {{ hostvars[inventory_hostname]['ansible_' + bond_interface]['ipv4']['network'] }}/24
+driftfile /var/lib/chrony/drift
+rtcsync
