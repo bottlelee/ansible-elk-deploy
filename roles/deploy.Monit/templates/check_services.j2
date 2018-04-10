@@ -1,15 +1,15 @@
-check host consul-dns with address 127.0.0.1
+check host consul-dns with address {{ hostvars[inventory_hostname]['ansible_' + bond_interface]['ipv4']['address'] }}
   if failed
     port 53
   then exec "/usr/local/bin/dns_forwarding.sh"
 
-check host CONSUL with address 127.0.0.1
+check host CONSUL with address {{ hostvars[inventory_hostname]['ansible_' + bond_interface]['ipv4']['address'] }}
   start program = "/usr/sbin/service consul start"
   stop program = "/usr/sbin/service consul stop"
   if failed port 8600 for 2 cycles then restart
 
 {% if 'logstash' in group_names %}
-check host LOGSTASH with address 127.0.0.1
+check host LOGSTASH with address {{ hostvars[inventory_hostname]['ansible_' + bond_interface]['ipv4']['address'] }}
   start program = "/usr/sbin/service logstash start"
   stop program = "/usr/sbin/service logstash stop"
   if failed
@@ -29,6 +29,6 @@ check process KIBANA with pidfile /tmp/kibana.pid
   if 3 restarts within 10 cycles then stop
 {% endif %}
 {% if 'elasticsearch' in group_names %}
-check host ELASTICSEARCH with address 127.0.0.1
+check host ELASTICSEARCH with address {{ hostvars[inventory_hostname]['ansible_' + bond_interface]['ipv4']['address'] }}
   if failed port {{ elastic_http_port }} for 3 cycles then alert
 {% endif %}
