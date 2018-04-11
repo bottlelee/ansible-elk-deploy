@@ -9,3 +9,8 @@
   rescue:
     - include_tasks: download.yml format=rpm
     - include_tasks: '{{ ansible_os_family }}.yml'
+  always:
+    - name: 'removing /tmp/logstash-{{ elk_version }}.rpm'
+      file:
+        path: '/tmp/logstash-{{ elk_version }}.rpm'
+        state: absent

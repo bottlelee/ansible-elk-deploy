@@ -6,7 +6,7 @@
       failed_when: 'elk_version not in verChk.stdout'
   rescue:
     - include_tasks: '{{ ansible_os_family }}.yml'
-    - name: Import elasticsearch template
+    - name: importing elasticsearch template
       shell: "{{ target }} setup --template -E output.logstash.enabled=false -E output.elasticsearch.hosts='elastic-ingest.service.{{ consul_dc_name }}.consul:{{ elastic_http_port }}'"
       run_once: yes
 

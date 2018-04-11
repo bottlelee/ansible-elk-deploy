@@ -15,5 +15,10 @@
   rescue:
     - include_tasks: download.yml format=deb
     - include_tasks: '{{ ansible_os_family }}.yml'
+  always:
+    - name: 'removing /tmp/elasticsearch-{{ elk_version }}.deb'
+      file:
+        path: '/tmp/elasticsearch-{{ elk_version }}.deb'
+        state: absent
 
 - include_tasks: common_setup.yml

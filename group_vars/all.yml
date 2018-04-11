@@ -1,4 +1,4 @@
-elk_version: '6.2.3'
+elk_version: '6.2.2'
 timezone: 'Asia/Shanghai'
 bond_interface: 'eth1'
 

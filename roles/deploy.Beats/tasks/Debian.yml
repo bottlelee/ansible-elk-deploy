@@ -15,3 +15,8 @@
         state: restarted
   rescue:
     - command: "dpkg -i /tmp/{{ target }}-{{ elk_version }}-amd64.deb"
+
+- name: "removing /tmp/{{ target }}-{{ elk_version }}-amd64.deb"
+  file:
+    path: "/tmp/{{ target }}-{{ elk_version }}-amd64.deb"
+    state: absent
