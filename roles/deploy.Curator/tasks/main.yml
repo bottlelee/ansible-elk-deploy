@@ -4,7 +4,6 @@
       changed_when: false
   rescue:
     - include_tasks: 'install.yml target={{ item }}'
-      become: yes
       with_items:
         - setuptools-38.5.2
         - certifi-2018.1.18
@@ -17,11 +16,11 @@
     - name: creating curator config file
       block:
         - file:
-            path: '{{ ansible_user_dir }}/.curator'
+            path: '~/.curator'
             state: directory
         - template:
             src: 'curator.yml.j2'
-            dest: '{{ ansible_user_dir }}/.curator/curator.yml'
+            dest: '~/.curator/curator.yml'
 
 - include_tasks: 'action_files.yml target={{ item }}'
   with_items:

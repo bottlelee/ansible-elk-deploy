@@ -4,6 +4,12 @@
   copy:
     src: "downloaded_files/{{ target }}-{{ elk_version }}-x86_64.rpm"
     dest: "/tmp/{{ target }}-{{ elk_version }}-x86_64.rpm"
+
 - name: "installing {{ target }}-{{ elk_version }}-x86_64.rpm"
   yum:
     name: "/tmp/{{ target }}-{{ elk_version }}-x86_64.rpm"
+    
+- name: 'restarting {{ target }} service'
+  service:
+    name: '{{ target }}'
+    state: restarted
