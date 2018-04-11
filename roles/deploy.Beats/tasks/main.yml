@@ -1,9 +1,9 @@
 - block:
     - name: "Checking {{ target }}"
-      shell: "{{ target }} version"
+      raw: "{{ target }} version | awk $'{ print $3}'"
       changed_when: false
       register: verChk
-      failed_when: 'elk_version not in verChk.stdout'
+      failed_when: 'elk_version > verChk.stdout'
   rescue:
     - include_tasks: '{{ ansible_os_family }}.yml'
     - name: importing elasticsearch template
