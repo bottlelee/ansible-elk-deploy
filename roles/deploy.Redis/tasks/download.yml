@@ -1,0 +1,20 @@
+- block:
+    - stat:
+        path: "downloaded_files/redis-stable.tar.gz"
+      register: p
+      failed_when: p.stat.exists == false
+      delegate_to: localhost
+      run_once: yes
+      become: no
+  rescue:
+    - name: downloading redis binary file
+      get_url:
+        url: "http://download.redis.io/releases/redis-stable.tar.gz"
+        dest: downloaded_files
+      register: download
+      until: download is succeeded
+      retries: 5
+      delay: 10
+      delegate_to: localhost
+      run_once: yes
+      become: no
