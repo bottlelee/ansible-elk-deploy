@@ -3,6 +3,9 @@
       unarchive:
         src: downloaded_files/monit-{{ monit_version }}-linux-x64.tar.gz
         dest: /tmp/
+      delegate_to: localhost
+      become: no
+      run_once: yes
   rescue:
     - include_tasks: download.yml
     - include_tasks: install.yml
@@ -12,7 +15,6 @@
     src: '/tmp/monit-{{ monit_version }}/{{ item.src }}'
     dest: '{{ item.dest }}'
     mode: '{{ item.mode }}'
-    remote_src: yes
   with_items:
     - { src: 'bin/monit', dest: '/usr/local/bin/monit', mode: 544 }
     - { src: 'man/man1/monit.1', dest: '/usr/share/man/man1/monit.1', mode: 644 }

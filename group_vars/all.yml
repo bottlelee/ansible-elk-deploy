@@ -44,3 +44,6 @@ packetbeat_modules: ""
 # Curator action tasks
 hot_to_warm_range_from: -7
 hot_to_warm_range_to: -1
+
+# Redis
+redis_version: 4.0.9
