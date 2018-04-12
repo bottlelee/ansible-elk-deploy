@@ -28,8 +28,8 @@ consul_dc_name: 'elk'
 # Monit
 monit_version: '5.25.1'
 smtp_host: '127.0.0.1'
-smtp_user: 'username'
-smtp_pass: 'password'
+smtp_user: 'user'
+smtp_pass: 'pass'
 recipients:
   - {
     name: '李海滨',

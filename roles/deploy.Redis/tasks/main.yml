@@ -7,3 +7,9 @@
     - include_tasks: system_config.yml
 
 - include_tasks: service_config.yml
+
+- name: coping check_redis_master.sh script
+  copy:
+    src: check_redis_master.sh
+    dest: /usr/local/bin/check_redis_master.sh
+    mode: 0755
