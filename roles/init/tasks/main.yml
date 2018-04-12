@@ -8,5 +8,8 @@
     - name: checking java command
       command: /usr/bin/java -version
       changed_when: false
+      when: ('elasticsearch' in group_names) or ('logstash' in group_names)
   rescue:
     - include_tasks: jre.yml
+
+- include_tasks: "{{ ansible_os_family }}.yml"

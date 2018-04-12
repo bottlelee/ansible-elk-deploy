@@ -7,7 +7,7 @@ Vagrant.require_version ">= 2.0.0"
 
 # $vm_box = "ubuntu/xenial64"
 $vm_box = "centos/7"
-$instances = 11
+$instances = 14
 $python_command = "/usr/bin/python"
 $bond_interface = "eth0"
 
@@ -41,6 +41,8 @@ Vagrant.configure("2") do |config|
       $vm_name = "kibana-#{instance_id}"
     elsif instance_id == 11
       $vm_name = "logstash-#{instance_id}"
+    elsif instance_id <= 14
+      $vm_name = "redis-#{instance_id}"
     end
     config.vm.define vm_name = $vm_name do |config|
       config.vm.hostname = vm_name
@@ -65,6 +67,7 @@ Vagrant.configure("2") do |config|
             "elasticIngestNode" => ["es-ingest-9"],
             "kibana" => ["kibana-10"],
             "logstash" => ["logstash-11"],
+            "redis" => ["redis-[12:14]"],
             "elasticsearch:children" => ["elasticMasterNode","elasticHotNode","elasticWarmNode"],
             "elasticDataNode:children" => ["elasticHotNode","elasticWarmNode"]
           }

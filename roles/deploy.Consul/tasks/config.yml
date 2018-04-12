@@ -21,6 +21,7 @@
     - elasticsearch
     - logstash
     - kibana
+    - redis
   register: servicesConfig
 
 - name: validate config

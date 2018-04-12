@@ -1,0 +1,6 @@
+- name: restarting redis-sentinel
+  service:
+    name: redis-sentinel
+    state: restarted
+    daemon_reload: yes
+    enabled: yes

@@ -1,0 +1,19 @@
+{
+  "services": [
+    {
+      "name": "redis",
+      "address": "",
+      "port": 6379,
+      "tags": [
+        "elk"
+      ],
+      "checks": [
+        {
+          "args": ["/usr/local/bin/check_redis_master.sh"],
+          "interval": "30s",
+          "timeout": "3s"
+        }
+      ]
+    }
+  ]
+}

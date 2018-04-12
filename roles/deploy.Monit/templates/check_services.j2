@@ -27,6 +27,7 @@ check host LOGSTASH with address {{ hostvars[inventory_hostname]['ansible_' + bo
   then restart
   if 3 restarts within 10 cycles then stop
 {% endif %}
+
 {% if 'kibana' in group_names %}
 check process KIBANA with pidfile /tmp/kibana.pid
   start program = "/usr/sbin/service kibana start"
@@ -37,7 +38,16 @@ check process KIBANA with pidfile /tmp/kibana.pid
   then restart
   if 3 restarts within 10 cycles then stop
 {% endif %}
+
 {% if 'elasticsearch' in group_names %}
 check host ELASTICSEARCH with address {{ hostvars[inventory_hostname]['ansible_' + bond_interface]['ipv4']['address'] }}
   if failed port {{ elastic_http_port }} for 3 cycles then alert
+{% endif %}
+
+{% if 'redis' in group_names %}
+check host REDIS-SERVER with address {{ hostvars[inventory_hostname]['ansible_' + bond_interface]['ipv4']['address'] }}
+  if failed port 6379 for 3 cycles then exec "/usr/sbin/redis-server /etc/redis/redis.conf" as uid "redis" and gid "redis"
+
+check host REDIS-SENTINEL with address {{ hostvars[inventory_hostname]['ansible_' + bond_interface]['ipv4']['address'] }}
+  if failed port 26379 for 3 cycles then exec "/usr/sbin/service redis-sentinel start"
 {% endif %}

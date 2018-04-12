@@ -3,7 +3,7 @@
       shell: /usr/share/logstash/bin/logstash -V | awk '{ print $2 }'
       changed_when: false
       register: verChk
-      failed_when: elk_version not in verChk.stdout
+      failed_when: elk_version > verChk.stdout
   rescue:
     - include_tasks: env_check.yml
       when: verChk.rc == 1

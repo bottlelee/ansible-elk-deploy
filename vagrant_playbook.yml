@@ -54,6 +54,7 @@
   roles:
     - deploy.Kibana
     - deploy.ElasticSearch
+    - deploy.Curator
   post_tasks:
     - block:
         - name: waiting for service started
@@ -68,6 +69,13 @@
         - wait_for:
             port: '{{ kibana_port }}'
             timeout: 120
+
+- hosts: redis
+  become: yes
+  serial:
+    - 1
+  roles:
+    - deploy.Redis
 
 - hosts: logstash
   become: yes

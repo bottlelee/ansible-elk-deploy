@@ -1,24 +1,10 @@
-# - hosts: all
-#   tasks: []
+- hosts: all
+  tasks: []
 
-- hosts: elasticMasterNode
+- hosts: redis
   become: yes
   serial:
     - 1
   roles:
     - deploy.Redis
-  # post_tasks:
-  #   - block:
-  #       - name: waiting for service consul started
-  #         wait_for:
-  #           host: "{{ hostvars[inventory_hostname]['ansible_' + bond_interface]['ipv4']['address'] }}"
-  #           port: 8600
-  #           timeout: 30
-  #     rescue:
-  #       - service:
-  #           name: consul
-  #           state: restarted
-  #       - wait_for:
-  #           host: "{{ hostvars[inventory_hostname]['ansible_' + bond_interface]['ipv4']['address'] }}"
-  #           port: 8600
-  #           timeout: 30
+    - deploy.Consul

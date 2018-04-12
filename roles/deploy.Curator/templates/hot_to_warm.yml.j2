@@ -14,10 +14,8 @@ actions:
     filters:
       - filtertype: alias
         aliases: active-logs
-      - filtertype: period
-        period_type: relative
-        source: name
-        range_from: {{ hot_to_warm_range_from }}
-        range_to: {{ hot_to_warm_range_to }}
-        timestring: '%Y.%m.%d'
-        unit: days
+      - filtertype: age
+        source: creation_date
+        direction: older
+        unit: {{ hot_to_warm_unit }}
+        unit_count: {{ hot_to_warm_unit_count }}

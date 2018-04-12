@@ -1,0 +1,20 @@
+- name: disable transparent hugepages
+  command: /usr/sbin/disable-transparent-hugepages
+  become_user: redis
+
+- name: shutting down redis server
+  block:
+    - command: /usr/bin/redis-cli shutdown
+    - wait_for:
+        port: 6379
+        state: stopped
+  become_user: redis
+  ignore_errors: yes
+
+- name: starting redis server
+  block:
+    - command: /usr/sbin/redis-server /etc/redis/redis.conf
+    - wait_for:
+        port: 6379
+        state: started
+  become_user: redis
