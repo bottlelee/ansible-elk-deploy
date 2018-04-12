@@ -1,9 +1,9 @@
 - block:
     - name: checking command 'kibana'
-      command: "/usr/share/kibana/bin/kibana -V"
+      command: "/usr/share/kibana/bin/kibana version"
       changed_when: false
       register: verChk
-      failed_when: elk_version not in verChk.stdout
+      failed_when: elk_version > verChk.stdout
     - name: checking kibana service status
       wait_for:
         port: '{{ kibana_port }}'
