@@ -28,8 +28,8 @@ consul_dc_name: 'elk'
 # Monit
 monit_version: '5.25.1'
 smtp_host: '127.0.0.1'
-smtp_user: 'user'
-smtp_pass: 'pass'
+smtp_user: 'username'
+smtp_pass: 'password'
 recipients:
   - {
     name: '李海滨',
@@ -42,8 +42,8 @@ metricbeat_modules: ""
 packetbeat_modules: ""
 
 # Curator action tasks
-hot_to_warm_range_from: -7
-hot_to_warm_range_to: -1
+hot_to_warm_unit: days
+hot_to_warm_unit_count: 1
 
 # Redis
 redis_version: 4.0.9
