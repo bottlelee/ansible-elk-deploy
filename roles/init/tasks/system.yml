@@ -1,9 +1,9 @@
-- name: "Checking {{ bond_interface }}"
+- name: "checking {{ bond_interface }}"
   fail:
     msg: "interface {{ bond_interface }} has no IP address"
   when: hostvars[inventory_hostname]['ansible_' + bond_interface]['ipv4']['address'] == ''
 
-- name: Setup sysctl
+- name: setup sysctl
   sysctl:
     name: '{{ item.name }}'
     value: '{{ item.value }}'
@@ -14,7 +14,7 @@
     - {name: fs.file-max, value: 65536}
     - {name: net.ipv4.ip_forward, value: 1}
 
-- name: Disable swap
+- name: disable swap
   command: swapoff -a
   when: "'elasticsearch' in group_names"
   changed_when: false
@@ -22,15 +22,3 @@
 - name: "Setup timezone to {{ timezone }}"
   timezone:
     name: '{{ timezone }}'
-
-- name: Disable firewalld and selinux
-  block:
-    - service:
-        name: firewalld
-        state: stopped
-        enabled: no
-    - selinux:
-        state: disabled
-  when:
-    - "ansible_distribution == 'CentOS'"
-    - "ansible_distribution_major_version >= '7'"
