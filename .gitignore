@@ -3,7 +3,7 @@ retry
 *.rpm
 *.tar.gz
 *.zip
-hosts
+hosts.ini
 609-hosts
 .~lock.*
 temp.yml

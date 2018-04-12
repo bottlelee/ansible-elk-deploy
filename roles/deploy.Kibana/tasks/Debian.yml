@@ -9,3 +9,8 @@
   rescue:
     - include_tasks: download.yml format=deb
     - include_tasks: '{{ ansible_os_family }}.yml'
+  always:
+    - name: 'removing /tmp/kibana-{{ elk_version }}-amd64.deb'
+      file:
+        path: '/tmp/kibana-{{ elk_version }}-amd64.deb'
+        state: absent

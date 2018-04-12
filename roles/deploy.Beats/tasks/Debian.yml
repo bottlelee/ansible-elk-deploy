@@ -9,5 +9,14 @@
     - name: 'installing {{ target }}-{{ elk_version }}-amd64.deb'
       apt:
         deb: '/tmp/{{ target }}-{{ elk_version }}-amd64.deb'
+    - name: 'restarting {{ target }} service'
+      service:
+        name: '{{ target }}'
+        state: restarted
   rescue:
     - command: "dpkg -i /tmp/{{ target }}-{{ elk_version }}-amd64.deb"
+
+- name: "removing /tmp/{{ target }}-{{ elk_version }}-amd64.deb"
+  file:
+    path: "/tmp/{{ target }}-{{ elk_version }}-amd64.deb"
+    state: absent

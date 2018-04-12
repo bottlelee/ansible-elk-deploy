@@ -27,3 +27,10 @@
     host: "{{ hostvars[inventory_hostname]['ansible_' + bond_interface]['ipv4']['address'] }}"
     port: '{{ elastic_http_port }}'
     state: stopped
+
+- name: removing plugins
+  elasticsearch_plugin:
+    name: "{{ item }}"
+    state: absent
+  ignore_errors: yes
+  with_items: "{{ elastic_plugins }}"

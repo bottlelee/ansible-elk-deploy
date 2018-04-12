@@ -1,6 +1,6 @@
 - name: checking if the node has been back to cluster or not.
   uri:
-    url: 'http://{{ hostvars[inventory_hostname]['ansible_' + bond_interface]['ipv4']['address'] }}:{{ elastic_http_port }}/_cat/nodes'
+    url: "http://{{ hostvars[inventory_hostname]['ansible_' + bond_interface]['ipv4']['address'] }}:{{ elastic_http_port }}/_cat/nodes"
     return_content: yes
   register: nodesSt
   until: "(ansible_hostname in nodesSt.content) or (hostvars[inventory_hostname]['ansible_host'] in nodesSt.content)"
@@ -16,7 +16,7 @@
 
 - name: checking if the cluster is green or not.
   uri:
-    url: 'http://{{ hostvars[inventory_hostname]['ansible_' + bond_interface]['ipv4']['address'] }}:{{ elastic_http_port }}/_cat/health'
+    url: "http://{{ hostvars[inventory_hostname]['ansible_' + bond_interface]['ipv4']['address'] }}:{{ elastic_http_port }}/_cat/health"
     return_content: yes
   register: healthSt
   until: "'green' in healthSt.content"

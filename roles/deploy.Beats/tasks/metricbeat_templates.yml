@@ -6,9 +6,11 @@
   register: configSt
 
 - name: Enable metricbeat modules
-  command: "metricbeat modules enable {{ item }}"
-  changed_when: false
+  template:
+    src: "metricbeat_{{ item }}.yml.j2"
+    dest: "/etc/metricbeat/modules.d/{{ item }}.yml"
   when: "item in group_names"
+  notify: Restart metricbeat service
   with_items:
     - logstash
     - kibana

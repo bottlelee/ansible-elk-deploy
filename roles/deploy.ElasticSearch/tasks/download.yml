@@ -1,13 +1,13 @@
 - block:
     - stat:
-        path: downloaded_files/elasticsearch-{{ elk_version }}.{{ format }}
+        path: "downloaded_files/elasticsearch-{{ elk_version }}.{{ format }}"
       register: p
       failed_when: p.stat.exists == false
       delegate_to: localhost
       become: no
       run_once: true
   rescue:
-    - name: 'downloading elasticsearch-{{ elk_version }}.{{ format }}'
+    - name: "downloading elasticsearch-{{ elk_version }}.{{ format }}"
       get_url:
         url: "https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-{{ elk_version }}.{{ format }}"
         dest: "downloaded_files/"

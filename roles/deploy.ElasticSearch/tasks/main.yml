@@ -37,7 +37,7 @@
         return_content: yes
       register: versionCheck
       changed_when: false
-      failed_when: elk_version|int > versionCheck.json.version.number|int
+      failed_when: elk_version > versionCheck.json.version.number
   rescue:
     - include_tasks: pre_upgrade.yml
     - include_tasks: '{{ ansible_os_family }}.yml'

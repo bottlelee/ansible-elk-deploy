@@ -1,6 +1,6 @@
 - block:
     - stat:
-        path: downloaded_files/{{ target }}-{{ elk_version }}-amd64.deb
+        path: "downloaded_files/{{ target }}-{{ elk_version }}-amd64.deb"
       register: p
       failed_when: p.stat.exists == False
       when: format == 'deb'
@@ -22,7 +22,7 @@
 
 - block:
     - stat:
-        path: downloaded_files/{{ target }}-{{ elk_version }}-x86_64.rpm
+        path: "downloaded_files/{{ target }}-{{ elk_version }}-x86_64.rpm"
       register: p
       when: format == 'rpm'
       failed_when: p.stat.exists == false

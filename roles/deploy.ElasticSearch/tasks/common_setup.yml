@@ -14,9 +14,7 @@
     - elasticsearch.yml
 
 - include_tasks: "plugins.yml target={{ target }}"
-  with_items:
-    - ingest-geoip
-    - ingest-user-agent
+  with_items: "{{ elastic_plugins }}"
   loop_control:
     loop_var: target
   when: node_ingest is defined and node_ingest == true

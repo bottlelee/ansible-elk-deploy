@@ -16,5 +16,10 @@
   rescue:
     - include_tasks: download.yml format=rpm
     - include_tasks: '{{ ansible_os_family }}.yml'
+  always:
+    - name: 'removing /tmp/elasticsearch-{{ elk_version }}.rpm'
+      file:
+        path: '/tmp/elasticsearch-{{ elk_version }}.rpm'
+        state: absent
 
 - include_tasks: common_setup.yml

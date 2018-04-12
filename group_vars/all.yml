@@ -1,6 +1,6 @@
 elk_version: '6.2.2'
 timezone: 'Asia/Shanghai'
-bond_interface: 'enp0s8'
+bond_interface: 'eth1'
 
 # Do NOT edit the following lines unless you know why.
 elastic_http_port: '9200'
@@ -12,6 +12,9 @@ elastic_cluster_name: 'quanduan'
 elastic_log_path: '/var/log/elasticsearch'
 elastic_data_path:
   - /var/lib/elasticsearch
+elastic_plugins:
+  - ingest-user-agent
+  - ingest-geoip
 
 # LogStash configure
 logstash_data_path: '/var/lib/logstash'
@@ -41,3 +44,6 @@ packetbeat_modules: ""
 # Curator action tasks
 hot_to_warm_range_from: -7
 hot_to_warm_range_to: -1
+
+# Redis
+redis_version: 4.0.9
