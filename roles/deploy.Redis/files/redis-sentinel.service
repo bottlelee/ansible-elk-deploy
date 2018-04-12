@@ -1,0 +1,11 @@
+[Unit]
+After=network.target
+
+[Service]
+User=redis
+Group=redis
+ExecStart=/usr/sbin/redis-sentinel /etc/redis/sentinel.conf
+Restart=always
+
+[Install]
+WantedBy=multi-user.target

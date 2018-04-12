@@ -1,0 +1,25 @@
+- name: setup sysctl
+  sysctl:
+    name: "{{ item.name }}"
+    value: "{{ item.value }}"
+    state: present
+    sysctl_set: yes
+  with_items:
+    - name: net.core.somaxconn
+      value: 512
+    - name: vm.overcommit_memory
+      value: 1
+    - name: fs.file-max
+      value: 100000
+
+- name: coping disable-transparent-hugepages script
+  copy:
+    src: disable-transparent-hugepages
+    dest: /usr/sbin/disable-transparent-hugepages
+    mode: 0755
+
+- name: coping service configure files
+  copy:
+    src: "redis-sentinel.service"
+    dest: "/etc/systemd/system/redis-sentinel.service"
+  notify: restarting redis-sentinel
