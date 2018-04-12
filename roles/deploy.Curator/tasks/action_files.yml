@@ -1,12 +1,12 @@
 - name: 'updating action file {{ target }}.yml'
   template:
     src: '{{ target }}.yml.j2'
-    dest: '{{ ansible_user_dir }}/.curator/{{ target }}.yml'
+    dest: '~/.curator/{{ target }}.yml'
   register: update
 
 - name: 'checking action file {{ target }}.yml'
   command: 'curator --dry-run {{ target }}.yml'
   args:
-    chdir: '{{ ansible_user_dir }}/.curator'
+    chdir: '~/.curator'
   changed_when: false
   when: update is changed
