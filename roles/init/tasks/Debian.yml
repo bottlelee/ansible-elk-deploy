@@ -3,10 +3,12 @@
     path: "/etc/resolvconf/resolv.conf.d/head"
     line: "{{ item }}"
   with_items:
-    - "nameserver 127.0.0.1"
-    - "nameserver 1.1.1.1"
+    - "nameserver {{ dns_servers[0] }}"
+    - "nameserver {{ dns_servers[1] }}"
+  register: resolvconf
 
 - name: restarting resolvconf service
   service:
     name: resolvconf
     state: restarted
+  when: resolvconf is changed

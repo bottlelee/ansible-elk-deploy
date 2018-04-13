@@ -85,7 +85,7 @@
     - block:
         - name: waiting for service started
           wait_for:
-            port: '{{ logstash_beats_port }}'
+            port: '9600'
             timeout: 120
       rescue:
         - name: set /var/lib/logstash ownership
@@ -102,7 +102,7 @@
             name: logstash
             state: restarted
         - wait_for:
-            port: '{{ logstash_beats_port }}'
+            port: '9600'
             timeout: 120
 
 - hosts: all

@@ -2,6 +2,11 @@ elk_version: '6.2.2'
 timezone: 'Asia/Shanghai'
 bond_interface: 'eth1'
 
+# DNS nameserver
+dns_servers:
+  - 127.0.0.1
+  - 1.1.1.1
+
 # Do NOT edit the following lines unless you know why.
 elastic_http_port: '9200'
 logstash_beats_port: '5044'

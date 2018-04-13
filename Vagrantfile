@@ -5,8 +5,8 @@ ENV["LC_ALL"] = "en_US.UTF-8"
 
 Vagrant.require_version ">= 2.0.0"
 
-# $vm_box = "ubuntu/xenial64"
-$vm_box = "centos/7"
+$vm_box = "ubuntu/xenial64"
+# $vm_box = "centos/7"
 $instances = 14
 $python_command = "/usr/bin/python"
 $bond_interface = "eth0"
@@ -23,9 +23,12 @@ Vagrant.configure("2") do |config|
   config.ssh.insert_key = false
   config.vm.box_check_update = false
   config.vm.box = $vm_box
-  # plugin conflict
   if Vagrant.has_plugin?("vagrant-vbguest") then
     config.vbguest.auto_update = false
+  end
+  if Vagrant.has_plugin?("vagrant-proxyconf") and $vm_box == "ubuntu/xenial64" then
+    config.apt_proxy.http = "http://192.168.205.16:3142"
+    config.apt_proxy.https = "DIRECT"
   end
 
   (1..$instances).each do |instance_id|
@@ -35,14 +38,12 @@ Vagrant.configure("2") do |config|
       $vm_name = "es-hot-#{instance_id}"
     elsif instance_id <= 8
       $vm_name = "es-warm-#{instance_id}"
-    elsif instance_id == 9
-      $vm_name = "es-ingest-#{instance_id}"
-    elsif instance_id == 10
-      $vm_name = "kibana-#{instance_id}"
-    elsif instance_id == 11
-      $vm_name = "logstash-#{instance_id}"
-    elsif instance_id <= 14
+    elsif instance_id <= 11
       $vm_name = "redis-#{instance_id}"
+    elsif instance_id <= 13
+      $vm_name = "logstash-#{instance_id}"
+    elsif instance_id == 14
+      $vm_name = "kibana-#{instance_id}"
     end
     config.vm.define vm_name = $vm_name do |config|
       config.vm.hostname = vm_name
@@ -64,10 +65,9 @@ Vagrant.configure("2") do |config|
             "elasticMasterNode" => ["es-master-[1:3]"],
             "elasticHotNode" => ["es-hot-[4:6]"],
             "elasticWarmNode" => ["es-warm-[7:8]"],
-            "elasticIngestNode" => ["es-ingest-9"],
-            "kibana" => ["kibana-10"],
-            "logstash" => ["logstash-11"],
-            "redis" => ["redis-[12:14]"],
+            "redis" => ["redis-[9:11]"],
+            "logstash" => ["logstash-[12:13]"],
+            "kibana" => ["kibana-14"],
             "elasticsearch:children" => ["elasticMasterNode","elasticHotNode","elasticWarmNode"],
             "elasticDataNode:children" => ["elasticHotNode","elasticWarmNode"]
           }

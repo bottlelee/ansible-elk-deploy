@@ -1,10 +1,11 @@
 output {
-  if [@metadata][beat] {
+  if [beat][type] {
     elasticsearch {
       hosts => ["elastic-ingest.service.{{ consul_dc_name }}.consul:{{ elastic_http_port }}"]
-      index => "%{[@metadata][beat]}-%{[beat][version]}-%{+YYYY.MM.dd}"
+      index => "%{[beat][type]}-%{[beat][version]}-%{+YYYY.MM.dd}"
     }
-  } else {
+  }
+  else {
     elasticsearch {
       hosts => ["elastic-ingest.service.{{ consul_dc_name }}.consul:{{ elastic_http_port }}"]
       index => "logstash-%{+YYYY.MM.dd}"

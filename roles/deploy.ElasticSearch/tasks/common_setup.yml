@@ -30,6 +30,7 @@
   wait_for:
     host: "{{ hostvars[inventory_hostname]['ansible_' + bond_interface]['ipv4']['address'] }}"
     port: '9200'
+    timeout: 120
 
 - name: setup index default settings
   uri:

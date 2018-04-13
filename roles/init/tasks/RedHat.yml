@@ -21,11 +21,13 @@
     path: "/etc/sysconfig/network-scripts/ifcfg-{{ bond_interface }}"
     line: "{{ item }}"
   with_items:
-    - "DNS1=127.0.0.1"
-    - "DNS2=1.1.1.1"
+    - "DNS1={{ dns_servers[0] }}"
+    - "DNS2={{ dns_servers[1] }}"
+  register: resolvconf
 
 - name: enable network service
   service:
     name: network
     state: restarted
     enabled: yes
+  when: resolvconf is changed

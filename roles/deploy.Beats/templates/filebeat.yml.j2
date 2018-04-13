@@ -32,14 +32,21 @@ filebeat.prospectors:
 
 #============================== Output =====================================
 
+{% if (groups['redis'] | length) >= 3 %}
+output.redis:
+  hosts: ["redis.service.{{ consul_dc_name }}.consul"]
+  key: "filebeat"
+  db: 0
+  timeout: 5
+{% else %}
 output.logstash:
   hosts: ["logstash.service.{{ consul_dc_name }}.consul:{{ logstash_beats_port }}"]
-  loadbalance: true
   compression_level: 5
   timeout: 300
   slow_start: true
+{% endif %}
 
-#================================ General =====================================
+#================================ Logging =====================================
 
 logging:
   to_files: true
@@ -47,7 +54,16 @@ logging:
   files:
     rotateeverybytes: 10485760 # = 10MB
     keepfiles: 7
+
+#================================ General =====================================
+
+fields_under_root: true
+fields:
+    beat:
+      type: filebeat
+
 name: {{ inventory_hostname }}
+
 tags: [
 {%- for item in group_names -%}
   "{{ item }}"{%- if loop.nextitem is defined -%},{%- endif -%}
