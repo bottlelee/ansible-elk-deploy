@@ -1,13 +1,13 @@
 - block:
     - name: "Checking {{ target }}"
-      raw: "{{ target }} version | awk $'{ print $3}'"
+      shell: "{{ target }} version | awk '{ print $3 }'"
       changed_when: false
       register: verChk
-      failed_when: 'elk_version > verChk.stdout'
+      failed_when: verChk.stdout is version(elk_version, operator='lt', strict=True)
   rescue:
     - include_tasks: '{{ ansible_os_family }}.yml'
     - name: importing elasticsearch template
-      shell: "{{ target }} setup --template -E output.logstash.enabled=false -E output.elasticsearch.hosts='elastic-ingest.service.{{ consul_dc_name }}.consul:{{ elastic_http_port }}'"
+      shell: "{{ target }} setup --template -E output.logstash.enabled=false -E output.redis.enabled=false -E output.elasticsearch.hosts='elastic-ingest.service.{{ consul_dc_name }}.consul:{{ elastic_http_port }}'"
       run_once: yes
 
 - include_tasks: '{{ target }}_templates.yml'

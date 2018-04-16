@@ -37,6 +37,9 @@ check process KIBANA with pidfile /tmp/kibana.pid
     for 2 cycles
   then restart
   if 3 restarts within 10 cycles then stop
+
+check host REDIS-MASTER with address redis.service.{{ consul_dc_name }}.consul
+  if failed port 6379 for 3 cycles then alert
 {% endif %}
 
 {% if 'elasticsearch' in group_names %}

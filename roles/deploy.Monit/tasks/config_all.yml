@@ -2,7 +2,7 @@
   template:
     src: monitrc.j2
     dest: /etc/monitrc
-    mode: 0600
+    mode: 0660
     owner: root
     group: root
 
@@ -15,16 +15,14 @@
     - check_fs_usage
     - check_sysload
     - check_services
-  register: configAll
 
 - name: Install/update config on elastic master nodes
   template:
     src: '{{ item }}.j2'
     dest: '/etc/monit.d/{{ item }}'
     mode: 0600
+  when: 'elasticMasterNode' in group_names
   with_items:
     - check_hosts
-  register: configEsMaster
 
 - include_tasks: config_test.yml
-  when: (configAll is changed) or (configEsMaster is changed)

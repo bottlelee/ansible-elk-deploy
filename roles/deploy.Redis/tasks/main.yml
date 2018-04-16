@@ -1,6 +1,6 @@
 - block:
     - name: checking redis command
-      command: test -e /usr/sbin/redis-server
+      command: test -e /usr/bin/redis-server
       changed_when: false
   rescue:
     - include_tasks: install.yml

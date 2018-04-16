@@ -12,7 +12,7 @@
   when: "item in group_names"
   notify: Restart metricbeat service
   with_items:
-    - logstash
+    - redis
     - kibana
     - elasticsearch
 

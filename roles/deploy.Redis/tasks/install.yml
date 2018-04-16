@@ -7,16 +7,15 @@
 - block:
     - name: uploading redis binary files
       copy:
-        src: "{{ item.src }}"
-        dest: "{{ item.dest }}{{ item.src }}"
-        mode: 0555
+        src: "redis-{{ item }}"
+        dest: "/usr/bin/redis-{{ item }}"
+        mode: 0550
+        owner: redis
+        group: consul
       with_items:
-        - src: redis-cli
-          dest: /usr/bin/
-        - src: redis-server
-          dest: /usr/sbin/
-        - src: redis-sentinel
-          dest: /usr/sbin/
+        -cli
+        -server
+        -sentinel
   rescue:
     - include_tasks: download.yml
     - include_tasks: build.yml

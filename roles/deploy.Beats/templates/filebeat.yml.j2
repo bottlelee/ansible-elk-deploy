@@ -4,7 +4,7 @@ filebeat.config.modules:
   path: /etc/filebeat/modules.d/*.yml
 
   # Set to true to enable config reloading
-  reload.enabled: true
+  reload.enabled: false
 
   # Period on which files under path should be checked for changes
   reload.period: 30s
@@ -27,14 +27,17 @@ filebeat.prospectors:
     - /var/log/filebeat/filebeat
     - /var/log/metricbeat/metricbeat
     - /var/log/packetbeat/packetbeat
-  exclude_lines: ["connection reset by peer"]
+  exclude_lines: [
+    "connection reset by peer",
+    "Failed to connect"
+  ]
   tags: ["beats-log"]
 
 #============================== Output =====================================
 
 {% if (groups['redis'] | length) >= 3 %}
 output.redis:
-  hosts: ["redis.service.{{ consul_dc_name }}.consul"]
+  hosts: ["redis.service.{{ consul_dc_name }}.consul:6379"]
   key: "filebeat"
   db: 0
   timeout: 5
@@ -59,8 +62,7 @@ logging:
 
 fields_under_root: true
 fields:
-    beat:
-      type: filebeat
+    beat_type: filebeat
 
 name: {{ inventory_hostname }}
 

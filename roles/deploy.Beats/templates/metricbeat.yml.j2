@@ -5,7 +5,7 @@ metricbeat.config.modules:
   path: /etc/metricbeat/modules.d/*.yml
 
   # Set to true to enable config reloading
-  reload.enabled: true
+  reload.enabled: false
 
   # Period on which files under path should be checked for changes
   reload.period: 30s
@@ -40,8 +40,7 @@ logging.files:
 
 fields_under_root: true
 fields:
-    beat:
-      type: metricbeat
+    beat_type: metricbeat
 
 name: {{ inventory_hostname }}
 

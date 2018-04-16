@@ -28,11 +28,11 @@
       regexp: "^port"
     - line: "sentinel monitor {{ groups['redis'][0] }} {{ hostvars[groups['redis'][0]]['ansible_' + bond_interface]['ipv4']['address'] }} 6379 2"
       regexp: "^sentinel monitor"
-    - line: "sentinel down-after-milliseconds {{ groups['redis'][0] }} 30000"
+    - line: "sentinel down-after-milliseconds {{ groups['redis'][0] }} 10000"
       regexp: "^sentinel down-after-milliseconds"
     - line: "sentinel parallel-syncs {{ groups['redis'][0] }} 1"
       regexp: "^sentinel parallel-syncs"
-    - line: "sentinel failover-timeout {{ groups['redis'][0] }} 180000"
+    - line: "sentinel failover-timeout {{ groups['redis'][0] }} 300000"
       regexp: "^sentinel failover-timeout"
   register: sentinelConfig
 

@@ -18,6 +18,9 @@
 
 - name: coping service configure files
   copy:
-    src: "redis-sentinel.service"
-    dest: "/etc/systemd/system/redis-sentinel.service"
+    src: "redis-{{ item }}.service"
+    dest: "/etc/systemd/system/redis-{{ item }}.service"
+  with_items:
+    - sentinel
+    - server
   notify: restarting redis-sentinel

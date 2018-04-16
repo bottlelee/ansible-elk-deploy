@@ -48,6 +48,10 @@ Vagrant.configure("2") do |config|
     config.vm.define vm_name = $vm_name do |config|
       config.vm.hostname = vm_name
       config.vm.network "private_network", type: "dhcp"
+      if $vm_name == "kibana-#{instance_id}"
+        config.vm.network "forwarded_port", guest: 5601, host: 5601, auto_correct: true
+        config.vm.network "forwarded_port", guest: 8600, host: 53, auto_correct: true
+      end
       config.vm.provider "virtualbox" do |vb|
         vb.memory = "2048"
         vb.cpus = "2"
@@ -57,10 +61,9 @@ Vagrant.configure("2") do |config|
       if instance_id == $instances
         config.vm.provision "ansible" do |ansible|
           ansible.extra_vars = {
-            ansible_python_interpreter: $python_command,
+            # ansible_python_interpreter: $python_command,
             bond_interface: $bond_interface
           }
-
           ansible.groups = {
             "elasticMasterNode" => ["es-master-[1:3]"],
             "elasticHotNode" => ["es-hot-[4:6]"],
@@ -69,9 +72,9 @@ Vagrant.configure("2") do |config|
             "logstash" => ["logstash-[12:13]"],
             "kibana" => ["kibana-14"],
             "elasticsearch:children" => ["elasticMasterNode","elasticHotNode","elasticWarmNode"],
-            "elasticDataNode:children" => ["elasticHotNode","elasticWarmNode"]
+            "elasticDataNode:children" => ["elasticHotNode","elasticWarmNode"],
+            "python3" => [""]
           }
-
           ansible.limit = "all"
           ansible.playbook = "vagrant_playbook.yml"
         end

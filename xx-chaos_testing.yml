@@ -1,0 +1,12 @@
+- hosts: all:!kibana
+  gather_facts: no
+  tasks:
+    - group_by:
+        key: chaos
+      when: groups['all'] | random == inventory_hostname
+
+- hosts: chaos
+  gather_facts: no
+  become: yes
+  tasks:
+    - command: reboot

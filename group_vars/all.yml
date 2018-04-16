@@ -1,6 +1,6 @@
-elk_version: '6.2.2'
+elk_version: '6.2.3'
 timezone: 'Asia/Shanghai'
-bond_interface: 'eth1'
+bond_interface: 'enp0s8'
 
 # DNS nameserver
 dns_servers:
