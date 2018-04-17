@@ -11,3 +11,10 @@
     state: restarted
     daemon_reload: yes
     enabled: yes
+
+- name: start disable-thp.service
+  service:
+    name: disable-thp
+    state: started
+    daemon_reload: yes
+    enabled: yes

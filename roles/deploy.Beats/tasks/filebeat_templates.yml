@@ -5,13 +5,13 @@
     mode: 0600
   register: configSt
 
-# - name: Enable filebeat modules
-#   command: "filebeat modules enable {{ item }}"
-#   changed_when: false
-#   with_items:
-#     - system
-#     - auditd
-#     - '{{ filebeat_modules }}'
+- name: Enable filebeat modules
+  command: "filebeat modules enable {{ item }}"
+  changed_when: false
+  with_items:
+    - system
+    - auditd
+    - '{{ filebeat_modules }}'
 
 - name: 'Testing filebeat'
   command: 'filebeat test {{ item }}'

@@ -1,24 +1,4 @@
-# - block:
-#     - stat:
-#         path: "downloaded_files/redis-stable.tar.gz"
-#       register: p
-#       failed_when: p.stat.exists == false
-#       delegate_to: localhost
-#       run_once: yes
-#       become: no
-#   rescue:
-#     - name: downloading redis binary file
-#       get_url:
-#         url: "http://download.redis.io/releases/redis-stable.tar.gz"
-#         dest: downloaded_files
-#       register: download
-#       until: download is succeeded
-#       retries: 5
-#       delay: 10
-#       delegate_to: localhost
-#       run_once: yes
-#       become: no
-
+# search packages on https://centos.pkgs.org/
 - block:
     - stat:
         path: "downloaded_files/redis-3.2.10-2.el7.x86_64.rpm"
@@ -39,9 +19,9 @@
       delegate_to: localhost
       become: no
       run_once: yes
-  when: "'format' == 'rpm'"
+  when: format == 'rpm'
 
-# packages from https://ubuntu.pkgs.org/
+# search packages on https://ubuntu.pkgs.org/
 - block:
     - stat:
         path: "downloaded_files/{{ item }}.deb"

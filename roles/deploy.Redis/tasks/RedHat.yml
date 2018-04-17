@@ -1,0 +1,31 @@
+- block:
+    - name: 'uploading packages'
+      copy:
+        src: 'downloaded_files/{{ item }}.rpm'
+        dest: /tmp/
+      with_items:
+        - libjemalloc1_3.6.0-9ubuntu1_amd64
+        - redis-tools_3.0.6-1_amd64
+        - redis-server_3.0.6-1_amd64
+        - redis-sentinel_3.0.6-1_amd64
+    - name: 'installing packages'
+      apt:
+        deb: '/tmp/{{ item }}.rpm'
+      with_items:
+        - libjemalloc1_3.6.0-9ubuntu1_amd64
+        - redis-tools_3.0.6-1_amd64
+        - redis-server_3.0.6-1_amd64
+        - redis-sentinel_3.0.6-1_amd64
+  rescue:
+    - include_tasks: download.yml format=deb
+    - include_tasks: '{{ ansible_os_family }}.yml'
+  always:
+    - name: 'removing packages'
+      file:
+        path: '/tmp/{{ item }}.rpm'
+        state: absent
+      with_items:
+        - redis-tools_3.0.6-1_amd64
+        - libjemalloc1_3.6.0-9ubuntu1_amd64
+        - redis-server_3.0.6-1_amd64
+        - redis-sentinel_3.0.6-1_amd64
