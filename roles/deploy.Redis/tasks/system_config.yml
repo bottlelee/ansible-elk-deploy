@@ -13,14 +13,14 @@
 - name: coping disable-transparent-hugepages script
   copy:
     src: disable-transparent-hugepages
-    dest: /usr/sbin/disable-transparent-hugepages
+    dest: /usr/bin/disable-transparent-hugepages
     mode: 0755
 
-- name: coping service configure files
-  copy:
-    src: "redis-{{ item }}.service"
-    dest: "/etc/systemd/system/redis-{{ item }}.service"
-  with_items:
-    - sentinel
-    - server
-  notify: restarting redis-sentinel
+# - name: coping service configure files
+#   copy:
+#     src: "redis-{{ item }}.service"
+#     dest: "/etc/systemd/system/redis-{{ item }}.service"
+#   with_items:
+#     - sentinel
+#     - server
+#   notify: restarting redis-sentinel

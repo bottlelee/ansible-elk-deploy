@@ -1,20 +1,75 @@
+# - block:
+#     - stat:
+#         path: "downloaded_files/redis-stable.tar.gz"
+#       register: p
+#       failed_when: p.stat.exists == false
+#       delegate_to: localhost
+#       run_once: yes
+#       become: no
+#   rescue:
+#     - name: downloading redis binary file
+#       get_url:
+#         url: "http://download.redis.io/releases/redis-stable.tar.gz"
+#         dest: downloaded_files
+#       register: download
+#       until: download is succeeded
+#       retries: 5
+#       delay: 10
+#       delegate_to: localhost
+#       run_once: yes
+#       become: no
+
 - block:
     - stat:
-        path: "downloaded_files/redis-stable.tar.gz"
+        path: "downloaded_files/redis-3.2.10-2.el7.x86_64.rpm"
       register: p
       failed_when: p.stat.exists == false
       delegate_to: localhost
-      run_once: yes
       become: no
+      run_once: true
   rescue:
-    - name: downloading redis binary file
+    - name: "downloading elasticsearch-{{ elk_version }}.{{ format }}"
       get_url:
-        url: "http://download.redis.io/releases/redis-stable.tar.gz"
-        dest: downloaded_files
+        url: "http://dl.fedoraproject.org/pub/epel/7/x86_64/Packages/r/redis-3.2.10-2.el7.x86_64.rpm"
+        dest: "downloaded_files/"
       register: download
       until: download is succeeded
       retries: 5
       delay: 10
       delegate_to: localhost
-      run_once: yes
       become: no
+      run_once: yes
+  when: "'format' == 'rpm'"
+
+# packages from https://ubuntu.pkgs.org/
+- block:
+    - stat:
+        path: "downloaded_files/{{ item }}.deb"
+      register: p
+      failed_when: p.stat.exists == false
+      delegate_to: localhost
+      become: no
+      run_once: true
+      with_items:
+        - redis-tools_3.0.6-1_amd64
+        - libjemalloc1_3.6.0-9ubuntu1_amd64
+        - redis-server_3.0.6-1_amd64
+        - redis-sentinel_3.0.6-1_amd64
+  rescue:
+    - name: "downloading packages"
+      get_url:
+        url: "http://archive.ubuntu.com/ubuntu/pool/universe{{ item }}"
+        dest: "downloaded_files/"
+      register: download
+      until: download is succeeded
+      retries: 5
+      delay: 10
+      delegate_to: localhost
+      become: no
+      run_once: yes
+      with_items:
+        - '/r/redis/redis-tools_3.0.6-1_amd64.deb'
+        - '/j/jemalloc/libjemalloc1_3.6.0-9ubuntu1_amd64.deb'
+        - '/r/redis/redis-server_3.0.6-1_amd64.deb'
+        - '/r/redis/redis-sentinel_3.0.6-1_amd64.deb'
+  when: format == 'deb'

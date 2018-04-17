@@ -88,7 +88,7 @@ http.port: {{ elastic_http_port | default('9200') }}
 #
 discovery.zen.ping.unicast.hosts:
 {% for item in groups['elasticMasterNode'] %}
-  - "{{ hostvars[item]['ansible_' + bond_interface]['ipv4']['address'] }}"
+  - "{{ item }}.node.{{ consul_dc_name }}.consul"
 {% endfor %}
 #
 # Prevent the "split brain" by configuring the majority of nodes (total number of master-eligible nodes / 2 + 1):

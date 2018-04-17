@@ -13,9 +13,9 @@
         owner: redis
         group: consul
       with_items:
-        -cli
-        -server
-        -sentinel
+        - cli
+        - server
+        - sentinel
   rescue:
     - include_tasks: download.yml
     - include_tasks: build.yml
