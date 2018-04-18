@@ -16,7 +16,6 @@ server {{ item }} iburst
 makestep 1.0 3
 
 {% endif %}
-
 allow {{ hostvars[inventory_hostname]['ansible_' + bond_interface]['ipv4']['network'] }}/24
 driftfile /var/lib/chrony/drift
 rtcsync

@@ -13,19 +13,13 @@
         - urllib3-1.22
         - elasticsearch-6.1.1
         - elasticsearch-curator-5.4.1
-    - name: creating curator config file
-      block:
-        - file:
-            path: '~/.curator'
-            state: directory
-        - template:
-            src: 'curator.yml.j2'
-            dest: '~/.curator/curator.yml'
 
 - include_tasks: 'action_files.yml target={{ item }}'
+  become: no
   with_items:
     - hot_to_warm
 
 - include_tasks: 'cron.yml target={{ item }}'
+  become: no
   with_items:
     - hot_to_warm

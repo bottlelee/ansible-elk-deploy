@@ -1,9 +1,9 @@
-check host consul-dns with address 127.0.0.1
+check host CONSUL-DNS with address 127.0.0.1
   if failed
     port 53
   then exec "/usr/local/bin/dns_forwarding.sh"
 
-check host chronyd with address 127.0.0.1
+check host CHRONY with address {{ hostvars[inventory_hostname]['ansible_' + bond_interface]['ipv4']['address'] }}
   start program = "/usr/sbin/service chronyd start"
   stop program = "/usr/sbin/service chronyd stop"
   if failed
@@ -18,18 +18,18 @@ check host CONSUL with address {{ hostvars[inventory_hostname]['ansible_' + bond
   if failed port 8600 for 2 cycles then restart
 
 {% if 'logstash' in group_names %}
-check host LOGSTASH with address {{ hostvars[inventory_hostname]['ansible_' + bond_interface]['ipv4']['address'] }}
+check host LOGSTASH with address 127.0.0.1
   start program = "/usr/sbin/service logstash start"
   stop program = "/usr/sbin/service logstash stop"
   if failed
-    port {{ logstash_beats_port }}
+    port 9600
     for 3 cycles
   then restart
   if 3 restarts within 10 cycles then stop
 {% endif %}
 
 {% if 'kibana' in group_names %}
-check process KIBANA with pidfile /tmp/kibana.pid
+check host KIBANA with address {{ hostvars[inventory_hostname]['ansible_' + bond_interface]['ipv4']['address'] }}
   start program = "/usr/sbin/service kibana start"
   stop program = "/usr/sbin/service kibana stop"
   if failed
@@ -37,17 +37,26 @@ check process KIBANA with pidfile /tmp/kibana.pid
     for 2 cycles
   then restart
   if 3 restarts within 10 cycles then stop
+
+check host REDIS-MASTER with address redis.service.{{ consul_dc_name }}.consul
+  if failed port 6379 for 3 cycles then alert
 {% endif %}
 
 {% if 'elasticsearch' in group_names %}
 check host ELASTICSEARCH with address {{ hostvars[inventory_hostname]['ansible_' + bond_interface]['ipv4']['address'] }}
+  start program = "/usr/sbin/service elasticsearch start"
+  stop program = "/usr/sbin/service elasticsearch stop"
   if failed port {{ elastic_http_port }} for 3 cycles then alert
 {% endif %}
 
 {% if 'redis' in group_names %}
 check host REDIS-SERVER with address {{ hostvars[inventory_hostname]['ansible_' + bond_interface]['ipv4']['address'] }}
-  if failed port 6379 for 3 cycles then exec "/usr/sbin/redis-server /etc/redis/redis.conf" as uid "redis" and gid "redis"
+  start program = "/usr/sbin/service redis-server start"
+  stop program = "/usr/sbin/service redis-server stop"
+  if failed port 6379 protocol redis for 3 cycles then restart
 
 check host REDIS-SENTINEL with address {{ hostvars[inventory_hostname]['ansible_' + bond_interface]['ipv4']['address'] }}
-  if failed port 26379 for 3 cycles then exec "/usr/sbin/service redis-sentinel start"
+  start program = "/usr/sbin/service redis-sentinel start"
+  stop program = "/usr/sbin/service redis-sentinel stop"
+  if failed port 26379 for 3 cycles then restart
 {% endif %}

@@ -1,6 +1,20 @@
-- name: restarting redis-sentinel
+- name: restart redis-sentinel
   service:
     name: redis-sentinel
     state: restarted
+    daemon_reload: yes
+    enabled: yes
+
+- name: restart redis-server
+  service:
+    name: redis-server
+    state: restarted
+    daemon_reload: yes
+    enabled: yes
+
+- name: start disable-thp.service
+  service:
+    name: disable-thp
+    state: started
     daemon_reload: yes
     enabled: yes

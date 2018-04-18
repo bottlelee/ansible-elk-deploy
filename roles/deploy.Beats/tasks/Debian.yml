@@ -13,6 +13,7 @@
       service:
         name: '{{ target }}'
         state: restarted
+        enabled: yes
   rescue:
     - command: "dpkg -i /tmp/{{ target }}-{{ elk_version }}-amd64.deb"
 

@@ -1,0 +1,10 @@
+- hosts: all
+  become: yes
+  serial:
+    - 1
+    - 30%
+  tasks:
+    - apt:
+        update_cache: yes
+        upgrade: dist
+      when: ansible_os_family == 'Debian'

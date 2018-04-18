@@ -3,38 +3,37 @@
     src: "redis.conf.j2"
     dest: "/etc/redis/redis.conf"
     owner: redis
-    group: redis
+    group: root
     mode: 0660
-  register: serverConfig
+  notify: restart redis-server
 
-- include_tasks: restart_redis.yml
-  when: serverConfig is changed
-
-- name: updating sentinel.conf
-  lineinfile:
-    path: /etc/redis/sentinel.conf
-    create: yes
-    owner: redis
-    group: redis
-    mode: 0660
-    line: "{{ item.line }}"
-    regexp: "{{ item.regexp }}"
-  with_items:
-    - line: "bind {{ hostvars[inventory_hostname]['ansible_' + bond_interface]['ipv4']['address'] }}"
-      regexp: "^bind"
-    - line: "protected-mode no"
-      regexp: "^protected-mode"
-    - line: "port 26379"
-      regexp: "^port"
-    - line: "sentinel monitor {{ groups['redis'][0] }} {{ hostvars[groups['redis'][0]]['ansible_' + bond_interface]['ipv4']['address'] }} 6379 2"
-      regexp: "^sentinel monitor"
-    - line: "sentinel down-after-milliseconds {{ groups['redis'][0] }} 30000"
-      regexp: "^sentinel down-after-milliseconds"
-    - line: "sentinel parallel-syncs {{ groups['redis'][0] }} 1"
-      regexp: "^sentinel parallel-syncs"
-    - line: "sentinel failover-timeout {{ groups['redis'][0] }} 180000"
-      regexp: "^sentinel failover-timeout"
-  register: sentinelConfig
-
-- include_tasks: restart_sentinel.yml
-  when: sentinelConfig is changed
+- block:
+    - name: checking redis.service.consul
+      wait_for:
+        host: "redis.service.{{ consul_dc_name }}.consul"
+        port: 6379
+        timeout: 10
+  rescue:
+    - name: updating sentinel.conf
+      lineinfile:
+        path: /etc/redis/sentinel.conf
+        create: yes
+        owner: redis
+        group: root
+        mode: 0660
+        line: "{{ item.line }}"
+        regexp: "{{ item.regexp }}"
+      with_items:
+        - line: "bind {{ hostvars[inventory_hostname]['ansible_' + bond_interface]['ipv4']['address'] }}"
+          regexp: "^bind"
+        - line: "port 26379"
+          regexp: "^port"
+        - line: "sentinel monitor {{ groups['redis'][0] }} {{ hostvars[groups['redis'][0]]['ansible_' + bond_interface]['ipv4']['address'] }} 6379 2"
+          regexp: "^sentinel monitor"
+        - line: "sentinel down-after-milliseconds {{ groups['redis'][0] }} 10000"
+          regexp: "^sentinel down-after-milliseconds"
+        - line: "sentinel parallel-syncs {{ groups['redis'][0] }} 1"
+          regexp: "^sentinel parallel-syncs"
+        - line: "sentinel failover-timeout {{ groups['redis'][0] }} 300000"
+          regexp: "^sentinel failover-timeout"
+      notify: restart redis-sentinel

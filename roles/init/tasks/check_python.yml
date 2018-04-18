@@ -7,12 +7,12 @@
     - name: checking python3
       raw: test -e /usr/bin/python3
       changed_when: false
-    - name: add host into group 'ubuntu_hosts'
+    - name: add host into group 'python3'
       block:
         - lineinfile:
             path: hosts.ini
             line: '{{ inventory_hostname }} ansible_python_interpreter=/usr/bin/python3'
-            insertafter: '\[ubuntu_hosts\]'
+            insertafter: '\[python3\]'
             state: present
           delegate_to: localhost
           become: no
@@ -28,7 +28,7 @@
     - name: checking python2
       raw: test -e /usr/bin/python
       changed_when: false
-    - name: remove host from group 'ubuntu_hosts'
+    - name: remove host from group 'python3'
       lineinfile:
         path: hosts.ini
         line: '{{ inventory_hostname }} ansible_python_interpreter=/usr/bin/python3'
@@ -37,3 +37,8 @@
       become: no
     - meta: clear_host_errors
     - meta: refresh_inventory
+
+- block:
+    - setup:
+  rescue:
+    - include_tasks: check_python.yml

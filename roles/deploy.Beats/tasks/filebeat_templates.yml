@@ -1,11 +1,11 @@
-- name: 'Updating filebeat.yml'
+- name: updating filebeat.yml
   template:
     src: 'filebeat.yml.j2'
     dest: '/etc/filebeat/filebeat.yml'
     mode: 0600
   register: configSt
 
-- name: Enable filebeat modules
+- name: enable filebeat modules
   command: "filebeat modules enable {{ item }}"
   changed_when: false
   with_items:
@@ -13,10 +13,15 @@
     - auditd
     - '{{ filebeat_modules }}'
 
-- name: 'Testing filebeat'
+- name: testing filebeat
   command: 'filebeat test {{ item }}'
   with_items:
     - output
     - config
   when: configSt is changed
   notify: Restart filebeat service
+
+- name: setup alias
+  uri:
+    url: http://elastic-ingest.service.consul:9200/filebeat-*/_alias/active-logs
+    method: PUT

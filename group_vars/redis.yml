@@ -1,0 +1,5 @@
+filebeat_modules:
+  - redis
+
+metricbeat_modules:
+  - redis

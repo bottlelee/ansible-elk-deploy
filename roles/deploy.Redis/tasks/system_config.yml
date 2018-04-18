@@ -9,15 +9,28 @@
       value: 512
     - name: vm.overcommit_memory
       value: 1
+    - name: fs.file-max
+      value: 10032
 
 - name: coping disable-transparent-hugepages script
   copy:
     src: disable-transparent-hugepages
-    dest: /usr/sbin/disable-transparent-hugepages
+    dest: /usr/bin/disable-transparent-hugepages
     mode: 0755
 
-- name: coping service configure files
+- name: create disable transparent hugepages service
   copy:
-    src: "redis-sentinel.service"
-    dest: "/etc/systemd/system/redis-sentinel.service"
-  notify: restarting redis-sentinel
+    src: disable-thp.service
+    dest: /lib/systemd/system/
+    owner: root
+    group: root
+    mode: 0544
+  notify: start disable-thp.service
+
+- name: config /lib/systemd/system/redis-server.service
+  ini_file:
+    path: /lib/systemd/system/redis-server.service
+    section: Service
+    option: LimitNOFILE
+    value: 65536
+  notify: restart redis-server

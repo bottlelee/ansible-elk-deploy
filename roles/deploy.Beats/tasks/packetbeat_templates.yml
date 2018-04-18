@@ -13,3 +13,8 @@
     - config
   when: configSt is changed
   notify: Restart packetbeat service
+
+- name: setup alias
+  uri:
+    url: http://elastic-ingest.service.consul:9200/packetbeat-*/_alias/active-logs
+    method: PUT

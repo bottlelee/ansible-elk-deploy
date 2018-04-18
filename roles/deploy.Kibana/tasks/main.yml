@@ -3,7 +3,7 @@
       command: "/usr/share/kibana/bin/kibana version"
       changed_when: false
       register: verChk
-      failed_when: elk_version > verChk.stdout
+      failed_when: verChk.stdout is version(elk_version, operator='lt', strict=True)
     - name: checking kibana service status
       wait_for:
         port: '{{ kibana_port }}'

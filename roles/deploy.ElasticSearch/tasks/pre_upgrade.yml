@@ -16,6 +16,7 @@
     method: PUT
     body: "{{ lookup('file','disable_shard.json') }}"
     body_format: json
+  when: node_data is sameas true
 
 - name: stopping service
   service:

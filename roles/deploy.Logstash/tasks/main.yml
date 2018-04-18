@@ -3,22 +3,11 @@
       shell: /usr/share/logstash/bin/logstash -V | awk '{ print $2 }'
       changed_when: false
       register: verChk
-      failed_when: elk_version > verChk.stdout
+      failed_when: verChk.stdout is version(elk_version, operator='lt', strict=True)
   rescue:
     - include_tasks: env_check.yml
       when: verChk.rc == 1
     - include_tasks: '{{ ansible_os_family }}.yml'
-
-- name: set /var/lib/logstash ownership
-  file:
-    path: '{{ item }}'
-    state: directory
-    owner: logstash
-    group: logstash
-    recurse: yes
-  with_items:
-    - '{{ logstash_log_path }}'
-    - '{{ logstash_data_path }}'
 
 - name: updating logstash configuration
   template:
@@ -46,3 +35,14 @@
   command: /usr/share/logstash/bin/logstash -t --path.settings=/etc/logstash
   notify: Restart logstash service
   when: configSt is changed or pipelineSt is changed
+
+- name: set /var/lib/logstash ownership
+  file:
+    path: '{{ item }}'
+    state: directory
+    owner: logstash
+    group: logstash
+    recurse: yes
+  with_items:
+    - '{{ logstash_log_path }}'
+    - '{{ logstash_data_path }}'

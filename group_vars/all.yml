@@ -1,6 +1,11 @@
-elk_version: '6.2.2'
+elk_version: '6.2.3'
 timezone: 'Asia/Shanghai'
-bond_interface: 'eth1'
+bond_interface: 'enp0s8'
+
+# DNS nameserver
+dns_servers:
+  - 127.0.0.1
+  - 1.1.1.1
 
 # Do NOT edit the following lines unless you know why.
 elastic_http_port: '9200'
@@ -27,9 +32,9 @@ consul_dc_name: 'elk'
 
 # Monit
 monit_version: '5.25.1'
-smtp_host: '127.0.0.1'
-smtp_user: 'user'
-smtp_pass: 'pass'
+smtp_host: ''
+smtp_user: ''
+smtp_pass: ''
 recipients:
   - {
     name: '李海滨',
