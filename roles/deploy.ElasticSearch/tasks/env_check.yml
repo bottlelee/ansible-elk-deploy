@@ -24,4 +24,4 @@
     - 'elasticsearch hard memlock unlimited'
     - 'elasticsearch - nofile 65536'
     - 'ulimit -n 65536'
-    - 'fsize unlimited'
+    # - 'fsize unlimited'

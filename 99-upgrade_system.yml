@@ -1,5 +1,8 @@
 - hosts: all
   become: yes
+  serial:
+    - 1
+    - 30%
   tasks:
     - apt:
         update_cache: yes

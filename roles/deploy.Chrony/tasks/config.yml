@@ -1,4 +1,4 @@
-- name: update master chrony.conf
+- name: update chrony.conf
   template:
     src: chrony.conf.j2
     dest: /etc/chrony.conf

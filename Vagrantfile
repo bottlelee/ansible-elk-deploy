@@ -10,6 +10,7 @@ $vm_box = "ubuntu/xenial64"
 $instances = 14
 $python_command = "/usr/bin/python"
 $bond_interface = "eth0"
+$apt_proxy = "http://192.168.205.16:3142"
 
 if $vm_box == "ubuntu/xenial64"
   $bond_interface = "enp0s8"
@@ -26,8 +27,8 @@ Vagrant.configure("2") do |config|
   if Vagrant.has_plugin?("vagrant-vbguest") then
     config.vbguest.auto_update = false
   end
-  if Vagrant.has_plugin?("vagrant-proxyconf") and $vm_box == "ubuntu/xenial64" then
-    config.apt_proxy.http = "http://192.168.205.16:3142"
+  if Vagrant.has_plugin?("vagrant-proxyconf") and $vm_box == "ubuntu/xenial64" and $apt_proxy != "" then
+    config.apt_proxy.http = $apt_proxy
     config.apt_proxy.https = "DIRECT"
   end
 

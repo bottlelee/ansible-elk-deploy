@@ -1,9 +1,9 @@
-check host consul-dns with address 127.0.0.1
+check host CONSUL-DNS with address 127.0.0.1
   if failed
     port 53
   then exec "/usr/local/bin/dns_forwarding.sh"
 
-check host chronyd with address 127.0.0.1
+check host CHRONY with address {{ hostvars[inventory_hostname]['ansible_' + bond_interface]['ipv4']['address'] }}
   start program = "/usr/sbin/service chronyd start"
   stop program = "/usr/sbin/service chronyd stop"
   if failed
@@ -53,7 +53,7 @@ check host ELASTICSEARCH with address {{ hostvars[inventory_hostname]['ansible_'
 check host REDIS-SERVER with address {{ hostvars[inventory_hostname]['ansible_' + bond_interface]['ipv4']['address'] }}
   start program = "/usr/sbin/service redis-server start"
   stop program = "/usr/sbin/service redis-server stop"
-  if failed port 6379 for 3 cycles then restart
+  if failed port 6379 protocol redis for 3 cycles then restart
 
 check host REDIS-SENTINEL with address {{ hostvars[inventory_hostname]['ansible_' + bond_interface]['ipv4']['address'] }}
   start program = "/usr/sbin/service redis-sentinel start"
