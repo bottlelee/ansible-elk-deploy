@@ -1,17 +1,23 @@
 # search packages on https://centos.pkgs.org/
 - block:
     - stat:
-        path: "downloaded_files/redis-3.2.10-2.el7.x86_64.rpm"
+        path: "downloaded_files/{{ item }}"
+      with_items:
+        - redis-3.2.10-2.el7.x86_64.rpm
+        - jemalloc-3.6.0-1.el7.x86_64.rpm
       register: p
       failed_when: p.stat.exists == false
       delegate_to: localhost
       become: no
       run_once: true
   rescue:
-    - name: "downloading elasticsearch-{{ elk_version }}.{{ format }}"
+    - name: "downloading packages"
       get_url:
-        url: "http://dl.fedoraproject.org/pub/epel/7/x86_64/Packages/r/redis-3.2.10-2.el7.x86_64.rpm"
+        url: "http://dl.fedoraproject.org/pub/epel/7/x86_64/Packages{{ item }}"
         dest: "downloaded_files/"
+      with_items:
+        - /r/redis-3.2.10-2.el7.x86_64.rpm
+        - /j/jemalloc-3.6.0-1.el7.x86_64.rpm
       register: download
       until: download is succeeded
       retries: 5

@@ -29,3 +29,11 @@
         - libjemalloc1_3.6.0-9ubuntu1_amd64
         - redis-server_3.0.6-1_amd64
         - redis-sentinel_3.0.6-1_amd64
+        
+- name: config /etc/systemd/system/redis-server.service.d/limit.conf
+  ini_file:
+    path: /etc/systemd/system/redis-server.service.d/limit.conf
+    section: Service
+    option: LimitNOFILE
+    value: 10240
+  notify: restart redis-server

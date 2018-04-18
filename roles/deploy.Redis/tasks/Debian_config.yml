@@ -12,7 +12,7 @@
       wait_for:
         host: "redis.service.{{ consul_dc_name }}.consul"
         port: 6379
-        timeout: 10
+        timeout: 3
   rescue:
     - name: updating sentinel.conf
       lineinfile:
