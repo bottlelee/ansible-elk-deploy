@@ -23,3 +23,8 @@
     - config
   notify: Restart metricbeat service
   when: configSt is changed
+
+- name: setup alias
+  uri:
+    url: http://elastic-ingest.service.consul:9200/metricbeat-*/_alias/active-logs
+    method: PUT
