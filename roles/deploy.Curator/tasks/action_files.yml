@@ -1,12 +1,28 @@
-- name: 'updating action file {{ target }}.yml'
-  template:
-    src: '{{ target }}.yml.j2'
-    dest: '~/.curator/{{ target }}.yml'
-  register: update
-
-- name: 'checking action file {{ target }}.yml'
-  command: 'curator --dry-run {{ target }}.yml'
-  args:
-    chdir: '~/.curator'
-  changed_when: false
-  when: update is changed
+- block:
+    - name: 'updating action file {{ target }}.yml'
+      template:
+        src: '{{ target }}.yml.j2'
+        dest: '{{ ansible_user_dir }}/.curator/{{ target }}.yml'
+        owner: '{{ ansible_user_id }}'
+        group: '{{ ansible_user_id }}'
+      register: update
+    - name: 'checking action file {{ target }}.yml'
+      command: 'curator --dry-run {{ target }}.yml'
+      args:
+        chdir: '{{ ansible_user_dir }}/.curator'
+      changed_when: false
+      when: update is changed
+  rescue:
+    - name: "create directory {{ ansible_user_dir }}/.curator/"
+      file:
+        path: "{{ ansible_user_dir }}/.curator/"
+        state: directory
+        owner: '{{ ansible_user_id }}'
+        group: '{{ ansible_user_id }}'
+    - name: create curator.yml
+      template:
+        src: 'curator.yml.j2'
+        dest: '{{ ansible_user_dir }}/.curator/curator.yml'
+        owner: '{{ ansible_user_id }}'
+        group: '{{ ansible_user_id }}'
+    - include_tasks: action_files.yml

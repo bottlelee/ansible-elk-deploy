@@ -1,5 +1,5 @@
 - name: "adding action {{ target }} to cron"
   cron:
     name: 'run curator action {{ target }}'
-    job: '/usr/bin/curator {{ ansible_user_dir }}/.curator/{{ target }}.yml'
+    job: '/usr/local/bin/curator {{ ansible_user_dir }}/.curator/{{ target }}.yml'
     hour: '3-5'
