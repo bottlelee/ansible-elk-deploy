@@ -4,9 +4,9 @@
       changed_when: false
   rescue:
     - include_tasks: '{{ ansible_os_family }}.yml'
-- include_tasks: system_config.yml
+    - include_tasks: system_config.yml
 
-- include_tasks: service_config.yml
+- include_tasks: '{{ ansible_os_family }}_config.yml'
 
 - name: coping check_redis_master.sh script
   copy:

@@ -5,8 +5,8 @@ ENV["LC_ALL"] = "en_US.UTF-8"
 
 Vagrant.require_version ">= 2.0.0"
 
-$vm_box = "ubuntu/xenial64"
-# $vm_box = "centos/7"
+# $vm_box = "ubuntu/xenial64"
+$vm_box = "centos/7"
 $instances = 14
 $python_command = "/usr/bin/python"
 $bond_interface = "eth0"
@@ -14,7 +14,6 @@ $apt_proxy = "http://192.168.205.16:3142"
 
 if $vm_box == "ubuntu/xenial64"
   $bond_interface = "enp0s8"
-  $python_command = "/usr/bin/python3"
 elsif $vm_box == "centos/7"
   $bond_interface = "eth1"
 end
@@ -24,6 +23,8 @@ Vagrant.configure("2") do |config|
   config.ssh.insert_key = false
   config.vm.box_check_update = false
   config.vm.box = $vm_box
+  config.vm.synced_folder "./", "/vagrant", type: "rsync",
+    rsync__exclude: [".git/", "downloaded_files/"]
   if Vagrant.has_plugin?("vagrant-vbguest") then
     config.vbguest.auto_update = false
   end
@@ -62,7 +63,6 @@ Vagrant.configure("2") do |config|
       if instance_id == $instances
         config.vm.provision "ansible" do |ansible|
           ansible.extra_vars = {
-            # ansible_python_interpreter: $python_command,
             bond_interface: $bond_interface
           }
           ansible.groups = {

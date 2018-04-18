@@ -8,12 +8,12 @@ es-master-2 ansible_host=172.23.56.105
 es-master-3 ansible_host=172.23.56.108
 
 # ElasticSearch ingest node.(Optional)
-# IMPORTANT: At least 1 nodes. If you don't need this group, please set `node_ingest: true` in `group_vars/elasticMasterNode.yml` file.
+# IMPORTANT: If you don't need this group, please set `node_ingest: true` in `group_vars/elasticMasterNode.yml` file.
 # Read more on https://www.elastic.co/guide/en/elasticsearch/reference/current/modules-node.html#node-ingest-node
 # More settings in `group_vars/elasticIngestNode.yml` file.
 [elasticIngestNode]
 
-# ElasticSearch hot data node, where newest data will be stored.
+# ElasticSearch hot data node, where newest data will be stored. Re-commanded for SSD storage
 # IMPORTANT: At least 3 nodes
 # Read more on https://www.elastic.co/blog/hot-warm-architecture
 # More settings in `group_vars/elasticDataNode.yml` file.
@@ -22,9 +22,12 @@ es-hot-1 ansible_host=172.23.56.111
 es-hot-2 ansible_host=172.23.56.112
 es-hot-3 ansible_host=172.23.56.113
 
-# ElasticSearch warm data node(Optional)
+# ElasticSearch warm data node(Optional). Normal Hard drive is OK.
 # More settings in `group_vars/elasticDataNode.yml` file.
 [elasticWarmNode]
+es-warm-1 ansible_host=172.23.56.121
+es-warm-2 ansible_host=172.23.56.122
+es-warm-3 ansible_host=172.23.56.123
 
 [elasticDataNode:children]
 elasticHotNode
@@ -61,7 +64,7 @@ ansible_user=nsc
 ansible_ssh_pass=quanduan
 ansible_sudo_pass=quanduan
 
-[ubuntu_hosts]
+[python3]
 es-ingest-2 ansible_python_interpreter=/usr/bin/python3
 es-hot-1 ansible_python_interpreter=/usr/bin/python3
 es-master-3 ansible_python_interpreter=/usr/bin/python3

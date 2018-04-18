@@ -1,31 +1,40 @@
 - block:
     - name: 'uploading packages'
       copy:
-        src: 'downloaded_files/{{ item }}.rpm'
-        dest: /tmp/
+        src: 'downloaded_files/{{ item }}'
+        dest: '/tmp/{{ item }}'
       with_items:
-        - libjemalloc1_3.6.0-9ubuntu1_amd64
-        - redis-tools_3.0.6-1_amd64
-        - redis-server_3.0.6-1_amd64
-        - redis-sentinel_3.0.6-1_amd64
+        - jemalloc-3.6.0-1.el7.x86_64.rpm
+        - redis-3.2.10-2.el7.x86_64.rpm
     - name: 'installing packages'
-      apt:
-        deb: '/tmp/{{ item }}.rpm'
+      yum:
+        name: 'file:///tmp/{{ item }}'
       with_items:
-        - libjemalloc1_3.6.0-9ubuntu1_amd64
-        - redis-tools_3.0.6-1_amd64
-        - redis-server_3.0.6-1_amd64
-        - redis-sentinel_3.0.6-1_amd64
+        - jemalloc-3.6.0-1.el7.x86_64.rpm
+        - redis-3.2.10-2.el7.x86_64.rpm
   rescue:
-    - include_tasks: download.yml format=deb
+    - include_tasks: download.yml format=rpm
     - include_tasks: '{{ ansible_os_family }}.yml'
   always:
     - name: 'removing packages'
       file:
-        path: '/tmp/{{ item }}.rpm'
+        path: '/tmp/{{ item }}'
         state: absent
       with_items:
-        - redis-tools_3.0.6-1_amd64
-        - libjemalloc1_3.6.0-9ubuntu1_amd64
-        - redis-server_3.0.6-1_amd64
-        - redis-sentinel_3.0.6-1_amd64
+        - jemalloc-3.6.0-1.el7.x86_64.rpm
+        - redis-3.2.10-2.el7.x86_64.rpm
+
+- name: set service name alias
+  ini_file:
+    path: /usr/lib/systemd/system/redis.service
+    section: Install
+    option: Alias
+    value: redis-server.service
+
+- systemd:
+    name: '{{ item }}'
+    daemon_reload: yes
+    enabled: yes
+  with_items:
+    - redis
+    - redis-sentinel
