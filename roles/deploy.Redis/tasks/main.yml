@@ -1,6 +1,6 @@
 - block:
     - name: checking redis command
-      command: test -e /usr/bin/redis-server1
+      command: test -e /usr/bin/redis-server
       changed_when: false
   rescue:
     - include_tasks: '{{ ansible_os_family }}.yml'

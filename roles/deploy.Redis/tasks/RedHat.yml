@@ -32,7 +32,9 @@
     value: redis-server.service
 
 - systemd:
-    name: redis
+    name: '{{ item }}'
     daemon_reload: yes
     enabled: yes
-  notify: restart redis-server
+  with_items:
+    - redis
+    - redis-sentinel

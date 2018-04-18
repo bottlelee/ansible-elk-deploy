@@ -21,7 +21,7 @@
   when: configSt is changed
   notify: Restart filebeat service
 
-- name: setup alias
-  uri:
-    url: http://elastic-ingest.service.consul:9200/filebeat-*/_alias/active-logs
-    method: PUT
+# - name: setup alias
+#   uri:
+#     url: http://elastic-ingest.service.consul:9200/filebeat-*/_alias/active-logs
+#     method: PUT
