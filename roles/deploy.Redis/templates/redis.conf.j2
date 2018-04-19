@@ -66,7 +66,7 @@ tcp-backlog 511
 # Examples:
 #
 # bind 192.168.1.100 10.0.0.1
-bind {{ hostvars[inventory_hostname]['ansible_' + bond_interface]['ipv4']['address'] }} 127.0.0.1
+bind {{ bind_address }} 127.0.0.1
 
 # Specify the path for the Unix socket that will be used to listen for
 # incoming connections. There is no default, so Redis will not listen
@@ -209,7 +209,7 @@ dir /var/lib/redis
 #
 # slaveof <masterip> <masterport>
 {% if inventory_hostname != groups['redis'][0] %}
-slaveof {{ hostvars[groups['redis'][0]]['ansible_' + bond_interface]['ipv4']['address'] }} 6379
+slaveof {{ hostvars[groups['redis'][0]]['bind_address'] }} 6379
 {% endif %}
 
 # If the master is password protected (using the "requirepass" configuration

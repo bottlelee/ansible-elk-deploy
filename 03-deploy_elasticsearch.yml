@@ -1,6 +1,3 @@
-- hosts: all
-  tasks: []
-
 - hosts: elasticsearch
   become: yes
   serial: 1
@@ -14,7 +11,7 @@
     - block:
         - name: waiting for service started
           wait_for:
-            host: "{{ hostvars[inventory_hostname]['ansible_' + bond_interface]['ipv4']['address'] }}"
+            host: "{{ bind_address }}"
             port: '{{ elastic_http_port }}'
             timeout: 60
       rescue:
@@ -22,6 +19,6 @@
             name: elasticsearch
             state: restarted
         - wait_for:
-            host: "{{ hostvars[inventory_hostname]['ansible_' + bond_interface]['ipv4']['address'] }}"
+            host: "{{ bind_address }}"
             port: '{{ elastic_http_port }}'
             timeout: 120

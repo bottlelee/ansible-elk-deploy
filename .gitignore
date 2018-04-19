@@ -11,3 +11,4 @@ downloaded_files
 .vagrant
 *.log
 fact_caching
+host_vars/*.yml

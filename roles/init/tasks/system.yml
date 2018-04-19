@@ -1,7 +1,7 @@
-- name: "checking {{ bond_interface }}"
+- name: "checking {{ bind_interface }}"
   fail:
-    msg: "interface {{ bond_interface }} has no IP address"
-  when: hostvars[inventory_hostname]['ansible_' + bond_interface]['ipv4']['address'] == ''
+    msg: "interface {{ bind_interface }} has no IP address"
+  when: hostvars[inventory_hostname]['ansible_' + bind_interface]['ipv4']['address'] == ''
 
 - name: setup sysctl
   sysctl:

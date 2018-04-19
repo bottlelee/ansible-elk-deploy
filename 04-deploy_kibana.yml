@@ -1,6 +1,3 @@
-- hosts: all
-  tasks: []
-
 - hosts: kibana
   become: yes
   serial:

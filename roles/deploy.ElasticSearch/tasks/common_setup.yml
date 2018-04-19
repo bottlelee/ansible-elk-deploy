@@ -28,7 +28,7 @@
 
 - name: waiting for service started
   wait_for:
-    host: "{{ hostvars[inventory_hostname]['ansible_' + bond_interface]['ipv4']['address'] }}"
+    host: "{{ bind_address }}"
     port: '9200'
     timeout: 120
 

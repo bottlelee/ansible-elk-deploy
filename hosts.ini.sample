@@ -63,8 +63,3 @@ elasticWarmNode
 ansible_user=nsc
 ansible_ssh_pass=quanduan
 ansible_sudo_pass=quanduan
-
-[python3]
-es-ingest-2 ansible_python_interpreter=/usr/bin/python3
-es-hot-1 ansible_python_interpreter=/usr/bin/python3
-es-master-3 ansible_python_interpreter=/usr/bin/python3

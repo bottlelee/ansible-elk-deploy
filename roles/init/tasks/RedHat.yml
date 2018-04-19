@@ -18,7 +18,7 @@
 
 - name: setup dns server
   lineinfile:
-    path: "/etc/sysconfig/network-scripts/ifcfg-{{ bond_interface }}"
+    path: "/etc/sysconfig/network-scripts/ifcfg-{{ bind_interface }}"
     line: "{{ item }}"
   with_items:
     - "DNS1={{ dns_servers[0] }}"

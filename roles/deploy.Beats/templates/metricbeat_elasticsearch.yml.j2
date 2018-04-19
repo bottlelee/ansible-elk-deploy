@@ -2,4 +2,4 @@
   metricsets: ["node", "node_stats"]
   enabled: true
   period: 30s
-  hosts: ["{{ hostvars[inventory_hostname]['ansible_' + bond_interface]['ipv4']['address'] }}:{{ elastic_http_port }}"]
+  hosts: ["{{ bind_address }}:{{ elastic_http_port }}"]

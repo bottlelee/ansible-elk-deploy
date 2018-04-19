@@ -24,11 +24,11 @@
         line: "{{ item.line }}"
         regexp: "{{ item.regexp }}"
       with_items:
-        - line: "bind {{ hostvars[inventory_hostname]['ansible_' + bond_interface]['ipv4']['address'] }}"
+        - line: "bind {{ bind_address }}"
           regexp: "^bind"
         - line: "port 26379"
           regexp: "^port"
-        - line: "sentinel monitor {{ groups['redis'][0] }} {{ hostvars[groups['redis'][0]]['ansible_' + bond_interface]['ipv4']['address'] }} 6379 2"
+        - line: "sentinel monitor {{ groups['redis'][0] }} {{ hostvars[groups['redis'][0]]['bind_address'] }} 6379 2"
           regexp: "^sentinel monitor"
         - line: "sentinel down-after-milliseconds {{ groups['redis'][0] }} 10000"
           regexp: "^sentinel down-after-milliseconds"
