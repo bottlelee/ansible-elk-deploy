@@ -1,0 +1,13 @@
+- name: "insert host vars"
+  lineinfile:
+    path: "host_vars/{{ inventory_hostname }}.yml"
+    regexp: "{{ item.regexp }}"
+    line: "{{ item.line }}"
+    create: yes
+  with_items:
+    - regexp: "^bind_address"
+      line: "bind_address: {{ hostvars[inventory_hostname]['ansible_' + bind_interface]['ipv4']['address'] }}"
+    - regexp: "^bind_network"
+      line: "bind_network: {{ hostvars[inventory_hostname]['ansible_' + bind_interface]['ipv4']['network'] }}"
+  delegate_to: localhost
+  become: no

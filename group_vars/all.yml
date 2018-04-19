@@ -2,7 +2,7 @@ elk_version: '6.2.3'
 timezone: 'Asia/Shanghai'
 
 # Set the network interface name to get IP
-bond_interface: 'eth1'
+bind_interface: 'eth1'
 
 # DNS nameserver
 dns_servers:

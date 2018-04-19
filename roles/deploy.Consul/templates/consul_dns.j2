@@ -4,5 +4,5 @@
 {% endif %}
 nameserver 127.0.0.1
 {% for item in groups['elasticMasterNode'] if item != inventory_hostname %}
-nameserver {{ hostvars[item]['ansible_' + bond_interface]['ipv4']['address'] }}
+nameserver {{ bind_address }}
 {% endfor %}

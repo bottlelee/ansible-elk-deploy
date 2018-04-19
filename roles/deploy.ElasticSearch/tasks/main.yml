@@ -24,7 +24,7 @@
   when: configSt is changed
 
 - wait_for:
-    host: "{{ hostvars[inventory_hostname]['ansible_' + bond_interface]['ipv4']['address'] }}"
+    host: "{{ bind_address }}"
     port: '{{ item }}'
   with_items:
     - 9300
@@ -33,7 +33,7 @@
 - block:
     - name: checking ElasticSearch version
       uri:
-        url: "http://{{ hostvars[inventory_hostname]['ansible_' + bond_interface]['ipv4']['address'] }}:{{ elastic_http_port }}"
+        url: "http://{{ bind_address }}:{{ elastic_http_port }}"
         return_content: yes
       register: versionCheck
       changed_when: false

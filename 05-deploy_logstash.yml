@@ -1,6 +1,3 @@
-- hosts: all
-  tasks: []
-
 - hosts: logstash
   become: yes
   serial:

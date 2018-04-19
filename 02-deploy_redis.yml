@@ -1,6 +1,3 @@
-- hosts: all
-  tasks: []
-
 - hosts: redis
   become: yes
   serial:

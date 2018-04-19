@@ -9,7 +9,7 @@
 
 - name: 'check if port {{ elastic_http_port }} available'
   wait_for:
-    host: "{{ hostvars[inventory_hostname]['ansible_' + bond_interface]['ipv4']['address'] }}"
+    host: "{{ bind_address }}"
     port: '{{ elastic_http_port }}'
     state: stopped
     timeout: 3

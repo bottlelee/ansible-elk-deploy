@@ -2,43 +2,31 @@
     - name: checking python2
       raw: test -e /usr/bin/python
       changed_when: false
-      when: ansible_python_interpreter is not defined
-  rescue:
-    - name: checking python3
-      raw: test -e /usr/bin/python3
-      changed_when: false
-    - name: add host into group 'python3'
-      block:
-        - lineinfile:
-            path: hosts.ini
-            line: '{{ inventory_hostname }} ansible_python_interpreter=/usr/bin/python3'
-            insertafter: '\[python3\]'
-            state: present
-          delegate_to: localhost
-          become: no
-    - meta: clear_host_errors
-    - meta: refresh_inventory
-
-- block:
-    - name: checking python3
-      raw: test -e /usr/bin/python3
-      changed_when: false
-      when: ansible_python_interpreter is defined
-  rescue:
-    - name: checking python2
-      raw: test -e /usr/bin/python
-      changed_when: false
-    - name: remove host from group 'python3'
+    - name: "create/update host_vars files"
       lineinfile:
-        path: hosts.ini
-        line: '{{ inventory_hostname }} ansible_python_interpreter=/usr/bin/python3'
-        state: absent
+        path: "host_vars/{{ inventory_hostname }}.yml"
+        regexp: "^ansible_python_interpreter"
+        line: "ansible_python_interpreter: /usr/bin/python"
+        create: yes
       delegate_to: localhost
       become: no
-    - meta: clear_host_errors
-    - meta: refresh_inventory
+  rescue:
+    - name: checking python3
+      raw: test -e /usr/bin/python3
+      changed_when: false
+    - name: "create/update host_vars files"
+      lineinfile:
+        path: "host_vars/{{ inventory_hostname }}.yml"
+        regexp: "^ansible_python_interpreter"
+        line: "ansible_python_interpreter: /usr/bin/python3"
+        create: yes
+      delegate_to: localhost
+      become: no
 
 - block:
+    - meta: clear_host_errors
+    - meta: refresh_inventory
     - setup:
+    - include_tasks: create_hostvars.yml
   rescue:
     - include_tasks: check_python.yml

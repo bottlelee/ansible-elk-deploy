@@ -9,7 +9,7 @@
       ],
       "checks": [
         {
-          "tcp": "{{ hostvars[inventory_hostname]['ansible_' + bond_interface]['ipv4']['address'] }}:{{ logstash_beats_port }}",
+          "tcp": "{{ bind_address }}:{{ logstash_beats_port }}",
           "interval": "10s",
           "timeout": "3s"
         }

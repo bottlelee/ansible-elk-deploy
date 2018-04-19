@@ -1,6 +1,6 @@
 - name: checking cluster health status
   uri:
-    url: http://{{ hostvars[inventory_hostname]['ansible_' + bond_interface]['ipv4']['address'] }}:{{ elastic_http_port }}/_cluster/health
+    url: http://{{ bind_address }}:{{ elastic_http_port }}/_cluster/health
     method: GET
     return_content: yes
     body_format: json
@@ -12,7 +12,7 @@
 
 - name: stopping shards
   uri:
-    url: "http://{{ hostvars[inventory_hostname]['ansible_' + bond_interface]['ipv4']['address'] }}:{{ elastic_http_port }}/_cluster/settings"
+    url: "http://{{ bind_address }}:{{ elastic_http_port }}/_cluster/settings"
     method: PUT
     body: "{{ lookup('file','disable_shard.json') }}"
     body_format: json
@@ -25,7 +25,7 @@
 
 - name: waiting for port down
   wait_for:
-    host: "{{ hostvars[inventory_hostname]['ansible_' + bond_interface]['ipv4']['address'] }}"
+    host: "{{ bind_address }}"
     port: '{{ elastic_http_port }}'
     state: stopped
 

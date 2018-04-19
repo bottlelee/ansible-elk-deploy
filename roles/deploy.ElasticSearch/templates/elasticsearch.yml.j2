@@ -66,13 +66,13 @@ bootstrap.memory_lock: true
 #
 # Set the bind address to a specific IP (IPv4 or IPv6):
 #
-network.host: _{{ bond_interface }}_
-network.bind_host: {{ hostvars[inventory_hostname]['ansible_' + bond_interface]['ipv4']['address'] }}
+network.host: _{{ bind_interface }}_
+network.bind_host: {{ bind_address }}
 
-network.publish_host: {{ hostvars[inventory_hostname]['ansible_' + bond_interface]['ipv4']['address'] }}
+network.publish_host: {{ bind_address }}
 
-transport.host: _{{ bond_interface }}_
-transport.bind_host: {{ hostvars[inventory_hostname]['ansible_' + bond_interface]['ipv4']['address'] }}
+transport.host: _{{ bind_interface }}_
+transport.bind_host: {{ bind_address }}
 
 #
 # Set a custom port for HTTP:
