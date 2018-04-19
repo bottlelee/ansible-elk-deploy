@@ -37,7 +37,7 @@ Any host that have `consul` installed，could be an internal DNS server. Please 
 
 ## Maintain
 ### Upgrade
-1. Set the value of 'elk_version' in `group_vars/all.yml`, then run step 03 to 05 will rolling upgrade your services to the new version.
+1. Set the value of 'elk_version' in `group_vars/all.yml`, then run step 03 to 06 will rolling upgrade your services to the new version.
   1. `ansible-playbook deploy_elasticsearch.yml`
   1. `ansible-playbook deploy_kibana.yml`
   1. `ansible-playbook deploy_logstash.yml`
@@ -78,7 +78,7 @@ Any host that have `consul` installed，could be an internal DNS server. Please 
 
 ## 维护更新
 ### 升级
-1. 修改 group_vars/all.yml 里的 elk_version 值，依次执行 03-05 即可滚动升级到最新版本。
+1. 修改 group_vars/all.yml 里的 elk_version 值，依次执行 03-06 即可滚动升级到最新版本。
 
 ## 鸣谢
 本脚本在“新致云”提供的云主机上测试通过。[新致云](https://cloud.newtouch.com)，助你真正用好云计算。
