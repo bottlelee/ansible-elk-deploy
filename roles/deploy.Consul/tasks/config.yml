@@ -1,5 +1,9 @@
-- include_vars:
-    file: key.yml
+- block:
+    - include_vars:
+        file: roles/deploy.Consul/vars/key.yml
+  rescue:
+    - include_tasks: keygen.yml
+    - include_tasks: config.yml
 
 - name: updating server config
   template:
