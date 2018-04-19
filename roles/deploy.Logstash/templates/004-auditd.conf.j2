@@ -13,8 +13,8 @@ filter {
     }
     kv {
       source => "[auditd][msg]"
-      target => "auditd"
       exclude_keys => ["pid", "ses", " old-auid", "old-ses", "fp", "spid", "rport"]
+      target => "auditd"
     }
   }
 }

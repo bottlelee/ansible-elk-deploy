@@ -3,7 +3,7 @@
     src: 'filebeat.yml.j2'
     dest: '/etc/filebeat/filebeat.yml'
     mode: 0600
-  register: configSt
+  notify: restart filebeat
 
 - name: enable filebeat modules
   command: "filebeat modules enable {{ item }}"
@@ -12,16 +12,4 @@
     - system
     - auditd
     - '{{ filebeat_modules }}'
-
-- name: testing filebeat
-  command: 'filebeat test {{ item }}'
-  with_items:
-    - output
-    - config
-  when: configSt is changed
-  notify: Restart filebeat service
-
-- name: setup alias
-  uri:
-    url: http://elastic-ingest.service.consul:9200/filebeat-*/_alias/active-logs
-    method: PUT
+  notify: restart filebeat

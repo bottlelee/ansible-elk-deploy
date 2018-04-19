@@ -5,4 +5,6 @@ metricbeat_modules:
 node_master: false
 node_data: false
 node_ingest: false
+
+# Read more on https://www.elastic.co/guide/en/elasticsearch/reference/current/modules-cross-cluster-search.html
 search_remote_connect: false

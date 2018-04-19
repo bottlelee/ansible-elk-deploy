@@ -51,6 +51,9 @@
 
 - hosts: kibana
   become: yes
+  serial:
+    - 1
+    - 30%
   roles:
     - deploy.Kibana
     - deploy.ElasticSearch
@@ -79,6 +82,9 @@
 
 - hosts: logstash
   become: yes
+  serial:
+    - 1
+    - 30%
   roles:
     - deploy.Logstash
   post_tasks:
@@ -107,6 +113,9 @@
 
 - hosts: all
   become: yes
+  serial:
+    - 1
+    - 30%
   roles:
     - {
       role: deploy.Beats,
@@ -121,6 +130,9 @@
 
 - hosts: all
   become: yes
+  serial:
+    - 1
+    - 30%
   roles:
     - deploy.Monit
   post_tasks:

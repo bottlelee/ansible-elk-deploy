@@ -3,18 +3,4 @@
     src: 'packetbeat.yml.j2'
     dest: '/etc/packetbeat/packetbeat.yml'
     mode: 0600
-  register: configSt
-
-- name: 'Testing packetbeat'
-  command: 'packetbeat test {{ item }}'
-  with_items:
-    - output
-    - modules
-    - config
-  when: configSt is changed
-  notify: Restart packetbeat service
-
-- name: setup alias
-  uri:
-    url: http://elastic-ingest.service.consul:9200/packetbeat-*/_alias/active-logs
-    method: PUT
+  notify: restart packetbeat

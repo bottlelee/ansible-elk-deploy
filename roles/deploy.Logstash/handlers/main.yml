@@ -1,6 +1,11 @@
-- name: Restart logstash service
+- name: checking logstash configuration
+  command: /usr/share/logstash/bin/logstash -t --path.settings=/etc/logstash
+  listen: "restart logstash"
+
+- name: restart logstash service
   service:
     name: logstash
     state: restarted
     enabled: yes
     daemon_reload: yes
+  listen: "restart logstash"

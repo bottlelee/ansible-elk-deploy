@@ -1,12 +1,13 @@
-- name: Update monitrc
+- name: update monitrc
   template:
     src: monitrc.j2
     dest: /etc/monitrc
     mode: 0700
     owner: root
     group: root
+  notify: "reload monit"
 
-- name: Install/update config for all
+- name: install/update config for all
   template:
     src: '{{ item }}.j2'
     dest: '/etc/monit.d/{{ item }}'
@@ -15,8 +16,9 @@
     - check_fs_usage
     - check_sysload
     - check_services
+  notify: "reload monit"
 
-- name: Install/update config on elastic master nodes
+- name: install/update config on elastic master nodes
   template:
     src: '{{ item }}.j2'
     dest: '/etc/monit.d/{{ item }}'
@@ -24,5 +26,4 @@
   when: "'elasticMasterNode' in group_names"
   with_items:
     - check_hosts
-
-- include_tasks: config_test.yml
+  notify: "reload monit"

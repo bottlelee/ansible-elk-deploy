@@ -1,6 +1,16 @@
-- name: Enable monit service
+- name: enable monit service
   service:
     name: monit
     state: restarted
     enabled: yes
     daemon_reload: yes
+
+- name: test monit config
+  command: /usr/local/bin/monit -t
+  listen: "reload monit"
+
+- name: reload monit service
+  service:
+    name: monit
+    state: reloaded
+  listen: "reload monit"

@@ -16,7 +16,7 @@
   with_items:
     - jvm.options
     - logstash.yml
-  register: configSt
+  notify: restart logstash
 
 - name: updating piplines
   template:
@@ -29,12 +29,12 @@
     - 003-syslog
     - 004-auditd
     - 999-output
-  register: pipelineSt
+  notify: restart logstash
 
-- name: checking logstash configuration
-  command: /usr/share/logstash/bin/logstash -t --path.settings=/etc/logstash
-  notify: Restart logstash service
-  when: configSt is changed or pipelineSt is changed
+# - name: checking logstash configuration
+#   command: /usr/share/logstash/bin/logstash -t --path.settings=/etc/logstash
+#   notify: Restart logstash service
+#   when: configSt is changed or pipelineSt is changed
 
 - name: set /var/lib/logstash ownership
   file:
