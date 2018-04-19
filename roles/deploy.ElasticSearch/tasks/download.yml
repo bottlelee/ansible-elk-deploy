@@ -7,7 +7,7 @@
       become: no
       run_once: true
   rescue:
-    - name: "downloading elasticsearch-{{ elk_version }}.{{ format }}"
+    - name: "Downloading elasticsearch-{{ elk_version }}.{{ format }}"
       get_url:
         url: "https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-{{ elk_version }}.{{ format }}"
         dest: "downloaded_files/"

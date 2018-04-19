@@ -31,3 +31,7 @@
     state: restarted
     enabled: yes
   when: resolvconf is changed
+  register: result
+  until: result is succeeded
+  retries: 3
+  delay: 10

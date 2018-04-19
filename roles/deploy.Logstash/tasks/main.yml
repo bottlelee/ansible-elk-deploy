@@ -31,17 +31,13 @@
     - 999-output
   notify: Restart logstash
 
-# - name: Checking logstash configuration
-#   command: /usr/share/logstash/bin/logstash -t --path.settings=/etc/logstash
-#   notify: Restart logstash service
-#   when: configSt is changed or pipelineSt is changed
-
 - name: Set /var/lib/logstash ownership
   file:
     path: '{{ item }}'
     state: directory
     owner: logstash
     group: logstash
+    mode: 0660
     recurse: yes
   with_items:
     - '{{ logstash_log_path }}'

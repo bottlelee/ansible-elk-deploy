@@ -77,7 +77,7 @@ Vagrant.configure("2") do |config|
             "python3" => [""]
           }
           ansible.limit = "all"
-          ansible.playbook = "vagrant_playbook.yml"
+          ansible.playbook = "play-all.yml"
         end
       end
     end
