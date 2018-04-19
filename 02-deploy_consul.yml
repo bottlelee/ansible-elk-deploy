@@ -2,12 +2,12 @@
   become: yes
   serial:
     - 1
-    - 30%
+    - 33%
   roles:
     - deploy.Consul
   post_tasks:
     - block:
-        - name: waiting for service consul started
+        - name: Waiting for service consul started
           wait_for:
             host: "{{ bind_address }}"
             port: 8600

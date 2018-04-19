@@ -1,4 +1,4 @@
-- name: checking cluster health status
+- name: Checking cluster health status
   uri:
     url: http://{{ bind_address }}:{{ elastic_http_port }}/_cluster/health
     method: GET
@@ -10,7 +10,7 @@
     msg: "Current cluster status is not 'green', please fix it before upgrade."
   when: health.json.status != "green"
 
-- name: stopping shards
+- name: Stopping shards
   uri:
     url: "http://{{ bind_address }}:{{ elastic_http_port }}/_cluster/settings"
     method: PUT
@@ -18,18 +18,18 @@
     body_format: json
   when: node_data is sameas true
 
-- name: stopping service
+- name: Stopping service
   service:
     name: elasticsearch
     state: stopped
 
-- name: waiting for port down
+- name: Waiting for port down
   wait_for:
     host: "{{ bind_address }}"
     port: '{{ elastic_http_port }}'
     state: stopped
 
-- name: removing plugins
+- name: Removing plugins
   elasticsearch_plugin:
     name: "{{ item }}"
     state: absent

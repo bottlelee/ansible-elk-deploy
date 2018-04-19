@@ -1,11 +1,11 @@
-- name: updating metricbeat.yml
+- name: Updating metricbeat.yml
   template:
     src: 'metricbeat.yml.j2'
     dest: '/etc/metricbeat/metricbeat.yml'
     mode: 0600
-  notify: restart metricbeat
+  notify: Restart metricbeat
 
-- name: enable metricbeat modules
+- name: Enable metricbeat modules
   template:
     src: "metricbeat_{{ item }}.yml.j2"
     dest: "/etc/metricbeat/modules.d/{{ item }}.yml"
@@ -14,4 +14,4 @@
     - redis
     - kibana
     - elasticsearch
-  notify: restart metricbeat
+  notify: Restart metricbeat

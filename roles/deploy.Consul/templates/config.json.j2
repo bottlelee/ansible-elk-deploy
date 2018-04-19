@@ -4,14 +4,14 @@
   "bootstrap_expect": 3,
   "retry_join": [
     {%- for item in groups['elasticMasterNode'] if item != ansible_nodename -%}
-      "{{ bind_address }}"{%- if loop.nextitem is defined -%},{%- endif -%}
+      "{{ hostvars[item]['bind_address'] }}"{%- if loop.nextitem is defined -%},{%- endif -%}
     {%- endfor -%}
   ],
 {% else %}
   "server": false,
   "retry_join": [
     {%- for item in groups['elasticMasterNode'] -%}
-      "{{ bind_address }}"{%- if loop.nextitem is defined -%},{%- endif -%}
+      "{{ hostvars[item]['bind_address'] }}"{%- if loop.nextitem is defined -%},{%- endif -%}
     {%- endfor -%}
   ],
 {% endif %}

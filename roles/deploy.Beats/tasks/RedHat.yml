@@ -1,20 +1,20 @@
 - include_tasks: download.yml format=rpm
 
-- name: "uploading {{ target }}-{{ elk_version }}-x86_64.rpm"
+- name: "Uploading {{ target }}-{{ elk_version }}-x86_64.rpm"
   copy:
     src: "downloaded_files/{{ target }}-{{ elk_version }}-x86_64.rpm"
     dest: "/tmp/{{ target }}-{{ elk_version }}-x86_64.rpm"
 
-- name: "installing {{ target }}-{{ elk_version }}-x86_64.rpm"
+- name: "Installing {{ target }}-{{ elk_version }}-x86_64.rpm"
   yum:
     name: "/tmp/{{ target }}-{{ elk_version }}-x86_64.rpm"
 
-- name: 'restarting {{ target }} service'
+- name: 'Restarting {{ target }} service'
   service:
     name: '{{ target }}'
     state: restarted
 
-- name: "removing /tmp/{{ target }}-{{ elk_version }}-x86_64.rpm"
+- name: "Removing /tmp/{{ target }}-{{ elk_version }}-x86_64.rpm"
   file:
     path: "/tmp/{{ target }}-{{ elk_version }}-x86_64.rpm"
     state: absent

@@ -1,5 +1,5 @@
 - block:
-    - name: checking command 'curator'
+    - name: Checking command 'curator'
       command: curator --version
       changed_when: false
   rescue:

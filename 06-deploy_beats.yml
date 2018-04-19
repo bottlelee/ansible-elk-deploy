@@ -2,7 +2,7 @@
   become: yes
   serial:
     - 1
-    - 30%
+    - 33%
   roles:
     - {
       role: deploy.Beats,

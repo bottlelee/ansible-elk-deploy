@@ -1,4 +1,4 @@
-- name: checking if target is suitable for deploy
+- name: Checking if target is suitable for deploy
   assert:
     that:
       - "ansible_memtotal_mb|int >= {{ env_check_memtotal_mb|default('1024')|int }}"
@@ -7,7 +7,7 @@
       - "ansible_architecture == 'x86_64'"
   when: "'elasticsearch' in group_names"
 
-- name: 'check if port {{ elastic_http_port }} available'
+- name: 'Check if port {{ elastic_http_port }} available'
   wait_for:
     host: "{{ bind_address }}"
     port: '{{ elastic_http_port }}'

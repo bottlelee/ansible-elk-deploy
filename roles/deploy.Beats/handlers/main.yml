@@ -1,41 +1,41 @@
-- name: testing filebeat config
+- name: Testing filebeat config
   command: 'filebeat test {{ item }}'
   with_items:
     - output
     - config
-  listen: "restart filebeat"
+  listen: "Restart filebeat"
 
-- name: restart filebeat service
+- name: Restart filebeat service
   service:
     name: filebeat
     state: restarted
     enabled: yes
-  listen: "restart filebeat"
+  listen: "Restart filebeat"
 
-- name: testing metricbeat config
+- name: Testing metricbeat config
   command: 'metricbeat test {{ item }}'
   with_items:
     - output
     - config
-  listen: "restart metricbeat"
+  listen: "Restart metricbeat"
 
-- name: restart metricbeat service
+- name: Restart metricbeat service
   service:
     name: metricbeat
     state: restarted
     enabled: yes
-  listen: "restart metricbeat"
+  listen: "Restart metricbeat"
 
-- name: testing packetbeat config
+- name: Testing packetbeat config
   command: 'packetbeat test {{ item }}'
   with_items:
     - output
     - config
-  listen: "restart packetbeat"
+  listen: "Restart packetbeat"
 
-- name: restart packetbeat service
+- name: Restart packetbeat service
   service:
     name: packetbeat
     state: restarted
     enabled: yes
-  listen: "restart packetbeat"
+  listen: "Restart packetbeat"

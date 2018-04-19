@@ -1,11 +1,11 @@
 - block:
-    - name: extracting jre-8u161-linux-x64.tar.gz
+    - name: Extracting jre-8u161-linux-x64.tar.gz
       unarchive:
         src: downloaded_files/jre-8u161-linux-x64.tar.gz
         dest: /opt/
         owner: root
         group: root
-    - name: create soft link
+    - name: Create soft link
       file:
         src: /opt/jre1.8.0_161/bin/java
         dest: /usr/bin/java
@@ -13,7 +13,7 @@
         group: root
         state: link
   rescue:
-    - name: downloading jre-8u161-linux-x64.tar.gz
+    - name: Downloading jre-8u161-linux-x64.tar.gz
       get_url:
         url: http://javadl.oracle.com/webapps/download/AutoDL?BundleId=230532_2f38c3b165be4555a1fa6e98c45e0808
         # headers: 'Cookie:oraclelicense=accept-securebackup-cookie'

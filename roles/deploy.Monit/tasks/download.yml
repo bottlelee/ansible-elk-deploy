@@ -7,7 +7,7 @@
       become: no
       run_once: true
   rescue:
-    - name: downloading monit binary file
+    - name: Downloading monit binary file
       get_url:
         url: "https://mmonit.com/monit/dist/binary/{{ monit_version }}/monit-{{ monit_version }}-linux-x64.tar.gz"
         dest: downloaded_files

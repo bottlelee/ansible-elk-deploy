@@ -1,4 +1,5 @@
-- hosts: all:!kibana
+# WARNING: This playbook is for testing only! Do NOT use it in production environment!
+- hosts: all
   gather_facts: no
   tasks:
     - group_by:

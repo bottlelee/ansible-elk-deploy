@@ -5,7 +5,7 @@
 - include_tasks: hostname.yml
 
 - block:
-    - name: checking java command
+    - name: Checking java command
       command: /usr/bin/java -version
       changed_when: false
   rescue:

@@ -1,16 +1,16 @@
 - block:
-    - name: 'uploading kibana-{{ elk_version }}-amd64.deb'
+    - name: 'Uploading kibana-{{ elk_version }}-amd64.deb'
       copy:
         src: 'downloaded_files/kibana-{{ elk_version }}-amd64.deb'
         dest: /tmp/
-    - name: 'installing kibana-{{ elk_version }}-amd64.deb'
+    - name: 'Installing kibana-{{ elk_version }}-amd64.deb'
       apt:
         deb: '/tmp/kibana-{{ elk_version }}-amd64.deb'
   rescue:
     - include_tasks: download.yml format=deb
     - include_tasks: '{{ ansible_os_family }}.yml'
   always:
-    - name: 'removing /tmp/kibana-{{ elk_version }}-amd64.deb'
+    - name: 'Removing /tmp/kibana-{{ elk_version }}-amd64.deb'
       file:
         path: '/tmp/kibana-{{ elk_version }}-amd64.deb'
         state: absent

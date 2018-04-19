@@ -1,39 +1,32 @@
-- name: updating redis.conf
+- name: Updating redis.conf
   template:
     src: "redis.conf.j2"
     dest: "/etc/redis/redis.conf"
     owner: redis
     group: root
     mode: 0660
-  notify: restart redis-server
+  notify: Restart redis-server
 
-- block:
-    - name: checking redis.service.consul
-      wait_for:
-        host: "redis.service.{{ consul_dc_name }}.consul"
-        port: 6379
-        timeout: 3
-  rescue:
-    - name: updating sentinel.conf
-      lineinfile:
-        path: /etc/redis/sentinel.conf
-        create: yes
-        owner: redis
-        group: root
-        mode: 0660
-        line: "{{ item.line }}"
-        regexp: "{{ item.regexp }}"
-      with_items:
-        - line: "bind {{ bind_address }}"
-          regexp: "^bind"
-        - line: "port 26379"
-          regexp: "^port"
-        - line: "sentinel monitor {{ groups['redis'][0] }} {{ hostvars[groups['redis'][0]]['bind_address'] }} 6379 2"
-          regexp: "^sentinel monitor"
-        - line: "sentinel down-after-milliseconds {{ groups['redis'][0] }} 10000"
-          regexp: "^sentinel down-after-milliseconds"
-        - line: "sentinel parallel-syncs {{ groups['redis'][0] }} 1"
-          regexp: "^sentinel parallel-syncs"
-        - line: "sentinel failover-timeout {{ groups['redis'][0] }} 300000"
-          regexp: "^sentinel failover-timeout"
-      notify: restart redis-sentinel
+- name: Updating sentinel.conf
+  lineinfile:
+    path: /etc/redis/sentinel.conf
+    create: yes
+    owner: redis
+    group: root
+    mode: 0660
+    line: "{{ item.line }}"
+    regexp: "{{ item.regexp }}"
+  with_items:
+    - line: "bind {{ bind_address }}"
+      regexp: "^bind"
+    - line: "port 26379"
+      regexp: "^port"
+    - line: "sentinel monitor {{ groups['redis'][0] }} {{ hostvars[groups['redis'][0]]['bind_address'] }} 6379 2"
+      regexp: "^sentinel monitor"
+    - line: "sentinel down-after-milliseconds {{ groups['redis'][0] }} 10000"
+      regexp: "^sentinel down-after-milliseconds"
+    - line: "sentinel parallel-syncs {{ groups['redis'][0] }} 1"
+      regexp: "^sentinel parallel-syncs"
+    - line: "sentinel failover-timeout {{ groups['redis'][0] }} 300000"
+      regexp: "^sentinel failover-timeout"
+  notify: Restart redis-sentinel

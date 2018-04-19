@@ -1,4 +1,4 @@
-- name: setup sysctl
+- name: Setup sysctl
   sysctl:
     name: "{{ item.name }}"
     value: "{{ item.value }}"
@@ -12,17 +12,17 @@
     - name: fs.file-max
       value: 10032
 
-- name: coping disable-transparent-hugepages script
+- name: Coping disable-transparent-hugepages script
   copy:
     src: disable-transparent-hugepages
     dest: /usr/bin/disable-transparent-hugepages
     mode: 0755
 
-- name: create disable transparent hugepages service
+- name: Create disable transparent hugepages service
   copy:
     src: disable-thp.service
     dest: /lib/systemd/system/
     owner: root
     group: root
     mode: 0544
-  notify: start disable-thp.service
+  notify: Start disable-thp.service

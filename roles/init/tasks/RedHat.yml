@@ -1,4 +1,4 @@
-- name: disable firewalld and selinux
+- name: Disable firewalld and selinux
   block:
     - service:
         name: firewalld
@@ -10,13 +10,13 @@
     - "ansible_distribution == 'CentOS'"
     - "ansible_distribution_major_version >= '7'"
 
-- name: disable NetworkManager service
+- name: Disable NetworkManager service
   service:
     name: NetworkManager
     state: stopped
     enabled: no
 
-- name: setup dns server
+- name: Setup dns server
   lineinfile:
     path: "/etc/sysconfig/network-scripts/ifcfg-{{ bind_interface }}"
     line: "{{ item }}"
@@ -25,7 +25,7 @@
     - "DNS2={{ dns_servers[1] }}"
   register: resolvconf
 
-- name: enable network service
+- name: Enable network service
   service:
     name: network
     state: restarted

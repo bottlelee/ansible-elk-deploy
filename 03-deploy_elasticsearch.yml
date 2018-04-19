@@ -2,14 +2,12 @@
   become: yes
   serial: 1
   roles:
-    - deploy.Consul
     - deploy.ElasticSearch
-    - deploy.Monit
     # - role: deploy.Curator
     #   when: "'elasticDataNode' in group_names"
   post_tasks:
     - block:
-        - name: waiting for service started
+        - name: Waiting for service started
           wait_for:
             host: "{{ bind_address }}"
             port: '{{ elastic_http_port }}'

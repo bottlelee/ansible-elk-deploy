@@ -1,8 +1,8 @@
 - block:
-    - name: checking python2
+    - name: Checking python2
       raw: test -e /usr/bin/python
       changed_when: false
-    - name: "create/update host_vars files"
+    - name: Create/update host_vars files
       lineinfile:
         path: "host_vars/{{ inventory_hostname }}.yml"
         regexp: "^ansible_python_interpreter"
@@ -11,10 +11,10 @@
       delegate_to: localhost
       become: no
   rescue:
-    - name: checking python3
+    - name: Checking python3
       raw: test -e /usr/bin/python3
       changed_when: false
-    - name: "create/update host_vars files"
+    - name: Create/update host_vars files
       lineinfile:
         path: "host_vars/{{ inventory_hostname }}.yml"
         regexp: "^ansible_python_interpreter"

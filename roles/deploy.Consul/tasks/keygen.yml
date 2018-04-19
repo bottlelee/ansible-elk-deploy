@@ -1,8 +1,8 @@
 - block:
-    - name: generating consul key
+    - name: Generating consul key
       command: /usr/local/bin/consul keygen
       register: keySt
-    - name: write consul key into vars file
+    - name: Write consul key into vars file
       lineinfile:
         path: roles/deploy.Consul/vars/key.yml
         regexp: '^consul_key'

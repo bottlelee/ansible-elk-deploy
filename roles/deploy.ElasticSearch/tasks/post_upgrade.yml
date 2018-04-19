@@ -1,4 +1,4 @@
-- name: checking if the node has been back to cluster or not.
+- name: Checking if the node has been back to cluster or not.
   uri:
     url: "http://{{ bind_address }}:{{ elastic_http_port }}/_cat/nodes"
     return_content: yes
@@ -7,14 +7,14 @@
   retries: 300
   delay: 10
 
-- name: enable shard allocation.
+- name: Enable shard allocation.
   uri:
     url: "http://{{ bind_address }}:{{ elastic_http_port }}/_cluster/settings"
     method: PUT
     body: "{{ lookup('file','enable_shard.json') }}"
     body_format: json
 
-- name: waiting for the cluster turn to green.
+- name: Waiting for the cluster turn to green.
   uri:
     url: "http://{{ bind_address }}:{{ elastic_http_port }}/_cat/health"
     return_content: yes

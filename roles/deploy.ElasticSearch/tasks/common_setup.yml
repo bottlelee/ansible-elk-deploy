@@ -1,11 +1,11 @@
-- name: config /usr/lib/systemd/system/elasticsearch.service
+- name: Config /usr/lib/systemd/system/elasticsearch.service
   ini_file:
     path: /usr/lib/systemd/system/elasticsearch.service
     section: Service
     option: LimitMEMLOCK
     value: infinity
 
-- name: updating ElasticSearch configuration
+- name: Updating ElasticSearch configuration
   template:
     src: '{{ item }}.j2'
     dest: '/etc/elasticsearch/{{ item }}'
@@ -19,20 +19,20 @@
     loop_var: target
   when: node_ingest is defined and node_ingest == true
 
-- name: starting ElasticSearch service
+- name: Starting ElasticSearch service
   service:
     name: elasticsearch
     daemon_reload: yes
     enabled: yes
     state: restarted
 
-- name: waiting for service started
+- name: Waiting for service started
   wait_for:
     host: "{{ bind_address }}"
     port: '9200'
     timeout: 120
 
-- name: setup index default settings
+- name: Setup index default settings
   uri:
     url: http://elastic-ingest.service.{{ consul_dc_name }}.consul:{{ elastic_http_port }}/_template/active-logs
     method: PUT

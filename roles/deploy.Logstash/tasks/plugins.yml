@@ -3,7 +3,7 @@
       copy:
         src: "downloaded_files/{{ target }}-{{ elk_version }}.zip"
         dest: "/tmp/{{ target }}-{{ elk_version }}.zip"
-    - name: "installing plugin {{ target }}"
+    - name: "Installing plugin {{ target }}"
       command: "{{ item }}"
       with_items:
         - "/usr/share/logstash/bin/logstash-plugin remove {{ target }}"
