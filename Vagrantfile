@@ -22,7 +22,7 @@ Vagrant.configure("2") do |config|
   # always use Vagrants insecure key
   config.ssh.insert_key = false
   config.vm.box_check_update = false
-  config.vm.box = $vm_box
+  # config.vm.box = $vm_box
   config.vm.synced_folder "./", "/vagrant", type: "rsync",
     rsync__exclude: [".git/", "downloaded_files/"]
   if Vagrant.has_plugin?("vagrant-vbguest") then
@@ -47,6 +47,14 @@ Vagrant.configure("2") do |config|
     elsif instance_id == 14
       $vm_name = "kibana-#{instance_id}"
     end
+
+    if (instance_id % 2) == 0
+      config.vm.box = "ubuntu/xenial64"
+    end
+    if (instance_id % 2) != 0
+      config.vm.box = "centos/7"
+    end
+
     config.vm.define vm_name = $vm_name do |config|
       config.vm.hostname = vm_name
       config.vm.network "private_network", type: "dhcp"

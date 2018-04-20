@@ -1,3 +1,11 @@
+- set_fact:
+    bind_interface: "{{ Debian_bind_interface }}"
+  when: "ansible_os_family == 'Debian'"
+
+- set_fact:
+    bind_interface: "{{ RedHat_bind_interface }}"
+  when: "ansible_os_family == 'RedHat'"
+
 - block:
     - name: Generating host vars files
       lineinfile:
@@ -17,6 +25,16 @@
       service:
         name: NetworkManager
         state: restarted
+        enabled: yes
+      when: "ansible_os_family == 'RedHat'"
+    - name: Restart networking service
+      service:
+        name: networking
+        state: restarted
+        enabled: yes
+      when: "ansible_os_family == 'Debian'"
+    - pause:
+        seconds: 30
     - include_tasks: create_hostvars.yml
 
 - set_fact:

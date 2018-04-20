@@ -1,6 +1,6 @@
 - hosts: all
   become: yes
-  serial: 33%
+  # serial: 33%
   gather_facts: no
   tasks:
     - include_role:

@@ -14,3 +14,9 @@
       file:
         path: '/tmp/logstash-{{ elk_version }}.deb'
         state: absent
+    # This task fix the logstash startup problem when it has no permission to write log in /var/log/logstash
+    - name: Add user 'logstash' into group 'adm'
+      user:
+        name: logstash
+        groups: adm
+        append: yes

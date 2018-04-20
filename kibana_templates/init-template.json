@@ -71,7 +71,24 @@
       ],
       "version": 1,
       "kibanaSavedObjectMeta": {
-        "searchSourceJSON": "{\"index\":\"6a2f9830-4249-11e8-9e47-f58f43061c8d\",\"highlightAll\":true,\"version\":true,\"query\":{\"language\":\"lucene\",\"query\":\"\"},\"filter\":[{\"meta\":{\"index\":\"e7d21e10-1b9e-11e8-85fa-ab077477b2da\",\"negate\":false,\"disabled\":false,\"alias\":null,\"type\":\"phrase\",\"key\":\"tags\",\"value\":\"monit\",\"params\":{\"query\":\"monit\",\"type\":\"phrase\"}},\"query\":{\"match\":{\"tags\":{\"query\":\"monit\",\"type\":\"phrase\"}}},\"$state\":{\"store\":\"appState\"}}]}"
+        "searchSourceJSON": "{\"index\":\"5fb3ec50-448b-11e8-8ca8-c702ca5cbade\",\"highlightAll\":true,\"version\":true,\"query\":{\"language\":\"lucene\",\"query\":\"\"},\"filter\":[{\"meta\":{\"index\":\"e7d21e10-1b9e-11e8-85fa-ab077477b2da\",\"negate\":false,\"disabled\":false,\"alias\":null,\"type\":\"phrase\",\"key\":\"tags\",\"value\":\"monit\",\"params\":{\"query\":\"monit\",\"type\":\"phrase\"}},\"query\":{\"match\":{\"tags\":{\"query\":\"monit\",\"type\":\"phrase\"}}},\"$state\":{\"store\":\"appState\"}}]}"
+      }
+    },
+    "_meta": {
+      "savedObjectVersion": 2
+    }
+  },
+  {
+    "_id": "b0e81170-42db-11e8-9e47-f58f43061c8d",
+    "_type": "visualization",
+    "_source": {
+      "title": "[Metricbeat] CPU user pct",
+      "visState": "{\"title\":\"[Metricbeat] CPU user pct\",\"type\":\"metrics\",\"params\":{\"id\":\"61ca57f0-469d-11e7-af02-69e470af7417\",\"type\":\"top_n\",\"series\":[{\"id\":\"610e5380-42db-11e8-8e8e-8f49defbde25\",\"color\":\"#68BC00\",\"split_mode\":\"terms\",\"metrics\":[{\"id\":\"610e5381-42db-11e8-8e8e-8f49defbde25\",\"type\":\"avg\",\"field\":\"system.cpu.user.pct\"}],\"seperate_axis\":0,\"axis_position\":\"right\",\"formatter\":\"percent\",\"chart_type\":\"line\",\"line_width\":1,\"point_size\":1,\"fill\":0.5,\"stacked\":\"none\",\"terms_field\":\"beat.name\",\"terms_size\":\"10\",\"terms_order_by\":\"610e5381-42db-11e8-8e8e-8f49defbde25\",\"label\":\"CPU USER PCT\",\"terms_direction\":\"desc\"}],\"time_field\":\"@timestamp\",\"index_pattern\":\"metricbeat-*\",\"interval\":\"auto\",\"axis_position\":\"left\",\"axis_formatter\":\"number\",\"show_legend\":1,\"show_grid\":1,\"gauge_color_rules\":[{\"value\":0,\"id\":\"74aa9440-42da-11e8-8e8e-8f49defbde25\",\"gauge\":null}],\"gauge_width\":10,\"gauge_inner_width\":10,\"gauge_style\":\"half\",\"gauge_max\":\"\",\"filter\":\"\",\"background_color_rules\":[{\"id\":\"1101c5c0-42db-11e8-8e8e-8f49defbde25\"}],\"bar_color_rules\":[{\"id\":\"127c7ee0-42db-11e8-8e8e-8f49defbde25\"}]},\"aggs\":[]}",
+      "uiStateJSON": "{}",
+      "description": "",
+      "version": 1,
+      "kibanaSavedObjectMeta": {
+        "searchSourceJSON": "{}"
       }
     },
     "_meta": {
@@ -113,12 +130,12 @@
     }
   },
   {
-    "_id": "0757cd60-1d3f-11e8-b050-f509ff1e2cf0",
+    "_id": "861f3f20-1d3f-11e8-b050-f509ff1e2cf0",
     "_type": "visualization",
     "_source": {
-      "title": "[Filebeat] Monit Hosts Tag Cloud",
-      "visState": "{\"title\":\"[Filebeat] Monit Hosts Tag Cloud\",\"type\":\"tagcloud\",\"params\":{\"scale\":\"linear\",\"orientation\":\"single\",\"minFontSize\":18,\"maxFontSize\":36},\"aggs\":[{\"id\":\"1\",\"enabled\":true,\"type\":\"count\",\"schema\":\"metric\",\"params\":{}},{\"id\":\"2\",\"enabled\":true,\"type\":\"terms\",\"schema\":\"segment\",\"params\":{\"field\":\"beat.name\",\"otherBucket\":false,\"otherBucketLabel\":\"Other\",\"missingBucket\":false,\"missingBucketLabel\":\"Missing\",\"exclude\":\"\",\"size\":5,\"order\":\"desc\",\"orderBy\":\"1\",\"customLabel\":\"Host\"}}]}",
-      "uiStateJSON": "{}",
+      "title": "[Filebeat] Monit Log Table",
+      "visState": "{\"title\":\"[Filebeat] Monit Log Table\",\"type\":\"table\",\"params\":{\"perPage\":10,\"showPartialRows\":false,\"showMeticsAtAllLevels\":false,\"sort\":{\"columnIndex\":null,\"direction\":null},\"showTotal\":false,\"totalFunc\":\"sum\"},\"aggs\":[{\"id\":\"1\",\"enabled\":true,\"type\":\"count\",\"schema\":\"metric\",\"params\":{}},{\"id\":\"2\",\"enabled\":true,\"type\":\"terms\",\"schema\":\"bucket\",\"params\":{\"field\":\"monit.log\",\"otherBucket\":false,\"otherBucketLabel\":\"Other\",\"missingBucket\":false,\"missingBucketLabel\":\"Missing\",\"size\":10,\"order\":\"desc\",\"orderBy\":\"1\",\"customLabel\":\"Log\"}},{\"id\":\"3\",\"enabled\":true,\"type\":\"terms\",\"schema\":\"split\",\"params\":{\"field\":\"monit.level\",\"otherBucket\":false,\"otherBucketLabel\":\"Other\",\"missingBucket\":false,\"missingBucketLabel\":\"Missing\",\"exclude\":\"info\",\"size\":5,\"order\":\"desc\",\"orderBy\":\"1\",\"customLabel\":\"Level\",\"row\":false}}]}",
+      "uiStateJSON": "{\"vis\":{\"params\":{\"sort\":{\"columnIndex\":null,\"direction\":null}}}}",
       "description": "",
       "savedSearchId": "fff3a140-1d3c-11e8-b050-f509ff1e2cf0",
       "version": 1,
@@ -149,34 +166,17 @@
     }
   },
   {
-    "_id": "861f3f20-1d3f-11e8-b050-f509ff1e2cf0",
+    "_id": "0757cd60-1d3f-11e8-b050-f509ff1e2cf0",
     "_type": "visualization",
     "_source": {
-      "title": "[Filebeat] Monit Log Table",
-      "visState": "{\"title\":\"[Filebeat] Monit Log Table\",\"type\":\"table\",\"params\":{\"perPage\":10,\"showPartialRows\":false,\"showMeticsAtAllLevels\":false,\"sort\":{\"columnIndex\":null,\"direction\":null},\"showTotal\":false,\"totalFunc\":\"sum\"},\"aggs\":[{\"id\":\"1\",\"enabled\":true,\"type\":\"count\",\"schema\":\"metric\",\"params\":{}},{\"id\":\"2\",\"enabled\":true,\"type\":\"terms\",\"schema\":\"bucket\",\"params\":{\"field\":\"monit.log\",\"otherBucket\":false,\"otherBucketLabel\":\"Other\",\"missingBucket\":false,\"missingBucketLabel\":\"Missing\",\"size\":10,\"order\":\"desc\",\"orderBy\":\"1\",\"customLabel\":\"Log\"}},{\"id\":\"3\",\"enabled\":true,\"type\":\"terms\",\"schema\":\"split\",\"params\":{\"field\":\"monit.level\",\"otherBucket\":false,\"otherBucketLabel\":\"Other\",\"missingBucket\":false,\"missingBucketLabel\":\"Missing\",\"exclude\":\"info\",\"size\":5,\"order\":\"desc\",\"orderBy\":\"1\",\"customLabel\":\"Level\",\"row\":false}}]}",
-      "uiStateJSON": "{\"vis\":{\"params\":{\"sort\":{\"columnIndex\":null,\"direction\":null}}}}",
+      "title": "[Filebeat] Monit Hosts Tag Cloud",
+      "visState": "{\"title\":\"[Filebeat] Monit Hosts Tag Cloud\",\"type\":\"tagcloud\",\"params\":{\"scale\":\"linear\",\"orientation\":\"single\",\"minFontSize\":18,\"maxFontSize\":36},\"aggs\":[{\"id\":\"1\",\"enabled\":true,\"type\":\"count\",\"schema\":\"metric\",\"params\":{}},{\"id\":\"2\",\"enabled\":true,\"type\":\"terms\",\"schema\":\"segment\",\"params\":{\"field\":\"beat.name\",\"otherBucket\":false,\"otherBucketLabel\":\"Other\",\"missingBucket\":false,\"missingBucketLabel\":\"Missing\",\"exclude\":\"\",\"size\":5,\"order\":\"desc\",\"orderBy\":\"1\",\"customLabel\":\"Host\"}}]}",
+      "uiStateJSON": "{}",
       "description": "",
       "savedSearchId": "fff3a140-1d3c-11e8-b050-f509ff1e2cf0",
       "version": 1,
       "kibanaSavedObjectMeta": {
-        "searchSourceJSON": "{}"
-      }
-    },
-    "_meta": {
-      "savedObjectVersion": 2
-    }
-  },
-  {
-    "_id": "b0e81170-42db-11e8-9e47-f58f43061c8d",
-    "_type": "visualization",
-    "_source": {
-      "title": "[Metricbeat] CPU user pct",
-      "visState": "{\"title\":\"[Metricbeat] CPU user pct\",\"type\":\"metrics\",\"params\":{\"id\":\"61ca57f0-469d-11e7-af02-69e470af7417\",\"type\":\"top_n\",\"series\":[{\"id\":\"610e5380-42db-11e8-8e8e-8f49defbde25\",\"color\":\"#68BC00\",\"split_mode\":\"terms\",\"metrics\":[{\"id\":\"610e5381-42db-11e8-8e8e-8f49defbde25\",\"type\":\"avg\",\"field\":\"system.cpu.user.pct\"}],\"seperate_axis\":0,\"axis_position\":\"right\",\"formatter\":\"percent\",\"chart_type\":\"line\",\"line_width\":1,\"point_size\":1,\"fill\":0.5,\"stacked\":\"none\",\"terms_field\":\"beat.name\",\"terms_size\":\"10\",\"terms_order_by\":\"610e5381-42db-11e8-8e8e-8f49defbde25\",\"label\":\"CPU USER PCT\",\"terms_direction\":\"desc\"}],\"time_field\":\"@timestamp\",\"index_pattern\":\"metricbeat-*\",\"interval\":\"auto\",\"axis_position\":\"left\",\"axis_formatter\":\"number\",\"show_legend\":1,\"show_grid\":1,\"gauge_color_rules\":[{\"value\":0,\"id\":\"74aa9440-42da-11e8-8e8e-8f49defbde25\",\"gauge\":null}],\"gauge_width\":10,\"gauge_inner_width\":10,\"gauge_style\":\"half\",\"gauge_max\":\"\",\"filter\":\"\",\"background_color_rules\":[{\"id\":\"1101c5c0-42db-11e8-8e8e-8f49defbde25\"}],\"bar_color_rules\":[{\"id\":\"127c7ee0-42db-11e8-8e8e-8f49defbde25\"}]},\"aggs\":[]}",
-      "uiStateJSON": "{}",
-      "description": "",
-      "version": 1,
-      "kibanaSavedObjectMeta": {
-        "searchSourceJSON": "{}"
+        "searchSourceJSON": "{\"filter\":[{\"meta\":{\"index\":\"5fb3ec50-448b-11e8-8ca8-c702ca5cbade\",\"negate\":true,\"disabled\":false,\"alias\":null,\"type\":\"phrase\",\"key\":\"monit.level\",\"value\":\"info\",\"params\":{\"query\":\"info\",\"type\":\"phrase\"}},\"query\":{\"match\":{\"monit.level\":{\"query\":\"info\",\"type\":\"phrase\"}}},\"$state\":{\"store\":\"appState\"}}],\"query\":{\"query\":\"\",\"language\":\"lucene\"}}"
       }
     },
     "_meta": {

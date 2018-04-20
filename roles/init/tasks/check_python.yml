@@ -1,3 +1,10 @@
+- file:
+    path: host_vars
+    state: directory
+  run_once: yes
+  delegate_to: localhost
+  become: no
+
 - block:
     - name: Checking python2
       raw: test -e /usr/bin/python
@@ -26,6 +33,7 @@
 - block:
     - meta: clear_host_errors
     - meta: refresh_inventory
+    - include_vars: "host_vars/{{ inventory_hostname }}.yml"
     - setup:
     - include_tasks: create_hostvars.yml
   rescue:

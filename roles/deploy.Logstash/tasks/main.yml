@@ -9,6 +9,14 @@
       when: verChk.rc == 1
     - include_tasks: '{{ ansible_os_family }}.yml'
 
+- name: Updating logstash systemd service configure
+  ini_file:
+    path: /etc/systemd/system/logstash.service
+    section: Service
+    option: PermissionsStartOnly
+    value: true
+    backup: yes
+
 - name: Updating logstash configuration
   template:
     src: '{{ item }}.j2'
@@ -37,8 +45,8 @@
     state: directory
     owner: logstash
     group: logstash
-    mode: 0660
     recurse: yes
+    mode: 0664
   with_items:
     - '{{ logstash_log_path }}'
     - '{{ logstash_data_path }}'

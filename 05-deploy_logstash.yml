@@ -2,7 +2,7 @@
   become: yes
   serial:
     - 1
-    - 10%
+    - 33%
   roles:
     - deploy.Logstash
   post_tasks:
