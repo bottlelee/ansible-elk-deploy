@@ -1,0 +1,15 @@
+- block:
+    - name: "Download /etc/elasticsearch/elasticsearch.yml to local directory"
+      fetch:
+        src: "/etc/elasticsearch/elasticsearch.yml"
+        dest: "install_report/elasticsearch/{{ inventory_hostname }}_elasticsearch.yml"
+        fail_on_missing: false
+        flat: yes
+  rescue:
+    - name: "Create local directory install_report/elasticsearch"
+      file:
+        path: "install_report/elasticsearch"
+        state: directory
+      delegate_to: localhost
+      become: no
+    - include_tasks: report.yml

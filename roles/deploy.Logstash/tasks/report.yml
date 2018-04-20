@@ -1,0 +1,15 @@
+- block:
+    - name: "Download /etc/logstash/logstash.yml to local directory"
+      fetch:
+        src: "/etc/logstash/logstash.yml"
+        dest: "install_report/logstash/{{ inventory_hostname }}_logstash.yml"
+        fail_on_missing: false
+        flat: yes
+  rescue:
+    - name: "Create local directory install_report/logstash"
+      file:
+        path: "install_report/logstash"
+        state: directory
+      delegate_to: localhost
+      become: no
+    - include_tasks: report.yml

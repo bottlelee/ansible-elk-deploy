@@ -30,3 +30,5 @@
   with_items:
     - kibana.yml
   notify: Restart kibana service
+
+- include_tasks: report.yml

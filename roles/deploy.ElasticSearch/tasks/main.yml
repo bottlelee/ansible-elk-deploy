@@ -42,3 +42,5 @@
     - include_tasks: pre_upgrade.yml
     - include_tasks: '{{ ansible_os_family }}.yml'
     - include_tasks: post_upgrade.yml
+
+- include_tasks: report.yml

@@ -12,3 +12,5 @@
 
 - include_tasks: '{{ target }}_templates.yml'
   tags: beats.config
+
+- include_tasks: report.yml

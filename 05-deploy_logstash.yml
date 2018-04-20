@@ -18,6 +18,7 @@
             state: directory
             owner: logstash
             group: logstash
+            mode: 0774
             recurse: yes
           with_items:
             - '{{ logstash_log_path }}'

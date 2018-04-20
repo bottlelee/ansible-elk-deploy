@@ -12,20 +12,20 @@ check filesystem {{ item.mount | regex_replace('.*?\/', '') | upper }} with path
 {% endif %}
 {% endfor %}
 
-check file resolvconf with path /etc/resolv.conf
+check file RESOLVCONF with path /etc/resolv.conf
   if changed checksum then alert
 
 check file hostname with path /etc/hostname
   if changed checksum then alert
 
-check file passwd with path /etc/passwd
+check file PASSWD with path /etc/passwd
   if changed checksum then alert
   if does not exist then unmonitor
   if failed permission 0644 then exec "/bin/chmod 0644 /etc/passwd"
   if failed uid "root" then alert
   if failed gid "root" then alert
 
-check file shadow with path /etc/shadow
+check file SHADOW with path /etc/shadow
   if changed checksum then alert
   if does not exist then unmonitor
   if failed permission 0640 then exec "/bin/chmod 0640 /etc/shadow"

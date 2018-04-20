@@ -1,4 +1,4 @@
-check system {{ ansible_hostname }}-{{ bind_address | default(ansible_all_ipv4_addresses[0]) | replace(".", "-") }}
+check system {{ ansible_hostname | upper }}_{{ bind_address | default(ansible_all_ipv4_addresses[0]) | replace(".", "-") }}
   if loadavg (5min) > {{ ansible_processor_vcpus * 1.5 }} then alert
   if loadavg (1min) > {{ ansible_processor_vcpus * 2 }} then alert
   if cpu usage > 85% for 5 cycles then alert

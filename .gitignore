@@ -12,3 +12,4 @@ downloaded_files
 *.log
 fact_caching
 host_vars/*.yml
+install_report

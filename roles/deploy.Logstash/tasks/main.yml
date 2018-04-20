@@ -46,7 +46,9 @@
     owner: logstash
     group: logstash
     recurse: yes
-    mode: 0664
+    mode: 0774
   with_items:
     - '{{ logstash_log_path }}'
     - '{{ logstash_data_path }}'
+
+- include_tasks: report.yml

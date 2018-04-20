@@ -1,0 +1,15 @@
+- block:
+    - name: "Download /etc/chrony.conf to local directory"
+      fetch:
+        src: "/etc/chrony.conf"
+        dest: "install_report/chrony/{{ inventory_hostname }}_chrony.conf"
+        fail_on_missing: false
+        flat: yes
+  rescue:
+    - name: "Create local directory install_report/chrony.conf"
+      file:
+        path: "install_report/chrony"
+        state: directory
+      delegate_to: localhost
+      become: no
+    - include_tasks: report.yml

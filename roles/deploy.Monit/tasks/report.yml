@@ -1,0 +1,26 @@
+- block:
+    - name: Get monit summary
+      command: monit summary
+      register: summary
+    - name: Remove old report
+      file:
+        path: "install_report/monit/{{ inventory_hostname }}.txt"
+        state: absent
+      delegate_to: localhost
+      become: no
+    - name: Create report file under install_report/monit
+      lineinfile:
+        path: "install_report/monit/{{ inventory_hostname }}.txt"
+        line: "{{ item }}"
+        create: yes
+      with_items: "{{ summary.stdout_lines }}"
+      delegate_to: localhost
+      become: no
+  rescue:
+    - name: "Create local directory install_report/monit"
+      file:
+        path: "install_report/monit"
+        state: directory
+      delegate_to: localhost
+      become: no
+    - include_tasks: report.yml

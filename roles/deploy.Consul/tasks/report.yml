@@ -1,0 +1,15 @@
+- block:
+    - name: "Download /etc/consul.d/config.json to local directory"
+      fetch:
+        src: "/etc/consul.d/config.json"
+        dest: "install_report/consul/{{ inventory_hostname }}_config.json"
+        fail_on_missing: false
+        flat: yes
+  rescue:
+    - name: "Create local directory install_report/consul"
+      file:
+        path: "install_report/consul"
+        state: directory
+      delegate_to: localhost
+      become: no
+    - include_tasks: report.yml
