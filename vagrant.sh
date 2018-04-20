@@ -19,7 +19,9 @@ case $1 in
     vagrant destroy -f
     create
     ;;
-  * )
-    Usage: up|restore|rebuild|destroy
+  down )
+    vagrant destroy -f
     ;;
+  * )
+    echo "Usage: up|restore|rebuild|down"
 esac
