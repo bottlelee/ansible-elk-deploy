@@ -1,12 +1,12 @@
 - block:
-    - name: checking process 'elasticsearch'
+    - name: Checking process 'elasticsearch'
       shell: ps xua | grep -v grep | grep -i elasticsearch
       changed_when: false
   rescue:
     - include_tasks: env_check.yml
     - include_tasks: '{{ ansible_os_family }}.yml'
 
-- name: updating ElasticSearch configuration
+- name: Updating ElasticSearch configuration
   template:
     src: '{{ item }}.j2'
     dest: '/etc/elasticsearch/{{ item }}'
@@ -15,7 +15,7 @@
     - elasticsearch.yml
   register: configSt
 
-- name: restarting ElasticSearch service
+- name: Restarting ElasticSearch service
   service:
     name: elasticsearch
     state: restarted
@@ -31,7 +31,7 @@
     - '{{ elastic_http_port }}'
 
 - block:
-    - name: checking ElasticSearch version
+    - name: Checking ElasticSearch version
       uri:
         url: "http://{{ bind_address }}:{{ elastic_http_port }}"
         return_content: yes
@@ -42,3 +42,5 @@
     - include_tasks: pre_upgrade.yml
     - include_tasks: '{{ ansible_os_family }}.yml'
     - include_tasks: post_upgrade.yml
+
+- include_tasks: report.yml

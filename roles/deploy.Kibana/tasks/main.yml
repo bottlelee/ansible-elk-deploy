@@ -1,32 +1,34 @@
 - block:
-    - name: checking command 'kibana'
+    - name: Checking command 'kibana'
       command: "/usr/share/kibana/bin/kibana version"
       changed_when: false
       register: verChk
       failed_when: verChk.stdout is version(elk_version, operator='lt', strict=True)
-    - name: checking kibana service status
+    - name: Checking kibana service status
       wait_for:
         port: '{{ kibana_port }}'
         timeout: 10
   rescue:
     - include_tasks: '{{ ansible_os_family }}.yml'
-    - name: create /var/run/kibana
+    - name: Create /var/run/kibana
       file:
         path: /var/run/kibana
         state: directory
         owner: kibana
         group: kibana
-    - name: starting kibana service
+    - name: Starting kibana service
       service:
         name: kibana
         state: restarted
         enabled: yes
         daemon_reload: yes
 
-- name: update kibana configuration
+- name: Update kibana configuration
   template:
     src: '{{ item }}.j2'
     dest: '/etc/kibana/{{ item }}'
   with_items:
     - kibana.yml
   notify: Restart kibana service
+
+- include_tasks: report.yml

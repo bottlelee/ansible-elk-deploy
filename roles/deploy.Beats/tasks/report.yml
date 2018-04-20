@@ -1,0 +1,15 @@
+- block:
+    - name: "Download /etc/{{ target }}/{{ target }}.yml to local directory"
+      fetch:
+        src: "/etc/{{ target }}/{{ target }}.yml"
+        dest: "install_report/{{ target }}/{{ inventory_hostname }}_{{ target }}.yml"
+        fail_on_missing: false
+        flat: yes
+  rescue:
+    - name: "Create local directory install_report/{{ target }}"
+      file:
+        path: "install_report/{{ target }}"
+        state: directory
+      delegate_to: localhost
+      become: no
+    - include_tasks: report.yml

@@ -1,22 +1,22 @@
 - block:
-    - name: "uploading plugin {{ target }}"
+    - name: "Uploading plugin {{ target }}"
       copy:
         src: "downloaded_files/{{ target }}-{{ elk_version }}.zip"
         dest: "/tmp/{{ target }}-{{ elk_version }}.zip"
-    - name: "installing plugin {{ target }}"
+    - name: "Installing plugin {{ target }}"
       elasticsearch_plugin:
         name: "file:///tmp/{{ target }}-{{ elk_version }}.zip"
         state: present
       # command: "/usr/share/elasticsearch/bin/elasticsearch-plugin install -bs file:///tmp/{{ target }}-{{ elk_version }}.zip"
       ignore_errors: yes
   rescue:
-    - name: "uninstalling plugin {{ target }}"
+    - name: "Uninstalling plugin {{ target }}"
       elasticsearch_plugin:
         name: "{{ target }}"
         state: absent
       # command: "/usr/share/elasticsearch/bin/elasticsearch-plugin remove {{ target }}"
       ignore_errors: yes
-    - name: "downloading plugin {{ target }}"
+    - name: "Downloading plugin {{ target }}"
       get_url:
         url: "https://artifacts.elastic.co/downloads/elasticsearch-plugins/{{ target }}/{{ target }}-{{ elk_version }}.zip"
         dest: downloaded_files/{{ target }}-{{ elk_version }}.zip

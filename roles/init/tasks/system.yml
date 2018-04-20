@@ -1,9 +1,9 @@
-- name: "checking {{ bind_interface }}"
+- name: "Checking {{ bind_interface }}"
   fail:
     msg: "interface {{ bind_interface }} has no IP address"
   when: hostvars[inventory_hostname]['ansible_' + bind_interface]['ipv4']['address'] == ''
 
-- name: setup sysctl
+- name: Setup sysctl
   sysctl:
     name: '{{ item.name }}'
     value: '{{ item.value }}'
@@ -14,7 +14,7 @@
     - {name: fs.file-max, value: 65536}
     - {name: net.ipv4.ip_forward, value: 1}
 
-- name: disable swap
+- name: Disable swap
   command: swapoff -a
   when: "'elasticsearch' in group_names"
   changed_when: false

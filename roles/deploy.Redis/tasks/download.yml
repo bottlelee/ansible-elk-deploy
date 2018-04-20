@@ -11,7 +11,7 @@
       become: no
       run_once: true
   rescue:
-    - name: "downloading packages"
+    - name: "Downloading packages"
       get_url:
         url: "http://dl.fedoraproject.org/pub/epel/7/x86_64/Packages{{ item }}"
         dest: "downloaded_files/"
@@ -42,7 +42,7 @@
         - redis-server_3.0.6-1_amd64
         - redis-sentinel_3.0.6-1_amd64
   rescue:
-    - name: "downloading packages"
+    - name: "Downloading packages"
       get_url:
         url: "http://archive.ubuntu.com/ubuntu/pool/universe{{ item }}"
         dest: "downloaded_files/"

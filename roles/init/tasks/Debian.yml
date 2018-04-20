@@ -1,13 +1,15 @@
-- name: setup dns server
+- name: Setup DNS servers
   lineinfile:
     path: "/etc/resolvconf/resolv.conf.d/head"
     line: "{{ item }}"
   with_items:
+    - "domain consul"
+    - "search consul"
     - "nameserver {{ dns_servers[0] }}"
     - "nameserver {{ dns_servers[1] }}"
   register: resolvconf
 
-- name: restarting resolvconf service
+- name: Restarting resolvconf service
   service:
     name: resolvconf
     state: restarted

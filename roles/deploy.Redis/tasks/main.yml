@@ -1,5 +1,5 @@
 - block:
-    - name: checking redis command
+    - name: Checking redis command
       command: test -e /usr/bin/redis-server
       changed_when: false
   rescue:
@@ -8,7 +8,7 @@
 
 - include_tasks: '{{ ansible_os_family }}_config.yml'
 
-- name: coping check_redis_master.sh script
+- name: Coping check_redis_master.sh script
   copy:
     src: check_redis_master.sh
     dest: /usr/local/bin/check_redis_master.sh

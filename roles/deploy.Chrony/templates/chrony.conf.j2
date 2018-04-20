@@ -1,17 +1,17 @@
 {% if 'elasticMasterNode' in group_names %}
 
 {% for item in groups['elasticMasterNode'] if item != inventory_hostname %}
-server {{ item }}
+server {{ item }}.node.{{ consul_dc_name }}.consul
 {% endfor %}
 local stratum 8 orphan
 smoothtime 400 0.01
 manual
-initstepslew 1 {% for item in groups['elasticMasterNode'] if item != inventory_hostname %}{{ item }} {% endfor %}
+initstepslew 1 {% for item in groups['elasticMasterNode'] if item != inventory_hostname %}{{ item }}.node.{{ consul_dc_name }}.consul {% endfor %}
 
 {% else %}
 
 {% for item in groups['elasticMasterNode'] %}
-server {{ item }} iburst
+server {{ item }}.node.{{ consul_dc_name }}.consul iburst
 {% endfor %}
 makestep 1.0 3
 

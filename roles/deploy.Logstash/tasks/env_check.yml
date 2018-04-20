@@ -1,11 +1,11 @@
-- name: checking if target is suitable for deploy
+- name: Checking if target is suitable for deploy
   assert:
     that:
       - "ansible_memory_mb.nocache.free >= 1024"
       - "ansible_processor_vcpus >= 2"
       - "ansible_architecture == 'x86_64'"
 
-- name: check if port available
+- name: Check if port available
   wait_for:
     host: '{{ item }}'
     port: '{{ logstash_beats_port }}'
@@ -16,7 +16,7 @@
     - '{{ ansible_all_ipv4_addresses }}'
   register: portSt
 
-# - name: writing port number into group_vars/all.yml
+# - name: Writing port number into group_vars/all.yml
 #   run_once: true
 #   lineinfile:
 #     path: group_vars/all.yml

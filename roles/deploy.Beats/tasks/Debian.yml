@@ -1,15 +1,15 @@
 - include_tasks: download.yml format='deb'
 
-- name: "uploading {{ target }}-{{ elk_version }}-amd64.deb"
+- name: "Uploading {{ target }}-{{ elk_version }}-amd64.deb"
   copy:
     src: "downloaded_files/{{ target }}-{{ elk_version }}-amd64.deb"
     dest: "/tmp/{{ target }}-{{ elk_version }}-amd64.deb"
 
 - block:
-    - name: 'installing {{ target }}-{{ elk_version }}-amd64.deb'
+    - name: 'Installing {{ target }}-{{ elk_version }}-amd64.deb'
       apt:
         deb: '/tmp/{{ target }}-{{ elk_version }}-amd64.deb'
-    - name: 'restarting {{ target }} service'
+    - name: 'Restarting {{ target }} service'
       service:
         name: '{{ target }}'
         state: restarted
@@ -17,7 +17,7 @@
   rescue:
     - command: "dpkg -i /tmp/{{ target }}-{{ elk_version }}-amd64.deb"
 
-- name: "removing /tmp/{{ target }}-{{ elk_version }}-amd64.deb"
+- name: "Removing /tmp/{{ target }}-{{ elk_version }}-amd64.deb"
   file:
     path: "/tmp/{{ target }}-{{ elk_version }}-amd64.deb"
     state: absent

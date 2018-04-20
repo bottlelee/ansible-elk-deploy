@@ -1,9 +1,9 @@
 - block:
-    - name: 'uploading kibana-{{ elk_version }}-x86_64.rpm'
+    - name: 'Uploading kibana-{{ elk_version }}-x86_64.rpm'
       copy:
         src: 'downloaded_files/kibana-{{ elk_version }}-x86_64.rpm'
         dest: /tmp/
-    - name: 'installing kibana-{{ elk_version }}-x86_64.rpm'
+    - name: 'Installing kibana-{{ elk_version }}-x86_64.rpm'
       yum:
         name: '/tmp/kibana-{{ elk_version }}-x86_64.rpm'
         state: present
@@ -11,7 +11,7 @@
     - include_tasks: download.yml format=rpm
     - include_tasks: '{{ ansible_os_family }}.yml'
   always:
-    - name: 'removing /tmp/kibana-{{ elk_version }}-x86_64.rpm'
+    - name: 'Removing /tmp/kibana-{{ elk_version }}-x86_64.rpm'
       file:
         path: '/tmp/kibana-{{ elk_version }}-x86_64.rpm'
         state: absent

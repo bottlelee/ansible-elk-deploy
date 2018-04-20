@@ -1,12 +1,17 @@
 - hosts: all
   become: yes
+  # serial: 33%
   gather_facts: no
-  vars:
-    check_groups: true
-  pre_tasks:
+  tasks:
     - include_role:
         name: init
         tasks_from: check_python.yml
+
+- hosts: all
+  become: yes
+  serial: 33%
+  vars:
+    check_groups: true
   roles:
     - init
     - deploy.Chrony

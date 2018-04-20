@@ -1,12 +1,12 @@
 - block:
-    - name: 'uploading elasticsearch-{{ elk_version }}.deb'
+    - name: 'Uploading elasticsearch-{{ elk_version }}.deb'
       copy:
         src: 'downloaded_files/elasticsearch-{{ elk_version }}.deb'
         dest: /tmp/
-    - name: 'installing elasticsearch-{{ elk_version }}.deb'
+    - name: 'Installing elasticsearch-{{ elk_version }}.deb'
       apt:
         deb: '/tmp/elasticsearch-{{ elk_version }}.deb'
-    - name: starting elasticsearch service
+    - name: Starting elasticsearch service
       service:
         name: elasticsearch
         state: started
@@ -16,7 +16,7 @@
     - include_tasks: download.yml format=deb
     - include_tasks: '{{ ansible_os_family }}.yml'
   always:
-    - name: 'removing /tmp/elasticsearch-{{ elk_version }}.deb'
+    - name: 'Removing /tmp/elasticsearch-{{ elk_version }}.deb'
       file:
         path: '/tmp/elasticsearch-{{ elk_version }}.deb'
         state: absent

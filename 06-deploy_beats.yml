@@ -1,8 +1,8 @@
 - hosts: all
   become: yes
-  serial:
-    - 1
-    - 30%
+  # serial:
+  #   - 1
+  #   - 33%
   roles:
     - {
       role: deploy.Beats,

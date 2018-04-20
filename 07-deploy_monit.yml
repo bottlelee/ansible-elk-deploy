@@ -1,16 +1,16 @@
 - hosts: all
   become: yes
-  serial:
-    - 1
-    - 30%
+  # serial:
+  #   - 1
+  #   - 33%
   roles:
     - deploy.Monit
   post_tasks:
     - block:
-        - name: waiting for service started
+        - name: Waiting for service started
           wait_for:
             port: 2812
-            timeout: 30
+            timeout: 35
       rescue:
         - service:
             name: monit

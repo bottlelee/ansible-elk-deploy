@@ -1,5 +1,5 @@
 - block:
-    - name: uploading command file
+    - name: Uploading command file
       copy:
         src: downloaded_files/consul
         dest: /usr/local/bin/consul
@@ -8,22 +8,22 @@
     - include_tasks: download.yml
     - include_tasks: install.yml
   always:
-    - name: creating user 'consul'
+    - name: Creating user 'consul'
       user:
         name: consul
-    - name: creating /etc/consul.d
+    - name: Creating /etc/consul.d
       file:
         path: /etc/consul.d/
         state: directory
         owner: consul
         group: consul
-    - name: creating /var/consul
+    - name: Creating /var/consul
       file:
         path: /var/consul
         state: directory
         owner: consul
         group: consul
-    - name: enable DNS port forwarding
+    - name: Enable DNS port forwarding
       command: '{{ item }}'
       with_items:
         - iptables -t nat -A PREROUTING -p udp -m udp --dport 53 -j REDIRECT --to-ports 8600

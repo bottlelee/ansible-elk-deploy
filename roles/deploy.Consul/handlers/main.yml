@@ -1,9 +1,14 @@
+- name: Validate config
+  command: /usr/local/bin/consul validate -quiet /etc/consul.d/
+  listen: Restart consul
+
 - name: Restart consul service
   service:
     name: consul
     state: restarted
     enabled: true
     daemon_reload: true
+  listen: Restart consul
 
 - name: Restart resolvconf service
   service:

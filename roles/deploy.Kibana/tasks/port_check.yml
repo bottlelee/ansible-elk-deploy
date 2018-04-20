@@ -1,4 +1,4 @@
-- name: 'cheking if port {{ kibana_port }} available'
+- name: 'Cheking if port {{ kibana_port }} available'
   wait_for:
     host: '{{ item }}'
     port: '{{ kibana_port }}'

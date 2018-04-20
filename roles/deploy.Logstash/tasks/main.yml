@@ -1,5 +1,5 @@
 - block:
-    - name: checking logstash
+    - name: Checking logstash
       shell: /usr/share/logstash/bin/logstash -V | awk '{ print $2 }'
       changed_when: false
       register: verChk
@@ -9,16 +9,24 @@
       when: verChk.rc == 1
     - include_tasks: '{{ ansible_os_family }}.yml'
 
-- name: updating logstash configuration
+- name: Updating logstash systemd service configure
+  ini_file:
+    path: /etc/systemd/system/logstash.service
+    section: Service
+    option: PermissionsStartOnly
+    value: true
+    backup: yes
+
+- name: Updating logstash configuration
   template:
     src: '{{ item }}.j2'
     dest: '/etc/logstash/{{ item }}'
   with_items:
     - jvm.options
     - logstash.yml
-  notify: restart logstash
+  notify: Restart logstash
 
-- name: updating piplines
+- name: Updating piplines
   template:
     src: '{{ item }}.conf.j2'
     dest: '/etc/logstash/conf.d/{{ item }}.conf'
@@ -29,20 +37,18 @@
     - 003-syslog
     - 004-auditd
     - 999-output
-  notify: restart logstash
+  notify: Restart logstash
 
-# - name: checking logstash configuration
-#   command: /usr/share/logstash/bin/logstash -t --path.settings=/etc/logstash
-#   notify: Restart logstash service
-#   when: configSt is changed or pipelineSt is changed
-
-- name: set /var/lib/logstash ownership
+- name: Set /var/lib/logstash ownership
   file:
     path: '{{ item }}'
     state: directory
     owner: logstash
     group: logstash
     recurse: yes
+    mode: 0774
   with_items:
     - '{{ logstash_log_path }}'
     - '{{ logstash_data_path }}'
+
+- include_tasks: report.yml

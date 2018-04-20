@@ -3,4 +3,4 @@
     src: 'packetbeat.yml.j2'
     dest: '/etc/packetbeat/packetbeat.yml'
     mode: 0600
-  notify: restart packetbeat
+  notify: Restart packetbeat

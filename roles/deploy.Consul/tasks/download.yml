@@ -1,5 +1,5 @@
 - block:
-    - name: checking local consul command
+    - name: Checking local consul command
       shell: downloaded_files/consul version | head -n1 | awk '{ gsub("v","") ; print $2 }'
       register: verChk
       changed_when: false
@@ -8,7 +8,7 @@
       become: no
       run_once: true
   rescue:
-    - name: downloading consul
+    - name: Downloading consul
       unarchive:
         src: "https://releases.hashicorp.com/consul/{{ consul_version }}/consul_{{ consul_version }}_linux_amd64.zip"
         dest: downloaded_files/

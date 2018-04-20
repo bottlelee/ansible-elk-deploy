@@ -5,7 +5,7 @@
     - include_tasks: keygen.yml
     - include_tasks: config.yml
 
-- name: updating server config
+- name: Updating server config
   template:
     src: '{{ item.src }}.j2'
     dest: '{{ item.dest }}'
@@ -14,9 +14,9 @@
       dest: /etc/consul.d/config.json
     - src: consul.service
       dest: /etc/systemd/system/consul.service
-  register: serverConfig
+  notify: Restart consul
 
-- name: updating services config
+- name: Updating services config
   template:
     src: '{{ item }}.json.j2'
     dest: '/etc/consul.d/{{ item }}.json'
@@ -26,9 +26,4 @@
     - logstash
     - kibana
     - redis
-  register: servicesConfig
-
-- name: validate config
-  command: /usr/local/bin/consul validate -quiet /etc/consul.d/
-  notify: Restart consul service
-  when: serverConfig is changed or servicesConfig is changed
+  notify: Restart consul

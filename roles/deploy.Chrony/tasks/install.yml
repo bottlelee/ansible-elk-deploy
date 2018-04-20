@@ -1,22 +1,22 @@
-- name: copy chronyc command file
+- name: Copy chronyc command file
   copy:
     src: chronyc
     dest: /usr/bin/chronyc
     mode: 0544
 
-- name: copy chronyd command file
+- name: Copy chronyd command file
   copy:
     src: chronyd
     dest: /usr/sbin/chronyd
     mode: 0544
 
-- name: copy service file
+- name: Copy service file
   copy:
     src: chronyd.service
     dest: /etc/systemd/system/chronyd.service
   notify: Restart chronyd service
 
-- name: create directories
+- name: Create directories
   file:
     path: "{{ item }}"
     state: directory

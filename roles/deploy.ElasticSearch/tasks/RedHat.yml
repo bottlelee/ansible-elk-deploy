@@ -1,13 +1,13 @@
 - block:
-    - name: 'uploading elasticsearch-{{ elk_version }}.rpm'
+    - name: 'Uploading elasticsearch-{{ elk_version }}.rpm'
       copy:
         src: 'downloaded_files/elasticsearch-{{ elk_version }}.rpm'
         dest: /tmp/
-    - name: 'installing elasticsearch-{{ elk_version }}.rpm'
+    - name: 'Installing elasticsearch-{{ elk_version }}.rpm'
       yum:
         name: '/tmp/elasticsearch-{{ elk_version }}.rpm'
         state: present
-    - name: starting elasticsearch service
+    - name: Starting elasticsearch service
       service:
         name: elasticsearch
         state: started
@@ -17,7 +17,7 @@
     - include_tasks: download.yml format=rpm
     - include_tasks: '{{ ansible_os_family }}.yml'
   always:
-    - name: 'removing /tmp/elasticsearch-{{ elk_version }}.rpm'
+    - name: 'Removing /tmp/elasticsearch-{{ elk_version }}.rpm'
       file:
         path: '/tmp/elasticsearch-{{ elk_version }}.rpm'
         state: absent

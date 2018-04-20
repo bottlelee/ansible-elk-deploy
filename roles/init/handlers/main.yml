@@ -2,3 +2,15 @@
   service:
     name: rsyslog
     state: restarted
+
+- name: Restart NetworkManager service
+  service:
+    name: NetworkManager
+    state: restarted
+    enabled: yes
+
+- name: Restart networking service
+  service:
+    name: networking
+    state: restarted
+    enabled: yes

@@ -1,15 +1,15 @@
-- name: updating filebeat.yml
+- name: Updating filebeat.yml
   template:
     src: 'filebeat.yml.j2'
     dest: '/etc/filebeat/filebeat.yml'
     mode: 0600
-  notify: restart filebeat
+  notify: Restart filebeat
 
-- name: enable filebeat modules
+- name: Enable filebeat modules
   command: "filebeat modules enable {{ item }}"
   changed_when: false
   with_items:
     - system
     - auditd
     - '{{ filebeat_modules }}'
-  notify: restart filebeat
+  notify: Restart filebeat

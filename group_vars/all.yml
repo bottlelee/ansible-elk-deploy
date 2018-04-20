@@ -1,8 +1,11 @@
-elk_version: '6.2.3'
+elk_version: '6.2.2'
 timezone: 'Asia/Shanghai'
 
 # Set the network interface name to get IP
-bind_interface: 'eth1'
+## CentOS
+RedHat_bind_interface: 'eth1'
+## Ubuntu
+Debian_bind_interface: 'enp0s8'
 
 # DNS nameserver
 dns_servers:
@@ -48,7 +51,7 @@ filebeat_modules: ""
 metricbeat_modules: ""
 packetbeat_modules: ""
 
-# Curator action tasks
+# Curator action tasks. Indices which older than the unit will move to warm data nodes.
 hot_to_warm_unit: days
 hot_to_warm_unit_count: 1
 

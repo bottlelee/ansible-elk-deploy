@@ -1,16 +1,22 @@
 - block:
-    - name: 'uploading logstash-{{ elk_version }}.rpm'
+    - name: 'Uploading logstash-{{ elk_version }}.rpm'
       copy:
         src: 'downloaded_files/logstash-{{ elk_version }}.rpm'
         dest: /tmp/
-    - name: 'installing logstash-{{ elk_version }}.rpm'
+    - name: 'Installing logstash-{{ elk_version }}.rpm'
       yum:
         name: '/tmp/logstash-{{ elk_version }}.rpm'
   rescue:
     - include_tasks: download.yml format=rpm
     - include_tasks: '{{ ansible_os_family }}.yml'
   always:
-    - name: 'removing /tmp/logstash-{{ elk_version }}.rpm'
+    - name: 'Removing /tmp/logstash-{{ elk_version }}.rpm'
       file:
         path: '/tmp/logstash-{{ elk_version }}.rpm'
         state: absent
+    # This task fix the logstash startup problem when it has no permission to write log in /var/log/logstash
+    - name: Add user 'logstash' into group 'adm'
+      user:
+        name: logstash
+        groups: adm
+        append: yes
