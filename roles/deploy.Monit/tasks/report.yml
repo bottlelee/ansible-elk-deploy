@@ -2,15 +2,10 @@
     - name: Get monit summary
       command: monit summary
       register: summary
-    - name: Remove old report
-      file:
-        path: "install_report/monit/{{ inventory_hostname }}.txt"
-        state: absent
-      delegate_to: localhost
-      become: no
     - name: Create report file under install_report/monit
       lineinfile:
         path: "install_report/monit/{{ inventory_hostname }}.txt"
+        regexp: "^{{ item | truncate(20, True) }}"
         line: "{{ item }}"
         create: yes
       with_items: "{{ summary.stdout_lines }}"

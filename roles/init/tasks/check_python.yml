@@ -1,39 +1,43 @@
-- file:
-    path: host_vars
-    state: directory
-  run_once: yes
-  delegate_to: localhost
-  become: no
+# - file:
+#     path: host_vars
+#     state: directory
+#   run_once: yes
+#   delegate_to: localhost
+#   become: no
 
 - block:
     - name: Checking python2
       raw: test -e /usr/bin/python
       changed_when: false
-    - name: Create/update host_vars files
-      lineinfile:
-        path: "host_vars/{{ inventory_hostname }}.yml"
-        regexp: "^ansible_python_interpreter"
-        line: "ansible_python_interpreter: /usr/bin/python"
-        create: yes
-      delegate_to: localhost
-      become: no
+    # - name: Create/update host_vars files
+    #   lineinfile:
+    #     path: "host_vars/{{ inventory_hostname }}.yml"
+    #     regexp: "^ansible_python_interpreter"
+    #     line: "ansible_python_interpreter: /usr/bin/python"
+    #     create: yes
+    #   delegate_to: localhost
+    #   become: no
   rescue:
     - name: Checking python3
       raw: test -e /usr/bin/python3
       changed_when: false
-    - name: Create/update host_vars files
-      lineinfile:
-        path: "host_vars/{{ inventory_hostname }}.yml"
-        regexp: "^ansible_python_interpreter"
-        line: "ansible_python_interpreter: /usr/bin/python3"
-        create: yes
-      delegate_to: localhost
-      become: no
+    # - name: Create/update host_vars files
+    #   lineinfile:
+    #     path: "host_vars/{{ inventory_hostname }}.yml"
+    #     regexp: "^ansible_python_interpreter"
+    #     line: "ansible_python_interpreter: /usr/bin/python3"
+    #     create: yes
+    #   delegate_to: localhost
+    #   become: no
+    - name: Temporary set python interpreter to /usr/bin/python3
+      set_fact:
+        ansible_python_interpreter: /usr/bin/python3
+    - include_tasks: install_python2.yml
 
 - block:
     - meta: clear_host_errors
     - meta: refresh_inventory
-    - include_vars: "host_vars/{{ inventory_hostname }}.yml"
+    # - include_vars: "host_vars/{{ inventory_hostname }}.yml"
     - setup:
     - include_tasks: create_hostvars.yml
   rescue:

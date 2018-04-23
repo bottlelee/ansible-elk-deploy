@@ -50,5 +50,3 @@
   with_items:
     - '{{ logstash_log_path }}'
     - '{{ logstash_data_path }}'
-
-- include_tasks: report.yml

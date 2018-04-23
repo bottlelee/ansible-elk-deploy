@@ -12,5 +12,3 @@
       tags: monit.config.common
   tags:
     - monit.config.all
-
-- include_tasks: report.yml

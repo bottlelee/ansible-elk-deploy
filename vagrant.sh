@@ -2,7 +2,7 @@
 
 function create() {
   vagrant up --no-provision
-  vagrant halt
+  # vagrant halt
   vagrant snapshot save init
   vagrant up --provision
 }

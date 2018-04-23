@@ -1,0 +1,28 @@
+- block:
+    - name: Uploading python-minimal packages
+      copy:
+        src: "downloaded_files/{{ item }}"
+        dest: /tmp/
+      with_items:
+        - libpython2.7-minimal_2.7.11-7ubuntu1_amd64.deb
+        - python2.7-minimal_2.7.11-7ubuntu1_amd64.deb
+        - python-minimal_2.7.11-1_amd64.deb
+    - name: Installing python-minimal packages
+      raw: "dpkg -i /tmp/{{ item }}"
+      with_items:
+        - libpython2.7-minimal_2.7.11-7ubuntu1_amd64.deb
+        - python2.7-minimal_2.7.11-7ubuntu1_amd64.deb
+        - python-minimal_2.7.11-1_amd64.deb
+  rescue:
+    - name: Downloading python-minimal packages
+      get_url:
+        url: "{{ item }}"
+        dest: downloaded_files/
+      delegate_to: localhost
+      become: no
+      run_once: yes
+      with_items:
+        - http://archive.ubuntu.com/ubuntu/pool/main/p/python2.7/python2.7-minimal_2.7.11-7ubuntu1_amd64.deb
+        - http://archive.ubuntu.com/ubuntu/pool/main/p/python-defaults/python-minimal_2.7.11-1_amd64.deb
+        - http://archive.ubuntu.com/ubuntu/pool/main/p/python2.7/libpython2.7-minimal_2.7.11-7ubuntu1_amd64.deb
+    - include_tasks: install_python2.yml

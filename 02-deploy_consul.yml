@@ -20,3 +20,6 @@
             host: "{{ bind_address }}"
             port: 8600
             timeout: 30
+    - include_role:
+        name: deploy.Consul
+        tasks_from: report.yml

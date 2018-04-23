@@ -29,3 +29,6 @@
         - wait_for:
             port: 9600
             timeout: 120
+    - include_role:
+        name: deploy.Logstash
+        tasks_from: report.yml
