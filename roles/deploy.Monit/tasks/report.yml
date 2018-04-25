@@ -1,6 +1,6 @@
 - block:
     - name: Get monit summary
-      command: monit summary
+      command: /usr/local/bin/monit summary
       register: summary
     - name: Create report file under install_report/monit
       lineinfile:

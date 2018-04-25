@@ -5,8 +5,8 @@ ENV["LC_ALL"] = "en_US.UTF-8"
 
 Vagrant.require_version ">= 2.0.0"
 
-# $vm_box = "ubuntu/xenial64"
-$vm_box = "centos/7"
+$vm_box = "ubuntu/xenial64"
+# $vm_box = "centos/7"
 $instances = 14
 $python_command = "/usr/bin/python"
 $bond_interface = "eth0"
@@ -22,7 +22,7 @@ Vagrant.configure("2") do |config|
   # always use Vagrants insecure key
   config.ssh.insert_key = false
   config.vm.box_check_update = false
-  # config.vm.box = $vm_box
+  config.vm.box = $vm_box
   config.vm.synced_folder "./", "/vagrant", type: "rsync",
     rsync__exclude: [".git/", "downloaded_files/"]
   if Vagrant.has_plugin?("vagrant-vbguest") then
@@ -48,20 +48,17 @@ Vagrant.configure("2") do |config|
       $vm_name = "kibana-#{instance_id}"
     end
 
-    if (instance_id % 2) == 0
-      config.vm.box = "ubuntu/xenial64"
-    end
-    if (instance_id % 2) != 0
-      config.vm.box = "centos/7"
-    end
-
     config.vm.define vm_name = $vm_name do |config|
       config.vm.hostname = vm_name
-      config.vm.network "private_network", type: "dhcp"
+      config.vm.network "private_network", ip: "172.28.128.1#{instance_id}"
+
       if $vm_name == "kibana-#{instance_id}"
-        config.vm.network "forwarded_port", guest: 5601, host: 5601, auto_correct: true
-        config.vm.network "forwarded_port", guest: 8600, host: 53, auto_correct: true
+        config.vm.network "forwarded_port", guest: 5601, host: 5601,
+          auto_correct: true
+        config.vm.network "forwarded_port", guest: 8600, host: 53,
+          auto_correct: true
       end
+
       config.vm.provider "virtualbox" do |vb|
         vb.memory = "2048"
         vb.cpus = "2"

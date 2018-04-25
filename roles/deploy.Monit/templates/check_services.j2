@@ -9,7 +9,7 @@ check host CHRONY with address {{ bind_address }}
   if failed
     port 123
     type udp
-    for 2 cycles
+    for 5 cycles
   then restart
 
 check host CONSUL with address {{ bind_address }}
@@ -23,7 +23,7 @@ check host LOGSTASH with address 127.0.0.1
   stop program = "/usr/sbin/service logstash stop"
   if failed
     port 9600
-    for 3 cycles
+    for 5 cycles
   then restart
   if 3 restarts within 10 cycles then stop
 {% endif %}
@@ -34,7 +34,7 @@ check host KIBANA with address {{ bind_address }}
   stop program = "/usr/sbin/service kibana stop"
   if failed
     port {{ kibana_port }}
-    for 2 cycles
+    for 5 cycles
   then restart
   if 3 restarts within 10 cycles then stop
 
@@ -46,17 +46,17 @@ check host REDIS-MASTER with address redis.service.{{ consul_dc_name }}.consul
 check host ELASTICSEARCH with address {{ bind_address }}
   start program = "/usr/sbin/service elasticsearch start"
   stop program = "/usr/sbin/service elasticsearch stop"
-  if failed port {{ elastic_http_port }} for 3 cycles then alert
+  if failed port {{ elastic_http_port }} for 5 cycles then alert
 {% endif %}
 
 {% if 'redis' in group_names %}
 check host REDIS-SERVER with address {{ bind_address }}
   start program = "/usr/sbin/service redis-server start"
   stop program = "/usr/sbin/service redis-server stop"
-  if failed port 6379 protocol redis for 3 cycles then restart
+  if failed port 6379 protocol redis for 5 cycles then restart
 
 check host REDIS-SENTINEL with address {{ bind_address }}
   start program = "/usr/sbin/service redis-sentinel start"
   stop program = "/usr/sbin/service redis-sentinel stop"
-  if failed port 26379 for 3 cycles then restart
+  if failed port 26379 for 5 cycles then restart
 {% endif %}

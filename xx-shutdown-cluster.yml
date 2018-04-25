@@ -1,0 +1,119 @@
+- hosts: all
+  become: yes
+  gather_facts: no
+  serial: 33%
+  tasks:
+    - name: Stop common services
+      service:
+        name: "{{ item }}"
+        state: stopped
+        enabled: yes
+      with_items:
+        - filebeat
+        - metricbeat
+        - monit
+    - name: Wait for monit stopped
+      wait_for:
+        port: 2812
+        state: stopped
+        delay: 30
+        sleep: 10
+        timeout: 3600
+
+- hosts: logstash
+  become: yes
+  gather_facts: no
+  serial: 33%
+  tasks:
+    - name: Stop logstash service
+      service:
+        name: "{{ item }}"
+        state: stopped
+        enabled: yes
+      with_items:
+        - consul
+        - logstash
+    - name: Wait for logstash stopped
+      wait_for:
+        port: 9600
+        state: stopped
+        delay: 30
+        sleep: 10
+        timeout: 3600
+
+- hosts: redis
+  become: yes
+  gather_facts: no
+  serial: 33%
+  tasks:
+    - name: Stop redis sentinel
+      service:
+        name: redis-sentinel
+        state: stopped
+        enabled: yes
+    - name: Wait for redis sentinel stopped
+      wait_for:
+        port: 26379
+        state: stopped
+        delay: 30
+        sleep: 10
+        timeout: 3600
+
+- hosts: redis
+  become: yes
+  gather_facts: no
+  tasks:
+    - name: Check redis role
+      command: redis-cli info replication
+      register: repl
+    - name: Stop redis slave
+      service:
+        name: redis-server
+        state: stopped
+      when: "'role:slave' in repl.stdout"
+    - wait_for:
+        port: 6379
+        state: stopped
+        delay: 30
+        sleep: 10
+        timeout: 3600
+    - name: Stop redis master
+      service:
+        name: redis-server
+        state: stopped
+      when: "'role:master' in repl.stdout"
+    - wait_for:
+        port: 6379
+        state: stopped
+        delay: 30
+        sleep: 10
+        timeout: 3600
+#
+# - hosts: kibana
+#   become: yes
+#   gather_facts: no
+#   serial: 1
+#   tasks:
+#     - name: Stop elasticsearch and kibana
+#       service:
+#         name: "{{ item }}"
+#         state: stopped
+#         enabled: yes
+#       with_items:
+#         - kibana
+#         - elasticsearch
+#         - consul
+#
+# - hosts: elasticWarmNode
+#   become: yes
+#   gather_facts: no
+#   serial: 1
+#   tasks:
+#     - name: Stop elasticsearch
+#       service:
+#         name: "{{ item }}"
+#         state: stopped
+#         enabled: yes
+#       with_items:
+#         - elasticsearch
+#         - consul
