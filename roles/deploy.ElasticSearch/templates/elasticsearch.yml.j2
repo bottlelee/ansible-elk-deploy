@@ -93,7 +93,7 @@ discovery.zen.ping.unicast.hosts:
 #
 # Prevent the "split brain" by configuring the majority of nodes (total number of master-eligible nodes / 2 + 1):
 #
-{% if groups.elasticsearch|count() >= 2 %}
+{% if groups.elasticsearch|count() >= 3 %}
 discovery.zen.minimum_master_nodes: {{ groups.elasticMasterNode|count() // 2 + 1 }}
 {% else %}
 discovery.zen.minimum_master_nodes: 1
