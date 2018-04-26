@@ -3,6 +3,19 @@ input {
     port => "{{ logstash_beats_port }}"
     client_inactivity_timeout => "300"
   }
+  http_poller {
+    urls => {
+      cluster_health => {
+        url => "http://elastic-ingest.service.{{ consul_dc_name }}.consul:9200/_cluster/health"
+        headers => {
+          Accept => "application/json"
+        }
+      }
+    }
+    schedule => { every => "1m"}
+    target => "elasticsearch"
+    codec => "json"
+  }
 {% if (groups['redis'] | length) >= 3 %}
   redis {
     data_type => "list"

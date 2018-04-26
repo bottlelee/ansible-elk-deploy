@@ -18,6 +18,8 @@
           line: "bind_address: {{ hostvars[inventory_hostname]['ansible_' + bind_interface]['ipv4']['address'] }}"
         - regexp: "^bind_network"
           line: "bind_network: {{ hostvars[inventory_hostname]['ansible_' + bind_interface]['ipv4']['network'] }}"
+        - regexp: "^bind_interface"
+          line: "bind_interface: {{ bind_interface }}"
       delegate_to: localhost
       become: no
   rescue:

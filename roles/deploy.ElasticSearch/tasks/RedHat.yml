@@ -16,6 +16,7 @@
   rescue:
     - include_tasks: download.yml format=rpm
     - include_tasks: '{{ ansible_os_family }}.yml'
+    - meta: clear_host_errors
   always:
     - name: 'Removing /tmp/elasticsearch-{{ elk_version }}.rpm'
       file:

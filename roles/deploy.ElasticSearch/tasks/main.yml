@@ -6,6 +6,15 @@
     - include_tasks: env_check.yml
     - include_tasks: '{{ ansible_os_family }}.yml'
 
+- name: Create ElasticSearch data dirs
+  file:
+    path: "{{ item }}"
+    state: directory
+    owner: elasticsearch
+    group: elasticsearch
+    mode: 0750
+  with_items: "{{ elastic_data_path }}"
+
 - name: Updating ElasticSearch configuration
   template:
     src: '{{ item }}.j2'

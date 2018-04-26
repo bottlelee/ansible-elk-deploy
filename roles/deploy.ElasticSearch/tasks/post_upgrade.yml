@@ -14,11 +14,16 @@
     body: "{{ lookup('file','enable_shard.json') }}"
     body_format: json
 
-- name: Waiting for the cluster turn to green.
+- name: Checking cluster health status
   uri:
-    url: "http://{{ bind_address }}:{{ elastic_http_port }}/_cat/health"
+    url: http://{{ bind_address }}:{{ elastic_http_port }}/_cluster/health
+    method: GET
     return_content: yes
-  register: healthSt
-  until: "'green' in healthSt.content"
-  retries: 300
+    body_format: json
+  register: health
+  retries: 180
   delay: 10
+  until: health.json.status == "green"
+
+- name: Start monitoring
+  command: /usr/local/bin/monit start elasticsearch

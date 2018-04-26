@@ -71,15 +71,14 @@ Vagrant.configure("2") do |config|
             bond_interface: $bond_interface
           }
           ansible.groups = {
-            "elasticMasterNode" => ["es-master-[1:3]"],
-            "elasticHotNode" => ["es-hot-[4:6]"],
-            "elasticWarmNode" => ["es-warm-[7:8]"],
-            "redis" => ["redis-[9:11]"],
+            "elasticMasterNode" => ["es-master-[01:03]"],
+            "elasticHotNode" => ["es-hot-[04:06]"],
+            "elasticWarmNode" => ["es-warm-[07:08]"],
+            "redis" => ["redis-[09:11]"],
             "logstash" => ["logstash-[12:13]"],
             "kibana" => ["kibana-14"],
             "elasticsearch:children" => ["elasticMasterNode","elasticHotNode","elasticWarmNode"],
-            "elasticDataNode:children" => ["elasticHotNode","elasticWarmNode"],
-            "python3" => [""]
+            "elasticDataNode:children" => ["elasticHotNode","elasticWarmNode"]
           }
           ansible.limit = "all"
           ansible.playbook = "play-all.yml"

@@ -10,6 +10,7 @@
   rescue:
     - include_tasks: download.yml format=rpm
     - include_tasks: '{{ ansible_os_family }}.yml'
+    - meta: clear_host_errors
   always:
     - name: 'Removing /tmp/kibana-{{ elk_version }}-x86_64.rpm'
       file:
