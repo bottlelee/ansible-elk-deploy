@@ -1,8 +1,6 @@
 - hosts: all
   become: yes
-  # serial:
-  #   - 1
-  #   - 33%
+  serial: 33%
   roles:
     - deploy.Consul
   post_tasks:

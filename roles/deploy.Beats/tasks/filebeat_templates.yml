@@ -1,7 +1,7 @@
 - name: Updating filebeat.yml
   template:
-    src: 'filebeat.yml.j2'
-    dest: '/etc/filebeat/filebeat.yml'
+    src: "filebeat.yml.j2"
+    dest: "/etc/filebeat/filebeat.yml"
     mode: 0600
   notify: Restart filebeat
 
@@ -9,7 +9,6 @@
   command: "filebeat modules enable {{ item }}"
   changed_when: false
   with_items:
-    - system
-    - auditd
-    - '{{ filebeat_modules }}'
+    - "{{ global_filebeat_modules | default(None) }}"
+    - "{{ filebeat_modules | default(None) }}"
   notify: Restart filebeat
