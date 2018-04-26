@@ -35,22 +35,22 @@ Vagrant.configure("2") do |config|
 
   (1..$instances).each do |instance_id|
     if instance_id <= 3
-      $vm_name = "es-master-#{instance_id}"
+      $vm_name = "es-master-#{instance_id.to_s.rjust(2, '0')}"
     elsif instance_id <= 6
-      $vm_name = "es-hot-#{instance_id}"
+      $vm_name = "es-hot-#{instance_id.to_s.rjust(2, '0')}"
     elsif instance_id <= 8
-      $vm_name = "es-warm-#{instance_id}"
+      $vm_name = "es-warm-#{instance_id.to_s.rjust(2, '0')}"
     elsif instance_id <= 11
-      $vm_name = "redis-#{instance_id}"
+      $vm_name = "redis-#{instance_id.to_s.rjust(2, '0')}"
     elsif instance_id <= 13
-      $vm_name = "logstash-#{instance_id}"
+      $vm_name = "logstash-#{instance_id.to_s.rjust(2, '0')}"
     elsif instance_id == 14
-      $vm_name = "kibana-#{instance_id}"
+      $vm_name = "kibana-#{instance_id.to_s.rjust(2, '0')}"
     end
 
     config.vm.define vm_name = $vm_name do |config|
       config.vm.hostname = vm_name
-      config.vm.network "private_network", ip: "172.28.128.1#{instance_id}"
+      config.vm.network "private_network", ip: "172.28.128.1#{instance_id.to_s.rjust(2, '0')}"
 
       if $vm_name == "kibana-#{instance_id}"
         config.vm.network "forwarded_port", guest: 5601, host: 5601,
