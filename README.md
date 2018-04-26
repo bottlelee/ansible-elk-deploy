@@ -12,7 +12,7 @@ For test only, you can run `vagrant up`. You need [vagrant](https://www.vagrantu
 1. [Consul](https://www.consul.io/) as internal DNS service. Scale your ELK without updating the beats output configuration.
 1. [Monit](https://mmonit.com/monit/documentation/monit.html) as monitoring service. Auto fix common issue, free you hands.
 
-## Tested on these OS with [ansible 2.5.0](http://docs.ansible.com/ansible/latest/intro_installation.html)
+## Tested on these OS with [ansible 2.5.1](http://docs.ansible.com/ansible/latest/intro_installation.html)
 * Ubuntu 16.04 LTS（xenial）
 * CentOS 7
 
@@ -53,7 +53,7 @@ For test only, you can run `vagrant up`. You need [vagrant](https://www.vagrantu
 
 测试本架构，运行`vagrant up`（你需要 [vagrant](https://www.vagrantup.com/)）。这将会消耗 22GB 内存和 22 个 CPU 线程。
 
-## 本项目基于 [ansible 2.5.0](http://docs.ansible.com/ansible/latest/intro_installation.html) 在以下操作系统测试通过。
+## 本项目基于 [ansible 2.5.1](http://docs.ansible.com/ansible/latest/intro_installation.html) 在以下操作系统测试通过。
 * Ubuntu 16.04 LTS（xenial）
 * CentOS 7
 

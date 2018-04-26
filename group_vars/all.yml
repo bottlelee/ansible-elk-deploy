@@ -22,6 +22,7 @@ elastic_cluster_name: 'quanduan'
 elastic_log_path: '/var/log/elasticsearch'
 elastic_data_path:
   - /var/lib/elasticsearch
+  - /data/elasticsearch
 elastic_plugins:
   - ingest-user-agent
   - ingest-geoip
@@ -47,9 +48,12 @@ recipients:
   }
 
 # global beats' modules list
-filebeat_modules: ""
-metricbeat_modules: ""
-packetbeat_modules: ""
+global_filebeat_modules:
+  - system
+  - auditd
+global_metricbeat_modules:
+  - system
+global_packetbeat_modules: ""
 
 # Curator action tasks. Indices which older than the unit will move to warm data nodes.
 hot_to_warm_unit: days
