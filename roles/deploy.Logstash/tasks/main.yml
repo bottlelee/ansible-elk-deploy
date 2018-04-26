@@ -13,9 +13,15 @@
   ini_file:
     path: /etc/systemd/system/logstash.service
     section: Service
-    option: PermissionsStartOnly
-    value: true
+    option: "{{ item.option }}"
+    value: "{{ item.value }}"
     backup: yes
+  with_items:
+    - option: PermissionsStartOnly
+      value: true
+    - option: ExecStartPre
+      value: "/bin/chown -R logstash:logstash {{ logstash_data_path }} {{ logstash_log_path }}"
+  notify: Restart logstash
 
 - name: Updating logstash configuration
   template:
@@ -38,15 +44,3 @@
     - 004-auditd
     - 999-output
   notify: Restart logstash
-
-- name: Set /var/lib/logstash ownership
-  file:
-    path: '{{ item }}'
-    state: directory
-    owner: logstash
-    group: logstash
-    recurse: yes
-    mode: 0774
-  with_items:
-    - '{{ logstash_log_path }}'
-    - '{{ logstash_data_path }}'

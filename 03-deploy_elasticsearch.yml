@@ -1,4 +1,4 @@
-- hosts: elasticsearch
+- hosts: elasticMasterNode:elasticDataNode
   become: yes
   serial: 1
   roles:

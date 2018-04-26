@@ -20,9 +20,10 @@ kibana_port: '5601'
 # Elasticsearch configure
 elastic_cluster_name: 'quanduan'
 elastic_log_path: '/var/log/elasticsearch'
+## IMPORTANT: for production, make sure the elasticsearch data paths are exists and not on the system disk.
+##            And DO NOT remove them unless you know what you doing.
 elastic_data_path:
   - /var/lib/elasticsearch
-  - /data/elasticsearch
 elastic_plugins:
   - ingest-user-agent
   - ingest-geoip

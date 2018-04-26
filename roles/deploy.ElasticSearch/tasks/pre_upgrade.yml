@@ -5,6 +5,9 @@
     return_content: yes
     body_format: json
   register: health
+  retries: 180
+  delay: 10
+  until: health.json.status == "green"
 
 - fail:
     msg: "Current cluster status is not 'green', please fix it before upgrade."
@@ -17,6 +20,9 @@
     body: "{{ lookup('file','disable_shard.json') }}"
     body_format: json
   when: node_data is sameas true
+
+- name: Stop monitoring
+  command: /usr/local/bin/monit stop elasticsearch
 
 - name: Stopping service
   service:

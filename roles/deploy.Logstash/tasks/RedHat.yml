@@ -9,14 +9,9 @@
   rescue:
     - include_tasks: download.yml format=rpm
     - include_tasks: '{{ ansible_os_family }}.yml'
+    - meta: clear_host_errors
   always:
     - name: 'Removing /tmp/logstash-{{ elk_version }}.rpm'
       file:
         path: '/tmp/logstash-{{ elk_version }}.rpm'
         state: absent
-    # This task fix the logstash startup problem when it has no permission to write log in /var/log/logstash
-    - name: Add user 'logstash' into group 'adm'
-      user:
-        name: logstash
-        groups: adm
-        append: yes

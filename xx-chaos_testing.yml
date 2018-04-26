@@ -4,10 +4,12 @@
   tasks:
     - group_by:
         key: chaos
-      when: groups['all'] | random == inventory_hostname
-
-- hosts: chaos
-  gather_facts: no
-  become: yes
-  tasks:
-    - command: reboot
+      when: "groups['all'] | random == inventory_hostname"
+    - command: shutdown -r +1 "Rebooting system, trigger by ansible."
+      become: yes
+      async: 0
+      poll: 0
+      when: "'chaos' in group_names"
+    - wait_for_connection:
+        delay: 60
+      when: "'chaos' in group_names"
