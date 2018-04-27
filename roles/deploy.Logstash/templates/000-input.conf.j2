@@ -11,6 +11,12 @@ input {
           Accept => "application/json"
         }
       }
+      cluster_stats => {
+        url => "http://elastic-ingest.service.{{ consul_dc_name }}.consul:9200/_cluster/stats"
+        headers => {
+          Accept => "application/json"
+        }
+      }
     }
     schedule => { every => "1m"}
     target => "elasticsearch"
