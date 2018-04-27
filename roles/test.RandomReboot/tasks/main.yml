@@ -1,7 +1,7 @@
 - block:
     - set_fact:
         chaos_number: "{{ groups['all'] | length }}"
-      when: "(groups['all'] | length) < (chaos_number | int)"
+      when: "(groups['all'] | length) < (chaos_number|int -1)"
     - name: Checking number of nodes in group 'chaos'.
       debug:
         msg: "{{ groups['chaos'] | join(', ') }} will be reboot."

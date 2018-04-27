@@ -10,7 +10,7 @@ $vm_box = "ubuntu/xenial64"
 $instances = 14
 $python_command = "/usr/bin/python"
 $bond_interface = "eth0"
-$apt_proxy = "http://192.168.205.16:3142"
+$apt_proxy = ""
 
 # if $vm_box == "ubuntu/xenial64"
 #   $bond_interface = "enp0s8"

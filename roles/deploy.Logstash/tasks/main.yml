@@ -8,20 +8,19 @@
     - include_tasks: env_check.yml
       when: verChk.rc == 1
     - include_tasks: '{{ ansible_os_family }}.yml'
-
-- name: Updating logstash systemd service configure
-  ini_file:
-    path: /etc/systemd/system/logstash.service
-    section: Service
-    option: "{{ item.option }}"
-    value: "{{ item.value }}"
-    backup: yes
-  with_items:
-    - option: PermissionsStartOnly
-      value: true
-    - option: ExecStartPre
-      value: "/bin/chown -R logstash:logstash {{ logstash_data_path }} {{ logstash_log_path }}"
-  notify: Restart logstash
+    - name: Updating logstash systemd service configure
+      ini_file:
+        path: /etc/systemd/system/logstash.service
+        section: Service
+        option: "{{ item.option }}"
+        value: "{{ item.value }}"
+        backup: yes
+      with_items:
+        - option: PermissionsStartOnly
+          value: true
+        - option: ExecStartPre
+          value: "/bin/chown -R logstash:logstash {{ logstash_data_path }} {{ logstash_log_path }}"
+      notify: Restart logstash
 
 - name: Updating logstash configuration
   template:
@@ -42,5 +41,6 @@
     - 002-monit
     - 003-syslog
     - 004-auditd
+    - 005-elasicsearch
     - 999-output
-  notify: Restart logstash
+  notify: Checking logstash configuration

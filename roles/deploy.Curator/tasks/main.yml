@@ -14,12 +14,13 @@
         - elasticsearch-6.1.1
         - elasticsearch-curator-5.4.1
 
-- include_tasks: 'action_files.yml target={{ item }}'
-  become: no
-  with_items:
-    - hot_to_warm
-
-- include_tasks: 'cron.yml target={{ item }}'
-  become: no
-  with_items:
-    - hot_to_warm
+- block:
+    - include_tasks: 'action_files.yml target={{ item }}'
+      become: no
+      with_items:
+        - hot_to_warm
+    - include_tasks: 'cron.yml target={{ item }}'
+      become: no
+      with_items:
+        - hot_to_warm
+  when: "groups['elasticWarmNodes'] != ''"

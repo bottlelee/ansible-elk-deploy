@@ -3,8 +3,6 @@
   serial: 1
   roles:
     - deploy.ElasticSearch
-    # - role: deploy.Curator
-    #   when: "'elasticDataNode' in group_names"
   post_tasks:
     - block:
         - name: Waiting for service started

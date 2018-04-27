@@ -1,6 +1,9 @@
 elk_version: '6.2.2'
 timezone: 'Asia/Shanghai'
 
+# Set 'true' when deploy on production.
+check_groups: true
+
 # Set the network interface name to get IP
 ## CentOS
 RedHat_bind_interface: 'eth1'
@@ -34,7 +37,7 @@ logstash_log_path: '/var/log/logstash'
 
 # Consul
 bootstrap: 'N'
-consul_version: '1.0.6'
+consul_version: '1.0.7'
 consul_dc_name: 'elk'
 
 # Monit
