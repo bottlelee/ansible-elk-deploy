@@ -1,15 +1,16 @@
 # WARNING: This playbook is for testing only! Do NOT use it in production environment!
 - hosts: all
   gather_facts: no
-  tasks:
-    - group_by:
-        key: chaos
-      when: "groups['all'] | random == inventory_hostname"
-    - command: shutdown -r +1 "Rebooting system, trigger by ansible."
-      become: yes
-      async: 0
-      poll: 0
-      when: "'chaos' in group_names"
-    - wait_for_connection:
-        delay: 60
-      when: "'chaos' in group_names"
+  vars_prompt:
+    - name: "chaos_number"
+      prompt: |
+        +---------------------------------------------------------------+
+        | Danger!                                                       |
+        | DO NOT run this playbook on production cluster. This          |
+        | is for testing only!                                          |
+        +---------------------------------------------------------------+
+        Please enter the number of hosts you want to reboot for TEST.
+      private: no
+      default: 3
+  roles:
+    - test.RandomReboot
