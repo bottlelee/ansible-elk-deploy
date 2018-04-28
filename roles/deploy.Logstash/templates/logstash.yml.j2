@@ -25,7 +25,7 @@ node.name: {{ inventory_hostname }}
 # Which directory should be used by logstash and its plugins
 # for any persistent needs. Defaults to LOGSTASH_HOME/data
 #
-path.data: {{ logstash_data_path }}
+path.data: {{ logstash_data_path | default('/var/lib/logstash') }}
 #
 # ------------ Pipeline Settings --------------
 #
@@ -205,7 +205,7 @@ config.reload.interval: 30s
 #   * trace
 #
 log.level: warn
-path.logs: {{ logstash_log_path }}
+path.logs: {{ logstash_log_path | default('/var/log/logstash') }}
 #
 # ------------ Other Settings --------------
 #

@@ -5,8 +5,8 @@ ENV["LC_ALL"] = "en_US.UTF-8"
 
 Vagrant.require_version ">= 2.0.0"
 
-$vm_box = "ubuntu/xenial64"
-# $vm_box = "centos/7"
+# $vm_box = "ubuntu/xenial64"
+$vm_box = "centos/7"
 $instances = 14
 $python_command = "/usr/bin/python"
 $bond_interface = "eth0"
