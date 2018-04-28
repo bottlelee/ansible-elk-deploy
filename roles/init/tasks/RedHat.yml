@@ -22,8 +22,6 @@
     - blockinfile:
         path: /etc/resolv.conf
         block: |
-          domain consul
-          search consul
           nameserver {{ dns_servers[0] }}
           nameserver {{ dns_servers[1] }}
         insertbefore: BOF

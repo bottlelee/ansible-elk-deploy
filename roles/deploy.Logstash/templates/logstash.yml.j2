@@ -25,7 +25,7 @@ node.name: {{ inventory_hostname }}
 # Which directory should be used by logstash and its plugins
 # for any persistent needs. Defaults to LOGSTASH_HOME/data
 #
-path.data: {{ logstash_data_path }}
+path.data: {{ logstash_data_path | default('/var/lib/logstash') }}
 #
 # ------------ Pipeline Settings --------------
 #
@@ -74,11 +74,11 @@ path.config: /etc/logstash/conf.d/*.conf
 # Periodically check if the configuration has changed and reload the pipeline
 # This can also be triggered manually through the SIGHUP signal
 #
-# config.reload.automatic: false
+config.reload.automatic: true
 #
 # How often to check if the pipeline configuration has changed (in seconds)
 #
-# config.reload.interval: 3s
+config.reload.interval: 30s
 #
 # Show fully compiled configuration as debug log message
 # NOTE: --log.level must be 'debug'
@@ -205,7 +205,7 @@ path.config: /etc/logstash/conf.d/*.conf
 #   * trace
 #
 log.level: warn
-path.logs: {{ logstash_log_path }}
+path.logs: {{ logstash_log_path | default('/var/log/logstash') }}
 #
 # ------------ Other Settings --------------
 #

@@ -1,5 +1,5 @@
 {
-{% if 'elasticMasterNode' in group_names %}
+{% if 'elasticMasterNode' in group_names and (groups['elasticMasterNode'] | length) >= 3 %}
   "server": true,
   "bootstrap_expect": 3,
   "retry_join": [
@@ -7,13 +7,16 @@
       "{{ hostvars[item]['bind_address'] }}"{%- if loop.nextitem is defined -%},{%- endif -%}
     {%- endfor -%}
   ],
-{% else %}
+{% elif 'elasticMasterNode' not in group_names and (groups['elasticMasterNode'] | length) >= 3 %}
   "server": false,
   "retry_join": [
     {%- for item in groups['elasticMasterNode'] -%}
       "{{ hostvars[item]['bind_address'] }}"{%- if loop.nextitem is defined -%},{%- endif -%}
     {%- endfor -%}
   ],
+{% else %}
+  "server": true,
+  "bootstrap": true,
 {% endif %}
 {# ---------------- #}
   "datacenter": "{{ consul_dc_name }}",

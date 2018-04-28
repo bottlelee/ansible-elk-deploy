@@ -1,0 +1,16 @@
+# WARNING: This playbook is for testing only! Do NOT use it in production environment!
+- hosts: all
+  gather_facts: no
+  vars_prompt:
+    - name: "chaos_number"
+      prompt: |
+        +---------------------------------------------------------------+
+        | Danger!                                                       |
+        | DO NOT run this playbook on production cluster. This          |
+        | is for testing only!                                          |
+        +---------------------------------------------------------------+
+        Please enter the number of hosts you want to reboot for TEST.
+      private: no
+      default: 3
+  roles:
+    - test.RandomReboot

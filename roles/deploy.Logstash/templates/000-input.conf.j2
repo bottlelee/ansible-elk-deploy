@@ -3,6 +3,7 @@ input {
     port => "{{ logstash_beats_port }}"
     client_inactivity_timeout => "300"
   }
+{% if (inventory_hostname == groups['logstash'][0]) or (inventory_hostname == groups['logstash'][1]) %}
   http_poller {
     urls => {
       cluster_health => {
@@ -11,11 +12,33 @@ input {
           Accept => "application/json"
         }
       }
+      cluster_stats => {
+        url => "http://elastic-ingest.service.{{ consul_dc_name }}.consul:9200/_cluster/stats"
+        headers => {
+          Accept => "application/json"
+        }
+      }
     }
     schedule => { every => "1m"}
-    target => "elasticsearch"
+    target => "elastic_cluster"
     codec => "json"
+    tags => "elastic_cluster"
   }
+  http_poller {
+    urls => {
+      cat_shards => {
+        url => "http://elastic-ingest.service.{{ consul_dc_name }}.consul:9200/_cat/shards?format=json"
+        headers => {
+          Accept => "application/json"
+        }
+      }
+    }
+    schedule => { every => "10m"}
+    target => "elastic_shards"
+    codec => "json"
+    tags => "elastic_shards"
+  }
+{% endif %}
 {% if (groups['redis'] | length) >= 3 %}
   redis {
     data_type => "list"

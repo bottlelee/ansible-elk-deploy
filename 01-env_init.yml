@@ -10,8 +10,6 @@
 - hosts: all
   become: yes
   serial: 33%
-  vars:
-    check_groups: true
   roles:
     - init
     - deploy.Chrony

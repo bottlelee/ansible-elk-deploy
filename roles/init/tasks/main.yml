@@ -1,5 +1,5 @@
 - include_tasks: check_groups.yml
-  when: check_groups is defined and check_groups sameas true
+  when: check_groups is defined and check_groups == "true"
   run_once: yes
 
 - include_tasks: system.yml

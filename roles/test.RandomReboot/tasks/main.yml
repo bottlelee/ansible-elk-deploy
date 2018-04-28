@@ -1,0 +1,24 @@
+- block:
+    - set_fact:
+        chaos_number: "{{ groups['all'] | length }}"
+      when: "(groups['all'] | length) < (chaos_number|int -1)"
+    - name: Checking number of nodes in group 'chaos'.
+      debug:
+        msg: "{{ groups['chaos'] | join(', ') }} will be reboot."
+      failed_when: "(groups['chaos'] | length) < (chaos_number | int)"
+      run_once: yes
+    - pause:
+        seconds: 10
+    - name: Rebooting target hosts in group 'chaos'.
+      command: shutdown -r +1 "Rebooting system, trigger by ansible."
+      become: yes
+      async: 0
+      poll: 0
+      when: "'chaos' in group_names"
+    - name: Waiting for the hosts back online.
+      wait_for_connection:
+        delay: 60
+      when: "'chaos' in group_names"
+  rescue:
+    - include_tasks: add_host.yml
+    - include_tasks: main.yml
