@@ -12,5 +12,6 @@
       changed_when: false
   rescue:
     - include_tasks: jre.yml
+  when: "'redis' not in group_names"
 
 - include_tasks: "{{ ansible_os_family }}.yml"
