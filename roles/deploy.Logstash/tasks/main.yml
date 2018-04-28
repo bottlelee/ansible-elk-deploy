@@ -21,6 +21,10 @@
         - option: ExecStartPre
           value: "/bin/chown -R logstash:logstash {{ logstash_data_path }} {{ logstash_log_path }}"
       notify: Restart logstash
+    - name: Installing logrotate configure
+      template:
+        src: logrotate_logstash.j2
+        dest: /etc/logrotate.d/logstash
 
 - name: Updating logstash configuration
   template:

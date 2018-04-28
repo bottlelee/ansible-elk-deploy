@@ -19,6 +19,11 @@
     loop_var: target
   when: node_ingest is defined and node_ingest == true
 
+- name: Installing logrotate configure
+  template:
+    src: logrotate_elasticsearch.j2
+    dest: /etc/logrotate.d/elasticsearch
+
 - name: Starting ElasticSearch service
   service:
     name: elasticsearch

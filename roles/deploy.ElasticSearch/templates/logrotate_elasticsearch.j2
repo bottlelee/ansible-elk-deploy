@@ -1,0 +1,9 @@
+/var/log/elasticsearch/*.log {
+  rotate 7
+  size 100M
+  daily
+  compress
+  delaycompress
+  missingok
+  su elasticsearch elasticsearch
+}
