@@ -1,0 +1,11 @@
+/var/log/monit.log {
+  rotate 7
+  size 10M
+  daily
+  compress
+  delaycompress
+  missingok
+  postrotate
+    /usr/sbin/service monit reload > /dev/null
+  endscript
+}
