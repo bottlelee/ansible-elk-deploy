@@ -5,6 +5,19 @@
     option: LimitMEMLOCK
     value: infinity
 
+- name: Installing enable-thp.service
+  copy:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+    mode: "{{ item.mode | default(omit) }}"
+  with_items:
+    - src: enable-transparent-hugepages
+      dest: /usr/bin/enable-transparent-hugepages
+      mode: 554
+    - src: enable-thp.service
+      dest: /etc/systemd/system/enable-thp.service
+  notify: Start enable-thp.service
+
 - name: Updating ElasticSearch configuration
   template:
     src: '{{ item }}.j2'
@@ -29,7 +42,7 @@
     name: elasticsearch
     daemon_reload: yes
     enabled: yes
-    state: restarted
+    state: started
 
 - name: Waiting for service started
   wait_for:
