@@ -4,9 +4,6 @@
       "name": "kibana",
       "address": "",
       "port": {{ kibana_port }},
-      "tags": [
-        "elk"
-      ],
       "checks": [
         {
           "http": "http://{{ bind_address }}:{{ kibana_port }}",

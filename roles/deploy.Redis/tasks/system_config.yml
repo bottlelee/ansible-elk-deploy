@@ -9,9 +9,7 @@
       value: 512
     - name: vm.overcommit_memory
       value: 1
-    - name: fs.file-max
-      value: 10032
-
+      
 - name: Coping disable-transparent-hugepages script
   copy:
     src: disable-transparent-hugepages

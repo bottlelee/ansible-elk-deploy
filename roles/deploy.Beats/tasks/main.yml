@@ -7,7 +7,7 @@
   rescue:
     - include_tasks: '{{ ansible_os_family }}.yml'
     - name: Importing elasticsearch template
-      shell: "{{ target }} setup --template -E output.logstash.enabled=false -E output.redis.enabled=false -E output.elasticsearch.hosts='elastic-ingest.service.{{ consul_dc_name }}.consul:{{ elastic_http_port }}'"
+      shell: "{{ target }} setup --template -E output.logstash.enabled=false -E output.redis.enabled=false -E output.elasticsearch.hosts='ingest.elastic.service.{{ consul_dc_name }}.consul:{{ elastic_http_port }}'"
       run_once: yes
 
 - include_tasks: '{{ target }}_templates.yml'

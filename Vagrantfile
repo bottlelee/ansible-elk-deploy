@@ -5,18 +5,10 @@ ENV["LC_ALL"] = "en_US.UTF-8"
 
 Vagrant.require_version ">= 2.0.0"
 
-# $vm_box = "ubuntu/xenial64"
-$vm_box = "centos/7"
+$vm_box = "ubuntu/xenial64"
+# $vm_box = "centos/7"
 $instances = 14
-$python_command = "/usr/bin/python"
-$bond_interface = "eth0"
 $apt_proxy = ""
-
-# if $vm_box == "ubuntu/xenial64"
-#   $bond_interface = "enp0s8"
-# elsif $vm_box == "centos/7"
-#   $bond_interface = "eth1"
-# end
 
 Vagrant.configure("2") do |config|
   # always use Vagrants insecure key
@@ -67,9 +59,6 @@ Vagrant.configure("2") do |config|
 
       if instance_id == $instances
         config.vm.provision "ansible" do |ansible|
-          # ansible.extra_vars = {
-          #   bond_interface: $bond_interface
-          # }
           ansible.groups = {
             "elasticMasterNode" => ["es-master-[01:03]"],
             "elasticHotNode" => ["es-hot-[04:06]"],

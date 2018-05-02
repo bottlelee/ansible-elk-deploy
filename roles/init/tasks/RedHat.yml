@@ -1,28 +1,36 @@
-- name: Disable firewalld and selinux
-  block:
-    - service:
-        name: firewalld
-        state: stopped
-        enabled: no
-    - selinux:
-        state: disabled
-  when:
-    - "ansible_distribution == 'CentOS'"
-    - "ansible_distribution_major_version >= '7'"
+- name: Disable firewalld
+  service:
+    name: "{{ item }}"
+    state: stopped
+    enabled: no
+  with_items:
+    - firewalld
+    - NetworkManager
+
+- name: Disable selinux
+  selinux:
+    state: disabled
+
+- name: Starting network service
+  service:
+    name: network
+    state: started
+    enabled: yes
 
 - name: "Setting /etc/sysconfig/network-scripts/ifcfg-{{ bind_interface }}"
-  block:
-    - lineinfile:
-        path: "/etc/sysconfig/network-scripts/ifcfg-{{ bind_interface }}"
-        line: "{{ item }}"
-      with_items:
-        - "DNS1={{ dns_servers[0] }}"
-        - "DNS2={{ dns_servers[1] }}"
-        - "PEERDNS=no"
-    - blockinfile:
-        path: /etc/resolv.conf
-        block: |
-          nameserver {{ dns_servers[0] }}
-          nameserver {{ dns_servers[1] }}
-        insertbefore: BOF
-        create: yes
+  lineinfile:
+    path: "/etc/sysconfig/network-scripts/ifcfg-{{ bind_interface }}"
+    line: "{{ item }}"
+  with_items:
+    - "DNS1={{ dns_servers[0] }}"
+    - "DNS2={{ dns_servers[1] }}"
+    - "PEERDNS=no"
+
+- name: Setting /etc/resolv.conf
+  blockinfile:
+    path: /etc/resolv.conf
+    block: |
+      nameserver {{ dns_servers[0] }}
+      nameserver {{ dns_servers[1] }}
+    insertbefore: BOF
+    create: yes

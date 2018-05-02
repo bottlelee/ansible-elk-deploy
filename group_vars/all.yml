@@ -30,6 +30,12 @@ elastic_data_path:
 elastic_plugins:
   - ingest-user-agent
   - ingest-geoip
+# Start Do NOT edit.
+elastic_all_roles:
+  - master
+  - data
+  - ingest
+# End: Do NOT edit
 
 # LogStash configure
 logstash_data_path: '/var/lib/logstash'

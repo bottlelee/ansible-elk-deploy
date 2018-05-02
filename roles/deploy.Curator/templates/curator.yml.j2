@@ -3,8 +3,7 @@
 # not a Python "NoneType"
 client:
   hosts:
-    - elastic-master.service.consul
-    - elastic-ingest.service.consul
+    - master.elastic.service.consul
   port: {{ elastic_http_port }}
   url_prefix:
   use_ssl: False
