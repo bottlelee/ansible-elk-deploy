@@ -4,9 +4,6 @@
       "name": "logstash",
       "address": "",
       "port": {{ logstash_beats_port }},
-      "tags": [
-        "elk"
-      ],
       "checks": [
         {
           "tcp": "{{ bind_address }}:{{ logstash_beats_port }}",

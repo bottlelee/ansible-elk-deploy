@@ -1,7 +1,7 @@
 - block:
     - name: Uploading command file
       copy:
-        src: downloaded_files/consul
+        src: "downloaded_files/consul-{{ consul_version }}"
         dest: /usr/local/bin/consul
         mode: 0755
   rescue:
@@ -25,6 +25,7 @@
         group: consul
     - name: Enable DNS port forwarding
       command: '{{ item }}'
+      changed_when: false
       with_items:
         - iptables -t nat -A PREROUTING -p udp -m udp --dport 53 -j REDIRECT --to-ports 8600
         - iptables -t nat -A PREROUTING -p tcp -m tcp --dport 53 -j REDIRECT --to-ports 8600

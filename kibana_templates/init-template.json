@@ -1,17 +1,17 @@
 [
   {
-    "_id": "be0de680-1d3e-11e8-b050-f509ff1e2cf0",
+    "_id": "bf4e7e60-3d5f-11e8-a080-9b83fb139fb1",
     "_type": "dashboard",
     "_source": {
-      "title": "[Filebeat] Monit Overview",
+      "title": "[Metricbeat] ELK Overview",
       "hits": 0,
       "description": "",
-      "panelsJSON": "[{\"panelIndex\":\"1\",\"gridData\":{\"x\":0,\"y\":0,\"w\":6,\"h\":3,\"i\":\"1\"},\"embeddableConfig\":{\"vis\":{\"legendOpen\":true}},\"id\":\"9c75bde0-1d3e-11e8-b050-f509ff1e2cf0\",\"type\":\"visualization\",\"version\":\"6.2.2\"},{\"panelIndex\":\"2\",\"gridData\":{\"x\":6,\"y\":0,\"w\":6,\"h\":3,\"i\":\"2\"},\"id\":\"0757cd60-1d3f-11e8-b050-f509ff1e2cf0\",\"type\":\"visualization\",\"version\":\"6.2.2\"},{\"panelIndex\":\"3\",\"gridData\":{\"x\":0,\"y\":3,\"w\":12,\"h\":7,\"i\":\"3\"},\"id\":\"861f3f20-1d3f-11e8-b050-f509ff1e2cf0\",\"type\":\"visualization\",\"version\":\"6.2.2\"}]",
+      "panelsJSON": "[{\"gridData\":{\"h\":3,\"i\":\"1\",\"w\":6,\"x\":0,\"y\":0},\"id\":\"c54e9990-3d54-11e8-a080-9b83fb139fb1\",\"panelIndex\":\"1\",\"type\":\"visualization\",\"version\":\"6.2.3\"},{\"gridData\":{\"h\":3,\"i\":\"2\",\"w\":6,\"x\":6,\"y\":0},\"id\":\"69bbdde0-3d5e-11e8-a080-9b83fb139fb1\",\"panelIndex\":\"2\",\"type\":\"visualization\",\"version\":\"6.2.3\"},{\"gridData\":{\"h\":4,\"i\":\"3\",\"w\":12,\"x\":0,\"y\":3},\"id\":\"4ce25ce0-49e2-11e8-84b7-9b93770644a4\",\"panelIndex\":\"3\",\"type\":\"visualization\",\"version\":\"6.2.4\"}]",
       "optionsJSON": "{\"darkTheme\":false,\"hidePanelTitles\":false,\"useMargins\":true}",
       "version": 1,
       "timeRestore": true,
       "timeTo": "now",
-      "timeFrom": "now-24h",
+      "timeFrom": "now-15m",
       "refreshInterval": {
         "display": "30 seconds",
         "pause": false,
@@ -27,18 +27,18 @@
     }
   },
   {
-    "_id": "bf4e7e60-3d5f-11e8-a080-9b83fb139fb1",
+    "_id": "be0de680-1d3e-11e8-b050-f509ff1e2cf0",
     "_type": "dashboard",
     "_source": {
-      "title": "[Metricbeat] ELK Overview",
+      "title": "[Filebeat] Monit Overview",
       "hits": 0,
       "description": "",
-      "panelsJSON": "[{\"gridData\":{\"h\":3,\"i\":\"1\",\"w\":6,\"x\":0,\"y\":0},\"id\":\"c54e9990-3d54-11e8-a080-9b83fb139fb1\",\"panelIndex\":\"1\",\"type\":\"visualization\",\"version\":\"6.2.3\"},{\"gridData\":{\"h\":3,\"i\":\"2\",\"w\":6,\"x\":6,\"y\":0},\"id\":\"69bbdde0-3d5e-11e8-a080-9b83fb139fb1\",\"panelIndex\":\"2\",\"type\":\"visualization\",\"version\":\"6.2.3\"},{\"gridData\":{\"h\":4,\"i\":\"3\",\"w\":12,\"x\":0,\"y\":3},\"id\":\"4ce25ce0-49e2-11e8-84b7-9b93770644a4\",\"panelIndex\":\"3\",\"type\":\"visualization\",\"version\":\"6.2.4\"}]",
+      "panelsJSON": "[{\"panelIndex\":\"1\",\"gridData\":{\"x\":0,\"y\":0,\"w\":6,\"h\":3,\"i\":\"1\"},\"embeddableConfig\":{\"vis\":{\"legendOpen\":true}},\"id\":\"9c75bde0-1d3e-11e8-b050-f509ff1e2cf0\",\"type\":\"visualization\",\"version\":\"6.2.2\"},{\"panelIndex\":\"2\",\"gridData\":{\"x\":6,\"y\":0,\"w\":6,\"h\":3,\"i\":\"2\"},\"id\":\"0757cd60-1d3f-11e8-b050-f509ff1e2cf0\",\"type\":\"visualization\",\"version\":\"6.2.2\"},{\"panelIndex\":\"3\",\"gridData\":{\"x\":0,\"y\":3,\"w\":12,\"h\":7,\"i\":\"3\"},\"id\":\"861f3f20-1d3f-11e8-b050-f509ff1e2cf0\",\"type\":\"visualization\",\"version\":\"6.2.2\"}]",
       "optionsJSON": "{\"darkTheme\":false,\"hidePanelTitles\":false,\"useMargins\":true}",
       "version": 1,
       "timeRestore": true,
       "timeTo": "now",
-      "timeFrom": "now-15m",
+      "timeFrom": "now-24h",
       "refreshInterval": {
         "display": "30 seconds",
         "pause": false,
@@ -71,7 +71,7 @@
       ],
       "version": 1,
       "kibanaSavedObjectMeta": {
-        "searchSourceJSON": "{\"index\":\"7de2f8d0-4aab-11e8-9bca-3f2b2c5f9f6e\",\"highlightAll\":true,\"version\":true,\"query\":{\"language\":\"lucene\",\"query\":\"\"},\"filter\":[{\"meta\":{\"index\":\"e7d21e10-1b9e-11e8-85fa-ab077477b2da\",\"negate\":false,\"disabled\":false,\"alias\":null,\"type\":\"phrase\",\"key\":\"tags\",\"value\":\"monit\",\"params\":{\"query\":\"monit\",\"type\":\"phrase\"}},\"query\":{\"match\":{\"tags\":{\"query\":\"monit\",\"type\":\"phrase\"}}},\"$state\":{\"store\":\"appState\"}}]}"
+        "searchSourceJSON": "{\"index\":\"4c437f80-4ded-11e8-ad34-c94180eaae8a\",\"highlightAll\":true,\"version\":true,\"query\":{\"language\":\"lucene\",\"query\":\"\"},\"filter\":[{\"meta\":{\"index\":\"e7d21e10-1b9e-11e8-85fa-ab077477b2da\",\"negate\":false,\"disabled\":false,\"alias\":null,\"type\":\"phrase\",\"key\":\"tags\",\"value\":\"monit\",\"params\":{\"query\":\"monit\",\"type\":\"phrase\"}},\"query\":{\"match\":{\"tags\":{\"query\":\"monit\",\"type\":\"phrase\"}}},\"$state\":{\"store\":\"appState\"}}]}"
       }
     },
     "_meta": {
@@ -97,41 +97,7 @@
       ],
       "version": 1,
       "kibanaSavedObjectMeta": {
-        "searchSourceJSON": "{\"index\":\"7de2f8d0-4aab-11e8-9bca-3f2b2c5f9f6e\",\"highlightAll\":true,\"version\":true,\"query\":{\"language\":\"lucene\",\"query\":\"\"},\"filter\":[{\"meta\":{\"negate\":false,\"index\":\"6f3f1040-492d-11e8-bcbd-ff9ea2f35a1b\",\"type\":\"exists\",\"key\":\"logstash.log.message\",\"value\":\"exists\",\"disabled\":false,\"alias\":null},\"exists\":{\"field\":\"logstash.log.message\"},\"$state\":{\"store\":\"appState\"}}]}"
-      }
-    },
-    "_meta": {
-      "savedObjectVersion": 2
-    }
-  },
-  {
-    "_id": "4ce25ce0-49e2-11e8-84b7-9b93770644a4",
-    "_type": "visualization",
-    "_source": {
-      "title": "[ElasticSearch] Cluster Health Table",
-      "visState": "{\"title\":\"[ElasticSearch] Cluster Health Table\",\"type\":\"table\",\"params\":{\"perPage\":5,\"showPartialRows\":false,\"showMeticsAtAllLevels\":false,\"sort\":{\"columnIndex\":null,\"direction\":null},\"showTotal\":false,\"totalFunc\":\"sum\"},\"aggs\":[{\"id\":\"2\",\"enabled\":true,\"type\":\"terms\",\"schema\":\"bucket\",\"params\":{\"field\":\"elastic_cluster.cluster_name.keyword\",\"otherBucket\":false,\"otherBucketLabel\":\"Other\",\"missingBucket\":false,\"missingBucketLabel\":\"Missing\",\"size\":5,\"order\":\"desc\",\"orderBy\":\"_term\",\"customLabel\":\"Cluster\"}},{\"id\":\"1\",\"enabled\":true,\"type\":\"top_hits\",\"schema\":\"metric\",\"params\":{\"field\":\"elastic_cluster.status\",\"aggregate\":\"concat\",\"size\":1,\"sortField\":\"elastic_cluster.status.keyword\",\"sortOrder\":\"asc\",\"customLabel\":\"Status\"}},{\"id\":\"5\",\"enabled\":true,\"type\":\"top_hits\",\"schema\":\"metric\",\"params\":{\"field\":\"elastic_cluster.number_of_data_nodes\",\"aggregate\":\"sum\",\"size\":1,\"sortField\":\"@timestamp\",\"sortOrder\":\"desc\",\"customLabel\":\"Data Nodes\"}},{\"id\":\"3\",\"enabled\":true,\"type\":\"top_hits\",\"schema\":\"metric\",\"params\":{\"field\":\"elastic_cluster.active_shards\",\"aggregate\":\"sum\",\"size\":1,\"sortField\":\"@timestamp\",\"sortOrder\":\"desc\",\"customLabel\":\"Active Shards\"}},{\"id\":\"4\",\"enabled\":true,\"type\":\"top_hits\",\"schema\":\"metric\",\"params\":{\"field\":\"elastic_cluster.active_primary_shards\",\"aggregate\":\"sum\",\"size\":1,\"sortField\":\"@timestamp\",\"sortOrder\":\"desc\",\"customLabel\":\"Primary Shards\"}},{\"id\":\"6\",\"enabled\":true,\"type\":\"top_hits\",\"schema\":\"metric\",\"params\":{\"field\":\"elastic_cluster.unassigned_shards\",\"aggregate\":\"sum\",\"size\":1,\"sortField\":\"@timestamp\",\"sortOrder\":\"desc\",\"customLabel\":\"Unassigned Shards\"}},{\"id\":\"7\",\"enabled\":true,\"type\":\"top_hits\",\"schema\":\"metric\",\"params\":{\"field\":\"elastic_cluster.relocating_shards\",\"aggregate\":\"sum\",\"size\":1,\"sortField\":\"@timestamp\",\"sortOrder\":\"desc\",\"customLabel\":\"Rellocating Shards\"}},{\"id\":\"8\",\"enabled\":true,\"type\":\"top_hits\",\"schema\":\"metric\",\"params\":{\"field\":\"elastic_cluster.number_of_pending_tasks\",\"aggregate\":\"sum\",\"size\":1,\"sortField\":\"@timestamp\",\"sortOrder\":\"desc\",\"customLabel\":\"Pending Tasks\"}}]}",
-      "uiStateJSON": "{\"vis\":{\"params\":{\"sort\":{\"columnIndex\":null,\"direction\":null}}}}",
-      "description": "",
-      "version": 1,
-      "kibanaSavedObjectMeta": {
-        "searchSourceJSON": "{\"index\":\"74049300-4aab-11e8-9bca-3f2b2c5f9f6e\",\"filter\":[{\"meta\":{\"index\":\"74049300-4aab-11e8-9bca-3f2b2c5f9f6e\",\"negate\":false,\"disabled\":false,\"alias\":null,\"type\":\"exists\",\"key\":\"elastic_cluster.number_of_data_nodes\",\"value\":\"exists\"},\"exists\":{\"field\":\"elastic_cluster.number_of_data_nodes\"},\"$state\":{\"store\":\"appState\"}}],\"query\":{\"query\":\"\",\"language\":\"lucene\"}}"
-      }
-    },
-    "_meta": {
-      "savedObjectVersion": 2
-    }
-  },
-  {
-    "_id": "69bbdde0-3d5e-11e8-a080-9b83fb139fb1",
-    "_type": "visualization",
-    "_source": {
-      "title": "[ElasticSearch] Free Disk Space",
-      "visState": "{\"title\":\"[ElasticSearch] Free Disk Space\",\"type\":\"metrics\",\"params\":{\"id\":\"61ca57f0-469d-11e7-af02-69e470af7417\",\"type\":\"gauge\",\"series\":[{\"id\":\"61ca57f1-469d-11e7-af02-69e470af7417\",\"color\":\"#68BC00\",\"split_mode\":\"filters\",\"metrics\":[{\"id\":\"5ab527a0-3d5b-11e8-92aa-f379e6ef316f\",\"type\":\"avg\",\"field\":\"elasticsearch.node.stats.fs.summary.available.bytes\"}],\"seperate_axis\":0,\"axis_position\":\"right\",\"formatter\":\"bytes\",\"chart_type\":\"line\",\"line_width\":1,\"point_size\":1,\"fill\":0.5,\"stacked\":\"none\",\"terms_field\":\"beat.hostname\",\"terms_direction\":\"asc\",\"terms_size\":\"8\",\"label\":\"Available\",\"terms_order_by\":\"5ab527a0-3d5b-11e8-92aa-f379e6ef316f\",\"filter\":\"\",\"split_filters\":[{\"filter\":\"tags:elasticHotNode\",\"label\":\"Hot nodes\",\"color\":\"#68BC00\",\"id\":\"6fc22480-3d5c-11e8-92aa-f379e6ef316f\"},{\"filter\":\"tags:elasticWarmNode\",\"label\":\"Warm nodes\",\"color\":\"#68BC00\",\"id\":\"f1673ac0-3d5c-11e8-92aa-f379e6ef316f\"}]}],\"time_field\":\"@timestamp\",\"index_pattern\":\"metricbeat-*\",\"interval\":\"1m\",\"axis_position\":\"left\",\"axis_formatter\":\"number\",\"show_legend\":1,\"show_grid\":1,\"background_color_rules\":[{\"id\":\"d177ae80-3d5b-11e8-92aa-f379e6ef316f\"}],\"gauge_color_rules\":[{\"value\":0,\"id\":\"d2f12f20-3d5b-11e8-92aa-f379e6ef316f\",\"opperator\":\"lt\",\"gauge\":null}],\"gauge_width\":10,\"gauge_inner_width\":10,\"gauge_style\":\"half\",\"bar_color_rules\":[{\"id\":\"09610940-3d5c-11e8-92aa-f379e6ef316f\"}],\"gauge_max\":\"\",\"filter\":\"\",\"drop_last_bucket\":1},\"aggs\":[]}",
-      "uiStateJSON": "{}",
-      "description": "",
-      "version": 1,
-      "kibanaSavedObjectMeta": {
-        "searchSourceJSON": "{}"
+        "searchSourceJSON": "{\"index\":\"4c437f80-4ded-11e8-ad34-c94180eaae8a\",\"highlightAll\":true,\"version\":true,\"query\":{\"language\":\"lucene\",\"query\":\"\"},\"filter\":[{\"meta\":{\"negate\":false,\"index\":\"6f3f1040-492d-11e8-bcbd-ff9ea2f35a1b\",\"type\":\"exists\",\"key\":\"logstash.log.message\",\"value\":\"exists\",\"disabled\":false,\"alias\":null},\"exists\":{\"field\":\"logstash.log.message\"},\"$state\":{\"store\":\"appState\"}}]}"
       }
     },
     "_meta": {
@@ -166,6 +132,40 @@
       "version": 1,
       "kibanaSavedObjectMeta": {
         "searchSourceJSON": "{}"
+      }
+    },
+    "_meta": {
+      "savedObjectVersion": 2
+    }
+  },
+  {
+    "_id": "69bbdde0-3d5e-11e8-a080-9b83fb139fb1",
+    "_type": "visualization",
+    "_source": {
+      "title": "[ElasticSearch] Free Disk Space",
+      "visState": "{\"title\":\"[ElasticSearch] Free Disk Space\",\"type\":\"metrics\",\"params\":{\"id\":\"61ca57f0-469d-11e7-af02-69e470af7417\",\"type\":\"gauge\",\"series\":[{\"id\":\"61ca57f1-469d-11e7-af02-69e470af7417\",\"color\":\"#68BC00\",\"split_mode\":\"filters\",\"metrics\":[{\"id\":\"5ab527a0-3d5b-11e8-92aa-f379e6ef316f\",\"type\":\"avg\",\"field\":\"elasticsearch.node.stats.fs.summary.available.bytes\"}],\"seperate_axis\":0,\"axis_position\":\"right\",\"formatter\":\"bytes\",\"chart_type\":\"line\",\"line_width\":1,\"point_size\":1,\"fill\":0.5,\"stacked\":\"none\",\"terms_field\":\"beat.hostname\",\"terms_direction\":\"asc\",\"terms_size\":\"8\",\"label\":\"Available\",\"terms_order_by\":\"5ab527a0-3d5b-11e8-92aa-f379e6ef316f\",\"filter\":\"\",\"split_filters\":[{\"filter\":\"tags:elasticHotNode\",\"label\":\"Hot nodes\",\"color\":\"#68BC00\",\"id\":\"6fc22480-3d5c-11e8-92aa-f379e6ef316f\"},{\"filter\":\"tags:elasticWarmNode\",\"label\":\"Warm nodes\",\"color\":\"#68BC00\",\"id\":\"f1673ac0-3d5c-11e8-92aa-f379e6ef316f\"}]}],\"time_field\":\"@timestamp\",\"index_pattern\":\"metricbeat-*\",\"interval\":\"1m\",\"axis_position\":\"left\",\"axis_formatter\":\"number\",\"show_legend\":1,\"show_grid\":1,\"background_color_rules\":[{\"id\":\"d177ae80-3d5b-11e8-92aa-f379e6ef316f\"}],\"gauge_color_rules\":[{\"value\":0,\"id\":\"d2f12f20-3d5b-11e8-92aa-f379e6ef316f\",\"opperator\":\"lt\",\"gauge\":null}],\"gauge_width\":10,\"gauge_inner_width\":10,\"gauge_style\":\"half\",\"bar_color_rules\":[{\"id\":\"09610940-3d5c-11e8-92aa-f379e6ef316f\"}],\"gauge_max\":\"\",\"filter\":\"\",\"drop_last_bucket\":1},\"aggs\":[]}",
+      "uiStateJSON": "{}",
+      "description": "",
+      "version": 1,
+      "kibanaSavedObjectMeta": {
+        "searchSourceJSON": "{}"
+      }
+    },
+    "_meta": {
+      "savedObjectVersion": 2
+    }
+  },
+  {
+    "_id": "4ce25ce0-49e2-11e8-84b7-9b93770644a4",
+    "_type": "visualization",
+    "_source": {
+      "title": "[ElasticSearch] Cluster Health Table",
+      "visState": "{\"title\":\"[ElasticSearch] Cluster Health Table\",\"type\":\"table\",\"params\":{\"perPage\":5,\"showPartialRows\":false,\"showMeticsAtAllLevels\":false,\"sort\":{\"columnIndex\":null,\"direction\":null},\"showTotal\":false,\"totalFunc\":\"sum\"},\"aggs\":[{\"id\":\"2\",\"enabled\":true,\"type\":\"terms\",\"schema\":\"bucket\",\"params\":{\"field\":\"elastic_cluster.cluster_name.keyword\",\"otherBucket\":false,\"otherBucketLabel\":\"Other\",\"missingBucket\":false,\"missingBucketLabel\":\"Missing\",\"size\":5,\"order\":\"desc\",\"orderBy\":\"_term\",\"customLabel\":\"Cluster\"}},{\"id\":\"1\",\"enabled\":true,\"type\":\"top_hits\",\"schema\":\"metric\",\"params\":{\"field\":\"elastic_cluster.status\",\"aggregate\":\"concat\",\"size\":1,\"sortField\":\"elastic_cluster.status.keyword\",\"sortOrder\":\"asc\",\"customLabel\":\"Status\"}},{\"id\":\"5\",\"enabled\":true,\"type\":\"top_hits\",\"schema\":\"metric\",\"params\":{\"field\":\"elastic_cluster.number_of_data_nodes\",\"aggregate\":\"sum\",\"size\":1,\"sortField\":\"@timestamp\",\"sortOrder\":\"desc\",\"customLabel\":\"Data Nodes\"}},{\"id\":\"3\",\"enabled\":true,\"type\":\"top_hits\",\"schema\":\"metric\",\"params\":{\"field\":\"elastic_cluster.active_shards\",\"aggregate\":\"sum\",\"size\":1,\"sortField\":\"@timestamp\",\"sortOrder\":\"desc\",\"customLabel\":\"Active Shards\"}},{\"id\":\"4\",\"enabled\":true,\"type\":\"top_hits\",\"schema\":\"metric\",\"params\":{\"field\":\"elastic_cluster.active_primary_shards\",\"aggregate\":\"sum\",\"size\":1,\"sortField\":\"@timestamp\",\"sortOrder\":\"desc\",\"customLabel\":\"Primary Shards\"}},{\"id\":\"6\",\"enabled\":true,\"type\":\"top_hits\",\"schema\":\"metric\",\"params\":{\"field\":\"elastic_cluster.unassigned_shards\",\"aggregate\":\"sum\",\"size\":1,\"sortField\":\"@timestamp\",\"sortOrder\":\"desc\",\"customLabel\":\"Unassigned Shards\"}},{\"id\":\"7\",\"enabled\":true,\"type\":\"top_hits\",\"schema\":\"metric\",\"params\":{\"field\":\"elastic_cluster.relocating_shards\",\"aggregate\":\"sum\",\"size\":1,\"sortField\":\"@timestamp\",\"sortOrder\":\"desc\",\"customLabel\":\"Rellocating Shards\"}},{\"id\":\"8\",\"enabled\":true,\"type\":\"top_hits\",\"schema\":\"metric\",\"params\":{\"field\":\"elastic_cluster.number_of_pending_tasks\",\"aggregate\":\"sum\",\"size\":1,\"sortField\":\"@timestamp\",\"sortOrder\":\"desc\",\"customLabel\":\"Pending Tasks\"}}]}",
+      "uiStateJSON": "{\"vis\":{\"params\":{\"sort\":{\"columnIndex\":null,\"direction\":null}}}}",
+      "description": "",
+      "version": 1,
+      "kibanaSavedObjectMeta": {
+        "searchSourceJSON": "{\"index\":\"41e90be0-4ded-11e8-ad34-c94180eaae8a\",\"filter\":[{\"meta\":{\"index\":\"74049300-4aab-11e8-9bca-3f2b2c5f9f6e\",\"negate\":false,\"disabled\":false,\"alias\":null,\"type\":\"exists\",\"key\":\"elastic_cluster.number_of_data_nodes\",\"value\":\"exists\"},\"exists\":{\"field\":\"elastic_cluster.number_of_data_nodes\"},\"$state\":{\"store\":\"appState\"}}],\"query\":{\"query\":\"\",\"language\":\"lucene\"}}"
       }
     },
     "_meta": {
@@ -219,7 +219,7 @@
       "savedSearchId": "fff3a140-1d3c-11e8-b050-f509ff1e2cf0",
       "version": 1,
       "kibanaSavedObjectMeta": {
-        "searchSourceJSON": "{\"filter\":[{\"meta\":{\"index\":\"6f3f1040-492d-11e8-bcbd-ff9ea2f35a1b\",\"negate\":true,\"disabled\":false,\"alias\":null,\"type\":\"phrase\",\"key\":\"monit.level\",\"value\":\"info\",\"params\":{\"query\":\"info\",\"type\":\"phrase\"}},\"query\":{\"match\":{\"monit.level\":{\"query\":\"info\",\"type\":\"phrase\"}}},\"$state\":{\"store\":\"appState\"}}],\"query\":{\"query\":\"\",\"language\":\"lucene\"}}"
+        "searchSourceJSON": "{\"filter\":[{\"meta\":{\"index\":\"4c437f80-4ded-11e8-ad34-c94180eaae8a\",\"negate\":true,\"disabled\":false,\"alias\":null,\"type\":\"phrase\",\"key\":\"monit.level\",\"value\":\"info\",\"params\":{\"query\":\"info\",\"type\":\"phrase\"}},\"query\":{\"match\":{\"monit.level\":{\"query\":\"info\",\"type\":\"phrase\"}}},\"$state\":{\"store\":\"appState\"}}],\"query\":{\"query\":\"\",\"language\":\"lucene\"}}"
       }
     },
     "_meta": {

@@ -1,2 +1,4 @@
 metricbeat_modules:
   - elasticsearch
+
+search_remote_connect: false

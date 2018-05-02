@@ -9,13 +9,7 @@
         dest: '{{ ansible_user_dir }}/.curator/{{ target }}.yml'
         owner: '{{ ansible_user_id }}'
         group: '{{ ansible_user_id }}'
-      register: update
-    - name: "Checking action file {{ target }}.yml"
-      command: 'curator --dry-run {{ target }}.yml'
-      args:
-        chdir: '{{ ansible_user_dir }}/.curator'
-      changed_when: false
-      when: update is changed
+        validate: "/usr/local/bin/curator --dry-run %s"
   rescue:
     - name: "Create directory {{ ansible_user_dir }}/.curator/"
       file:
