@@ -27,3 +27,18 @@
     - kibana
     - redis
   notify: Restart consul
+
+- block:
+    - name: Checking local port 53
+      wait_for:
+        port: 53
+        timeout: 3
+  rescue:
+    - name: Enable DNS port forwarding
+      command: '{{ item }}'
+      changed_when: false
+      with_items:
+        - iptables -t nat -A PREROUTING -p udp -m udp --dport 53 -j REDIRECT --to-ports 8600
+        - iptables -t nat -A PREROUTING -p tcp -m tcp --dport 53 -j REDIRECT --to-ports 8600
+        - iptables -t nat -A OUTPUT -d localhost -p udp -m udp --dport 53 -j REDIRECT --to-ports 8600
+        - iptables -t nat -A OUTPUT -d localhost -p tcp -m tcp --dport 53 -j REDIRECT --to-ports 8600

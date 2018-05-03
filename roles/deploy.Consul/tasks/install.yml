@@ -23,11 +23,3 @@
         state: directory
         owner: consul
         group: consul
-    - name: Enable DNS port forwarding
-      command: '{{ item }}'
-      changed_when: false
-      with_items:
-        - iptables -t nat -A PREROUTING -p udp -m udp --dport 53 -j REDIRECT --to-ports 8600
-        - iptables -t nat -A PREROUTING -p tcp -m tcp --dport 53 -j REDIRECT --to-ports 8600
-        - iptables -t nat -A OUTPUT -d localhost -p udp -m udp --dport 53 -j REDIRECT --to-ports 8600
-        - iptables -t nat -A OUTPUT -d localhost -p tcp -m tcp --dport 53 -j REDIRECT --to-ports 8600
