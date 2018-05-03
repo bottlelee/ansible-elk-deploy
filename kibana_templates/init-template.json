@@ -105,16 +105,23 @@
     }
   },
   {
-    "_id": "c54e9990-3d54-11e8-a080-9b83fb139fb1",
-    "_type": "visualization",
+    "_id": "8082d780-4e0d-11e8-9e6d-3749e4039e50",
+    "_type": "search",
     "_source": {
-      "title": "[Elasticsearch] kibana request status",
-      "visState": "{\"title\":\"[Elasticsearch] kibana request status\",\"type\":\"metrics\",\"params\":{\"id\":\"61ca57f0-469d-11e7-af02-69e470af7417\",\"type\":\"timeseries\",\"series\":[{\"id\":\"61ca57f1-469d-11e7-af02-69e470af7417\",\"color\":\"#68BC00\",\"split_mode\":\"everything\",\"metrics\":[{\"id\":\"7cf040a0-3d53-11e8-b337-6558da97a8de\",\"type\":\"max\",\"field\":\"kibana.status.metrics.requests.total\"}],\"seperate_axis\":0,\"axis_position\":\"right\",\"formatter\":\"number\",\"chart_type\":\"line\",\"line_width\":1,\"point_size\":1,\"fill\":0.5,\"stacked\":\"none\",\"filter\":\"\",\"terms_field\":\"kibana.status.name\",\"label\":\"Total request\"},{\"id\":\"e39346e0-3d53-11e8-b337-6558da97a8de\",\"color\":\"rgba(128,226,29,1)\",\"split_mode\":\"everything\",\"metrics\":[{\"id\":\"e39346e1-3d53-11e8-b337-6558da97a8de\",\"type\":\"max\",\"field\":\"kibana.status.metrics.concurrent_connections\"}],\"seperate_axis\":0,\"axis_position\":\"right\",\"formatter\":\"number\",\"chart_type\":\"line\",\"line_width\":1,\"point_size\":1,\"fill\":0.5,\"stacked\":\"none\",\"filter\":\"\",\"terms_field\":\"kibana.status.name\",\"label\":\"Concurrent connections\"}],\"time_field\":\"@timestamp\",\"index_pattern\":\"metricbeat-*\",\"interval\":\"1m\",\"axis_position\":\"left\",\"axis_formatter\":\"number\",\"show_legend\":1,\"show_grid\":1,\"bar_color_rules\":[{\"id\":\"f74dbe00-3d52-11e8-b337-6558da97a8de\"}],\"background_color_rules\":[{\"id\":\"f862d780-3d52-11e8-b337-6558da97a8de\"}],\"gauge_color_rules\":[{\"id\":\"f994a0c0-3d52-11e8-b337-6558da97a8de\"}],\"gauge_width\":10,\"gauge_inner_width\":10,\"gauge_style\":\"half\",\"legend_position\":\"bottom\"},\"aggs\":[]}",
-      "uiStateJSON": "{}",
+      "title": "[Filebeat] Redis",
       "description": "",
+      "hits": 0,
+      "columns": [
+        "message",
+        "beat.name"
+      ],
+      "sort": [
+        "@timestamp",
+        "desc"
+      ],
       "version": 1,
       "kibanaSavedObjectMeta": {
-        "searchSourceJSON": "{}"
+        "searchSourceJSON": "{\"index\":\"4c437f80-4ded-11e8-ad34-c94180eaae8a\",\"highlightAll\":true,\"version\":true,\"query\":{\"language\":\"lucene\",\"query\":\"\"},\"filter\":[{\"$state\":{\"store\":\"appState\"},\"meta\":{\"alias\":null,\"disabled\":false,\"index\":\"4c437f80-4ded-11e8-ad34-c94180eaae8a\",\"key\":\"fileset.module\",\"negate\":false,\"params\":{\"query\":\"redis\",\"type\":\"phrase\"},\"type\":\"phrase\",\"value\":\"redis\"},\"query\":{\"match\":{\"fileset.module\":{\"query\":\"redis\",\"type\":\"phrase\"}}}}]}"
       }
     },
     "_meta": {
@@ -122,11 +129,11 @@
     }
   },
   {
-    "_id": "b0e81170-42db-11e8-9e47-f58f43061c8d",
+    "_id": "c54e9990-3d54-11e8-a080-9b83fb139fb1",
     "_type": "visualization",
     "_source": {
-      "title": "[Metricbeat] CPU user pct",
-      "visState": "{\"title\":\"[Metricbeat] CPU user pct\",\"type\":\"metrics\",\"params\":{\"id\":\"61ca57f0-469d-11e7-af02-69e470af7417\",\"type\":\"top_n\",\"series\":[{\"id\":\"610e5380-42db-11e8-8e8e-8f49defbde25\",\"color\":\"#68BC00\",\"split_mode\":\"terms\",\"metrics\":[{\"id\":\"610e5381-42db-11e8-8e8e-8f49defbde25\",\"type\":\"avg\",\"field\":\"system.cpu.user.pct\"}],\"seperate_axis\":0,\"axis_position\":\"right\",\"formatter\":\"percent\",\"chart_type\":\"line\",\"line_width\":1,\"point_size\":1,\"fill\":0.5,\"stacked\":\"none\",\"terms_field\":\"beat.name\",\"terms_size\":\"10\",\"terms_order_by\":\"610e5381-42db-11e8-8e8e-8f49defbde25\",\"label\":\"CPU USER PCT\",\"terms_direction\":\"desc\"}],\"time_field\":\"@timestamp\",\"index_pattern\":\"metricbeat-*\",\"interval\":\"auto\",\"axis_position\":\"left\",\"axis_formatter\":\"number\",\"show_legend\":1,\"show_grid\":1,\"gauge_color_rules\":[{\"value\":0,\"id\":\"74aa9440-42da-11e8-8e8e-8f49defbde25\",\"gauge\":null}],\"gauge_width\":10,\"gauge_inner_width\":10,\"gauge_style\":\"half\",\"gauge_max\":\"\",\"filter\":\"\",\"background_color_rules\":[{\"id\":\"1101c5c0-42db-11e8-8e8e-8f49defbde25\"}],\"bar_color_rules\":[{\"id\":\"127c7ee0-42db-11e8-8e8e-8f49defbde25\"}]},\"aggs\":[]}",
+      "title": "[Elasticsearch] kibana request status",
+      "visState": "{\"title\":\"[Elasticsearch] kibana request status\",\"type\":\"metrics\",\"params\":{\"id\":\"61ca57f0-469d-11e7-af02-69e470af7417\",\"type\":\"timeseries\",\"series\":[{\"id\":\"61ca57f1-469d-11e7-af02-69e470af7417\",\"color\":\"#68BC00\",\"split_mode\":\"everything\",\"metrics\":[{\"id\":\"7cf040a0-3d53-11e8-b337-6558da97a8de\",\"type\":\"max\",\"field\":\"kibana.status.metrics.requests.total\"}],\"seperate_axis\":0,\"axis_position\":\"right\",\"formatter\":\"number\",\"chart_type\":\"line\",\"line_width\":1,\"point_size\":1,\"fill\":0.5,\"stacked\":\"none\",\"filter\":\"\",\"terms_field\":\"kibana.status.name\",\"label\":\"Total request\"},{\"id\":\"e39346e0-3d53-11e8-b337-6558da97a8de\",\"color\":\"rgba(128,226,29,1)\",\"split_mode\":\"everything\",\"metrics\":[{\"id\":\"e39346e1-3d53-11e8-b337-6558da97a8de\",\"type\":\"max\",\"field\":\"kibana.status.metrics.concurrent_connections\"}],\"seperate_axis\":0,\"axis_position\":\"right\",\"formatter\":\"number\",\"chart_type\":\"line\",\"line_width\":1,\"point_size\":1,\"fill\":0.5,\"stacked\":\"none\",\"filter\":\"\",\"terms_field\":\"kibana.status.name\",\"label\":\"Concurrent connections\"}],\"time_field\":\"@timestamp\",\"index_pattern\":\"metricbeat-*\",\"interval\":\"1m\",\"axis_position\":\"left\",\"axis_formatter\":\"number\",\"show_legend\":1,\"show_grid\":1,\"bar_color_rules\":[{\"id\":\"f74dbe00-3d52-11e8-b337-6558da97a8de\"}],\"background_color_rules\":[{\"id\":\"f862d780-3d52-11e8-b337-6558da97a8de\"}],\"gauge_color_rules\":[{\"id\":\"f994a0c0-3d52-11e8-b337-6558da97a8de\"}],\"gauge_width\":10,\"gauge_inner_width\":10,\"gauge_style\":\"half\",\"legend_position\":\"bottom\"},\"aggs\":[]}",
       "uiStateJSON": "{}",
       "description": "",
       "version": 1,
@@ -173,6 +180,41 @@
     }
   },
   {
+    "_id": "0757cd60-1d3f-11e8-b050-f509ff1e2cf0",
+    "_type": "visualization",
+    "_source": {
+      "title": "[Filebeat] Monit Hosts Tag Cloud",
+      "visState": "{\"title\":\"[Filebeat] Monit Hosts Tag Cloud\",\"type\":\"tagcloud\",\"params\":{\"scale\":\"linear\",\"orientation\":\"single\",\"minFontSize\":18,\"maxFontSize\":36},\"aggs\":[{\"id\":\"1\",\"enabled\":true,\"type\":\"count\",\"schema\":\"metric\",\"params\":{}},{\"id\":\"2\",\"enabled\":true,\"type\":\"terms\",\"schema\":\"segment\",\"params\":{\"field\":\"beat.name\",\"otherBucket\":false,\"otherBucketLabel\":\"Other\",\"missingBucket\":false,\"missingBucketLabel\":\"Missing\",\"exclude\":\"\",\"size\":5,\"order\":\"desc\",\"orderBy\":\"1\",\"customLabel\":\"Host\"}}]}",
+      "uiStateJSON": "{}",
+      "description": "",
+      "savedSearchId": "fff3a140-1d3c-11e8-b050-f509ff1e2cf0",
+      "version": 1,
+      "kibanaSavedObjectMeta": {
+        "searchSourceJSON": "{\"filter\":[{\"meta\":{\"index\":\"4c437f80-4ded-11e8-ad34-c94180eaae8a\",\"negate\":true,\"disabled\":false,\"alias\":null,\"type\":\"phrase\",\"key\":\"monit.level\",\"value\":\"info\",\"params\":{\"query\":\"info\",\"type\":\"phrase\"}},\"query\":{\"match\":{\"monit.level\":{\"query\":\"info\",\"type\":\"phrase\"}}},\"$state\":{\"store\":\"appState\"}}],\"query\":{\"query\":\"\",\"language\":\"lucene\"}}"
+      }
+    },
+    "_meta": {
+      "savedObjectVersion": 2
+    }
+  },
+  {
+    "_id": "b0e81170-42db-11e8-9e47-f58f43061c8d",
+    "_type": "visualization",
+    "_source": {
+      "title": "[Metricbeat] CPU user pct",
+      "visState": "{\"title\":\"[Metricbeat] CPU user pct\",\"type\":\"metrics\",\"params\":{\"id\":\"61ca57f0-469d-11e7-af02-69e470af7417\",\"type\":\"top_n\",\"series\":[{\"id\":\"610e5380-42db-11e8-8e8e-8f49defbde25\",\"color\":\"#68BC00\",\"split_mode\":\"terms\",\"metrics\":[{\"id\":\"610e5381-42db-11e8-8e8e-8f49defbde25\",\"type\":\"avg\",\"field\":\"system.cpu.user.pct\"}],\"seperate_axis\":0,\"axis_position\":\"right\",\"formatter\":\"percent\",\"chart_type\":\"line\",\"line_width\":1,\"point_size\":1,\"fill\":0.5,\"stacked\":\"none\",\"terms_field\":\"beat.name\",\"terms_size\":\"10\",\"terms_order_by\":\"610e5381-42db-11e8-8e8e-8f49defbde25\",\"label\":\"CPU USER PCT\",\"terms_direction\":\"desc\"}],\"time_field\":\"@timestamp\",\"index_pattern\":\"metricbeat-*\",\"interval\":\"auto\",\"axis_position\":\"left\",\"axis_formatter\":\"number\",\"show_legend\":1,\"show_grid\":1,\"gauge_color_rules\":[{\"value\":0,\"id\":\"74aa9440-42da-11e8-8e8e-8f49defbde25\",\"gauge\":null}],\"gauge_width\":10,\"gauge_inner_width\":10,\"gauge_style\":\"half\",\"gauge_max\":\"\",\"filter\":\"\",\"background_color_rules\":[{\"id\":\"1101c5c0-42db-11e8-8e8e-8f49defbde25\"}],\"bar_color_rules\":[{\"id\":\"127c7ee0-42db-11e8-8e8e-8f49defbde25\"}]},\"aggs\":[]}",
+      "uiStateJSON": "{}",
+      "description": "",
+      "version": 1,
+      "kibanaSavedObjectMeta": {
+        "searchSourceJSON": "{}"
+      }
+    },
+    "_meta": {
+      "savedObjectVersion": 2
+    }
+  },
+  {
     "_id": "861f3f20-1d3f-11e8-b050-f509ff1e2cf0",
     "_type": "visualization",
     "_source": {
@@ -202,24 +244,6 @@
       "version": 1,
       "kibanaSavedObjectMeta": {
         "searchSourceJSON": "{}"
-      }
-    },
-    "_meta": {
-      "savedObjectVersion": 2
-    }
-  },
-  {
-    "_id": "0757cd60-1d3f-11e8-b050-f509ff1e2cf0",
-    "_type": "visualization",
-    "_source": {
-      "title": "[Filebeat] Monit Hosts Tag Cloud",
-      "visState": "{\"title\":\"[Filebeat] Monit Hosts Tag Cloud\",\"type\":\"tagcloud\",\"params\":{\"scale\":\"linear\",\"orientation\":\"single\",\"minFontSize\":18,\"maxFontSize\":36},\"aggs\":[{\"id\":\"1\",\"enabled\":true,\"type\":\"count\",\"schema\":\"metric\",\"params\":{}},{\"id\":\"2\",\"enabled\":true,\"type\":\"terms\",\"schema\":\"segment\",\"params\":{\"field\":\"beat.name\",\"otherBucket\":false,\"otherBucketLabel\":\"Other\",\"missingBucket\":false,\"missingBucketLabel\":\"Missing\",\"exclude\":\"\",\"size\":5,\"order\":\"desc\",\"orderBy\":\"1\",\"customLabel\":\"Host\"}}]}",
-      "uiStateJSON": "{}",
-      "description": "",
-      "savedSearchId": "fff3a140-1d3c-11e8-b050-f509ff1e2cf0",
-      "version": 1,
-      "kibanaSavedObjectMeta": {
-        "searchSourceJSON": "{\"filter\":[{\"meta\":{\"index\":\"4c437f80-4ded-11e8-ad34-c94180eaae8a\",\"negate\":true,\"disabled\":false,\"alias\":null,\"type\":\"phrase\",\"key\":\"monit.level\",\"value\":\"info\",\"params\":{\"query\":\"info\",\"type\":\"phrase\"}},\"query\":{\"match\":{\"monit.level\":{\"query\":\"info\",\"type\":\"phrase\"}}},\"$state\":{\"store\":\"appState\"}}],\"query\":{\"query\":\"\",\"language\":\"lucene\"}}"
       }
     },
     "_meta": {

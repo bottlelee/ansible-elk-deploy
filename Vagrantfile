@@ -15,8 +15,9 @@ Vagrant.configure("2") do |config|
   config.ssh.insert_key = false
   config.vm.box_check_update = false
   config.vm.box = $vm_box
-  config.vm.synced_folder "./", "/vagrant", type: "rsync",
-    rsync__exclude: [".git/", "downloaded_files/"]
+  # config.vm.synced_folder "./", "/vagrant", type: "rsync",
+  #   rsync__exclude: [".git/", "downloaded_files/"]
+  config.vm.synced_folder ".", "/vagrant", disabled: true
   if Vagrant.has_plugin?("vagrant-vbguest") then
     config.vbguest.auto_update = false
   end
@@ -42,16 +43,17 @@ Vagrant.configure("2") do |config|
 
     config.vm.define vm_name = $vm_name do |config|
       config.vm.hostname = vm_name
-      config.vm.network "private_network", ip: "172.28.128.1#{instance_id.to_s.rjust(2, '0')}"
+      # config.vm.network "private_network", ip: "172.28.128.1#{instance_id.to_s.rjust(2, '0')}"
+      config.vm.network "private_network", type: "dhcp"
 
       if $vm_name == "kibana-#{instance_id.to_s.rjust(2, '0')}"
         config.vm.network "forwarded_port", guest: 5601, host: 5601,
           auto_correct: true
-        config.vm.network "forwarded_port", guest: 8600, host: 53,
-          auto_correct: true
       end
 
       config.vm.provider "virtualbox" do |vb|
+        vb.customize ["modifyvm", :id, "--natdnshostresolver1", "off"]
+        vb.customize ["modifyvm", :id, "--natdnsproxy1", "off"]
         vb.memory = "2048"
         vb.cpus = "2"
         vb.name = vm_name

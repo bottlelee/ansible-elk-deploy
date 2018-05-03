@@ -1,7 +1,6 @@
 #!/usr/bin/env bash
 
 function create() {
-  rm host_vars install_report -rf
   vagrant up --no-provision
   vagrant snapshot save init
   vagrant up --provision
@@ -13,8 +12,7 @@ case $1 in
     ;;
   restore )
     vagrant snapshot restore init
-    rm host_vars -rf
-    vagrant up --provision
+    vagrant reload --provision
     ;;
   rebuild )
     vagrant destroy -f
@@ -22,7 +20,6 @@ case $1 in
     ;;
   down )
     vagrant destroy -f
-    rm host_vars install_report -rf
     ;;
   * )
     echo "Usage: up|restore|rebuild|down"

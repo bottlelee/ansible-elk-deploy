@@ -1,0 +1,6 @@
+- name: Setup index default settings
+  uri:
+    url: http://ingest.elastic.service.{{ consul_dc_name }}.consul:{{ elastic_http_port }}/_template/active-logs
+    method: PUT
+    body: "{{ lookup('file', 'indices_default_settings.json') }}"
+    body_format: json
