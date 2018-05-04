@@ -5,8 +5,8 @@ ENV["LC_ALL"] = "en_US.UTF-8"
 
 Vagrant.require_version ">= 2.0.0"
 
-$vm_box = "ubuntu/xenial64"
-# $vm_box = "centos/7"
+# $vm_box = "ubuntu/xenial64"
+$vm_box = "centos/7"
 $instances = 14
 $apt_proxy = ""
 
@@ -15,8 +15,6 @@ Vagrant.configure("2") do |config|
   config.ssh.insert_key = false
   config.vm.box_check_update = false
   config.vm.box = $vm_box
-  # config.vm.synced_folder "./", "/vagrant", type: "rsync",
-  #   rsync__exclude: [".git/", "downloaded_files/"]
   config.vm.synced_folder ".", "/vagrant", disabled: true
   if Vagrant.has_plugin?("vagrant-vbguest") then
     config.vbguest.auto_update = false

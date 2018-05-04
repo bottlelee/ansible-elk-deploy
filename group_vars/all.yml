@@ -13,7 +13,7 @@ Debian_bind_interface: 'enp0s8'
 # DNS nameserver
 dns_servers:
   - 127.0.0.1
-  - 1.1.1.1
+  - 8.8.8.8
 
 # Do NOT edit the following lines unless you know why.
 elastic_http_port: '9200'

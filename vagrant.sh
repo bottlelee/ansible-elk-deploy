@@ -3,7 +3,7 @@
 function create() {
   vagrant up --no-provision
   vagrant snapshot save init
-  vagrant up --provision
+  vagrant reload --provision
 }
 
 case $1 in

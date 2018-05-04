@@ -2,7 +2,8 @@ metricbeat_modules:
   - kibana
 
 # ElasticSearch coordinating only node, set the value as null.
-elastic_instance_roles: ""
+elastic_instance_roles:
+  - tribe
 
 # Read more on https://www.elastic.co/guide/en/elasticsearch/reference/current/modules-cross-cluster-search.html
 search_remote_connect: false

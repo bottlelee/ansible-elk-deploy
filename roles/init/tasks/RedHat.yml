@@ -11,12 +11,6 @@
   selinux:
     state: disabled
 
-- name: Starting network service
-  service:
-    name: network
-    state: started
-    enabled: yes
-
 - name: "Setting /etc/sysconfig/network-scripts/ifcfg-{{ bind_interface }}"
   lineinfile:
     path: "/etc/sysconfig/network-scripts/ifcfg-{{ bind_interface }}"
@@ -25,12 +19,4 @@
     - "DNS1={{ dns_servers[0] }}"
     - "DNS2={{ dns_servers[1] }}"
     - "PEERDNS=yes"
-
-- name: Setting /etc/resolv.conf
-  blockinfile:
-    path: /etc/resolv.conf
-    block: |
-      nameserver {{ dns_servers[0] }}
-      nameserver {{ dns_servers[1] }}
-    insertbefore: BOF
-    create: yes
+  notify: Restart network service
