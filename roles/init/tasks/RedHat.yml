@@ -24,7 +24,7 @@
   with_items:
     - "DNS1={{ dns_servers[0] }}"
     - "DNS2={{ dns_servers[1] }}"
-    - "PEERDNS=no"
+    - "PEERDNS=yes"
 
 - name: Setting /etc/resolv.conf
   blockinfile:
