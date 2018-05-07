@@ -1,17 +1,17 @@
 [
   {
-    "_id": "be0de680-1d3e-11e8-b050-f509ff1e2cf0",
+    "_id": "bf4e7e60-3d5f-11e8-a080-9b83fb139fb1",
     "_type": "dashboard",
     "_source": {
-      "title": "[Filebeat] Monit Overview",
+      "title": "[Metricbeat] ELK Overview",
       "hits": 0,
       "description": "",
-      "panelsJSON": "[{\"panelIndex\":\"1\",\"gridData\":{\"x\":0,\"y\":0,\"w\":6,\"h\":3,\"i\":\"1\"},\"embeddableConfig\":{\"vis\":{\"legendOpen\":true}},\"id\":\"9c75bde0-1d3e-11e8-b050-f509ff1e2cf0\",\"type\":\"visualization\",\"version\":\"6.2.2\"},{\"panelIndex\":\"2\",\"gridData\":{\"x\":6,\"y\":0,\"w\":6,\"h\":3,\"i\":\"2\"},\"id\":\"0757cd60-1d3f-11e8-b050-f509ff1e2cf0\",\"type\":\"visualization\",\"version\":\"6.2.2\"},{\"panelIndex\":\"3\",\"gridData\":{\"x\":0,\"y\":3,\"w\":12,\"h\":7,\"i\":\"3\"},\"id\":\"861f3f20-1d3f-11e8-b050-f509ff1e2cf0\",\"type\":\"visualization\",\"version\":\"6.2.2\"}]",
+      "panelsJSON": "[{\"gridData\":{\"h\":3,\"i\":\"1\",\"w\":6,\"x\":0,\"y\":0},\"id\":\"c54e9990-3d54-11e8-a080-9b83fb139fb1\",\"panelIndex\":\"1\",\"type\":\"visualization\",\"version\":\"6.2.3\"},{\"gridData\":{\"h\":3,\"i\":\"2\",\"w\":6,\"x\":6,\"y\":0},\"id\":\"69bbdde0-3d5e-11e8-a080-9b83fb139fb1\",\"panelIndex\":\"2\",\"type\":\"visualization\",\"version\":\"6.2.3\"},{\"gridData\":{\"h\":4,\"i\":\"3\",\"w\":12,\"x\":0,\"y\":3},\"id\":\"4ce25ce0-49e2-11e8-84b7-9b93770644a4\",\"panelIndex\":\"3\",\"type\":\"visualization\",\"version\":\"6.2.4\"}]",
       "optionsJSON": "{\"darkTheme\":false,\"hidePanelTitles\":false,\"useMargins\":true}",
       "version": 1,
       "timeRestore": true,
       "timeTo": "now",
-      "timeFrom": "now-24h",
+      "timeFrom": "now-15m",
       "refreshInterval": {
         "display": "30 seconds",
         "pause": false,
@@ -27,18 +27,18 @@
     }
   },
   {
-    "_id": "bf4e7e60-3d5f-11e8-a080-9b83fb139fb1",
+    "_id": "be0de680-1d3e-11e8-b050-f509ff1e2cf0",
     "_type": "dashboard",
     "_source": {
-      "title": "[Metricbeat] ELK Overview",
+      "title": "[Filebeat] Monit Overview",
       "hits": 0,
       "description": "",
-      "panelsJSON": "[{\"gridData\":{\"h\":3,\"i\":\"1\",\"w\":6,\"x\":0,\"y\":0},\"id\":\"c54e9990-3d54-11e8-a080-9b83fb139fb1\",\"panelIndex\":\"1\",\"type\":\"visualization\",\"version\":\"6.2.3\"},{\"gridData\":{\"h\":3,\"i\":\"2\",\"w\":6,\"x\":6,\"y\":0},\"id\":\"69bbdde0-3d5e-11e8-a080-9b83fb139fb1\",\"panelIndex\":\"2\",\"type\":\"visualization\",\"version\":\"6.2.3\"},{\"gridData\":{\"h\":4,\"i\":\"3\",\"w\":12,\"x\":0,\"y\":3},\"id\":\"4ce25ce0-49e2-11e8-84b7-9b93770644a4\",\"panelIndex\":\"3\",\"type\":\"visualization\",\"version\":\"6.2.4\"}]",
+      "panelsJSON": "[{\"panelIndex\":\"1\",\"gridData\":{\"x\":0,\"y\":0,\"w\":6,\"h\":3,\"i\":\"1\"},\"embeddableConfig\":{\"vis\":{\"legendOpen\":true}},\"id\":\"9c75bde0-1d3e-11e8-b050-f509ff1e2cf0\",\"type\":\"visualization\",\"version\":\"6.2.2\"},{\"panelIndex\":\"2\",\"gridData\":{\"x\":6,\"y\":0,\"w\":6,\"h\":3,\"i\":\"2\"},\"id\":\"0757cd60-1d3f-11e8-b050-f509ff1e2cf0\",\"type\":\"visualization\",\"version\":\"6.2.2\"},{\"panelIndex\":\"3\",\"gridData\":{\"x\":0,\"y\":3,\"w\":12,\"h\":7,\"i\":\"3\"},\"id\":\"861f3f20-1d3f-11e8-b050-f509ff1e2cf0\",\"type\":\"visualization\",\"version\":\"6.2.2\"}]",
       "optionsJSON": "{\"darkTheme\":false,\"hidePanelTitles\":false,\"useMargins\":true}",
       "version": 1,
       "timeRestore": true,
       "timeTo": "now",
-      "timeFrom": "now-15m",
+      "timeFrom": "now-24h",
       "refreshInterval": {
         "display": "30 seconds",
         "pause": false,
@@ -155,7 +155,7 @@
       "description": "",
       "version": 1,
       "kibanaSavedObjectMeta": {
-        "searchSourceJSON": "{}"
+        "searchSourceJSON": "{\"index\":\"41e90be0-4ded-11e8-ad34-c94180eaae8a\",\"filter\":[{\"meta\":{\"index\":\"74049300-4aab-11e8-9bca-3f2b2c5f9f6e\",\"negate\":false,\"disabled\":false,\"alias\":null,\"type\":\"exists\",\"key\":\"elastic_cluster.number_of_data_nodes\",\"value\":\"exists\"},\"exists\":{\"field\":\"elastic_cluster.number_of_data_nodes\"},\"$state\":{\"store\":\"appState\"}}],\"query\":{\"query\":\"\",\"language\":\"lucene\"}}"
       }
     },
     "_meta": {
