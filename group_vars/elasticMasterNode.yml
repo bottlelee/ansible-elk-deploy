@@ -1,11 +1,8 @@
-# ElasticSearch Master only node
-node_master: true
-node_data: false
-node_ingest: true
-search_remote_connect: false
+# Rols options are 'master', 'data', 'ingest' and 'tribe'
+elastic_instance_roles:
+  - master
+  - ingest
 
 env_check_memtotal_mb: 1000
 env_check_memory_mb_nocache_free: 512
 env_check_processor_vcpus: 1
-
-consul_service_name: elastic-master

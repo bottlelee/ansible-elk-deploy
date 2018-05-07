@@ -2,7 +2,7 @@
   template:
     src: monitrc.j2
     dest: /etc/monitrc
-    mode: 0700
+    mode: 0600
     owner: root
     group: root
   notify: "Reload monit"
@@ -11,7 +11,7 @@
   template:
     src: '{{ item }}.j2'
     dest: '/etc/monit.d/{{ item }}'
-    mode: 0700
+    mode: 0600
   with_items:
     - check_fs_usage
     - check_sysload

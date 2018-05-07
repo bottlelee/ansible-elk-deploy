@@ -4,12 +4,27 @@
       "name": "kibana",
       "address": "",
       "port": {{ kibana_port }},
-      "tags": [
-        "elk"
-      ],
       "checks": [
         {
           "http": "http://{{ bind_address }}:{{ kibana_port }}",
+          "interval": "10s",
+          "timeout": "3s"
+        }
+      ]
+    },
+    {
+      "name": "elastic",
+      "address": "",
+      "port": {{ elastic_http_port }},
+      "enable_tag_override": true,
+      "tags": [
+        {%- for item in elastic_instance_roles -%}
+          "{{ item }}"{%- if loop.nextitem is defined -%},{%- endif -%}
+        {%- endfor -%}
+      ],
+      "checks": [
+        {
+          "http": "http://{{ bind_address }}:{{ elastic_http_port }}",
           "interval": "10s",
           "timeout": "3s"
         }

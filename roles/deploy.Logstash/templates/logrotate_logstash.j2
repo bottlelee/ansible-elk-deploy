@@ -1,0 +1,9 @@
+{{ logstash_log_path }}/*.log {
+  rotate 7
+  size 100M
+  daily
+  compress
+  delaycompress
+  missingok
+  su logstash logstash
+}

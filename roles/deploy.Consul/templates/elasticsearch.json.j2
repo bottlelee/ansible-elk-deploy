@@ -1,15 +1,14 @@
 {
   "services": [
     {
-{% if node_ingest is defined and node_ingest == true %}
-      "name": "elastic-ingest",
-{% else %}
-      "name": "{{ consul_service_name | default('elastic-unknown') }}",
-{% endif %}
+      "name": "elastic",
       "address": "",
       "port": {{ elastic_http_port }},
+      "enable_tag_override": true,
       "tags": [
-        "elk"
+        {%- for item in elastic_instance_roles -%}
+          "{{ item }}"{%- if loop.nextitem is defined -%},{%- endif -%}
+        {%- endfor -%}
       ],
       "checks": [
         {

@@ -6,14 +6,14 @@ check_groups: true
 
 # Set the network interface name to get IP
 ## CentOS
-RedHat_bind_interface: 'eth1'
+RedHat_bind_interface: 'eth0'
 ## Ubuntu
 Debian_bind_interface: 'enp0s8'
 
 # DNS nameserver
 dns_servers:
   - 127.0.0.1
-  - 1.1.1.1
+  - 8.8.8.8
 
 # Do NOT edit the following lines unless you know why.
 elastic_http_port: '9200'
@@ -30,6 +30,12 @@ elastic_data_path:
 elastic_plugins:
   - ingest-user-agent
   - ingest-geoip
+# Start Do NOT edit.
+elastic_all_roles:
+  - master
+  - data
+  - ingest
+# End: Do NOT edit
 
 # LogStash configure
 logstash_data_path: '/var/lib/logstash'
@@ -60,8 +66,8 @@ global_metricbeat_modules:
 global_packetbeat_modules: ""
 
 # Curator action tasks. Indices which older than the unit will move to warm data nodes.
-hot_to_warm_unit: days
-hot_to_warm_unit_count: 1
+hot_to_warm_unit: hours
+hot_to_warm_unit_count: 12
 
 # Redis
 redis_version: 4.0.9

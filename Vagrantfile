@@ -5,26 +5,17 @@ ENV["LC_ALL"] = "en_US.UTF-8"
 
 Vagrant.require_version ">= 2.0.0"
 
-# $vm_box = "ubuntu/xenial64"
-$vm_box = "centos/7"
+$vm_box = "ubuntu/xenial64"
+# $vm_box = "centos/7"
 $instances = 14
-$python_command = "/usr/bin/python"
-$bond_interface = "eth0"
 $apt_proxy = ""
-
-# if $vm_box == "ubuntu/xenial64"
-#   $bond_interface = "enp0s8"
-# elsif $vm_box == "centos/7"
-#   $bond_interface = "eth1"
-# end
 
 Vagrant.configure("2") do |config|
   # always use Vagrants insecure key
   config.ssh.insert_key = false
   config.vm.box_check_update = false
   config.vm.box = $vm_box
-  config.vm.synced_folder "./", "/vagrant", type: "rsync",
-    rsync__exclude: [".git/", "downloaded_files/"]
+  config.vm.synced_folder ".", "/vagrant", disabled: true
   if Vagrant.has_plugin?("vagrant-vbguest") then
     config.vbguest.auto_update = false
   end
@@ -55,11 +46,11 @@ Vagrant.configure("2") do |config|
       if $vm_name == "kibana-#{instance_id.to_s.rjust(2, '0')}"
         config.vm.network "forwarded_port", guest: 5601, host: 5601,
           auto_correct: true
-        config.vm.network "forwarded_port", guest: 8600, host: 53,
-          auto_correct: true
       end
 
       config.vm.provider "virtualbox" do |vb|
+        vb.customize ["modifyvm", :id, "--natdnshostresolver1", "off"]
+        vb.customize ["modifyvm", :id, "--natdnsproxy1", "off"]
         vb.memory = "2048"
         vb.cpus = "2"
         vb.name = vm_name
@@ -67,9 +58,6 @@ Vagrant.configure("2") do |config|
 
       if instance_id == $instances
         config.vm.provision "ansible" do |ansible|
-          # ansible.extra_vars = {
-          #   bond_interface: $bond_interface
-          # }
           ansible.groups = {
             "elasticMasterNode" => ["es-master-[01:03]"],
             "elasticHotNode" => ["es-hot-[04:06]"],

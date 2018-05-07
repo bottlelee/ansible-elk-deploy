@@ -3,4 +3,4 @@
   serial:
     - 1
   roles:
-    - deploy.Redis
+    - role: deploy.Redis

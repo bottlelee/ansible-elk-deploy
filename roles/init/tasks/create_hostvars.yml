@@ -37,6 +37,7 @@
       when: "ansible_os_family == 'Debian'"
     - pause:
         seconds: 30
+    - setup:
     - include_tasks: create_hostvars.yml
 
 - set_fact:

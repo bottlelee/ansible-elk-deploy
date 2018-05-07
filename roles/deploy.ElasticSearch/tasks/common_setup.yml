@@ -5,6 +5,19 @@
     option: LimitMEMLOCK
     value: infinity
 
+- name: Installing enable-thp.service
+  copy:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+    mode: "{{ item.mode | default(omit) }}"
+  with_items:
+    - src: enable-transparent-hugepages
+      dest: /usr/bin/enable-transparent-hugepages
+      mode: 554
+    - src: enable-thp.service
+      dest: /etc/systemd/system/enable-thp.service
+  notify: Start enable-thp.service
+
 - name: Updating ElasticSearch configuration
   template:
     src: '{{ item }}.j2'
@@ -19,6 +32,11 @@
     loop_var: target
   when: node_ingest is defined and node_ingest == true
 
+- name: Installing logrotate configure
+  template:
+    src: logrotate_elasticsearch.j2
+    dest: /etc/logrotate.d/elasticsearch
+
 - name: Starting ElasticSearch service
   service:
     name: elasticsearch
@@ -31,11 +49,3 @@
     host: "{{ bind_address }}"
     port: '9200'
     timeout: 120
-
-- name: Setup index default settings
-  uri:
-    url: http://elastic-ingest.service.{{ consul_dc_name }}.consul:{{ elastic_http_port }}/_template/active-logs
-    method: PUT
-    body: "{{ lookup('file', 'indices_default_settings.json') }}"
-    body_format: json
-  when: inventory_hostname == groups['kibana'][0]

@@ -7,6 +7,20 @@
       prompt: "What type of files do you need?[rpm|deb]"
       default: "rpm"
       private: no
+  pre_tasks:
+    - name: Checking group_vars/all.yml
+      file:
+        path: group_vars/all.yml
+      register: result
+    - fail:
+        msg: |
+          Please create group_vars/all.yml from group_vars/all.yml.example,
+          and edit it to suit your environment before your deploy.
+      when: result.stat.exists == false
+    - name: Create local downloaded_files directory
+      file:
+        path: downloaded_files
+        state: directory
   tasks:
     - include_role: name=deploy.ElasticSearch tasks_from=download
       tags: elasticsearch

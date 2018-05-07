@@ -3,9 +3,9 @@
     name: rsyslog
     state: restarted
 
-- name: Restart NetworkManager service
+- name: Restart network service
   service:
-    name: NetworkManager
+    name: network
     state: restarted
     enabled: yes
 

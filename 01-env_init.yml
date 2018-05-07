@@ -3,6 +3,15 @@
   serial: 33%
   gather_facts: no
   tasks:
+    - name: Checking group_vars/all.yml
+      file:
+        path: group_vars/all.yml
+      register: result
+    - fail:
+        msg: |
+          Please create group_vars/all.yml from group_vars/all.yml.example,
+          and edit it to suit your environment before your deploy.
+      when: result.stat.exists == false
     - include_role:
         name: init
         tasks_from: check_python.yml
