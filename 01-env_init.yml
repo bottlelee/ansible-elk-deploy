@@ -4,14 +4,18 @@
   gather_facts: no
   tasks:
     - name: Checking group_vars/all.yml
-      file:
+      stat:
         path: group_vars/all.yml
+      delegate_to: localhost
+      run_once: yes
+      become: no
       register: result
     - fail:
-        msg: |
-          Please create group_vars/all.yml from group_vars/all.yml.example,
-          and edit it to suit your environment before your deploy.
+        msg: "Please create group_vars/all.yml from group_vars/all.yml.example, and edit it to suit your environment before your deploy."
       when: result.stat.exists == false
+      delegate_to: localhost
+      run_once: yes
+      become: no
     - include_role:
         name: init
         tasks_from: check_python.yml

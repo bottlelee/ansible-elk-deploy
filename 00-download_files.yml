@@ -9,14 +9,20 @@
       private: no
   pre_tasks:
     - name: Checking group_vars/all.yml
-      file:
+      stat:
         path: group_vars/all.yml
+      delegate_to: localhost
+      run_once: yes
+      become: no
       register: result
     - fail:
         msg: |
           Please create group_vars/all.yml from group_vars/all.yml.example,
           and edit it to suit your environment before your deploy.
       when: result.stat.exists == false
+      delegate_to: localhost
+      run_once: yes
+      become: no
     - name: Create local downloaded_files directory
       file:
         path: downloaded_files

@@ -22,7 +22,7 @@
   with_items:
     - jvm.options
     - elasticsearch.yml
-  notify: Restarting elasticsearch service
+  notify: Restarting elasticsearch
 
 - block:
     - wait_for:

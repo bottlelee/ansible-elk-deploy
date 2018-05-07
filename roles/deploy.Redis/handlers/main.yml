@@ -5,16 +5,30 @@
     daemon_reload: yes
     enabled: yes
 
-- name: Restart redis-server
+- name: Restart redis-server service
   service:
     name: redis-server
     state: restarted
     daemon_reload: yes
     enabled: yes
+  listen: Restart redis-server
 
-- name: Restart redis-sentinel
+- name: Waiting for redis-server
+  wait_for:
+    host: "{{ bind_address }}"
+    port: 6379
+  listen: Restart redis-server
+
+- name: Restart redis-sentinel service
   service:
     name: redis-sentinel
     state: restarted
     daemon_reload: yes
     enabled: yes
+  listen: Restart redis-sentinel
+
+- name: Waiting for redis-server
+  wait_for:
+    host: "{{ bind_address }}"
+    port: 6379
+  listen: Restart redis-sentinel

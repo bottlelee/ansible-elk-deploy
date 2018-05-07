@@ -4,6 +4,15 @@
     state: restarted
     enabled: yes
     daemon_reload: yes
+  listen: Restarting elasticsearch
+
+- wait_for:
+    host: "{{ bind_address }}"
+    port: '{{ item }}'
+  with_items:
+    - 9300
+    - 9200
+  listen: Restarting elasticsearch
 
 - name: Start enable-thp.service
   service:
