@@ -23,6 +23,3 @@
         state: absent
 
 - include_tasks: common_setup.yml
-
-- include_tasks: set_template.yml
-  when: inventory_hostname == groups['kibana'][0]

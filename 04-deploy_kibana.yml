@@ -5,7 +5,8 @@
     - 33%
   roles:
     - deploy.Kibana
-    - deploy.ElasticSearch
+    - role: deploy.ElasticSearch
+      when: "'elasticsearch' not in group_names"
     - deploy.Curator
   post_tasks:
     - block:

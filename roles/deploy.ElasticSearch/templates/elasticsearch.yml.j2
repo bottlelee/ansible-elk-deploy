@@ -31,12 +31,8 @@ node.attr.box_type: warm
 {% endif %}
 # Role of the node in cluster:
 #
-{% for item in elastic_all_roles %}
-{% if item in elastic_instance_roles %}
-node.{{ item }}: true
-{% else %}
+{% for item in elastic_all_roles if item not in elastic_instance_roles %}
 node.{{ item }}: false
-{% endif %}
 {% endfor %}
 search.remote.connect: {{ search_remote_connect }}
 # ----------------------------------- Paths ------------------------------------

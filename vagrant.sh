@@ -12,7 +12,7 @@ case $1 in
     ;;
   restore )
     vagrant snapshot restore init
-    vagrant reload --provision
+    # vagrant reload --provision
     ;;
   rebuild )
     vagrant destroy -f

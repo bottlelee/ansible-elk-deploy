@@ -7,6 +7,11 @@
       prompt: "What type of files do you need?[rpm|deb]"
       default: "rpm"
       private: no
+  pre_tasks:
+    - name: Create local downloaded_files directory
+      file:
+        path: downloaded_files
+        state: directory
   tasks:
     - include_role: name=deploy.ElasticSearch tasks_from=download
       tags: elasticsearch

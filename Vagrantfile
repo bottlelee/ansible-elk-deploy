@@ -5,8 +5,8 @@ ENV["LC_ALL"] = "en_US.UTF-8"
 
 Vagrant.require_version ">= 2.0.0"
 
-# $vm_box = "ubuntu/xenial64"
-$vm_box = "centos/7"
+$vm_box = "ubuntu/xenial64"
+# $vm_box = "centos/7"
 $instances = 14
 $apt_proxy = ""
 
@@ -41,8 +41,7 @@ Vagrant.configure("2") do |config|
 
     config.vm.define vm_name = $vm_name do |config|
       config.vm.hostname = vm_name
-      # config.vm.network "private_network", ip: "172.28.128.1#{instance_id.to_s.rjust(2, '0')}"
-      config.vm.network "private_network", type: "dhcp"
+      config.vm.network "private_network", ip: "172.28.128.1#{instance_id.to_s.rjust(2, '0')}"
 
       if $vm_name == "kibana-#{instance_id.to_s.rjust(2, '0')}"
         config.vm.network "forwarded_port", guest: 5601, host: 5601,

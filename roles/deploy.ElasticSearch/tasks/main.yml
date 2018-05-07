@@ -1,6 +1,6 @@
 - block:
     - name: Checking process 'elasticsearch'
-      shell: ps xua | grep -v grep | grep -i elasticsearch
+      shell: /usr/share/elasticsearch/bin/elasticsearch --version
       changed_when: false
   rescue:
     - include_tasks: env_check.yml
@@ -22,22 +22,29 @@
   with_items:
     - jvm.options
     - elasticsearch.yml
-  register: configSt
+  notify: Restarting elasticsearch service
 
-- name: Restarting ElasticSearch service
-  service:
-    name: elasticsearch
-    state: restarted
-    enabled: yes
-    daemon_reload: yes
-  when: configSt is changed
-
-- wait_for:
-    host: "{{ bind_address }}"
-    port: '{{ item }}'
-  with_items:
-    - 9300
-    - '{{ elastic_http_port }}'
+- block:
+    - wait_for:
+        host: "{{ bind_address }}"
+        port: '{{ item }}'
+        timeout: 10
+      with_items:
+        - 9300
+        - '{{ elastic_http_port }}'
+  rescue:
+    - name: Restarting ElasticSearch service
+      service:
+        name: elasticsearch
+        state: restarted
+        enabled: yes
+        daemon_reload: yes
+    - wait_for:
+        host: "{{ bind_address }}"
+        port: '{{ item }}'
+      with_items:
+        - 9300
+        - '{{ elastic_http_port }}'
 
 - block:
     - name: Checking ElasticSearch version

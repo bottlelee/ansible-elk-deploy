@@ -45,7 +45,7 @@ logstash-1 ansible_host=172.23.56.114
 kibana-1 ansible_host=172.23.56.115
 
 # Redis Cluster
-# IMPORTANT: At least 3 nodes.
+# IMPORTANT: At least 3 nodes. DO NOT deploy with ElasticSearch hosts!
 # This is an option groups. If it's empty, beats will send logs to logstash directly.
 [redis]
 redis-1 ansible_host=172.23.56.215

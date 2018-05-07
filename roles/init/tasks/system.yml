@@ -9,10 +9,18 @@
     value: '{{ item.value }}'
     state: present
   with_items:
-    - {name: vm.max_map_count, value: 262144}
-    - {name: vm.swappiness, value: 1}
-    - {name: fs.file-max, value: 65536}
-    - {name: net.ipv4.ip_forward, value: 1}
+    - name: vm.max_map_count
+      value: 262144
+    - name: vm.swappiness
+      value: 1
+    - name: fs.file-max
+      value: 65536
+    - name: net.ipv4.ip_forward
+      value: 1
+    - name: net.core.somaxconn
+      value: 512
+    - name: vm.overcommit_memory
+      value: 1
 
 - name: Disable swap
   command: swapoff -a
