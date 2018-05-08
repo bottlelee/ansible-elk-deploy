@@ -23,4 +23,4 @@
       become: no
       with_items:
         - hot_to_warm
-  when: "groups['elasticWarmNodes'] != ''"
+  when: "(groups['elasticWarmNode']|length) > 0"

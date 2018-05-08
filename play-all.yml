@@ -1,8 +1,8 @@
 - import_playbook: 01-env_init.yml
 - import_playbook: 02-deploy_consul.yml
-- import_playbook: 02-deploy_redis.yml
-- import_playbook: 03-deploy_elasticsearch.yml
-- import_playbook: 04-deploy_kibana.yml
-- import_playbook: 05-deploy_logstash.yml
-- import_playbook: 06-deploy_beats.yml
-- import_playbook: 07-deploy_monit.yml
+- import_playbook: 03-deploy_redis.yml
+- import_playbook: 04-deploy_elasticsearch.yml
+- import_playbook: 05-deploy_kibana.yml
+- import_playbook: 06-deploy_logstash.yml
+- import_playbook: 07-deploy_beats.yml
+- import_playbook: 08-deploy_monit.yml

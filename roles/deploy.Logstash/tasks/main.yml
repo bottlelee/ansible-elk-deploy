@@ -10,7 +10,7 @@
     - include_tasks: '{{ ansible_os_family }}.yml'
     - name: Updating logstash systemd service configure
       ini_file:
-        path: /etc/systemd/system/logstash.service
+        path: /etc/systemd/system/logstash.service.d/override.conf
         section: Service
         option: "{{ item.option }}"
         value: "{{ item.value }}"

@@ -20,7 +20,7 @@ For test only, you can run `vagrant up`. You need [vagrant](https://www.vagrantu
 1. At least 4 CPUs, 8GB ram, 148G free disk space.
 
 ## Steps ##
-1. Copy `hosts.sample` to `hosts`, and edit it base on your real environment.
+1. Copy `hosts.ini.sample` to `hosts`, and edit it base on your real environment.
 1. Run `ansible-playbook 00-download.yml` if you haven't got any packages.
 1. Run `ansible-playbook 01-env_init.yml` to initial all your hosts.
 1. Run `ansible-playbook 03-deploy_elasticsearch.yml` to deploy elasticsearch cluster.
@@ -61,7 +61,7 @@ For test only, you can run `vagrant up`. You need [vagrant](https://www.vagrantu
 1. 最小配置：4 CPUs, 8GB 内存, 148G 空闲磁盘空间.
 
 ## 执行步骤
-1. 按照 hosts.sample 模板，同目录新建一个 hosts 文件， 根据实际环境填写机器信息。
+1. 按照 hosts.ini.sample 模板，同目录新建一个 hosts 文件， 根据实际环境填写机器信息。
 1. 执行 `ansible-playbook 00-download.yml` 确认安装所需的文件都已经下载好。
 1. 执行 `ansible-playbook 01-env_init.yml` 初始化目标服务器的环境。
 1. 执行 `ansible-playbook 03-deploy_elasticsearch.yml` 部署 elasticsearch 集群。

@@ -9,7 +9,7 @@
         dest: '{{ ansible_user_dir }}/.curator/{{ target }}.yml'
         owner: '{{ ansible_user_id }}'
         group: '{{ ansible_user_id }}'
-        validate: "/usr/bin/curator --dry-run %s"
+        validate: "/usr/local/bin/curator --dry-run %s"
   rescue:
     - name: "Create directory {{ ansible_user_dir }}/.curator/"
       file:

@@ -1,7 +1,9 @@
 - block:
-    - name: Checking process 'elasticsearch'
-      shell: /usr/share/elasticsearch/bin/elasticsearch --version
-      changed_when: false
+    - name: Checking '/usr/share/elasticsearch/bin/elasticsearch'
+      stat:
+        path: /usr/share/elasticsearch/bin/elasticsearch
+      register: result
+      failed_when: result.stat.exists == false
   rescue:
     - include_tasks: env_check.yml
     - include_tasks: '{{ ansible_os_family }}.yml'
@@ -27,8 +29,8 @@
 - block:
     - wait_for:
         host: "{{ bind_address }}"
-        port: '{{ item }}'
-        timeout: 10
+        port: "{{ item }}"
+        timeout: 5
       with_items:
         - 9300
         - '{{ elastic_http_port }}'
@@ -41,7 +43,7 @@
         daemon_reload: yes
     - wait_for:
         host: "{{ bind_address }}"
-        port: '{{ item }}'
+        port: "{{ item }}"
       with_items:
         - 9300
         - '{{ elastic_http_port }}'
