@@ -20,27 +20,19 @@ For test only, you can run `vagrant up`. You need [vagrant](https://www.vagrantu
 1. At least 4 CPUs, 8GB ram, 148G free disk space.
 
 ## Steps ##
-1. Copy `hosts.ini.sample` to `hosts`, and edit it base on your real environment.
+1. Copy `hosts.ini.sample` to `hosts.ini`, and edit it base on your real environment.
 1. Run `ansible-playbook 00-download.yml` if you haven't got any packages.
-1. Run `ansible-playbook 01-env_init.yml` to initial all your hosts.
-1. Run `ansible-playbook 03-deploy_elasticsearch.yml` to deploy elasticsearch cluster.
-1. Run `ansible-playbook 04-deploy_kibana.yml` to deploy kibana.
-1. Run `ansible-playbook 05-deploy_logstash.yml` to deploy logstash.
-1. Run `ansible-playbook 06-deploy_beats.yml` to install beats agent for your ELK stack.
+1. Run `ansible-playbook play-all.yml` to start fresh deploy.
 
-## DNS config
-### TODO
-
-## How to send datas from outside hosts to ELK
+## How to send data to ELK from outside hosts
 1. Make sure outside hosts can access the ELK network.
-1. Assume you are using beats as data collect client, use the `logstash` hosts' IP in output section, or you can use `logstash.service.consul` after you setup the [nameservers](#DNS config)
+1. Assume you are using beats as data collect client, use the `logstash` hosts' IP in output section, or you can use `logstash.service.consul` after you setup the [nameservers]
 
 ## Maintain
 ### Upgrade
-1. Set the value of 'elk_version' in `group_vars/all.yml`, then run step 03 to 06 will rolling upgrade your services to the new version.
-  1. `ansible-playbook deploy_elasticsearch.yml`
-  1. `ansible-playbook deploy_kibana.yml`
-  1. `ansible-playbook deploy_logstash.yml`
+1. Set the value of 'elk_version' in `group_vars/all.yml`, then run `ansible-playbook 98-upgrade_elk_cluster.yml` will rolling upgrade your services to the new version.
+
+## Read more in `docs/handbook.md`
 
 ---
 
@@ -61,16 +53,11 @@ For test only, you can run `vagrant up`. You need [vagrant](https://www.vagrantu
 1. 最小配置：4 CPUs, 8GB 内存, 148G 空闲磁盘空间.
 
 ## 执行步骤
-1. 按照 hosts.ini.sample 模板，同目录新建一个 hosts 文件， 根据实际环境填写机器信息。
+1. 按照 hosts.ini.sample 模板，同目录新建一个 hosts.ini 文件， 根据实际环境填写机器信息。
 1. 执行 `ansible-playbook 00-download.yml` 确认安装所需的文件都已经下载好。
-1. 执行 `ansible-playbook 01-env_init.yml` 初始化目标服务器的环境。
-1. 执行 `ansible-playbook 03-deploy_elasticsearch.yml` 部署 elasticsearch 集群。
-1. 执行 `ansible-playbook 04-deploy_kibana.yml` 部署 kibana，建议至少 2 个点。不要和 elastic-master 一起。
-1. 执行 `ansible-playbook 05-deploy_logstash.yml` 部署 logstash。
-1. 执行 `ansible-playbook 06-deploy_beats.yml` 部署 beats 客户端，默认把 ELK 的日志和资源状态等收集。
+1. 执行 `ansible-playbook play-all.yml` 进行全新部署。
 
-## DNS 设置
-### TODO
+## 详细步骤在 `docs/handbook.md`
 
 ## ELK 集群之外的机器，如果需要推送数据，需要满足以下条件：
 1. 可访问本次部署的 ELK 集群网络。
@@ -78,7 +65,7 @@ For test only, you can run `vagrant up`. You need [vagrant](https://www.vagrantu
 
 ## 维护更新
 ### 升级
-1. 修改 group_vars/all.yml 里的 elk_version 值，依次执行 03-06 即可滚动升级到最新版本。
+1. 修改 group_vars/all.yml 里的 elk_version 值，执行 `ansible-playbook 98-upgrade_elk_cluster.yml` 即可滚动升级到最新版本。
 
 ## 鸣谢
 本脚本在“新致云”提供的云主机上测试通过。[新致云](https://cloud.newtouch.com)，助你真正用好云计算。
