@@ -30,7 +30,7 @@
   with_items: "{{ elastic_plugins }}"
   loop_control:
     loop_var: target
-  when: node_ingest is defined and node_ingest == true
+  when: "'ingest' in elastic_instance_roles"
 
 - name: Installing logrotate configure
   template:
