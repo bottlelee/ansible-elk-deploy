@@ -1,10 +1,10 @@
 {% if 'elasticMasterNode' in group_names %}
 
-{% for item in groups['elasticMasterNode'] if item != inventory_hostname %}
+{%- for item in groups['elasticMasterNode'] if item != inventory_hostname %}
 server {{ item }}.node.{{ consul_dc_name }}.consul
 {% endfor %}
 local stratum 8 orphan
-smoothtime 400 0.01
+#smoothtime 400 0.01
 manual
 initstepslew 1 {% for item in groups['elasticMasterNode'] if item != inventory_hostname %}{{ item }}.node.{{ consul_dc_name }}.consul {% endfor %}
 
