@@ -7,6 +7,8 @@ Vagrant.require_version ">= 2.0.0"
 
 $vm_box = "ubuntu/xenial64"
 # $vm_box = "centos/7"
+$memory = "16384"
+$cpu = "4"
 $instances = 3
 $apt_proxy = "http://192.168.205.16:3142"
 
@@ -51,8 +53,8 @@ Vagrant.configure("2") do |config|
       config.vm.provider "virtualbox" do |vb|
         vb.customize ["modifyvm", :id, "--natdnshostresolver1", "off"]
         vb.customize ["modifyvm", :id, "--natdnsproxy1", "off"]
-        vb.memory = "16384"
-        vb.cpus = "2"
+        vb.memory = $memory
+        vb.cpus = $cpu
         vb.name = vm_name
       end
 

@@ -18,14 +18,14 @@
 
 - name: Updating services config
   template:
-    src: '{{ item }}.json.j2'
-    dest: '/etc/consul.d/{{ item }}.json'
+    src: '{{ item }}.j2'
+    dest: '/etc/consul.d/{{ item }}'
   when: "item in group_names"
   with_items:
-    - elasticsearch
-    - logstash
-    - kibana
-    - redis
+    - elasticsearch.json
+    - logstash.json
+    - kibana.json
+    - redis.json
   notify: Restart consul
   register: templates
 
