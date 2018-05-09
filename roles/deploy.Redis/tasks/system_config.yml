@@ -9,7 +9,14 @@
       value: 512
     - name: vm.overcommit_memory
       value: 1
-      
+
+- name: Setup /etc/security/limits.conf
+  blockinfile:
+    path: /etc/security/limits.conf
+    block: |
+      redis soft nofile 4096
+      redis hard nofile 10240
+
 - name: Coping disable-transparent-hugepages script
   copy:
     src: disable-transparent-hugepages

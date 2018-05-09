@@ -110,7 +110,7 @@
 所有服务的配置都会下载到本地的 `install_report` 目录下，以便查看。
 
 # 后续
-## 用浏览器访问 kibana 主机的 5601 端口，分别建立 logstash、filebeat 和 metricbeat 索引。
+## 部署完成后，等待大约 3 分钟，相关日志进入 index 后，打开浏览器访问 kibana 主机的 5601 端口，分别建立 logstash、filebeat 和 metricbeat 索引。
 
 ### 进入 Management -> Index Patterns
 ![kiban-01](imgs/kibana-01.png)
