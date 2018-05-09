@@ -28,7 +28,7 @@
 在 hosts.ini 里定义。
 
 |组名|主机数|共用|
-|---|
+|---|---|---|---|
 |elasticMasterNode|3|是|
 |elasticHotNode|0||
 |elasticWarmNode|0||
@@ -133,3 +133,24 @@
 ![kiban-07](imgs/kibana-07.png)
 
 ### 最后就可以前往 Dashboard 里查看了。
+
+# 升级操作
+## ELK 版本升级。
+1. 修改 `group_vars/all.yml` 里的 `elk_version` 值。
+1. 执行 `ansible-playbook 98-upgrade_elk_cluster.yml"` 即可。
+1. 该脚本会自动检测比对版本号，高于现有版本号才执行更新操作。
+1. 升级步骤按照官方文档指导而编写，基本上安全无害。
+1. 必须逐台主机升级，请勿修改 playbook 里的 serial 参数。
+1. 只提供升级，不提供降级。请在测试环境测试 OK 再到生产环境执行。
+
+## Monit 版本升级
+1. 修改 `group_vars/all.yml` 里的 `monit_version` 值。
+1. 执行 `ansible-playbook 08-deploy_monit.yml"` 即可。
+
+## Consul 版本升级
+1. 修改 `group_vars/all.yml` 里的 `consul_version` 值。
+1. 执行 `ansible-playbook 02-deploy_consul.yml"` 即可。
+
+## Redis 版本升级
+1. 修改 `group_vars/all.yml` 里的 `redis_version` 值。
+1. 执行 `ansible-playbook 03-deploy_redis.yml"` 即可。
