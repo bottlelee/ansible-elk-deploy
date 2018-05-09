@@ -37,14 +37,28 @@
 
 - name: Updating piplines
   template:
-    src: '{{ item }}.conf.j2'
-    dest: '/etc/logstash/conf.d/{{ item }}.conf'
+    src: '{{ item }}.j2'
+    dest: '/etc/logstash/conf.d/{{ item }}'
   with_items:
-    - 000-input
-    - 001-logstash
-    - 002-monit
-    - 003-syslog
-    - 004-auditd
-    - 005-elasicsearch
-    - 999-output
+    - 000-input.conf
+    - 001-logstash.conf
+    - 002-monit.conf
+    - 003-syslog.conf
+    - 004-auditd.conf
+    - 005-elasicsearch.conf
+    - 999-output.conf
   notify: Checking logstash configuration
+  register: templates
+
+- name: Listing current pipline files
+  command: "ls /etc/logstash/conf.d/"
+  ignore_errors: yes
+  changed_when: false
+  register: allTemplates
+
+- name: Removing unmanaged pipline files
+  file:
+    path: "/etc/logstash/conf.d/{{ item }}"
+    state: absent
+  with_items: "{{ allTemplates.stdout_lines }}"
+  when: "item not in (templates.results|selectattr('item', 'string')|map(attribute='item')|list)"

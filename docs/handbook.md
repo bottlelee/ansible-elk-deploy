@@ -10,6 +10,7 @@
 以每条日志 1kb 大小为例，每秒产生 1000 条日志记录，不做任何解构的前提下，每天的数据存储量在 86GB 左右。2TB 磁盘空间可以存储 23 天左右的日志。
 
 ## 配置要求
+
 |名称|要求|
 |---|---|
 |系统|Ubuntu xenial(推荐)，或 CentOS 7 |
@@ -27,14 +28,14 @@
 ## 最小部署：3 主机。
 在 hosts.ini 里定义。
 
-|组名|主机数|共用|
+|组名|主机数|共用|备注|
 |---|---|---|---|
-|elasticMasterNode|3|是|
-|elasticHotNode|0||
-|elasticWarmNode|0||
-|redis|0||
-|logstash|3|是|
-|kibana|3|是|
+|elasticMasterNode|3|是||
+|elasticHotNode|0|||
+|elasticWarmNode|0|||
+|redis|0|||
+|logstash|3|是||
+|kibana|3|是|||
 
 ## 中型部署：9 主机。
 在 hosts.ini 里定义

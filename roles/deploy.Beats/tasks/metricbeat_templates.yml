@@ -15,3 +15,17 @@
     - kibana
     - elasticsearch
   notify: Restart metricbeat
+  register: templates
+
+- name: Listing current enabled metricbeat modules
+  shell: "ls *.yml | grep -v system"
+  args:
+    chdir: /etc/metricbeat/modules.d/
+  changed_when: false
+  ignore_errors: yes
+  register: allTemplates
+
+- name: Disable unmanaged metricbeat modules
+  command: "metricbeat modules disable {{ item | replace('.yml', '') }}"
+  with_items: "{{ allTemplates.stdout_lines }}"
+  when: "item|replace('.yml', '') not in (templates.results|selectattr('item', 'string')|map(attribute='item')|list)"

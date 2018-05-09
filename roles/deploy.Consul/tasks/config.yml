@@ -18,15 +18,29 @@
 
 - name: Updating services config
   template:
-    src: '{{ item }}.json.j2'
-    dest: '/etc/consul.d/{{ item }}.json'
+    src: '{{ item }}.j2'
+    dest: '/etc/consul.d/{{ item }}'
   when: "item in group_names"
   with_items:
-    - elasticsearch
-    - logstash
-    - kibana
-    - redis
+    - elasticsearch.json
+    - logstash.json
+    - kibana.json
+    - redis.json
   notify: Restart consul
+  register: templates
+
+- name: Listing current config files
+  shell: "ls /etc/consul.d/*.json | grep -v config"
+  ignore_errors: yes
+  changed_when: false
+  register: allTemplates
+
+- name: Removing unmanaged config files
+  file:
+    path: "/etc/consul.d/{{ item }}"
+    state: absent
+  with_items: "{{ allTemplates.stdout_lines }}"
+  when: "item not in (templates.results|selectattr('item', 'string')|map(attribute='item')|list)"
 
 - block:
     - name: Checking local port 53

@@ -8,7 +8,7 @@ Vagrant.require_version ">= 2.0.0"
 $vm_box = "ubuntu/xenial64"
 # $vm_box = "centos/7"
 $instances = 14
-$apt_proxy = ""
+$apt_proxy = "192.168.205.16:3142"
 
 Vagrant.configure("2") do |config|
   # always use Vagrants insecure key

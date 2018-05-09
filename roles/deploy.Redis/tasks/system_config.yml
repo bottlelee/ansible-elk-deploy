@@ -14,7 +14,7 @@
   blockinfile:
     path: /etc/security/limits.conf
     block: |
-      redis soft nofile 4096
+      redis soft nofile 10240
       redis hard nofile 10240
 
 - name: Coping disable-transparent-hugepages script
