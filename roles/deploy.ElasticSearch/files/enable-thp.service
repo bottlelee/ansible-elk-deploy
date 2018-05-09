@@ -1,9 +1,10 @@
 [Unit]
 Description=Enable Transparent Huge Pages (THP)
-before=elasticsearch.service
+Before=elasticsearch.service
 
 [Service]
-Type=simple
+Type=oneshot
+RemainAfterExit=true
 ExecStart=/usr/bin/enable-transparent-hugepages start
 
 [Install]

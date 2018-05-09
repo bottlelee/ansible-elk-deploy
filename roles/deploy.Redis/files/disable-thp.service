@@ -1,9 +1,10 @@
 [Unit]
 Description=Disable Transparent Huge Pages (THP)
-before=redis-server.service
+Before=redis-server.service
 
 [Service]
-Type=simple
+Type=oneshot
+RemainAfterExit=true
 ExecStart=/usr/bin/disable-transparent-hugepages start
 
 [Install]

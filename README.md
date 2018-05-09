@@ -32,7 +32,7 @@ For test only, you can run `vagrant up`. You need [vagrant](https://www.vagrantu
 ### Upgrade
 1. Set the value of 'elk_version' in `group_vars/all.yml`, then run `ansible-playbook 98-upgrade_elk_cluster.yml` will rolling upgrade your services to the new version.
 
-## Read more in `docs/handbook.md`
+## Read more in [handbook](docs/handbook.md)
 
 ---
 
@@ -57,7 +57,7 @@ For test only, you can run `vagrant up`. You need [vagrant](https://www.vagrantu
 1. 执行 `ansible-playbook 00-download.yml` 确认安装所需的文件都已经下载好。
 1. 执行 `ansible-playbook play-all.yml` 进行全新部署。
 
-## 详细步骤在 `docs/handbook.md`
+## 详细步骤在 [handbook](docs/handbook.md)
 
 ## ELK 集群之外的机器，如果需要推送数据，需要满足以下条件：
 1. 可访问本次部署的 ELK 集群网络。

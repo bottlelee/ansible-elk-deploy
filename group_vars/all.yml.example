@@ -42,7 +42,6 @@ logstash_data_path: '/var/lib/logstash'
 logstash_log_path: '/var/log/logstash'
 
 # Consul
-bootstrap: 'N'
 consul_version: '1.0.7'
 consul_dc_name: 'elk'
 

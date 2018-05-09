@@ -19,6 +19,7 @@
     - import_role:
         name: deploy.ElasticSearch
         tasks_from: set_template.yml
+      run_once: yes
 
 - include_tasks: '{{ target }}_templates.yml'
   tags: beats.config

@@ -16,11 +16,9 @@
 
 - block:
     - include_tasks: 'action_files.yml target={{ item }}'
-      become: no
       with_items:
         - hot_to_warm
     - include_tasks: 'cron.yml target={{ item }}'
-      become: no
       with_items:
         - hot_to_warm
   when: "(groups['elasticWarmNode']|length) > 0"

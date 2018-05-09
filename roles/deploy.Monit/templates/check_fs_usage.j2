@@ -15,7 +15,7 @@ check filesystem {{ item.mount | basename | upper }}-{{ item.device | basename |
 check file RESOLVCONF with path /etc/resolv.conf
   if changed checksum then alert
 
-check file hostname with path /etc/hostname
+check file HOSTNAME with path /etc/hostname
   if changed checksum then alert
 
 check file PASSWD with path /etc/passwd

@@ -12,3 +12,16 @@
     - "{{ global_filebeat_modules | default(None) }}"
     - "{{ filebeat_modules | default(None) }}"
   notify: Restart filebeat
+  register: templates
+
+- name: Listing current enabled filebeat modules
+  shell: "ls *.yml"
+  args:
+    chdir: /etc/filebeat/modules.d/
+  changed_when: false
+  register: allTemplates
+
+- name: Disable unmanaged filebeat modules
+  command: "filebeat modules disable {{ item | replace('.yml', '') }}"
+  with_items: "{{ allTemplates.stdout_lines }}"
+  when: "item|replace('.yml', '') not in (templates.results|selectattr('item', 'string')|map(attribute='item')|list)"

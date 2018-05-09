@@ -18,7 +18,7 @@ server.host: "0.0.0.0"
 server.name: "{{ ansible_hostname }}"
 
 # The URL of the Elasticsearch instance to use for all your queries.
-{% if ('kibana' in group_names) and ('elasticsearch' in group_names) %}
+{% if 'elasticsearch' in group_names %}
 elasticsearch.url: "http://master.elastic.service.{{ consul_dc_name }}.consul:9200"
 {% else %}
 elasticsearch.url: "http://tribe.elastic.service.{{ consul_dc_name }}.consul:9200"

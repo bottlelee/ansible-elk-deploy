@@ -10,6 +10,7 @@
 以每条日志 1kb 大小为例，每秒产生 1000 条日志记录，不做任何解构的前提下，每天的数据存储量在 86GB 左右。2TB 磁盘空间可以存储 23 天左右的日志。
 
 ## 配置要求
+
 |名称|要求|
 |---|---|
 |系统|Ubuntu xenial(推荐)，或 CentOS 7 |
@@ -27,14 +28,14 @@
 ## 最小部署：3 主机。
 在 hosts.ini 里定义。
 
-|组名|主机数|共用|
-|---|
-|elasticMasterNode|3|是|
-|elasticHotNode|0||
-|elasticWarmNode|0||
-|redis|0||
-|logstash|3|是|
-|kibana|3|是|
+|组名|主机数|共用|备注|
+|---|---|---|---|
+|elasticMasterNode|3|是||
+|elasticHotNode|0|||
+|elasticWarmNode|0|||
+|redis|0|||
+|logstash|3|是||
+|kibana|3|是|||
 
 ## 中型部署：9 主机。
 在 hosts.ini 里定义
@@ -110,7 +111,7 @@
 所有服务的配置都会下载到本地的 `install_report` 目录下，以便查看。
 
 # 后续
-## 用浏览器访问 kibana 主机的 5601 端口，分别建立 logstash、filebeat 和 metricbeat 索引。
+## 部署完成后，等待大约 3 分钟，相关日志进入 index 后，打开浏览器访问 kibana 主机的 5601 端口，分别建立 logstash、filebeat 和 metricbeat 索引。
 
 ### 进入 Management -> Index Patterns
 ![kiban-01](imgs/kibana-01.png)
@@ -133,3 +134,24 @@
 ![kiban-07](imgs/kibana-07.png)
 
 ### 最后就可以前往 Dashboard 里查看了。
+
+# 升级操作
+## ELK 版本升级。
+1. 修改 `group_vars/all.yml` 里的 `elk_version` 值。
+1. 执行 `ansible-playbook 98-upgrade_elk_cluster.yml"` 即可。
+1. 该脚本会自动检测比对版本号，高于现有版本号才执行更新操作。
+1. 升级步骤按照官方文档指导而编写，基本上安全无害。
+1. 必须逐台主机升级，请勿修改 playbook 里的 serial 参数。
+1. 只提供升级，不提供降级。请在测试环境测试 OK 再到生产环境执行。
+
+## Monit 版本升级
+1. 修改 `group_vars/all.yml` 里的 `monit_version` 值。
+1. 执行 `ansible-playbook 08-deploy_monit.yml"` 即可。
+
+## Consul 版本升级
+1. 修改 `group_vars/all.yml` 里的 `consul_version` 值。
+1. 执行 `ansible-playbook 02-deploy_consul.yml"` 即可。
+
+## Redis 版本升级
+1. 修改 `group_vars/all.yml` 里的 `redis_version` 值。
+1. 执行 `ansible-playbook 03-deploy_redis.yml"` 即可。
