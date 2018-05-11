@@ -7,7 +7,8 @@ Vagrant.require_version ">= 2.0.0"
 
 $vm_box = "ubuntu/xenial64"
 # $vm_box = "centos/7"
-$instances = 3
+# $instances = 3
+$instances = 14
 $apt_proxy = "http://192.168.205.16:3142"
 
 Vagrant.configure("2") do |config|
@@ -52,6 +53,9 @@ Vagrant.configure("2") do |config|
       config.vm.network "private_network", ip: "172.28.128.1#{instance_id.to_s.rjust(2, '0')}"
 
       if $vm_name == "kibana-#{instance_id.to_s.rjust(2, '0')}"
+        config.vm.network "forwarded_port", guest: 5601, host: 5601,
+          auto_correct: true
+      elsif $instances == 3
         config.vm.network "forwarded_port", guest: 5601, host: 5601,
           auto_correct: true
       end
