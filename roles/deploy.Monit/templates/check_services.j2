@@ -35,9 +35,6 @@ check host KIBANA with address {{ bind_address }}
     port {{ kibana_port }}
     for 5 cycles
   then restart
-
-check host REDIS-MASTER with address redis.service.{{ consul_dc_name }}.consul
-  if failed port 6379 for 3 cycles then alert
 {% endif %}
 
 {% if 'elasticsearch' in group_names or 'kibana' in group_names %}
@@ -57,4 +54,7 @@ check host REDIS-SENTINEL with address {{ bind_address }}
   start program = "/usr/sbin/service redis-sentinel start"
   stop program = "/usr/sbin/service redis-sentinel stop"
   if failed port 26379 for 5 cycles then restart
+
+check host REDIS-MASTER with address redis.service.{{ consul_dc_name }}.consul
+  if failed port 6379 for 3 cycles then alert
 {% endif %}
