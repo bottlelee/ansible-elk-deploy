@@ -3,24 +3,15 @@
     msg: "interface {{ bind_interface }} has no IP address"
   when: hostvars[inventory_hostname]['ansible_' + bind_interface]['ipv4']['address'] == ''
 
+- include_vars:
+    file: sysctl_rules.yml
+
 - name: Setup sysctl
   sysctl:
     name: '{{ item.name }}'
     value: '{{ item.value }}'
-    state: present
-  with_items:
-    - name: vm.max_map_count
-      value: 262144
-    - name: vm.swappiness
-      value: 1
-    - name: fs.file-max
-      value: 65536
-    - name: net.ipv4.ip_forward
-      value: 1
-    - name: net.core.somaxconn
-      value: 512
-    - name: vm.overcommit_memory
-      value: 1
+    ignoreerrors: yes
+  with_items: "{{ sysctl_rules }}"
 
 - name: Disable swap
   command: swapoff -a

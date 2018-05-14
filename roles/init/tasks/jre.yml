@@ -1,26 +1,39 @@
+- include_vars:
+    file: download_urls.yml
+
 - block:
-    - name: Extracting jre-8u161-linux-x64.tar.gz
+    - name: Creating /usr/java
+      file:
+        path: /usr/java
+        state: directory
+    - name: "Extracting jre-{{ jre_version }}-linux-x64.tar.gz"
       unarchive:
-        src: downloaded_files/jre-8u161-linux-x64.tar.gz
-        dest: /opt/
+        src: "downloaded_files/jre-{{ jre_version }}-linux-x64.tar.gz"
+        dest: /usr/java
         owner: root
         group: root
     - name: Create soft link
       file:
-        src: /opt/jre1.8.0_161/bin/java
+        src: "/usr/java/jre{{ jre_version }}/bin/java"
         dest: /usr/bin/java
         owner: root
         group: root
         state: link
   rescue:
-    - name: Downloading jre-8u161-linux-x64.tar.gz
+    - name: Creating local directory 'downloaded_files'
+      file:
+        path: downloaded_files
+        state: directory
+      delegate_to: localhost
+      become: no
+      run_once: yes
+    - name: "Downloading jre-{{ jre_version }}-linux-x64.tar.gz from {{ jre_url }}"
       get_url:
-        url: http://javadl.oracle.com/webapps/download/AutoDL?BundleId=230532_2f38c3b165be4555a1fa6e98c45e0808
-        # headers: 'Cookie:oraclelicense=accept-securebackup-cookie'
-        dest: downloaded_files/jre-8u161-linux-x64.tar.gz
+        url: "{{ jre_url }}"
+        dest: "downloaded_files/jre-{{ jre_version }}-linux-x64.tar.gz"
       register: download
       until: download is succeeded
-      retries: 5
+      retries: 50
       delay: 10
       delegate_to: localhost
       become: no

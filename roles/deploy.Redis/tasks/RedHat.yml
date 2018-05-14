@@ -1,28 +1,22 @@
 - block:
     - name: 'Uploading packages'
       copy:
-        src: 'downloaded_files/{{ item }}'
-        dest: '/tmp/{{ item }}'
-      with_items:
-        - jemalloc-3.6.0-1.el7.x86_64.rpm
-        - redis-3.2.10-2.el7.x86_64.rpm
+        src: 'downloaded_files/{{ item | basename }}'
+        dest: '/tmp/{{ item | basename }}'
+      loop: "{{ rpm_redis_urls }}"
     - name: 'Installing packages'
       yum:
-        name: 'file:///tmp/{{ item }}'
-      with_items:
-        - jemalloc-3.6.0-1.el7.x86_64.rpm
-        - redis-3.2.10-2.el7.x86_64.rpm
+        name: 'file:///tmp/{{ item | basename }}'
+      loop: "{{ rpm_redis_urls }}"
   rescue:
     - include_tasks: download.yml format=rpm
     - include_tasks: '{{ ansible_os_family }}.yml'
   always:
     - name: 'Removing packages'
       file:
-        path: '/tmp/{{ item }}'
+        path: '/tmp/{{ item | basename }}'
         state: absent
-      with_items:
-        - jemalloc-3.6.0-1.el7.x86_64.rpm
-        - redis-3.2.10-2.el7.x86_64.rpm
+      loop: "{{ rpm_redis_urls }}"
 
 - name: Set service name alias
   ini_file:

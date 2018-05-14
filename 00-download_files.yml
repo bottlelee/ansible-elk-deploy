@@ -2,6 +2,8 @@
   connection: local
   become: no
   gather_facts: no
+  vars_files:
+    - vars/download_urls.yml
   vars_prompt:
     - name: "format"
       prompt: "What type of files do you need?[rpm|deb]"
