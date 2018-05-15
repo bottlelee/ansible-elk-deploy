@@ -1,6 +1,3 @@
-- include_vars:
-    file: download_urls.yml
-
 - block:
     - name: Creating /usr/java
       file:
