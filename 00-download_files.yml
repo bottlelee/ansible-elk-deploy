@@ -50,3 +50,5 @@
       tags: beats
     - include_role: name=deploy.Redis tasks_from=download
       tags: redis
+    - include_role: name=deploy.Haproxy tasks_from=download
+      tags: haproxy

@@ -3,18 +3,3 @@
   serial: 1
   roles:
     - deploy.ElasticSearch
-  # post_tasks:
-  #   - block:
-  #       - name: Waiting for service started
-  #         wait_for:
-  #           host: "{{ bind_address }}"
-  #           port: '{{ elastic_http_port }}'
-  #           timeout: 60
-  #     rescue:
-  #       - service:
-  #           name: elasticsearch
-  #           state: restarted
-  #       - wait_for:
-  #           host: "{{ bind_address }}"
-  #           port: '{{ elastic_http_port }}'
-  #           timeout: 120

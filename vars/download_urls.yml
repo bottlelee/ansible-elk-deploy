@@ -4,7 +4,7 @@
 jre_url: http://javadl.oracle.com/webapps/download/AutoDL?BundleId=233162_512cd62ec5174c3487ac17c61aaa89e8
 jre_version: 1.8.0_171
 
-# Redis download url from https://pkgs.org/
+# Redis download urls
 rpm_redis_urls:
   # https://pkgs.org/download/redis
   - http://dl.fedoraproject.org/pub/epel/7/x86_64/Packages/r/redis-3.2.10-2.el7.x86_64.rpm
@@ -19,3 +19,10 @@ deb_redis_urls:
   - http://archive.ubuntu.com/ubuntu/pool/universe/r/redis/redis-server_3.0.6-1_amd64.deb
   # https://pkgs.org/download/redis-sentinel
   - http://archive.ubuntu.com/ubuntu/pool/universe/r/redis/redis-sentinel_3.0.6-1_amd64.deb
+
+# https://pkgs.org/download/haproxy
+rpm_haproxy_urls:
+  - http://mirror.centos.org/centos/7/os/x86_64/Packages/haproxy-1.5.18-7.el7.x86_64.rpm
+deb_haproxy_urls:
+  - http://archive.ubuntu.com/ubuntu/pool/main/l/lua5.3/liblua5.3-0_5.3.1-1ubuntu2_amd64.deb
+  - http://archive.ubuntu.com/ubuntu/pool/main/h/haproxy/haproxy_1.6.3-1_amd64.deb

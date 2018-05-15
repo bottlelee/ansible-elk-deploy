@@ -23,6 +23,8 @@
 - hosts: all
   become: yes
   serial: 33%
+  vars_files:
+    - vars/download_urls.yml
   roles:
     - init
     - deploy.Chrony

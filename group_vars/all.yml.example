@@ -6,7 +6,7 @@ check_groups: true
 
 # Set the network interface name to get IP
 ## CentOS
-RedHat_bind_interface: 'eth0'
+RedHat_bind_interface: 'eth1'
 ## Ubuntu
 Debian_bind_interface: 'enp0s8'
 
@@ -25,12 +25,12 @@ elastic_cluster_name: 'quanduan'
 elastic_log_path: '/var/log/elasticsearch'
 ## IMPORTANT: for production, make sure the elasticsearch data paths are exists and not on the system disk.
 ##            And DO NOT remove them unless you know what you doing.
-elastic_data_path:
+elastic_data_paths:
   - /var/lib/elasticsearch
 elastic_plugins:
   - ingest-user-agent
   - ingest-geoip
-# Start Do NOT edit.
+# Start: Do NOT edit.
 elastic_all_roles:
   - master
   - data
@@ -40,7 +40,14 @@ elastic_all_roles:
 # LogStash configure
 logstash_data_path: '/var/lib/logstash'
 logstash_log_path: '/var/log/logstash'
-
+logstash_piplines:
+  - 000-input
+  - 001-logstash
+  - 002-monit
+  - 003-syslog
+  - 004-auditd
+  - 005-elasicsearch
+  - 999-output
 # Consul
 consul_version: '1.0.7'
 consul_dc_name: 'elk'
