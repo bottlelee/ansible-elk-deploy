@@ -6,6 +6,10 @@
 （图暂缺）
 
 # 部署前的准备
+## 更新系统
+1. 如果有条件的，应该把系统软件更新到最新版本，并重启一次。
+1. 部署过程中，由于系统差别，可能会遇到某些依赖包缺失。请自行修复。本项目使用 vagrant 测试通过。
+
 ## Elasticsearch 数据盘容量估算公式
 以每条日志 1kb 大小为例，每秒产生 1000 条日志记录，不做任何解构的前提下，每天的数据存储量在 86GB 左右。2TB 磁盘空间可以存储 23 天左右的日志。
 
@@ -111,6 +115,8 @@
 所有服务的配置都会下载到本地的 `install_report` 目录下，以便查看。
 
 # 后续
+## 各节点应重启一次，确认系统和相关服务都能自启动。简单的方法可以执行 `ansible-playbook test_books/xx-chaos_testing.yml`，在提示中输入集群节点总数量（默认是 3）。
+
 ## 部署完成后，等待大约 3 分钟，相关日志进入 index 后，打开浏览器访问 kibana 主机的 5601 端口，分别建立 logstash、filebeat 和 metricbeat 索引。
 
 ### 进入 Management -> Index Patterns
@@ -155,3 +161,11 @@
 ## Redis 版本升级
 1. 修改 `group_vars/all.yml` 里的 `redis_version` 值。
 1. 执行 `ansible-playbook 03-deploy_redis.yml"` 即可。
+
+# 外部接入
+如何让外部的数据可以输入到本集群？
+
+1. 添加一个组名为 haproxy，在组内添加主机。
+1. 修改 `group_vars/haproxy.yml` 确定哪些端口暴露到集群之外（把 haproxy_backends.expose 值改为 true）。切记不要修改 haproxy_backends.name。
+1. 执行 `ansible-playbook 09-deploy_haproxy.yml` 进行部署。
+1. 外部主机访问相应的 front_port 即可。

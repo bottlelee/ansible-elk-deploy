@@ -4,5 +4,6 @@
 - import_playbook: 04-deploy_elasticsearch.yml
 - import_playbook: 05-deploy_kibana.yml
 - import_playbook: 06-deploy_logstash.yml
-- import_playbook: 07-deploy_beats.yml
-- import_playbook: 08-deploy_monit.yml
+- import_playbook: 07-deploy_monit.yml
+- import_playbook: 08-deploy_beats.yml
+- import_playbook: 09-deploy_haproxy.yml

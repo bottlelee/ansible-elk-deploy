@@ -29,6 +29,6 @@
     dest: '/etc/kibana/{{ item }}'
   with_items:
     - kibana.yml
-  notify: Restart kibana service
+  notify: Restart kibana
 
 - include_tasks: report.yml

@@ -46,7 +46,7 @@ search.remote.connect: {{ search_remote_connect }}
 # Path to directory where to store the data (separate multiple locations by comma):
 #
 path.data:
-{% for path in elastic_data_path %}
+{% for path in elastic_data_paths %}
   - {{ path }}
 {% endfor %}
 #

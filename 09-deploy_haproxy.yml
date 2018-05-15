@@ -1,8 +1,7 @@
-- hosts: redis
+- hosts: haproxy
   become: yes
-  serial:
-    - 1
+  serial: 33%
   vars_files:
     - vars/download_urls.yml
   roles:
-    - role: deploy.Redis
+    - deploy.Haproxy

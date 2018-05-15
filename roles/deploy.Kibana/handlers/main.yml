@@ -4,3 +4,11 @@
     state: restarted
     enabled: yes
     daemon_reload: yes
+  listen: Restart kibana
+
+- name: Waiting for kibana started
+  wait_for:
+    hosts: "{{ bind_address }}"
+    port: "{{ kibana_port }}"
+    timeout: 120
+  listen: Restart kibana

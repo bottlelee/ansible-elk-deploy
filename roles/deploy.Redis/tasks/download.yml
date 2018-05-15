@@ -1,23 +1,25 @@
-# search packages on https://centos.pkgs.org/
 - block:
     - stat:
-        path: "downloaded_files/{{ item }}"
-      with_items:
-        - redis-3.2.10-2.el7.x86_64.rpm
-        - jemalloc-3.6.0-1.el7.x86_64.rpm
+        path: "downloaded_files/{{ item | basename }}"
+      with_items: "{{ rpm_redis_urls }}"
       register: p
       failed_when: p.stat.exists == false
       delegate_to: localhost
       become: no
       run_once: true
   rescue:
-    - name: "Downloading packages"
+    - name: Creating local directory 'downloaded_files'
+      file:
+        path: downloaded_files
+        state: directory
+      delegate_to: localhost
+      become: no
+      run_once: yes
+    - name: "Downloading rpm packages"
       get_url:
-        url: "http://dl.fedoraproject.org/pub/epel/7/x86_64/Packages{{ item }}"
-        dest: "downloaded_files/"
-      with_items:
-        - /r/redis-3.2.10-2.el7.x86_64.rpm
-        - /j/jemalloc-3.6.0-1.el7.x86_64.rpm
+        url: "{{ item }}"
+        dest: downloaded_files
+      with_items: "{{ rpm_redis_urls }}"
       register: download
       until: download is succeeded
       retries: 5
@@ -27,25 +29,28 @@
       run_once: yes
   when: format == 'rpm'
 
-# search packages on https://ubuntu.pkgs.org/
 - block:
     - stat:
-        path: "downloaded_files/{{ item }}.deb"
+        path: "downloaded_files/{{ item | basename }}"
       register: p
       failed_when: p.stat.exists == false
       delegate_to: localhost
       become: no
       run_once: true
-      with_items:
-        - redis-tools_3.0.6-1_amd64
-        - libjemalloc1_3.6.0-9ubuntu1_amd64
-        - redis-server_3.0.6-1_amd64
-        - redis-sentinel_3.0.6-1_amd64
+      with_items: "{{ deb_redis_urls }}"
   rescue:
-    - name: "Downloading packages"
+    - name: Creating local directory 'downloaded_files'
+      file:
+        path: downloaded_files
+        state: directory
+      delegate_to: localhost
+      become: no
+      run_once: yes
+    - name: "Downloading deb packages"
       get_url:
-        url: "http://archive.ubuntu.com/ubuntu/pool/universe{{ item }}"
+        url: "{{ item }}"
         dest: "downloaded_files/"
+      with_items: "{{ deb_redis_urls }}"
       register: download
       until: download is succeeded
       retries: 5
@@ -53,9 +58,4 @@
       delegate_to: localhost
       become: no
       run_once: yes
-      with_items:
-        - '/r/redis/redis-tools_3.0.6-1_amd64.deb'
-        - '/j/jemalloc/libjemalloc1_3.6.0-9ubuntu1_amd64.deb'
-        - '/r/redis/redis-server_3.0.6-1_amd64.deb'
-        - '/r/redis/redis-sentinel_3.0.6-1_amd64.deb'
   when: format == 'deb'

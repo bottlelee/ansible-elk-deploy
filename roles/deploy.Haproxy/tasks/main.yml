@@ -1,0 +1,15 @@
+- block:
+    - name: Checking haproxy
+      service:
+        name: haproxy
+        state: started
+      changed_when: false
+  rescue:
+    - include_tasks: "{{ ansible_os_family }}.yml"
+
+- name: Updating /etc/haproxy/haproxy.cfg
+  template:
+    src: haproxy.cfg.j2
+    dest: /etc/haproxy/haproxy.cfg
+    validate: "/usr/sbin/haproxy -c -f %s"
+  notify: Reload haproxy
