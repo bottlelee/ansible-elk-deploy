@@ -1,14 +1,14 @@
-- name: Setup sysctl
-  sysctl:
-    name: "{{ item.name }}"
-    value: "{{ item.value }}"
-    state: present
-    sysctl_set: yes
-  with_items:
-    - name: net.core.somaxconn
-      value: 512
-    - name: vm.overcommit_memory
-      value: 1
+# - name: Setup sysctl
+#   sysctl:
+#     name: "{{ item.name }}"
+#     value: "{{ item.value }}"
+#     state: present
+#     sysctl_set: yes
+#   with_items:
+#     - name: net.core.somaxconn
+#       value: 512
+#     - name: vm.overcommit_memory
+#       value: 1
 
 - name: Setup /etc/security/limits.conf
   blockinfile:
