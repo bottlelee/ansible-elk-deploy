@@ -9,3 +9,10 @@
     enabled: yes
     daemon_reload: yes
   listen: "Restart logstash"
+
+- name: Waiting for logstash started
+  wait_for:
+    host: "{{ bind_address }}"
+    port: 9600
+    timeout: 120
+  listen: "Restart logstash"
