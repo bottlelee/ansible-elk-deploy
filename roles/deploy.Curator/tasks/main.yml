@@ -1,6 +1,6 @@
 - block:
     - name: Checking command 'curator'
-      command: curator --version
+      command: /usr/local/bin/curator --version
       changed_when: false
   rescue:
     - include_tasks: 'install.yml target={{ item }}'
@@ -13,7 +13,13 @@
         - urllib3-1.22
         - elasticsearch-6.1.1
         - elasticsearch-curator-5.4.1
-
+    - name: Create soft link | RedHat
+      file:
+        src: /usr/bin/curator
+        path: /usr/local/bin/curator
+        state: link
+      when: ansible_os_family == 'RedHat'
+      
 - block:
     - include_tasks: 'action_files.yml target={{ item }}'
       with_items:
