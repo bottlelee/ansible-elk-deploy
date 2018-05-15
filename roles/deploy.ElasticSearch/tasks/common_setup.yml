@@ -1,9 +1,16 @@
 - name: Config /etc/systemd/system/elasticsearch.service.d/override.conf
   ini_file:
     path: /etc/systemd/system/elasticsearch.service.d/override.conf
-    section: Service
-    option: LimitMEMLOCK
-    value: infinity
+    section: "{{ item.section }}"
+    option: "{{ item.option }}"
+    value: "{{ item.value }}"
+  with_items:
+    - section: Service
+      option: LimitMEMLOCK
+      value: infinity
+    - section: Unit
+      option: After
+      value: enable-thp.service
 
 - name: Installing enable-thp.service
   copy:
