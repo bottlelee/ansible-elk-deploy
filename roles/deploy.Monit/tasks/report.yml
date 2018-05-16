@@ -8,6 +8,7 @@
         regexp: "^{{ item | truncate(20, True) }}"
         line: "{{ item }}"
         create: yes
+      changed_when: false
       with_items: "{{ summary.stdout_lines }}"
       delegate_to: localhost
       become: no

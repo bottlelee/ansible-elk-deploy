@@ -15,6 +15,7 @@
 - name: Testing metricbeat config
   command: 'metricbeat test {{ item }}'
   with_items:
+    - modules
     - output
     - config
   listen: "Restart metricbeat"
