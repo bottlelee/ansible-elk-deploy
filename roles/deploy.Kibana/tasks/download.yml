@@ -14,8 +14,8 @@
         dest: "downloaded_files/"
       register: download
       until: download is succeeded
-      retries: 5
-      delay: 10
+      retries: 99
+      delay: 3
       delegate_to: localhost
       become: no
       run_once: yes
@@ -37,8 +37,8 @@
         dest: "downloaded_files/"
       register: download
       until: download is succeeded
-      retries: 5
-      delay: 10
+      retries: 99
+      delay: 3
       delegate_to: localhost
       become: no
       run_once: yes
