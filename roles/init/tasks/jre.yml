@@ -30,7 +30,7 @@
         dest: "downloaded_files/jre-{{ jre_version }}-linux-x64.tar.gz"
       register: download
       until: download is succeeded
-      retries: 50
+      retries: 99
       delay: 10
       delegate_to: localhost
       become: no

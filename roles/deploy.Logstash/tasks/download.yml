@@ -7,14 +7,14 @@
       become: no
       run_once: true
   rescue:
-    - name: 'downloading logstash-{{ elk_version }}.{{ format }}'
+    - name: 'Downloading logstash-{{ elk_version }}.{{ format }}'
       get_url:
         url: "https://artifacts.elastic.co/downloads/logstash/logstash-{{ elk_version }}.{{ format }}"
         dest: "downloaded_files/"
       register: download
       until: download is succeeded
-      retries: 5
-      delay: 10
+      retries: 99
+      delay: 3
       delegate_to: localhost
       become: no
       run_once: yes

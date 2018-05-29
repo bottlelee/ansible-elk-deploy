@@ -35,6 +35,15 @@ check host KIBANA with address {{ bind_address }}
     port {{ kibana_port }}
     for 5 cycles
   then restart
+
+check host ES-SHARDS-STATUS with address master.elastic.service.{{ consul_dc_name }}.consul
+  if failed
+    port 9200
+    protocol http
+    request "/_cat/shards"
+    content = "UNASSIGNED"
+    for 10 cycles
+  then alert
 {% endif %}
 
 {% if 'elasticsearch' in group_names or 'kibana' in group_names %}

@@ -22,7 +22,7 @@
       with_items: "{{ rpm_redis_urls }}"
       register: download
       until: download is succeeded
-      retries: 5
+      retries: 99
       delay: 10
       delegate_to: localhost
       become: no
@@ -53,7 +53,7 @@
       with_items: "{{ deb_redis_urls }}"
       register: download
       until: download is succeeded
-      retries: 5
+      retries: 99
       delay: 10
       delegate_to: localhost
       become: no
