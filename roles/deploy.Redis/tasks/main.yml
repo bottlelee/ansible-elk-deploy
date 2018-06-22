@@ -1,8 +1,11 @@
 - block:
-    - name: Checking redis-server service
+    - name: Checking redis services
       service:
-        name: redis-server
+        name: "redis-{{ item }}"
         state: started
+      with_items:
+        - server
+        - sentinel
   rescue:
     - include_tasks: '{{ ansible_os_family }}.yml'
 
