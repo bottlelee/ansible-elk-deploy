@@ -1,11 +1,12 @@
 # for roles/init/tasks/system.yml
 sysctl_rules:
-  - {name: fs.file-max, value: 65536}
+  - {name: fs.file-max, value: 65535}
   - {name: vm.max_map_count, value: 262144}
   - {name: vm.swappiness, value: 1}
   - {name: vm.overcommit_memory, value: 1}
-  - {name: net.core.somaxconn, value: 65536}
-  - {name: net.core.netdev_max_backlog, value: 5000}
+  - {name: net.core.somaxconn, value: 65535}
+  - {name: net.core.netdev_max_backlog, value: 65535}
+  - {name: net.core.tcp_max_syn_backlog, value: 65535}
   - {name: net.core.rmem_max, value: 12582912}
   - {name: net.core.wmem_max, value: 12582912}
   - {name: net.ipv4.ip_forward, value: 1}
@@ -15,3 +16,6 @@ sysctl_rules:
   - {name: net.ipv4.tcp_window_scaling, value: 1}
   - {name: net.ipv4.tcp_sack, value: 1}
   - {name: net.ipv4.tcp_no_metrics_save, value: 1}
+  - {name: net.ipv4.tcp_congestion_control, value: cubic}
+  - {name: net.ipv4.tcp_syncookies, value: 1}
+  - {name: net.ipv4.tcp_tw_recycle, value: 1}
