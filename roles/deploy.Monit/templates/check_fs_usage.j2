@@ -28,10 +28,11 @@ check file PASSWD with path /etc/passwd
 check file SHADOW with path /etc/shadow
   if changed checksum then alert
   if does not exist then unmonitor
-  if failed permission 0640 then exec "/bin/chmod 0640 /etc/shadow"
   if failed uid "root" then alert
 {% if ansible_os_family == "Debian" %}
   if failed gid "shadow" then alert
+  if failed permission 0640 then exec "/bin/chmod 0640 /etc/shadow"
 {% elif ansible_os_family == "RedHat" %}
   if failed gid "root" then alert
+  if failed permission 0000 then exec "/bin/chmod 0000 /etc/shadow"
 {% endif %}

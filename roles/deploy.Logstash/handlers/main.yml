@@ -12,7 +12,6 @@
 
 - name: Waiting for logstash started
   wait_for:
-    host: "{{ bind_address }}"
     port: 9600
-    timeout: 120
+    timeout: 180
   listen: "Restart logstash"

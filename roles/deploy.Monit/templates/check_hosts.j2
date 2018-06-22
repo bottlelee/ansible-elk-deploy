@@ -1,4 +1,4 @@
-{% for item in groups['all'] if item != inventory_hostname %}
+{% for item in groups['all'] | sort if item != inventory_hostname %}
 check host {{ item | upper }} with address {{ item }}.node.{{ consul_dc_name }}.consul
   if failed ping4 count 5 with timeout 10 seconds then alert
 {% endfor %}
