@@ -1,6 +1,6 @@
 - name: Checking logstash configuration
   command: /usr/share/logstash/bin/logstash -t --path.settings=/etc/logstash
-  listen: "Restart logstash"
+  listen: Restart logstash
 
 - name: Restart logstash service
   service:
@@ -8,10 +8,10 @@
     state: restarted
     enabled: yes
     daemon_reload: yes
-  listen: "Restart logstash"
+  listen: Restart logstash
 
 - name: Waiting for logstash started
   wait_for:
     port: 9600
     timeout: 180
-  listen: "Restart logstash"
+  listen: Restart logstash
