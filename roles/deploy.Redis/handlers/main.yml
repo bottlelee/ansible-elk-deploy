@@ -13,7 +13,7 @@
     enabled: yes
   listen: Restart redis-server
 
-- name: Waiting for redis-server
+- name: Waiting for redis-server started
   wait_for:
     host: "{{ bind_address }}"
     port: 6379
@@ -27,8 +27,8 @@
     enabled: yes
   listen: Restart redis-sentinel
 
-- name: Waiting for redis-server
+- name: Waiting for redis-sentinel started
   wait_for:
     host: "{{ bind_address }}"
-    port: 6379
+    port: 26379
   listen: Restart redis-sentinel
