@@ -8,7 +8,7 @@
 
 - name: Waiting for kibana started
   wait_for:
-    hosts: "{{ bind_address }}"
+    host: "{{ bind_address }}"
     port: "{{ kibana_port }}"
     timeout: 120
   listen: Restart kibana

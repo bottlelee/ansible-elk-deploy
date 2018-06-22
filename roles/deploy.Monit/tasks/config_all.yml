@@ -17,20 +17,7 @@
     - check_sysload
     - check_services
   notify: "Reload monit"
-  register: templates
-
-- name: Listing current config files
-  command: "ls /etc/monit.d/"
-  ignore_errors: yes
-  changed_when: false
-  register: allTemplates
-
-- name: Removing unmanaged config files
-  file:
-    path: "/etc/monit.d/{{ item }}"
-    state: absent
-  with_items: "{{ allTemplates.stdout_lines }}"
-  when: "item not in (templates.results|selectattr('item', 'string')|map(attribute='item')|list)"
+  register: templatesAll
 
 - name: Install/update config on elastic master nodes
   template:
@@ -41,3 +28,17 @@
   with_items:
     - check_hosts
   notify: "Reload monit"
+  register: templatesMaster
+
+- name: Listing current config files
+  command: "ls /etc/monit.d/"
+  ignore_errors: yes
+  changed_when: false
+  register: templatesList
+
+- name: Removing unmanaged config files
+  file:
+    path: "/etc/monit.d/{{ item }}"
+    state: absent
+  with_items: "{{ templatesList.stdout_lines }}"
+  when: "item not in (templatesAll.results|selectattr('item', 'string')|map(attribute='item')|list + templatesMaster.results|selectattr('item', 'string')|map(attribute='item')|list)"
