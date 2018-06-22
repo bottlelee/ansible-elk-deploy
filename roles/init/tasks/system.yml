@@ -11,7 +11,7 @@
     name: '{{ item.name }}'
     value: '{{ item.value }}'
     ignoreerrors: yes
-  with_items: "{{ sysctl_rules }}"
+  with_items: "{{ sysctl_rules | sort }}"
 
 - name: Disable swap
   command: swapoff -a

@@ -49,6 +49,18 @@ output.logstash:
   slow_start: true
 {% endif %}
 
+#============================== Dashboards =====================================
+setup.dashboards:
+  enabled: true
+  retry:
+    enabled: true
+    interval: 60s
+    maximum: 10
+
+#================================ Kibana =====================================
+setup.kibana:
+  host: "kibana.service.{{ consul_dc_name }}.consul"
+
 #================================ Logging =====================================
 
 logging:

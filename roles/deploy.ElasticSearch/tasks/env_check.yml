@@ -22,6 +22,6 @@
   with_items:
     - 'elasticsearch soft memlock unlimited'
     - 'elasticsearch hard memlock unlimited'
-    - 'elasticsearch - nofile 65536'
-    - 'ulimit -n 65536'
+    - 'elasticsearch - nofile 65535'
+    - 'ulimit -n 65535'
     # - 'fsize unlimited'

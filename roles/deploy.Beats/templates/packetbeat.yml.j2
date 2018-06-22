@@ -1,6 +1,6 @@
 packetbeat.interfaces:
-  device: {{ ansible_default_ipv4.interface }}
-  snaplen: 65536
+  device: {{ bind_interface }}
+  snaplen: 65535
   type: af_packet
   buffer_size_mb: 100
   with_vlans: yes
@@ -34,6 +34,11 @@ output.logstash:
   slow_start: true
 {% endif %}
 
+#================================ Kibana =====================================
+setup.kibana:
+  host: "kibana.service.{{ consul_dc_name }}.consul"
+
+#================================ Logging =====================================
 logging.to_files: true
 logging.level: error
 logging.files:
