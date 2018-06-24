@@ -1,4 +1,4 @@
-- hosts: elasticMasterNode:elasticDataNode
+- hosts: esMasters:esDatas
   become: yes
   serial: 1
   roles:

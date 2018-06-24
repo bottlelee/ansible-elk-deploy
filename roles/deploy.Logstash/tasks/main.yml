@@ -8,6 +8,10 @@
     - include_tasks: env_check.yml
       when: verChk.rc == 1
     - include_tasks: '{{ ansible_os_family }}.yml'
+    # - include_tasks: "plugins.yml target={{ target }}"
+    #   with_items: "{{ logstash_plugins }}"
+    #   loop_control:
+    #     loop_var: target
     - name: Updating logstash systemd service configure
       ini_file:
         path: /etc/systemd/system/logstash.service.d/override.conf

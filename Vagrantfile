@@ -52,22 +52,19 @@ Vagrant.configure("2") do |config|
       config.vm.hostname = vm_name
       config.vm.network "private_network", ip: "172.28.128.1#{instance_id.to_s.rjust(2, '0')}"
 
-      if $vm_name == "kibana-#{instance_id.to_s.rjust(2, '0')}"
-        config.vm.network "forwarded_port", guest: 5601, host: 5601,
-          auto_correct: true
-      elsif $instances == 3
+      if $instances == 3
         config.vm.network "forwarded_port", guest: 5601, host: 5601,
           auto_correct: true
       end
 
       if $vm_name == "redis-#{instance_id.to_s.rjust(2, '0')}"
-        config.vm.network "forwarded_port", guest: 15601, host: 15601,
+        config.vm.network "forwarded_port", guest: 15601, host: 5601,
           auto_correct: true
-        config.vm.network "forwarded_port", guest: 19200, host: 19200,
+        config.vm.network "forwarded_port", guest: 19200, host: 9200,
           auto_correct: true
-        config.vm.network "forwarded_port", guest: 15044, host: 15044,
+        config.vm.network "forwarded_port", guest: 15044, host: 5044,
           auto_correct: true
-        config.vm.network "forwarded_port", guest: 16379, host: 16379,
+        config.vm.network "forwarded_port", guest: 16379, host: 6379,
           auto_correct: true
       end
 
@@ -88,27 +85,27 @@ Vagrant.configure("2") do |config|
         config.vm.provision "ansible" do |ansible|
           if $instances == 14
             ansible.groups = {
-              "elasticMasterNode" => ["es-master-[01:03]"],
-              "elasticHotNode" => ["es-hot-[04:06]"],
-              "elasticWarmNode" => ["es-warm-[07:08]"],
+              "esMasters" => ["es-master-[01:03]"],
+              "esHots" => ["es-hot-[04:06]"],
+              "esWarms" => ["es-warm-[07:08]"],
               "redis" => ["redis-[09:11]"],
               "logstash" => ["logstash-[12:13]"],
               "kibana" => ["kibana-14"],
               "haproxy" => ["redis-[09:11]"],
-              "elasticsearch:children" => ["elasticMasterNode","elasticHotNode","elasticWarmNode"],
-              "elasticDataNode:children" => ["elasticHotNode","elasticWarmNode"]
+              "elasticsearch:children" => ["elasticMasterNode","esHots","esWarms"],
+              "esDatas:children" => ["esHots","esWarms"]
             }
           end
           if $instances == 3
             ansible.groups = {
-              "elasticMasterNode" => ["es-master-[01:03]"],
-              "elasticHotNode" => "",
-              "elasticWarmNode" => "",
+              "esMasters" => ["es-master-[01:03]"],
+              "esHots" => "",
+              "esWarms" => "",
               "redis" => "",
               "logstash" => ["es-master-[01:03]"],
               "kibana" => ["es-master-[01:03]"],
-              "elasticsearch:children" => ["elasticMasterNode","elasticHotNode","elasticWarmNode"],
-              "elasticDataNode:children" => ["elasticHotNode","elasticWarmNode"]
+              "elasticsearch:children" => ["elasticMasterNode","esHots","esWarms"],
+              "esDatas:children" => ["esHots","esWarms"]
             }
           end
           ansible.limit = "all"
