@@ -25,7 +25,8 @@
 
 - block:
     - pause:
-        seconds: 10
+        seconds: 120
+        prompt: "Caution: above hosts will be reboot! Press Ctrl+C+A if you don't want to!"
     - name: Rebooting all hosts.
       command: shutdown -r +1 "Rebooting system, trigger by ansible."
       become: yes

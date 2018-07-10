@@ -9,7 +9,7 @@ $vm_box = "ubuntu/xenial64"
 # $vm_box = "centos/7"
 # $instances = 3
 $instances = 14
-$apt_proxy = "http://192.168.205.16:3142"
+$apt_proxy = "http://192.168.205.12:3142"
 
 Vagrant.configure("2") do |config|
   # always use Vagrants insecure key
@@ -92,7 +92,7 @@ Vagrant.configure("2") do |config|
               "logstash" => ["logstash-[12:13]"],
               "kibana" => ["kibana-14"],
               "haproxy" => ["redis-[09:11]"],
-              "elasticsearch:children" => ["elasticMasterNode","esHots","esWarms"],
+              "elasticsearch:children" => ["esMasters","esHots","esWarms"],
               "esDatas:children" => ["esHots","esWarms"]
             }
           end
@@ -104,7 +104,7 @@ Vagrant.configure("2") do |config|
               "redis" => "",
               "logstash" => ["es-master-[01:03]"],
               "kibana" => ["es-master-[01:03]"],
-              "elasticsearch:children" => ["elasticMasterNode","esHots","esWarms"],
+              "elasticsearch:children" => ["esMasters","esHots","esWarms"],
               "esDatas:children" => ["esHots","esWarms"]
             }
           end

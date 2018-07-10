@@ -4,7 +4,7 @@
         name: "redis-{{ item }}"
         state: started
       with_items:
-        - server
+        - server1
         - sentinel
   rescue:
     - include_tasks: '{{ ansible_os_family }}.yml'

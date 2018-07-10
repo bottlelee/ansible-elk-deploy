@@ -46,9 +46,9 @@
 - name: Starting ElasticSearch service
   service:
     name: elasticsearch
+    state: restarted
     daemon_reload: yes
     enabled: yes
-    state: restarted
 
 - name: Waiting for service started
   wait_for:

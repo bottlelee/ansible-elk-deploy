@@ -1,6 +1,5 @@
 packetbeat.interfaces:
-  device: {{ bind_interface }}
-  snaplen: 65535
+  device: any
   type: af_packet
   buffer_size_mb: 100
   with_vlans: yes
@@ -10,15 +9,20 @@ packetbeat.flows:
   timeout: 30s
   period: 120s
 
-packetbeat.protocols.icmp:
-  enabled: false
+packetbeat.protocols:
+  - type: icmp
+    enabled: true
+{% if 'redis' in group_names %}
+  - type: redis
+    ports: [6379]
+{% endif %}
 
-packetbeat.protocols.dns:
-  enabled: false
-  period: 120s
-  include_authorities: true
-  include_additionals: true
-  ports: [53]
+{% if 'haproxy' in group_names %}
+packetbeat.procs:
+  monitored:
+    - process: haproxy
+      cmdline_grep: haproxy
+{% endif %}
 
 {% if (groups['redis'] | length) >= 3 %}
 output.redis:
@@ -33,6 +37,14 @@ output.logstash:
   timeout: 300
   slow_start: true
 {% endif %}
+
+#============================== Dashboards =====================================
+setup.dashboards:
+  enabled: true
+  retry:
+    enabled: true
+    interval: 60s
+    maximum: 10
 
 #================================ Kibana =====================================
 setup.kibana:

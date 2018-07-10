@@ -11,8 +11,6 @@
       service:
         name: elasticsearch
         state: started
-        enabled: yes
-        daemon_reload: yes
   rescue:
     - include_tasks: download.yml format=rpm
     - include_tasks: '{{ ansible_os_family }}.yml'

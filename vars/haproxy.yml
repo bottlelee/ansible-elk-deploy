@@ -3,23 +3,19 @@ haproxy_backends:
   - name: redis
     front_port: 16379
     back_port: 6379
-    mode: tcp
     expose: true
 
   - name: "ingest.elastic"
     front_port: 19200
     back_port: 9200
-    mode: http
     expose: false
 
   - name: logstash
     front_port: 15044
     back_port: 5044
-    mode: tcp
     expose: false
 
   - name: kibana
     front_port: 15601
     back_port: 5601
-    mode: http
     expose: true
