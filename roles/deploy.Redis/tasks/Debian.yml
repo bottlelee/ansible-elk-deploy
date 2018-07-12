@@ -3,20 +3,20 @@
       copy:
         src: "downloaded_files/{{ item | basename }}"
         dest: /tmp/
-      loop: "{{ deb_redis_urls }}"
+      loop: "{{ deb_redis_urls | sort }}"
     - name: "Installing packages"
       apt:
         deb: "/tmp/{{ item | basename }}"
-      loop: "{{ deb_redis_urls }}"
+      loop: "{{ deb_redis_urls | sort }}"
   rescue:
     - include_tasks: download.yml format=deb
     - include_tasks: "{{ ansible_os_family }}.yml"
-  always:
-    - name: "Removing packages"
-      file:
-        path: "/tmp/{{ item | basename }}"
-        state: absent
-      loop: "{{ deb_redis_urls }}"
+  # always:
+  #   - name: "Removing packages"
+  #     file:
+  #       path: "/tmp/{{ item | basename }}"
+  #       state: absent
+  #     loop: "{{ deb_redis_urls }}"
 
 - name: Config /etc/systemd/system/redis-server.service.d/limit.conf
   ini_file:

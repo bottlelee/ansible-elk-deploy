@@ -1,5 +1,5 @@
 packetbeat.interfaces:
-  device: any
+  device: {{ bind_interface }}
   type: af_packet
   buffer_size_mb: 100
   with_vlans: yes

@@ -17,13 +17,13 @@
       redis soft nofile 10240
       redis hard nofile 10240
 
-- name: Coping disable-transparent-hugepages script
+- name: Coping 'Disable Transparent Hugepages' script
   copy:
     src: disable-transparent-hugepages
     dest: /usr/bin/disable-transparent-hugepages
     mode: 0755
 
-- name: Create disable transparent hugepages service
+- name: Create 'Disable Transparent Hugepages' service
   copy:
     src: disable-thp.service
     dest: /lib/systemd/system/

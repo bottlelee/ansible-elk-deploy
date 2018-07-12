@@ -18,19 +18,27 @@ Vagrant.configure("2") do |config|
   config.vm.box = $vm_box
   config.vm.synced_folder ".", "/vagrant", disabled: true
 
-  if Vagrant.has_plugin?("vagrant-vbguest") then
-    config.vbguest.auto_update = false
-  end
-
   if Vagrant.has_plugin?("vagrant-proxyconf") and $vm_box == "ubuntu/xenial64" then
     config.apt_proxy.http = $apt_proxy || ""
     config.apt_proxy.https = "DIRECT"
+  end
+
+  if $vm_box == "ubuntu/xenial64" then
+    config.vm.provision "file", source: "apt_sources.list", destination: "/tmp/sources.list"
+    config.vm.provision "shell", inline: "sudo mv -f /tmp/sources.list /etc/apt/sources.list"
+    config.vm.provision "shell", inline: "sudo apt-get update"
+    config.vm.provision "shell", inline: "sudo apt-get dist-upgrade -y --auto-remove"
+    config.vm.provision "shell", inline: "sudo apt-get autoclean"
   end
 
   if Vagrant.has_plugin?("vagrant-proxyconf")
     config.proxy.http     = ENV['HTTP_PROXY'] || ENV['http_proxy'] || ""
     config.proxy.https    = ENV['HTTPS_PROXY'] || ENV['https_proxy'] ||  ""
     config.proxy.no_proxy = $no_proxy
+  end
+
+  if Vagrant.has_plugin?("vagrant-vbguest") then
+    config.vbguest.auto_update = false
   end
 
   (1..$instances).each do |instance_id|

@@ -12,8 +12,8 @@
       target: metricbeat,
       tags: metricbeat
     }
-    - {
-      role: deploy.Beats,
-      target: packetbeat,
-      tags: packetbeat
-    }
+    # - {
+    #   role: deploy.Beats,
+    #   target: packetbeat,
+    #   tags: packetbeat
+    # }

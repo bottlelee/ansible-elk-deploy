@@ -1,11 +1,15 @@
 - block:
+
     - name: Checking elasticsearch service status
       service:
         name: elasticsearch
         state: started
+
   rescue:
+
     - include_tasks: env_check.yml
     - include_tasks: '{{ ansible_os_family }}.yml'
+    - include_tasks: common_setup.yml
 
 - name: Create ElasticSearch data dirs
   file:

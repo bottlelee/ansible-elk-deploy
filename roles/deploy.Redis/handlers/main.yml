@@ -4,6 +4,7 @@
     state: started
     daemon_reload: yes
     enabled: yes
+  listen: Restart redis-server
 
 - name: Restart redis-server service
   service:
