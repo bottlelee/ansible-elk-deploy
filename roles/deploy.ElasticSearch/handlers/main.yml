@@ -1,3 +1,11 @@
+- name: Start enable-thp.service
+  service:
+    name: enable-thp
+    state: started
+    enabled: yes
+    daemon_reload: yes
+  listen: Restarting elasticsearch
+
 - name: Restarting elasticsearch service
   service:
     name: elasticsearch
@@ -13,10 +21,3 @@
     - 9300
     - 9200
   listen: Restarting elasticsearch
-
-- name: Start enable-thp.service
-  service:
-    name: enable-thp
-    state: started
-    enabled: yes
-    daemon_reload: yes

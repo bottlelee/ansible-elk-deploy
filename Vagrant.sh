@@ -1,16 +1,22 @@
 #!/usr/bin/env bash
 
+function create() {
+  vagrant up --provision
+  vagrant vbguest
+  vagrant reload
+}
+
 case $1 in
   up )
-    vagrant up --provision
+    create
     ;;
   rebuild )
     vagrant destroy -f
-    vagrant up --provision
+    create
     ;;
-  down )
+  destroy )
     vagrant destroy -f
     ;;
   * )
-    echo "Usage: up|rebuild|down"
+    echo "Usage: up|rebuild|destroy"
 esac

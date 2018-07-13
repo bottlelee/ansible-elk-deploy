@@ -27,8 +27,6 @@ Vagrant.configure("2") do |config|
     config.vm.provision "file", source: "apt_sources.list", destination: "/tmp/sources.list"
     config.vm.provision "shell", inline: "sudo mv -f /tmp/sources.list /etc/apt/sources.list"
     config.vm.provision "shell", inline: "sudo apt-get update"
-    config.vm.provision "shell", inline: "sudo apt-get dist-upgrade -y --auto-remove"
-    config.vm.provision "shell", inline: "sudo apt-get autoclean"
   end
 
   if Vagrant.has_plugin?("vagrant-proxyconf")
@@ -65,7 +63,7 @@ Vagrant.configure("2") do |config|
           auto_correct: true
       end
 
-      if $vm_name == "redis-#{instance_id.to_s.rjust(2, '0')}"
+      if $vm_name == "kibana-#{instance_id.to_s.rjust(2, '0')}"
         config.vm.network "forwarded_port", guest: 15601, host: 5601,
           auto_correct: true
         config.vm.network "forwarded_port", guest: 19200, host: 9200,
@@ -73,6 +71,8 @@ Vagrant.configure("2") do |config|
         config.vm.network "forwarded_port", guest: 15044, host: 5044,
           auto_correct: true
         config.vm.network "forwarded_port", guest: 16379, host: 6379,
+          auto_correct: true
+        config.vm.network "forwarded_port", guest: 18500, host: 8500,
           auto_correct: true
       end
 
@@ -83,6 +83,9 @@ Vagrant.configure("2") do |config|
         if $instances == 3
           vb.memory = "16384"
           vb.cpus = "4"
+        elsif $vm_name == "kibana-#{instance_id.to_s.rjust(2, '0')}"
+          vb.memory = "4096"
+          vb.cpus = "2"
         else
           vb.memory = "2048"
           vb.cpus = "2"
@@ -99,7 +102,7 @@ Vagrant.configure("2") do |config|
               "redis" => ["redis-[09:11]"],
               "logstash" => ["logstash-[12:13]"],
               "kibana" => ["kibana-14"],
-              "haproxy" => ["redis-[09:11]"],
+              "haproxy:children" => ["kibana"],
               "elasticsearch:children" => ["esMasters","esHots","esWarms"],
               "esDatas:children" => ["esHots","esWarms"]
             }
