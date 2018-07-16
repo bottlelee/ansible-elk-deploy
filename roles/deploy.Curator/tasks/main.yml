@@ -27,4 +27,4 @@
     - include_tasks: 'cron.yml target={{ item }}'
       with_items:
         - hot_to_warm
-  when: "(groups['elasticWarmNode']|length) > 0"
+  when: "(groups['esWarms']|length) > 0"

@@ -8,6 +8,7 @@
       with_items:
         - "/usr/share/logstash/bin/logstash-plugin remove {{ target }}"
         - "/usr/share/logstash/bin/logstash-plugin install file:///tmp/{{ target }}-{{ elk_version }}.zip"
+      notify: Restart logstash
   rescue:
     - name: "Downloading plugin {{ target }}"
       get_url:

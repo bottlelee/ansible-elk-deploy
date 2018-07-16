@@ -2,6 +2,7 @@
   become: yes
   serial: 33%
   vars_files:
+    - vars/haproxy.yml
     - vars/download_urls.yml
   roles:
     - deploy.Haproxy

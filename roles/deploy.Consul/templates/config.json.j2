@@ -1,22 +1,24 @@
 {
-{% if 'elasticMasterNode' in group_names and (groups['elasticMasterNode'] | length) >= 3 %}
+{% if 'esMasters' in group_names and (groups['esMasters'] | length) >= 3 %}
   "server": true,
   "bootstrap_expect": 3,
   "retry_join": [
-    {%- for item in groups['elasticMasterNode'] if item != ansible_nodename -%}
+    {%- for item in groups['esMasters'] if item != ansible_nodename -%}
       "{{ hostvars[item]['bind_address'] }}"{%- if loop.nextitem is defined -%},{%- endif -%}
     {%- endfor -%}
   ],
-{% elif 'elasticMasterNode' not in group_names and (groups['elasticMasterNode'] | length) >= 3 %}
+  "ui": true,
+  "client_addr": "0.0.0.0",
+{% elif 'esMasters' not in group_names and (groups['esMasters'] | length) >= 3 %}
   "server": false,
   "retry_join": [
-    {%- for item in groups['elasticMasterNode'] -%}
+    {%- for item in groups['esMasters'] -%}
       "{{ hostvars[item]['bind_address'] }}"{%- if loop.nextitem is defined -%},{%- endif -%}
     {%- endfor -%}
   ],
 {% else %}
   "server": true,
-  "bootstrap": true,
+  "bootstrap": true
 {% endif %}
 {# ---------------- #}
   "datacenter": "{{ consul_dc_name }}",

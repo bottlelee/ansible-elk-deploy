@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+/usr/bin/redis-cli -p 26379 -h {{ bind_address }} info sentinel | grep -w {{ bind_address | quote }} || exit 231
+
+if [[ $? == 0 ]]; then
+  /usr/bin/redis-cli info replication | grep -w "role\:master" || exit 231
+fi

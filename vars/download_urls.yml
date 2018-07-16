@@ -11,14 +11,14 @@ rpm_redis_urls:
   # https://pkgs.org/download/jemalloc
   - http://dl.fedoraproject.org/pub/epel/7/x86_64/Packages/j/jemalloc-3.6.0-1.el7.x86_64.rpm
 deb_redis_urls:
-  # https://pkgs.org/download/redis-tools
-  - http://archive.ubuntu.com/ubuntu/pool/universe/r/redis/redis-tools_3.0.6-1_amd64.deb
   # https://pkgs.org/download/libjemalloc
   - http://archive.ubuntu.com/ubuntu/pool/universe/j/jemalloc/libjemalloc1_3.6.0-9ubuntu1_amd64.deb
   # https://pkgs.org/download/redis-server
   - http://archive.ubuntu.com/ubuntu/pool/universe/r/redis/redis-server_3.0.6-1_amd64.deb
   # https://pkgs.org/download/redis-sentinel
   - http://archive.ubuntu.com/ubuntu/pool/universe/r/redis/redis-sentinel_3.0.6-1_amd64.deb
+  # https://pkgs.org/download/redis-tools
+  - http://archive.ubuntu.com/ubuntu/pool/universe/r/redis/redis-tools_3.0.6-1_amd64.deb
 
 # https://pkgs.org/download/haproxy
 rpm_haproxy_urls:

@@ -24,7 +24,7 @@
     src: '{{ item }}.j2'
     dest: '/etc/monit.d/{{ item }}'
     mode: 0600
-  when: "'elasticMasterNode' in group_names"
+  when: "'esMasters' in group_names"
   with_items:
     - check_hosts
   notify: "Reload monit"

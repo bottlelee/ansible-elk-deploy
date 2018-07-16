@@ -8,13 +8,28 @@
         - sentinel
   rescue:
     - include_tasks: '{{ ansible_os_family }}.yml'
+    - include_tasks: system_config.yml
 
-- include_tasks: system_config.yml
+- block:
+    - name: Checking master from sentinel
+      shell: "/usr/bin/redis-cli -p 26379 -h {{ bind_address }} info sentinel | grep -w address"
+      changed_when: false
+      register: sentinel_check
+    - name: Confirm master status
+      shell: /usr/bin/redis-cli info replication | grep -w 'role\:master'
+      changed_when: false
+      when: bind_address in sentinel_check.stdout
+    - name: Confirm slaveof status
+      shell: redis-cli info replication | grep -w master_host | awk '{split($0,r,":"); print r[2]}'
+      changed_when: false
+      register: slaveof_master_ip
+      failed_when: slaveof_master_ip.stdout not in sentinel_check.stdout
+      when: bind_address not in sentinel_check.stdout
+  rescue:
+    - include_tasks: '{{ ansible_os_family }}_config.yml'
 
-- include_tasks: '{{ ansible_os_family }}_config.yml'
-
-- name: Coping check_redis_master.sh script
-  copy:
-    src: check_redis_master.sh
+- name: Updating script '/usr/local/bin/check_redis_master.sh'
+  template:
+    src: check_redis_master.sh.j2
     dest: /usr/local/bin/check_redis_master.sh
     mode: 0755

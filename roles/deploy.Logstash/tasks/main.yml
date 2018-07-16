@@ -5,9 +5,17 @@
       register: verChk
       failed_when: verChk.stdout is version(elk_version, operator='lt', strict=True)
   rescue:
-    - include_tasks: env_check.yml
-      when: verChk.rc == 1
+    - name: Checking if target is suitable for deploy
+      assert:
+        that:
+          - "ansible_memory_mb.nocache.free >= 1024"
+          - "ansible_processor_vcpus >= 2"
+          - "ansible_architecture == 'x86_64'"
     - include_tasks: '{{ ansible_os_family }}.yml'
+    # - include_tasks: "plugins.yml target={{ target }}"
+    #   with_items: "{{ logstash_plugins }}"
+    #   loop_control:
+    #     loop_var: target
     - name: Updating logstash systemd service configure
       ini_file:
         path: /etc/systemd/system/logstash.service.d/override.conf
@@ -45,7 +53,6 @@
     - 002-monit.conf
     - 003-syslog.conf
     - 004-auditd.conf
-    - 005-elasicsearch.conf
     - 999-output.conf
   notify: Checking logstash configuration
   register: templates

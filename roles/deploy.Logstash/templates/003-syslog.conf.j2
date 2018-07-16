@@ -2,19 +2,39 @@ filter {
   if [fileset][name] == "syslog" {
     grok {
       match => { "message" => [
-        "%{SYSLOGLINE}",
-        "%{CRONLOG}",
-        "%{SYSLOGPAMSESSION}"
+        "%{SYSLOGTIMESTAMP:timestamp} %{DATA:[system][syslog][hostname]} %{DATA:[system][syslog][program]}\[%{INT}\]:%{GREEDYDATA:[system][syslog][message]}",
+        "%{SYSLOGLINE:[system][syslog][message]}",
+        "%{CRONLOG:[system][syslog][message]}",
+        "%{SYSLOGPAMSESSION:[system][syslog][message]}"
         ]
       }
-      overwrite => ["message"]
+      remove_field => "message"
     }
-    if "is now critical" in [message] {
+    if "is now critical" in [system][syslog][message] {
       drop {}
     }
     date {
       match => [ "timestamp", "MMM  d HH:mm:ss", "MMM dd HH:mm:ss" ]
       remove_field => "timestamp"
+    }
+    mutate {
+      strip => "[system][syslog][message]"
+    }
+  }
+  if [fileset][name] == "auth" {
+    grok {
+      match => { "message" => [
+        "%{SYSLOGTIMESTAMP:timestamp} %{DATA:[system][syslog][hostname]} sudo:  %{DATA:[system][auth][user]} : TTY=%{DATA:[system][auth][sudo][tty]} ; PWD=%{DATA:[system][auth][sudo][pwd]} ; USER=%{DATA:[system][auth][sudo][user]} ; COMMAND=%{GREEDYDATA:[system][auth][sudo][command]}"
+        ]
+      }
+      remove_field => "message"
+    }
+    date {
+      match => [ "timestamp", "MMM  d HH:mm:ss", "MMM dd HH:mm:ss" ]
+      remove_field => "timestamp"
+    }
+    mutate {
+      strip => "[system][auth][sudo][command]"
     }
   }
 }

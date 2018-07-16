@@ -209,7 +209,7 @@ dir /var/lib/redis
 #
 # slaveof <masterip> <masterport>
 {% if inventory_hostname != groups['redis'][0] %}
-slaveof {{ hostvars[groups['redis'][0]]['bind_address'] }} 6379
+slaveof {{ groups['redis'][0] }}.node.{{ consul_dc_name }}.consul 6379
 {% endif %}
 
 # If the master is password protected (using the "requirepass" configuration

@@ -37,7 +37,6 @@
   with_items: "{{ elastic_plugins }}"
   loop_control:
     loop_var: target
-  when: "'ingest' in elastic_instance_roles"
 
 - name: Installing logrotate configure
   template:
@@ -47,9 +46,9 @@
 - name: Starting ElasticSearch service
   service:
     name: elasticsearch
+    state: restarted
     daemon_reload: yes
     enabled: yes
-    state: restarted
 
 - name: Waiting for service started
   wait_for:

@@ -3,6 +3,7 @@ output {
     elasticsearch {
       hosts => ["ingest.elastic.service.{{ consul_dc_name }}.consul:{{ elastic_http_port }}"]
       index => "%{[beat_type]}-%{[beat][version]}-%{+YYYY.MM.dd}"
+      manage_template => false
     }
   }
   else {

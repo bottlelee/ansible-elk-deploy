@@ -3,11 +3,11 @@
       copy:
         src: "downloaded_files/{{ item | basename }}"
         dest: /tmp/
-      loop: "{{ deb_redis_urls }}"
+      loop: "{{ deb_redis_urls | sort }}"
     - name: "Installing packages"
       apt:
         deb: "/tmp/{{ item | basename }}"
-      loop: "{{ deb_redis_urls }}"
+      loop: "{{ deb_redis_urls | sort }}"
   rescue:
     - include_tasks: download.yml format=deb
     - include_tasks: "{{ ansible_os_family }}.yml"

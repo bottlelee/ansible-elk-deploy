@@ -14,6 +14,19 @@
     body: "{{ lookup('file','enable_shard.json') }}"
     body_format: json
 
+# - name: Enable 'xpack.monitoring.collection' for 6.3.x
+#   uri:
+#     url: "http://{{ bind_address }}:{{ elastic_http_port }}/_cluster/settings"
+#     method: PUT
+#     body: |
+#       {
+#           "persistent" : {
+#               "xpack.monitoring.collection.enabled" : "true"
+#           }
+#       }
+#     body_format: json
+#   when: versionCheck.json.version.number is version('6.3.0', operator='lt', strict=True)
+
 - name: Checking cluster health status
   uri:
     url: http://{{ bind_address }}:{{ elastic_http_port }}/_cluster/health

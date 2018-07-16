@@ -2,13 +2,13 @@
     msg: "At least 3 hosts needed in group '{{ item }}'"
   when: (groups[item] | length) < 3
   with_items:
-    - elasticMasterNode
-    - elasticHotNode
+    - esMasters
+    - esHots
 
 - fail:
     msg: "At least 1 host needed in group '{{ item }}'"
   when: (groups[item] | length) < 1
   with_items:
-    - elasticWarmNode
+    - esWarms
     - logstash
     - kibana

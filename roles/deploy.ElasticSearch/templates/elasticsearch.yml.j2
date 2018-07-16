@@ -24,16 +24,16 @@ node.name: {{ inventory_hostname }}
 #
 # Add custom attributes to the node:
 #
-{% if ('elasticHotNode' in group_names) or (groups['elasticDataNode']|length < 1) %}
+{% if ('esHots' in group_names) or (groups['esDatas']|length < 1) %}
 node.attr.box_type: hot
-{% elif 'elasticWarmNode' in group_names %}
+{% elif 'esWarms' in group_names %}
 node.attr.box_type: warm
 {% endif %}
 
 # Role of the node in cluster:
 #
 {% for item in elastic_all_roles %}
-{% if groups['elasticDataNode']|length < 1 %}
+{% if groups['esDatas']|length < 1 %}
 node.{{ item }}: true
 {% elif item not in elastic_instance_roles %}
 node.{{ item }}: false
@@ -93,14 +93,14 @@ http.port: {{ elastic_http_port }}
 # The default list of hosts is ["127.0.0.1", "[::1]"]
 #
 discovery.zen.ping.unicast.hosts:
-{% for item in groups['elasticMasterNode'] %}
+{% for item in groups['esMasters'] %}
   - "{{ item }}.node.{{ consul_dc_name }}.consul"
 {% endfor %}
 #
 # Prevent the "split brain" by configuring the majority of nodes (total number of master-eligible nodes / 2 + 1):
 #
 {% if groups.elasticsearch|count() >= 3 %}
-discovery.zen.minimum_master_nodes: {{ groups.elasticMasterNode|count() // 2 + 1 }}
+discovery.zen.minimum_master_nodes: {{ groups.esMasters|count() // 2 + 1 }}
 {% else %}
 discovery.zen.minimum_master_nodes: 1
 {% endif %}
@@ -112,7 +112,7 @@ discovery.zen.minimum_master_nodes: 1
 # Block initial recovery after a full cluster restart until N nodes are started:
 #
 {% if groups.elasticsearch|count() > 2 %}
-gateway.recover_after_nodes: {{ groups.elasticMasterNode|count() // 2 + 1 }}
+gateway.recover_after_nodes: {{ groups.esMasters|count() // 2 + 1 }}
 {% else %}
 gateway.recover_after_nodes: 1
 {% endif %}
