@@ -7,6 +7,8 @@
       "{{ hostvars[item]['bind_address'] }}"{%- if loop.nextitem is defined -%},{%- endif -%}
     {%- endfor -%}
   ],
+  "ui": true,
+  "client_addr": "0.0.0.0",
 {% elif 'esMasters' not in group_names and (groups['esMasters'] | length) >= 3 %}
   "server": false,
   "retry_join": [
@@ -16,8 +18,7 @@
   ],
 {% else %}
   "server": true,
-  "bootstrap": true,
-  "ui": true
+  "bootstrap": true
 {% endif %}
 {# ---------------- #}
   "datacenter": "{{ consul_dc_name }}",
