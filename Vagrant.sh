@@ -2,8 +2,8 @@
 
 function create() {
   vagrant up --provision
-  vagrant vbguest
-  vagrant reload
+  # vagrant vbguest
+  # vagrant reload --provision
 }
 
 case $1 in
@@ -18,5 +18,5 @@ case $1 in
     vagrant destroy -f
     ;;
   * )
-    echo "Usage: up|rebuild|destroy"
+    echo "Usage: $0 up|rebuild|destroy"
 esac

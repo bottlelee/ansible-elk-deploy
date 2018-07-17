@@ -7,8 +7,8 @@
         - server
         - sentinel
   rescue:
-    - include_tasks: '{{ ansible_os_family }}.yml'
     - include_tasks: system_config.yml
+    - include_tasks: '{{ ansible_os_family }}.yml'
 
 - block:
     - name: Checking master from sentinel

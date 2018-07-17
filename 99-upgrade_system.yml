@@ -2,7 +2,6 @@
   become: yes
   serial:
     - 1
-    - 33%
   tasks:
     - apt:
         update_cache: yes

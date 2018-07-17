@@ -4,7 +4,7 @@ Before=redis-server.service
 
 [Service]
 Type=oneshot
-#RemainAfterExit=true
+RemainAfterExit=true
 ExecStart=/usr/bin/disable-transparent-hugepages start
 
 [Install]

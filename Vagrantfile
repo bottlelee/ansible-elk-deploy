@@ -5,8 +5,8 @@ ENV["LC_ALL"] = "en_US.UTF-8"
 
 Vagrant.require_version ">= 2.0.0"
 
-$vm_box = "ubuntu/xenial64"
-# $vm_box = "centos/7"
+# $vm_box = "ubuntu/xenial64"
+$vm_box = "centos/7"
 # $instances = 3
 $instances = 14
 $apt_proxy = "http://192.168.205.12:3142"
@@ -27,6 +27,10 @@ Vagrant.configure("2") do |config|
     config.vm.provision "file", source: "apt_sources.list", destination: "/tmp/sources.list"
     config.vm.provision "shell", inline: "sudo mv -f /tmp/sources.list /etc/apt/sources.list"
     config.vm.provision "shell", inline: "sudo apt-get update"
+    config.vm.provision "shell", inline: "sudo apt-get install -y htop di nmon"
+  elsif $vm_box == "centos/7" then
+    config.vm.provision "shell", inline: "yum install -y epel-release"
+    config.vm.provision "shell", inline: "yum install -y htop di byobu nmon telnet net-tools bind-utils"
   end
 
   if Vagrant.has_plugin?("vagrant-proxyconf")
