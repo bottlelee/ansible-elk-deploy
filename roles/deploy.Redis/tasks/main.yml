@@ -1,12 +1,19 @@
 - block:
-    - name: Checking redis-server services
+    - name: Checking services status
       service:
-        name: redis-server
+        name: "{{ item }}"
         state: started
-    - name: Checking redis-sentinel services
-      service:
-        name: redis-sentinel
-        state: started
+      with_items:
+        - redis-server
+        - redis-sentinel
+    - name: Checking services port
+      wait_for:
+        host: "{{ bind_address }}"
+        port: "{{ item }}"
+        timeout: 30
+      with_items:
+        - 6379
+        - 26379
   rescue:
     - include_tasks: system_config.yml
     - include_tasks: '{{ ansible_os_family }}.yml'
