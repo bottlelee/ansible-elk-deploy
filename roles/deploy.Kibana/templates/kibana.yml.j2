@@ -18,11 +18,12 @@ server.host: "0.0.0.0"
 server.name: "{{ ansible_hostname }}"
 
 # The URL of the Elasticsearch instance to use for all your queries.
-{% if 'elasticsearch' in group_names %}
+{# {% if 'elasticsearch' in group_names %}
 elasticsearch.url: "http://master.elastic.service.{{ consul_dc_name }}.consul:9200"
 {% else %}
 elasticsearch.url: "http://tribe.elastic.service.{{ consul_dc_name }}.consul:9200"
-{% endif %}
+{% endif %} #}
+elasticsearch.url: "http://ingest.elastic.service.{{ consul_dc_name }}.consul:9200"
 
 # When this setting's value is true Kibana uses the hostname specified in the server.host
 # setting. When the value of this setting is false, Kibana uses the hostname of the host
@@ -106,3 +107,5 @@ logging.quiet: true
 # The default locale. This locale can be used in certain circumstances to substitute any missing
 # translations.
 #i18n.defaultLocale: "en"
+
+xpack.security.enabled: false

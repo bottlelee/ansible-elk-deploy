@@ -24,6 +24,7 @@
     section: Install
     option: Alias
     value: redis-server.service
+  notify: Restart redis-server
 
 - systemd:
     name: '{{ item }}'

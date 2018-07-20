@@ -1,32 +1,41 @@
 - block:
-    - name: Checking redis services
+    - name: Checking redis-server services
       service:
-        name: "redis-{{ item }}"
+        name: redis-server
         state: started
-      with_items:
-        - server
-        - sentinel
+    - name: Checking redis-sentinel services
+      service:
+        name: redis-sentinel
+        state: started
   rescue:
     - include_tasks: system_config.yml
     - include_tasks: '{{ ansible_os_family }}.yml'
 
 - block:
     - name: Checking master from sentinel
-      shell: "/usr/bin/redis-cli -p 26379 -h {{ bind_address }} info sentinel | grep -w address"
+      shell: /usr/bin/redis-cli -p 26379 -h redis-sentinel.service.{{ consul_dc_name }}.consul info sentinel | grep -w address| awk '{split($0,a,","); print a[3]}' | awk '{split($0,b,"="); print b[2]}' | awk '{split($0,c,":"); print c[1]}'
       changed_when: false
       register: sentinel_check
+      retries: 10
+      until: (sentinel_check.stdout != "127.0.0.1") and (sentinel_check.stdout != "")
+    - set_fact:
+        sentinel_redis_master: "{{ sentinel_check.stdout }}"
+    - debug:
+        msg: "{{ sentinel_check.stdout }}"
     - name: Confirm master status
       shell: /usr/bin/redis-cli info replication | grep -w 'role\:master'
       changed_when: false
-      when: bind_address in sentinel_check.stdout
+      when: bind_address == sentinel_redis_master
     - name: Confirm slaveof status
-      shell: redis-cli info replication | grep -w master_host | awk '{split($0,r,":"); print r[2]}'
+      shell: redis-cli info replication | grep -w master_host | awk '{split($0,a,":"); print a[2]}'
       changed_when: false
       register: slaveof_master_ip
-      failed_when: slaveof_master_ip.stdout not in sentinel_check.stdout
-      when: bind_address not in sentinel_check.stdout
+      failed_when: slaveof_master_ip.stdout != sentinel_redis_master
+      when: bind_address != sentinel_redis_master
   rescue:
     - include_tasks: '{{ ansible_os_family }}_config.yml'
+
+# - include_tasks: '{{ ansible_os_family }}_config.yml'
 
 - name: Updating script '/usr/local/bin/check_redis_master.sh'
   template:

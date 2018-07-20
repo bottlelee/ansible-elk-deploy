@@ -4,7 +4,7 @@ Before=elasticsearch.service
 
 [Service]
 Type=oneshot
-#RemainAfterExit=true
+RemainAfterExit=true
 ExecStart=/usr/bin/enable-transparent-hugepages start
 
 [Install]

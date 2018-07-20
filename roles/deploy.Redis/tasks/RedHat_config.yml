@@ -21,18 +21,18 @@
       regexp: "^bind"
     - line: "port 26379"
       regexp: "^port"
-    - line: "sentinel monitor {{ groups['redis'][0] }} {{ hostvars[groups['redis'][0]]['bind_address'] }} 6379 2"
+    - line: "sentinel monitor elk-redis {{ sentinel_redis_master | default(groups['redis'][0] + '.node.' + consul_dc_name + '.consul') }} 6379 2"
       regexp: "^sentinel monitor"
-    - line: "sentinel down-after-milliseconds {{ groups['redis'][0] }} 5000"
+    - line: "sentinel down-after-milliseconds elk-redis 5000"
       regexp: "^sentinel down-after-milliseconds"
-    - line: "sentinel parallel-syncs {{ groups['redis'][0] }} 1"
+    - line: "sentinel parallel-syncs elk-redis 1"
       regexp: "^sentinel parallel-syncs"
-    - line: "sentinel failover-timeout {{ groups['redis'][0] }} 60000"
+    - line: "sentinel failover-timeout elk-redis 60000"
       regexp: "^sentinel failover-timeout"
   notify: Restart redis-sentinel
-- name: Replace 'mymaster' with '{{ groups['redis'][0] }}'
+- name: Replace 'mymaster' with 'elk-redis'
   replace:
     path: /etc/redis-sentinel.conf
     regexp: 'mymaster'
-    replace: "{{ groups['redis'][0] }}"
+    replace: "elk-redis"
   notify: Restart redis-sentinel

@@ -25,7 +25,6 @@
     name: redis-sentinel
     state: restarted
     daemon_reload: yes
-    enabled: yes
   listen: Restart redis-sentinel
 
 - name: Waiting for redis-sentinel started

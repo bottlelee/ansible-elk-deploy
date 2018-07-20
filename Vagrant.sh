@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 function create() {
-  vagrant up --provision
+  vagrant up --provision --install-provider
   # vagrant vbguest
   # vagrant reload --provision
 }
