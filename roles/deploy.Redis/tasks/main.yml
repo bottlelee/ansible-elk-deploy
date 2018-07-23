@@ -28,7 +28,7 @@
     - set_fact:
         sentinel_redis_master: "{{ sentinel_check.stdout }}"
     - debug:
-        msg: "{{ sentinel_check.stdout }}"
+        msg: "Current redis master is {{ sentinel_check.stdout }}"
     - name: Confirm master status
       shell: /usr/bin/redis-cli info replication | grep -w 'role\:master'
       changed_when: false
@@ -38,6 +38,10 @@
       changed_when: false
       register: slaveof_master_ip
       failed_when: slaveof_master_ip.stdout != sentinel_redis_master
+      when: bind_address != sentinel_redis_master
+    - name: Checking master link status is 'up' or not
+      shell: /usr/bin/redis-cli info replication | grep -w 'master_link_status\:up'
+      changed_when: false
       when: bind_address != sentinel_redis_master
   rescue:
     - include_tasks: '{{ ansible_os_family }}_config.yml'

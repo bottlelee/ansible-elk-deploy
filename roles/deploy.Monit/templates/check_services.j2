@@ -47,7 +47,7 @@ check host ES-SHARDS-STATUS with address master.elastic.service.{{ consul_dc_nam
   then alert
 {% endif %}
 
-{% if 'elasticsearch' in group_names or 'kibana' in group_names %}
+{% if 'elasticsearch' in group_names %}
 check host ELASTICSEARCH with address {{ bind_address }}
   start program = "/usr/sbin/service elasticsearch start"
   stop program = "/usr/sbin/service elasticsearch stop"
