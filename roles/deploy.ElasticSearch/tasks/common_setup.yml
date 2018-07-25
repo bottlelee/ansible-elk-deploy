@@ -33,10 +33,10 @@
     - jvm.options
     - elasticsearch.yml
 
-- include_tasks: "plugins.yml target={{ target }}"
-  with_items: "{{ elastic_plugins }}"
-  loop_control:
-    loop_var: target
+# - include_tasks: "plugins.yml target={{ target }}"
+#   with_items: "{{ elastic_plugins }}"
+#   loop_control:
+#     loop_var: target
 
 - name: Installing logrotate configure
   template:

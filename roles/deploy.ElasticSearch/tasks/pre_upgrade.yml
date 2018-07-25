@@ -34,11 +34,3 @@
     host: "{{ bind_address }}"
     port: '{{ elastic_http_port }}'
     state: stopped
-
-- name: Removing plugins
-  elasticsearch_plugin:
-    name: "{{ item }}"
-    state: absent
-  ignore_errors: yes
-  with_items: "{{ elastic_plugins }}"
-  when: "'ingest' in elastic_instance_roles"

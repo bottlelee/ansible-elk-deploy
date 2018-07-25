@@ -33,7 +33,7 @@
     - wait_for:
         host: "{{ bind_address }}"
         port: "{{ item }}"
-        timeout: 5
+        timeout: 60
       with_items:
         - 9300
         - '{{ elastic_http_port }}'
@@ -50,6 +50,9 @@
       with_items:
         - 9300
         - '{{ elastic_http_port }}'
+
+- include_tasks: set_template.yml
+  when: (groups['elasticsearch']|last) == inventory_hostname
 
 - block:
     - name: Checking ElasticSearch version

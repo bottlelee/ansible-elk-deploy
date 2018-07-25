@@ -10,10 +10,16 @@
         name: '/tmp/elasticsearch-{{ elk_version }}.rpm'
         state: present
 
+    - include_tasks: "plugins.yml target={{ target }}"
+      with_items: "{{ elastic_plugins }}"
+      loop_control:
+        loop_var: target
+
     - name: Starting elasticsearch service
       service:
         name: elasticsearch
-        state: started
+        state: restarted
+        daemon_reload: yes
 
   rescue:
 

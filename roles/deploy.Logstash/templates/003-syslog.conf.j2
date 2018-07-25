@@ -2,7 +2,7 @@ filter {
   if [fileset][name] == "syslog" {
     grok {
       match => { "message" => [
-        "%{SYSLOGTIMESTAMP:timestamp} %{DATA:[system][syslog][hostname]} %{DATA:[system][syslog][program]}\[%{INT}\]:%{GREEDYDATA:[system][syslog][message]}",
+        "%{SYSLOGTIMESTAMP:timestamp} %{DATA:[system][syslog][hostname]} %{DATA:[system][syslog][program]}(\[%{INT}\]|):%{GREEDYDATA:[system][syslog][message]}",
         "%{SYSLOGLINE:[system][syslog][message]}",
         "%{CRONLOG:[system][syslog][message]}",
         "%{SYSLOGPAMSESSION:[system][syslog][message]}"

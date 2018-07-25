@@ -1,5 +1,7 @@
 - hosts: esMasters:esDatas
   become: yes
   serial: 1
+  vars_files:
+    - vars/elasticsearch.yml
   roles:
     - deploy.ElasticSearch

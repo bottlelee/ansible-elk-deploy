@@ -13,7 +13,7 @@
         - name: Waiting for service started
           wait_for:
             port: '{{ kibana_port }}'
-            timeout: 120
+            timeout: 180
       rescue:
         - service:
             name: kibana
