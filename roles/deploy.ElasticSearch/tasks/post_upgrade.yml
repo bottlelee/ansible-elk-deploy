@@ -13,7 +13,7 @@
     method: PUT
     body: "{{ lookup('file','enable_shard.json') }}"
     body_format: json
-    
+
 - name: Checking cluster health status
   uri:
     url: http://{{ bind_address }}:{{ elastic_http_port }}/_cluster/health

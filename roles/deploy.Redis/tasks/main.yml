@@ -17,6 +17,7 @@
   rescue:
     - include_tasks: system_config.yml
     - include_tasks: '{{ ansible_os_family }}.yml'
+    - include_tasks: system_config.yml
 
 - block:
     - name: Checking master from sentinel
@@ -45,8 +46,6 @@
       when: bind_address != sentinel_redis_master
   rescue:
     - include_tasks: '{{ ansible_os_family }}_config.yml'
-
-# - include_tasks: '{{ ansible_os_family }}_config.yml'
 
 - name: Updating script '/usr/local/bin/check_redis_master.sh'
   template:

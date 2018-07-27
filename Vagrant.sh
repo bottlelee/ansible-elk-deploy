@@ -2,8 +2,6 @@
 
 function create() {
   vagrant up --provision --install-provider
-  # vagrant vbguest
-  # vagrant reload --provision
 }
 
 case $1 in
