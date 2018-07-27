@@ -1,0 +1,15 @@
+new 'bash' ;
+selectp -t 0 ;
+send -t 0 sleep SPACE 3 ENTER ;
+send -t 0 vagrant SPACE ssh SPACE redis-09 ENTER ;
+send -t 0 watch SPACE "dig SPACE redis.service.consul SPACE | SPACE grep SPACE -e SPACE '^redis'" ENTER ;
+splitw -h vagrant ssh redis-09 ;
+selectp -t 0 ;
+splitw -v vagrant ssh redis-10 ;
+selectp -t 2 ;
+splitw -v vagrant ssh redis-11 ;
+send -t 1 watch SPACE redis-cli SPACE info SPACE replication ENTER ;
+send -t 2 watch SPACE redis-cli SPACE info SPACE replication ENTER ;
+send -t 3 watch SPACE redis-cli SPACE info SPACE replication ENTER ;
+selectl tiled ;
+selectp -t 0 ;

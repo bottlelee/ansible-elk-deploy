@@ -16,6 +16,7 @@ check host CONSUL with address {{ bind_address }}
   start program = "/usr/sbin/service consul start"
   stop program = "/usr/sbin/service consul stop"
   if failed port 8600 for 2 cycles then restart
+  if failed port 8301 for 2 cycles then restart
 
 {% if 'logstash' in group_names %}
 check host LOGSTASH with address 127.0.0.1
@@ -46,10 +47,10 @@ check host ES-SHARDS-STATUS with address master.elastic.service.{{ consul_dc_nam
   then alert
 {% endif %}
 
-{% if 'elasticsearch' in group_names or 'kibana' in group_names %}
-start program = "/usr/sbin/service elasticsearch start"
-stop program = "/usr/sbin/service elasticsearch stop"
+{% if 'elasticsearch' in group_names %}
 check host ELASTICSEARCH with address {{ bind_address }}
+  start program = "/usr/sbin/service elasticsearch start"
+  stop program = "/usr/sbin/service elasticsearch stop"
   if failed port {{ elastic_http_port }} for 5 cycles then restart
 {% endif %}
 
@@ -57,12 +58,12 @@ check host ELASTICSEARCH with address {{ bind_address }}
 check host REDIS-SERVER with address {{ bind_address }}
   start program = "/usr/sbin/service redis-server start"
   stop program = "/usr/sbin/service redis-server stop"
-  if failed port 6379 protocol redis for 10 cycles then restart
+  if failed port 6379 protocol redis for 10 cycles then alert
 
 check host REDIS-SENTINEL with address {{ bind_address }}
   start program = "/usr/sbin/service redis-sentinel start"
   stop program = "/usr/sbin/service redis-sentinel stop"
-  if failed port 26379 for 10 cycles then restart
+  if failed port 26379 for 10 cycles then alert
 
 check host REDIS-MASTER with address redis.service.{{ consul_dc_name }}.consul
   if failed port 6379 for 10 cycles then alert

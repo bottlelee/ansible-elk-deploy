@@ -1,0 +1,25 @@
+# Elasticsearch configure
+elastic_cluster_name: 'quanduan'
+elastic_log_path: '/var/log/elasticsearch'
+
+## IMPORTANT: for production, DO NOT store the elasticsearch data along with the system.
+##            And DO NOT remove them unless you know what you doing.
+elastic_data_paths:
+  - /var/lib/elasticsearch
+
+elastic_plugins:
+  - ingest-user-agent
+  - ingest-geoip
+
+indices_default_settings:
+  number_of_shards: 3
+  number_of_replicas: 0
+  refresh_interval: 15s
+  unassigned_node_left_delayed_timeout: 5m
+
+# Start: Do NOT edit.
+elastic_all_roles:
+  - master
+  - data
+  - ingest
+# End: Do NOT edit

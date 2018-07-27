@@ -19,3 +19,5 @@
     group: root
     mode: 0544
   notify: Start disable-thp.service
+
+- meta: flush_handlers

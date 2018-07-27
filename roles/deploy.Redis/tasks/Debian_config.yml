@@ -21,7 +21,7 @@
       regexp: "^bind"
     - line: "port 26379"
       regexp: "^port"
-    - line: "sentinel monitor elk-redis {{ groups['redis'][0] }}.node.{{ consul_dc_name }}.consul 6379 2"
+    - line: "sentinel monitor elk-redis {{ sentinel_redis_master | default(groups['redis'][0]) }} 6379 2"
       regexp: "^sentinel monitor"
     - line: "sentinel down-after-milliseconds elk-redis 5000"
       regexp: "^sentinel down-after-milliseconds"

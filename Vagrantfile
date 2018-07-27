@@ -27,11 +27,15 @@ Vagrant.configure("2") do |config|
     config.vm.provision "file", source: "apt_sources.list", destination: "/tmp/sources.list"
     config.vm.provision "shell", inline: "sudo mv -f /tmp/sources.list /etc/apt/sources.list"
     config.vm.provision "shell", inline: "sudo apt-get update"
+    config.vm.provision "shell", inline: "sudo apt-get install -y htop di nmon"
+  elsif $vm_box == "centos/7" then
+    config.vm.provision "shell", inline: "yum install -y epel-release"
+    config.vm.provision "shell", inline: "yum install -y nano htop di byobu nmon telnet net-tools bind-utils"
   end
 
   if Vagrant.has_plugin?("vagrant-proxyconf")
     config.proxy.http     = ENV['HTTP_PROXY'] || ENV['http_proxy'] || ""
-    config.proxy.https    = ENV['HTTPS_PROXY'] || ENV['https_proxy'] ||  ""
+    config.proxy.https    = ENV['HTTPS_PROXY'] || ENV['https_proxy'] || ""
     config.proxy.no_proxy = $no_proxy
   end
 

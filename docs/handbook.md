@@ -34,9 +34,9 @@
 
 |组名|主机数|共用|备注|
 |---|---|---|---|
-|elasticMasterNode|3|是||
-|elasticHotNode|0|||
-|elasticWarmNode|0|||
+|esMasters|3|是||
+|esHots|0|||
+|esWarms|0|||
 |redis|0|||
 |logstash|3|是||
 |kibana|3|是|||
@@ -46,9 +46,9 @@
 
 |组名|主机数|共用|备注|
 |---|---|---|---|
-|elasticMasterNode|3|否|不存储数据|
-|elasticHotNode|3|否|存储数据|
-|elasticWarmNode|0|||
+|esMasters|3|否|不存储数据|
+|esHots|3|否|存储数据|
+|esWarms|0|||
 |redis|0|||
 |logstash|3|是||
 |kibana|3|是|||
@@ -58,9 +58,9 @@
 
 |组名|主机数|共用|备注|
 |---|---|---|---|
-|elasticMasterNode|3|否|不存储数据|
-|elasticHotNode|3|否|存储热数据|
-|elasticWarmNode|3|否|存储冷数据|
+|esMasters|3|否|不存储数据|
+|esHots|3|否|存储热数据|
+|esWarms|3|否|存储冷数据|
 |redis|3|否||
 |logstash|2+|否||
 |kibana|2+|否|||
@@ -69,15 +69,15 @@
 ## 全新部署
 执行 `ansible-playbook play-all.yml`
 
-## 分解部署
+## 分解部署（带 * 表示公共脚本）
 ### 00-downloaded_files.yml
 下载所需文件。如果是要在离线环境部署，需先执行该剧本。
 
-### 01-env_init.yml
+### 01-env_init.yml *
 1. 初始化所有目标服务器的环境。安装 chrony NTP 服务。
 1. 这是公用剧本。任何主机数量的增减，都需要执行一次。
 
-### 02-deploy_consul.yml
+### 02-deploy_consul.yml *
 1. 部署 consul 服务。用于服务自注册，内部 DNS 解析。
 1. consul master 节点与 elasticsearch master 节点共存。
 1. 其余节点都是 client 模式。
@@ -101,13 +101,13 @@
 ### 06-deploy_logstash.yml
 1. 部署 logstash 集群。主机数可根据负载弹性伸缩。
 
-### 07-deploy_beats.yml
+### 07-deploy_beats.yml *
 1. filebeat 默认采集本架构内相关服务的日志。
 1. metricbeat 采集主机状态、kibana 状态、elasticsearch 状态。
 1. redis 或 logstash 节点伸缩，无需改变 beats 的 output，因为是通过 consul 做 DNS 解析。
 1. 这是公用剧本。新增的主机都需要执行一次。
 
-### 08-deploy_monit.yml
+### 08-deploy_monit.yml *
 1. 用于监控告警。具体看 roles/deploy.Monit/templates 里的监控配置。
 1. 这是公用剧本。任何主机数量的增减，都需要执行一次。
 

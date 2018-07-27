@@ -10,5 +10,8 @@
   wait_for:
     host: "{{ bind_address }}"
     port: "{{ kibana_port }}"
-    timeout: 120
+    timeout: 180
+  register: status
+  retries: 3
+  until: status is succeeded
   listen: Restart kibana

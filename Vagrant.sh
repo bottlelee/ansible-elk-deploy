@@ -1,9 +1,7 @@
 #!/usr/bin/env bash
 
 function create() {
-  vagrant up --provision
-  vagrant vbguest
-  vagrant reload
+  vagrant up --provision --install-provider
 }
 
 case $1 in
@@ -18,5 +16,5 @@ case $1 in
     vagrant destroy -f
     ;;
   * )
-    echo "Usage: up|rebuild|destroy"
+    echo "Usage: $0 up|rebuild|destroy"
 esac

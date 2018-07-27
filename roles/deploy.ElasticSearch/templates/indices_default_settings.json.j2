@@ -1,0 +1,19 @@
+{
+  "index_patterns": [
+    "*"
+  ],
+  "settings": {
+    "number_of_shards": {{ indices_default_settings.number_of_shards }},
+    "number_of_replicas": {{ indices_default_settings.number_of_replicas }},
+    "index": {
+      {% if (groups['esHots'] | count) > 0 -%}
+      "routing.allocation.require.box_type": "hot",
+      {% endif -%}
+      "unassigned.node_left.delayed_timeout": "{{ indices_default_settings.unassigned_node_left_delayed_timeout }}",
+      "refresh_interval": "{{ indices_default_settings.refresh_interval }}"
+    }
+  },
+  "aliases": {
+    "active-logs": {}
+  }
+}

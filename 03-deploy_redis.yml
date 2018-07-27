@@ -4,5 +4,6 @@
     - 1
   vars_files:
     - vars/download_urls.yml
+    - vars/redis_conf.yml
   roles:
     - role: deploy.Redis

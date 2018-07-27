@@ -30,5 +30,13 @@
   "bind_addr": "{{ bind_address }}",
   "addresses": {
     "dns": "0.0.0.0"
+  },
+  "connect": {
+    "enabled": true
+  },
+  "dns_config": {
+    "service_ttl": {
+      "*": "5s"
+    }
   }
 }

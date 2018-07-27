@@ -20,6 +20,7 @@
         name: deploy.ElasticSearch
         tasks_from: set_template.yml
       run_once: yes
+  when: "'kibana' in group_names"
 
 - include_tasks: '{{ target }}_templates.yml'
   tags: beats.config
