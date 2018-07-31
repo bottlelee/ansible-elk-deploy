@@ -6,13 +6,14 @@
       failed_when: verChk.stdout is version(elk_version, operator='lt', strict=True)
     - name: Checking kibana service status
       wait_for:
+        host: "{{ bind_address }}"
         port: '{{ kibana_port }}'
         timeout: 10
   rescue:
     - include_tasks: '{{ ansible_os_family }}.yml'
-    - name: Create /var/run/kibana
+    - name: Create /var/log/kibana
       file:
-        path: /var/run/kibana
+        path: /var/log/kibana
         state: directory
         owner: kibana
         group: kibana
