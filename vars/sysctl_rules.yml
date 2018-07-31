@@ -12,10 +12,10 @@ sysctl_rules:
   - {name: net.ipv4.ip_forward, value: 1}
   - {name: net.ipv4.tcp_rmem, value: 10240 87380 12582912}
   - {name: net.ipv4.tcp_wmem, value: 10240 87380 12582912}
-  # - {name: net.ipv4.tcp_timestamps, value: 1}
-  # - {name: net.ipv4.tcp_window_scaling, value: 1}
-  # - {name: net.ipv4.tcp_sack, value: 1}
-  # - {name: net.ipv4.tcp_no_metrics_save, value: 1}
-  # - {name: net.ipv4.tcp_congestion_control, value: cubic}
-  # - {name: net.ipv4.tcp_syncookies, value: 1}
-  # - {name: net.ipv4.tcp_tw_recycle, value: 1}
+  - {name: net.ipv4.tcp_timestamps, value: 1}
+  - {name: net.ipv4.tcp_window_scaling, value: 1}
+  - {name: net.ipv4.tcp_sack, value: 1}
+  - {name: net.ipv4.tcp_no_metrics_save, value: 1}
+  - {name: net.ipv4.tcp_congestion_control, value: cubic}
+  - {name: net.ipv4.tcp_syncookies, value: 1}
+  - {name: net.ipv4.tcp_tw_recycle, value: 1}

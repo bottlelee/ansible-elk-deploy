@@ -19,7 +19,7 @@
         path: /usr/local/bin/curator
         state: link
       when: ansible_os_family == 'RedHat'
-      
+
 - block:
     - include_tasks: 'action_files.yml target={{ item }}'
       with_items:
@@ -27,4 +27,4 @@
     - include_tasks: 'cron.yml target={{ item }}'
       with_items:
         - hot_to_warm
-  when: "(groups['esWarms']|length) > 0"
+  when: "( groups['esWarms'] | count ) > 0"

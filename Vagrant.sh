@@ -2,6 +2,7 @@
 
 function create() {
   vagrant up --provision --install-provider
+  vagrant reload --provision
 }
 
 case $1 in

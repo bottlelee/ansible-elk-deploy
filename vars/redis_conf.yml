@@ -48,6 +48,8 @@ redis_conf:
   - ["client-output-buffer-limit", "pubsub 32mb 8mb 60"]
   - ["hz", "10"]
   - ["aof-rewrite-incremental-fsync", "yes"]
+  - ["min-slaves-to-write", "1"]
+  - ["min-slaves-max-lag", "10"]
 
 redis_extra_conf:
   maxmemory_percent: 0.8

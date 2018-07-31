@@ -2,9 +2,9 @@
   "services": [
     {
       "name": "elastic",
-      "address": "",
+      "address": "{{ bind_address }}",
       "port": {{ elastic_http_port }},
-      "enable_tag_override": true,
+      "enable_tag_override": false,
       "tags": [
         {%- for item in elastic_instance_roles -%}
           "{{ item }}"{%- if loop.nextitem is defined -%},{%- endif -%}

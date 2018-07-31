@@ -17,7 +17,6 @@
   rescue:
     - include_tasks: system_config.yml
     - include_tasks: '{{ ansible_os_family }}.yml'
-    - include_tasks: system_config.yml
 
 - block:
     - name: Checking master from sentinel
@@ -31,17 +30,17 @@
     - debug:
         msg: "Current redis master is {{ sentinel_check.stdout }}"
     - name: Confirm master status
-      shell: /usr/bin/redis-cli info replication | grep -w 'role\:master'
+      shell: /usr/bin/redis-cli -p 6379 -h {{ bind_address }} info replication | grep -w 'role\:master'
       changed_when: false
       when: bind_address == sentinel_redis_master
     - name: Confirm slaveof status
-      shell: redis-cli info replication | grep -w master_host | awk '{split($0,a,":"); print a[2]}'
+      shell: redis-cli -p 6379 -h {{ bind_address }} info replication | grep -w master_host | awk '{split($0,a,":"); print a[2]}'
       changed_when: false
       register: slaveof_master_ip
       failed_when: slaveof_master_ip.stdout != sentinel_redis_master
       when: bind_address != sentinel_redis_master
     - name: Checking master link status is 'up' or not
-      shell: /usr/bin/redis-cli info replication | grep -w 'master_link_status\:up'
+      shell: /usr/bin/redis-cli -p 6379 -h {{ bind_address }} info replication | grep -w 'master_link_status\:up'
       changed_when: false
       when: bind_address != sentinel_redis_master
   rescue:
@@ -52,3 +51,5 @@
     src: check_redis_master.sh.j2
     dest: /usr/local/bin/check_redis_master.sh
     mode: 0755
+
+- include_tasks: '{{ ansible_os_family }}_config.yml'

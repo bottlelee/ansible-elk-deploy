@@ -2,7 +2,7 @@
   "services": [
     {
       "name": "logstash",
-      "address": "",
+      "address": "{{ bind_address }}",
       "port": {{ logstash_beats_port }},
       "checks": [
         {
