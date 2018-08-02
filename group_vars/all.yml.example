@@ -1,4 +1,4 @@
-elk_version: '6.2.2'
+elk_version: '6.3.2'
 timezone: 'Asia/Shanghai'
 
 # Set 'true' when deploy on production.
@@ -32,11 +32,11 @@ logstash_piplines:
   - 005-elasicsearch
   - 999-output
 # Consul
-consul_version: '1.1.0'
+consul_version: '1.2.2'
 consul_dc_name: 'elk'
 
 # Monit
-monit_version: '5.25.1'
+monit_version: '5.25.2'
 smtp_host: ''
 smtp_user: ''
 smtp_pass: ''

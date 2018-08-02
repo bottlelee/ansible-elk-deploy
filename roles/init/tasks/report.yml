@@ -1,0 +1,20 @@
+- block:
+    - name: "Download {{ item }} to local directory"
+      fetch:
+        src: "{{ item }}"
+        dest: "install_report"
+        fail_on_missing: false
+      with_items:
+        - /etc/sysconfig/network-scripts/ifcfg-{{ bind_interface }}
+        - /etc/sysctl.conf
+        - /etc/rsyslog.d/01-hostname.conf
+        - /etc/hosts
+        - /etc/resolvconf/resolv.conf.d/head
+  rescue:
+    - name: "Create local directory install_report/monit"
+      file:
+        path: "install_report/monit"
+        state: directory
+      delegate_to: localhost
+      become: no
+    - include_tasks: report.yml

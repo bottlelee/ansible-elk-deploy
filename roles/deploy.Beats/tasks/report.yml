@@ -2,13 +2,12 @@
     - name: "Download /etc/{{ target }}/{{ target }}.yml to local directory"
       fetch:
         src: "/etc/{{ target }}/{{ target }}.yml"
-        dest: "install_report/{{ target }}/{{ inventory_hostname }}_{{ target }}.yml"
+        dest: "install_report"
         fail_on_missing: false
-        flat: yes
   rescue:
     - name: "Create local directory install_report/{{ target }}"
       file:
-        path: "install_report/{{ target }}"
+        path: "install_report"
         state: directory
       delegate_to: localhost
       become: no

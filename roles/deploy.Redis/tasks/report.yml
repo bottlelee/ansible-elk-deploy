@@ -1,0 +1,19 @@
+- block:
+    - name: "Download /etc/redis/{{ item }} to local directory"
+      fetch:
+        src: "/etc/redis/{{ item }}"
+        dest: "install_report"
+        fail_on_missing: false
+      with_items:
+        - redis.conf
+        - sentinel.conf
+        - redis-server.conf
+        - redis-sentinel.conf
+  rescue:
+    - name: "Create local directory install_report/monit"
+      file:
+        path: "install_report/monit"
+        state: directory
+      delegate_to: localhost
+      become: no
+    - include_tasks: report.yml

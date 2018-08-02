@@ -13,6 +13,11 @@
       with_items: "{{ summary.stdout_lines | sort }}"
       delegate_to: localhost
       become: no
+    - name: "Download /etc/monitrc to local directory"
+      fetch:
+        src: "/etc/monitrc"
+        dest: "install_report"
+        fail_on_missing: false
   rescue:
     - name: "Create local directory install_report/monit"
       file:

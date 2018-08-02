@@ -2,9 +2,8 @@
     - name: "Download /etc/consul.d/*.json to local directory"
       fetch:
         src: "/etc/consul.d/{{ item }}.json"
-        dest: "install_report/consul/{{ inventory_hostname }}_{{ item }}.json"
+        dest: "install_report"
         fail_on_missing: false
-        flat: yes
       with_items:
         - config
         - elasticsearch
@@ -14,7 +13,7 @@
   rescue:
     - name: "Create local directory install_report/consul"
       file:
-        path: "install_report/consul"
+        path: "install_report"
         state: directory
       delegate_to: localhost
       become: no

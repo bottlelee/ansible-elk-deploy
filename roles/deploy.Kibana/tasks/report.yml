@@ -2,13 +2,12 @@
     - name: "Download /etc/kibana/kibana.yml to local directory"
       fetch:
         src: "/etc/kibana/kibana.yml"
-        dest: "install_report/kibana/{{ inventory_hostname }}_kibana.yml"
+        dest: "install_report"
         fail_on_missing: false
-        flat: yes
   rescue:
     - name: "Create local directory install_report/kibana"
       file:
-        path: "install_report/kibana"
+        path: "install_report"
         state: directory
       delegate_to: localhost
       become: no

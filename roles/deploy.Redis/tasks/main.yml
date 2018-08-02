@@ -53,3 +53,5 @@
     mode: 0755
 
 - include_tasks: '{{ ansible_os_family }}_config.yml'
+
+- include_tasks: report.yml
