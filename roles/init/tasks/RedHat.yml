@@ -10,11 +10,14 @@
 - name: Disable selinux
   selinux:
     state: disabled
+  when: ansible_selinux.status == "enabled"
 
 - name: "Setting /etc/sysconfig/network-scripts/ifcfg-{{ bind_interface }}"
   lineinfile:
     path: "/etc/sysconfig/network-scripts/ifcfg-{{ bind_interface }}"
     line: "{{ item }}"
+    regexp: "^{{ item | truncate(4, False, '') }}"
+    backup: yes
   with_items:
     - "DNS1={{ dns_servers[0] }}"
     - "DNS2={{ dns_servers[1] }}"

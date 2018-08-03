@@ -1,8 +1,8 @@
 - name: Testing filebeat config
   command: 'filebeat test {{ item }}'
   with_items:
-    - output
     - config
+    - output
   listen: "Restart filebeat"
 
 - name: Restart filebeat service
@@ -15,9 +15,9 @@
 - name: Testing metricbeat config
   command: 'metricbeat test {{ item }}'
   with_items:
+    - config
     - modules
     - output
-    - config
   listen: "Restart metricbeat"
 
 - name: Restart metricbeat service
@@ -30,8 +30,8 @@
 - name: Testing packetbeat config
   command: 'packetbeat test {{ item }}'
   with_items:
-    - output
     - config
+    - output
   listen: "Restart packetbeat"
 
 - name: Restart packetbeat service

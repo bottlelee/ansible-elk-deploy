@@ -3,7 +3,7 @@
   period: 30s
 
   # Redis hosts
-  hosts: ["{{ inventory_hostname }}:6379"]
+  hosts: ["{{ bind_address }}:6379"]
 
   # Timeout after which time a metricset should return an error
   # Timeout is by default defined as period, as a fetch of a metricset

@@ -28,6 +28,7 @@ output.logstash:
   slow_start: true
 {% endif %}
 
+{% if inventory_hostname == groups['all'][0] %}
 #============================== Dashboards =====================================
 setup.dashboards:
   enabled: true
@@ -39,6 +40,7 @@ setup.dashboards:
 #================================ Kibana =====================================
 setup.kibana:
   host: "kibana.service.{{ consul_dc_name }}.consul"
+{% endif %}
 
 #================================ Logging =====================================
 logging.to_files: true

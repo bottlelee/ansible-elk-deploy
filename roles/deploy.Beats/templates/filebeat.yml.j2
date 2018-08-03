@@ -55,7 +55,7 @@ output.elasticsearch:
   slow_start: true
 {% endif %}
 
-{% if 'esMasters' in group_names %}
+{% if inventory_hostname == groups['all'][0] %}
 #============================== Dashboards =====================================
 setup.dashboards:
   enabled: true

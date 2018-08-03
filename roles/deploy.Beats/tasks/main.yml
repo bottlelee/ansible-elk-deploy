@@ -8,21 +8,18 @@
     - include_tasks: '{{ ansible_os_family }}.yml'
     - name: Importing elasticsearch template
       shell: "{{ target }} setup --template -E output.logstash.enabled=false -E output.redis.enabled=false -E output.elasticsearch.hosts='ingest.elastic.service.{{ consul_dc_name }}.consul:{{ elastic_http_port }}'"
-      run_once: yes
+      when: inventory_hostname == groups['all'][0]
 
 - block:
     - name: Checking index default settings
       uri:
         url: http://ingest.elastic.service.{{ consul_dc_name }}.consul:{{ elastic_http_port }}/_template/active-logs
-      run_once: yes
   rescue:
     - import_role:
         name: deploy.ElasticSearch
         tasks_from: set_template.yml
-      run_once: yes
-  when: "'kibana' in group_names"
+  when: inventory_hostname == groups['all'][0]
 
 - include_tasks: '{{ target }}_templates.yml'
-  tags: beats.config
 
 - include_tasks: report.yml

@@ -7,13 +7,23 @@
       target: filebeat,
       tags: filebeat
     }
-    # - {
-    #   role: deploy.Beats,
-    #   target: metricbeat,
-    #   tags: metricbeat
-    # }
-    # - {
-    #   role: deploy.Beats,
-    #   target: packetbeat,
-    #   tags: packetbeat
-    # }
+
+- hosts: all
+  become: yes
+  serial: 33%
+  roles:
+    - {
+      role: deploy.Beats,
+      target: metricbeat,
+      tags: metricbeat
+    }
+
+- hosts: all
+  become: yes
+  serial: 33%
+  roles:
+    - {
+      role: deploy.Beats,
+      target: packetbeat,
+      tags: packetbeat
+    }
