@@ -13,7 +13,7 @@
       with_items: "{{ summary.stdout_lines | sort }}"
       delegate_to: localhost
       become: no
-    - name: "Download /etc/monitrc to local directory"
+    - name: "Fetching /etc/monitrc to local 'install_report' directory"
       fetch:
         src: "/etc/monitrc"
         dest: "install_report"

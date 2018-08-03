@@ -1,5 +1,5 @@
 - block:
-    - name: "Download {{ item }} to local directory"
+    - name: "Fetching {{ item }} to local 'install_report' directory"
       fetch:
         src: "{{ item }}"
         dest: "install_report"

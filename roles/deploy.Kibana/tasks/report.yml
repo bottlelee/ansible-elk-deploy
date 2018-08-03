@@ -1,5 +1,5 @@
 - block:
-    - name: "Download /etc/kibana/kibana.yml to local directory"
+    - name: "Fetching /etc/kibana/kibana.yml to local 'install_report' directory"
       fetch:
         src: "/etc/kibana/kibana.yml"
         dest: "install_report"

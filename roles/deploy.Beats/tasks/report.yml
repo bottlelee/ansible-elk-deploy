@@ -1,5 +1,5 @@
 - block:
-    - name: "Download /etc/{{ target }}/{{ target }}.yml to local directory"
+    - name: "Fetching /etc/{{ target }}/{{ target }}.yml to local 'install_report' directory"
       fetch:
         src: "/etc/{{ target }}/{{ target }}.yml"
         dest: "install_report"

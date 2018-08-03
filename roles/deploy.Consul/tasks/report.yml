@@ -1,5 +1,5 @@
 - block:
-    - name: "Download /etc/consul.d/*.json to local directory"
+    - name: "Fetching /etc/consul.d/*.json to local 'install_report' directory"
       fetch:
         src: "/etc/consul.d/{{ item }}.json"
         dest: "install_report"

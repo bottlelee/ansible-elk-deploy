@@ -1,5 +1,5 @@
 {
-{% if 'esMasters' in group_names and (groups['esMasters'] | length) >= 3 %}
+{% if 'esMasters' in group_names and (groups['esMasters'] | count) >= 3 %}
   "server": true,
   "bootstrap_expect": 3,
   "retry_join": [
@@ -9,7 +9,13 @@
   ],
   "ui": true,
   "client_addr": "0.0.0.0",
-{% elif 'esMasters' not in group_names and (groups['esMasters'] | length) >= 3 %}
+  "performance": {
+    "raft_multiplier": 1
+  },
+  "connect": {
+    "enabled": true
+  },
+{% elif 'esMasters' not in group_names and (groups['esMasters'] | count) >= 3 %}
   "server": false,
   "retry_join": [
     {%- for item in groups['esMasters'] -%}
@@ -24,15 +30,12 @@
   "datacenter": "{{ consul_dc_name }}",
   "data_dir": "/var/consul",
   "encrypt": "{{ consul_key }}",
-  "log_level": "WARN",
+  "log_level": "err",
   "enable_syslog": true,
   "enable_script_checks": true,
   "bind_addr": "{{ bind_address }}",
   "addresses": {
     "dns": "0.0.0.0"
-  },
-  "connect": {
-    "enabled": true
   },
   "dns_config": {
     "service_ttl": {

@@ -1,5 +1,5 @@
 - block:
-    - name: "Download /etc/chrony.conf to local directory"
+    - name: "Fetching /etc/chrony.conf to local 'install_report' directory"
       fetch:
         src: "/etc/chrony.conf"
         dest: "install_report"

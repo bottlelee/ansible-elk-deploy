@@ -1,5 +1,5 @@
 - block:
-    - name: "Download /etc/elasticsearch/elasticsearch.yml to local directory"
+    - name: "Fetching /etc/elasticsearch/elasticsearch.yml to local 'install_report' directory"
       fetch:
         src: "/etc/elasticsearch/elasticsearch.yml"
         dest: "install_report"

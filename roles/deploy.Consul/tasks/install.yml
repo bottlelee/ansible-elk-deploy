@@ -4,6 +4,7 @@
         src: "downloaded_files/consul-{{ consul_version }}"
         dest: /usr/local/bin/consul
         mode: 0755
+      notify: Restart consul
   rescue:
     - include_tasks: download.yml
     - include_tasks: install.yml

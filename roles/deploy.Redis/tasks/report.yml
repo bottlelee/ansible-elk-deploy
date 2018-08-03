@@ -1,5 +1,5 @@
 - block:
-    - name: "Download /etc/redis/{{ item }} to local directory"
+    - name: "Fetching /etc/redis/{{ item }} to local 'install_report' directory"
       fetch:
         src: "/etc/redis/{{ item }}"
         dest: "install_report"

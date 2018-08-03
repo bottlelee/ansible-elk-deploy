@@ -1,5 +1,5 @@
 - block:
-    - name: "Download /etc/logstash/logstash.yml to local directory"
+    - name: "Fetching /etc/logstash/logstash.yml to local 'install_report' directory"
       fetch:
         src: "/etc/logstash/logstash.yml"
         dest: "install_report"
