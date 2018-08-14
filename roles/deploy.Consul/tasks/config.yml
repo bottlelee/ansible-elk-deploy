@@ -33,7 +33,7 @@
   shell: "ls *.json | grep -v config"
   args:
     chdir: /etc/consul.d/
-  ignore_errors: yes
+  ignore_errors: True
   changed_when: false
   register: allTemplates
 

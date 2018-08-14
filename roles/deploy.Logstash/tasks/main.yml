@@ -59,7 +59,7 @@
 
 - name: Listing current pipline files
   command: "ls /etc/logstash/conf.d/"
-  ignore_errors: yes
+  ignore_errors: True
   changed_when: false
   register: allTemplates
 

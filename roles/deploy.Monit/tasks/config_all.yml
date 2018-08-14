@@ -32,7 +32,7 @@
 
 - name: Listing current config files
   command: "ls /etc/monit.d/"
-  ignore_errors: yes
+  ignore_errors: True
   changed_when: false
   register: templatesList
 
