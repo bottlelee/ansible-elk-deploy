@@ -19,11 +19,10 @@
       delegate_to: localhost
       become: no
       run_once: yes
-
-- name: Copy the /tmp/consul into downloaded_files
-  copy:
-    src: /tmp/consul
-    dest: "downloaded_files/consul-{{ consul_version }}"
-  delegate_to: localhost
-  become: no
-  run_once: yes
+    - name: Copy the /tmp/consul into downloaded_files
+      copy:
+        src: /tmp/consul
+        dest: "downloaded_files/consul-{{ consul_version }}"
+      delegate_to: localhost
+      become: no
+      run_once: yes
