@@ -7,7 +7,7 @@ jre_version: 1.8.0_171
 # Redis download urls
 rpm_redis_urls:
   # https://pkgs.org/download/redis
-  - http://dl.fedoraproject.org/pub/epel/7/x86_64/Packages/r/redis-3.2.10-2.el7.x86_64.rpm
+  - http://dl.fedoraproject.org/pub/epel/7/x86_64/Packages/r/redis-3.2.12-1.el7.x86_64.rpm
   # https://pkgs.org/download/jemalloc
   - http://dl.fedoraproject.org/pub/epel/7/x86_64/Packages/j/jemalloc-3.6.0-1.el7.x86_64.rpm
 deb_redis_urls:

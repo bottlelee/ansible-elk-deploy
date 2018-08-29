@@ -11,7 +11,7 @@
       command: /usr/bin/java -version
       changed_when: false
   rescue:
-    - include_tasks: jre.yml
+    - include_tasks: jre/install.yml
   when: "'redis' not in group_names"
 
 - include_tasks: "{{ ansible_os_family }}.yml"

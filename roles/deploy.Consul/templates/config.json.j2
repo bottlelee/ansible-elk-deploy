@@ -4,7 +4,7 @@
   "bootstrap_expect": 3,
   "retry_join": [
     {%- for item in groups['esMasters'] if item != ansible_nodename -%}
-      "{{ hostvars[item]['bind_address'] }}"{%- if loop.nextitem is defined -%},{%- endif -%}
+      "{{ hostvars[item]['ansible_' + bind_interface]['ipv4']['address'] | default(ansible_default_ipv4.address) }}"{%- if loop.nextitem is defined -%},{%- endif -%}
     {%- endfor -%}
   ],
   "ui": true,
@@ -19,7 +19,7 @@
   "server": false,
   "retry_join": [
     {%- for item in groups['esMasters'] -%}
-      "{{ hostvars[item]['bind_address'] }}"{%- if loop.nextitem is defined -%},{%- endif -%}
+      "{{ hostvars[item]['ansible_' + bind_interface]['ipv4']['address'] | default(ansible_default_ipv4.address) }}"{%- if loop.nextitem is defined -%},{%- endif -%}
     {%- endfor -%}
   ],
 {% else %}

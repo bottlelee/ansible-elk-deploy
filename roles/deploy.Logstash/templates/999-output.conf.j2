@@ -1,8 +1,8 @@
 output {
-  if [beat_type] {
+  if [@metadata][beat] {
     elasticsearch {
       hosts => ["ingest.elastic.service.{{ consul_dc_name }}.consul:{{ elastic_http_port }}"]
-      index => "%{[beat_type]}-%{[beat][version]}-%{+YYYY.MM.dd}"
+      index => "%{[@metadata][beat]}-%{[@metadata][version]}-%{+YYYY.MM.dd}"
       manage_template => false
     }
   }

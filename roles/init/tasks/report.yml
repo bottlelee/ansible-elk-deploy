@@ -11,9 +11,9 @@
         - /etc/hosts
         - /etc/resolvconf/resolv.conf.d/head
   rescue:
-    - name: "Create local directory install_report/monit"
+    - name: "Create local directory install_report"
       file:
-        path: "install_report/monit"
+        path: "install_report"
         state: directory
       delegate_to: localhost
       become: no

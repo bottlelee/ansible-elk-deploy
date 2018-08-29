@@ -1,12 +1,18 @@
 - block:
-
     - name: Checking elasticsearch service status
       service:
         name: elasticsearch
         state: started
-
+    - name: Checking elasticsearch port
+      wait_for:
+        host: "{{ bind_address }}"
+        port: "{{ item }}"
+        delay: 10
+        timeout: 180
+      with_items:
+        - 9300
+        - 9200
   rescue:
-
     - include_tasks: env_check.yml
     - include_tasks: '{{ ansible_os_family }}.yml'
     - include_tasks: common_setup.yml

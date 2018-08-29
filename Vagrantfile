@@ -18,12 +18,12 @@ Vagrant.configure("2") do |config|
   config.vm.box = $vm_box
   config.vm.synced_folder ".", "/vagrant", disabled: true
 
-  if Vagrant.has_plugin?("vagrant-proxyconf") and $vm_box == "ubuntu/xenial64" then
+  if Vagrant.has_plugin?("vagrant-proxyconf") and $vm_box == "bento/ubuntu-16.04" then
     config.apt_proxy.http = $apt_proxy || ""
     config.apt_proxy.https = "DIRECT"
   end
 
-  if $vm_box == "ubuntu/xenial64" then
+  if $vm_box == "bento/ubuntu-16.04" then
     config.vm.provision "file", source: "apt_sources.list", destination: "/tmp/sources.list"
     config.vm.provision "shell", inline: "sudo mv -f /tmp/sources.list /etc/apt/sources.list"
     config.vm.provision "shell", inline: "sudo apt-get update"

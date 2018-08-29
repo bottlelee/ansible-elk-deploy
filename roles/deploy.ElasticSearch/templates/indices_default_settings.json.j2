@@ -10,7 +10,8 @@
       "routing.allocation.require.box_type": "hot",
       {% endif -%}
       "unassigned.node_left.delayed_timeout": "{{ indices_default_settings.unassigned_node_left_delayed_timeout }}",
-      "refresh_interval": "{{ indices_default_settings.refresh_interval }}"
+      "refresh_interval": "{{ indices_default_settings.refresh_interval }}",
+      "codec": "best_compression"
     }
   },
   "aliases": {

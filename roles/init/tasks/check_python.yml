@@ -1,3 +1,5 @@
+---
+
 - block:
     - name: Checking python2
       raw: test -e /usr/bin/python
@@ -10,6 +12,10 @@
         create: yes
       delegate_to: localhost
       become: no
+    - meta: clear_host_errors
+    - meta: refresh_inventory
+    - include_vars: "host_vars/{{ inventory_hostname }}.yml"
+    - setup:
   rescue:
     - name: Checking python3
       raw: test -e /usr/bin/python3
@@ -22,7 +28,12 @@
         create: yes
       delegate_to: localhost
       become: no
+    - meta: clear_host_errors
+    - meta: refresh_inventory
+    - include_vars: "host_vars/{{ inventory_hostname }}.yml"
+    - setup:
   when: (ansible_python_interpreter is not defined) or (ansible_python_interpreter == "/usr/bin/python")
+
 
 - block:
     - name: Checking python3
@@ -36,6 +47,10 @@
         create: yes
       delegate_to: localhost
       become: no
+    - meta: clear_host_errors
+    - meta: refresh_inventory
+    - include_vars: "host_vars/{{ inventory_hostname }}.yml"
+    - setup:
   rescue:
     - name: Checking python
       raw: test -e /usr/bin/python
@@ -48,13 +63,8 @@
         create: yes
       delegate_to: localhost
       become: no
-  when: (ansible_python_interpreter is not defined) or (ansible_python_interpreter == "/usr/bin/python3")
-
-- block:
     - meta: clear_host_errors
     - meta: refresh_inventory
     - include_vars: "host_vars/{{ inventory_hostname }}.yml"
     - setup:
-    - include_tasks: create_hostvars.yml
-  rescue:
-    - include_tasks: check_python.yml
+  when: (ansible_python_interpreter is not defined) or (ansible_python_interpreter == "/usr/bin/python3")

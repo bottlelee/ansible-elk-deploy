@@ -4,7 +4,7 @@ filter {
       source => "message"
       include_brackets => false
       target => "[auditd][log]"
-      #remove_field => "message"
+      remove_field => "message"
     }
     kv {
       source => "[auditd][log][msg]"
