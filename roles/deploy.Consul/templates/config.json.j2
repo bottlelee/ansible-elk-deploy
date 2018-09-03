@@ -1,12 +1,14 @@
 {
-{% if 'esMasters' in group_names and (groups['esMasters'] | count) >= 3 %}
+{% if 'esMasters' in group_names %}
   "server": true,
+  {% if (groups['esMasters'] | count) >= 3 -%}
   "bootstrap_expect": 3,
   "retry_join": [
     {%- for item in groups['esMasters'] if item != ansible_nodename -%}
       "{{ hostvars[item]['ansible_' + bind_interface]['ipv4']['address'] | default(ansible_default_ipv4.address) }}"{%- if loop.nextitem is defined -%},{%- endif -%}
     {%- endfor -%}
   ],
+  {% endif -%}
   "ui": true,
   "client_addr": "0.0.0.0",
   "performance": {
@@ -15,7 +17,7 @@
   "connect": {
     "enabled": true
   },
-{% elif 'esMasters' not in group_names and (groups['esMasters'] | count) >= 3 %}
+{% elif 'esMasters' not in group_names %}
   "server": false,
   "retry_join": [
     {%- for item in groups['esMasters'] -%}
@@ -24,7 +26,7 @@
   ],
 {% else %}
   "server": true,
-  "bootstrap": true
+  "bootstrap": true,
 {% endif %}
 {# ---------------- #}
   "datacenter": "{{ consul_dc_name }}",

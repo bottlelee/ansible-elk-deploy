@@ -5,10 +5,13 @@ ENV["LC_ALL"] = "en_US.UTF-8"
 
 Vagrant.require_version ">= 2.0.0"
 
-$vm_box = "bento/ubuntu-16.04"
-# $vm_box = "centos/7"
-$instances = 3
-# $instances = 14
+if ENV['VM_BOX'] == "ubuntu" then
+  $vm_box = "bento/ubuntu-16.04"
+else
+  $vm_box = "centos/7"
+end
+
+$instances = ENV['ELK_INSTANCES'] || 3
 $apt_proxy = "http://192.168.205.12:3142"
 
 Vagrant.configure("2") do |config|
@@ -33,7 +36,7 @@ Vagrant.configure("2") do |config|
     config.vm.provision "shell", inline: "sudo apt-get autoclean"
   elsif $vm_box == "centos/7" then
     config.vm.provision "shell", inline: "yum install -y epel-release"
-    config.vm.provision "shell", inline: "yum install -y nano htop di byobu nmon telnet net-tools bind-utils"
+    config.vm.provision "shell", inline: "yum install -y nano htop byobu nmon telnet net-tools bind-utils"
   end
 
   if Vagrant.has_plugin?("vagrant-proxyconf")
@@ -65,39 +68,13 @@ Vagrant.configure("2") do |config|
       config.vm.hostname = vm_name
       config.vm.network "private_network", ip: "172.28.128.1#{instance_id.to_s.rjust(2, '0')}"
 
-      if $instances == 3
-        config.vm.network "forwarded_port", guest: 5601, host: 5601,
-          auto_correct: true
-      end
-
-      if $vm_name == "kibana-#{instance_id.to_s.rjust(2, '0')}"
-        config.vm.network "forwarded_port", guest: 15601, host: 5601,
-          auto_correct: true
-        config.vm.network "forwarded_port", guest: 19200, host: 9200,
-          auto_correct: true
-        config.vm.network "forwarded_port", guest: 15044, host: 5044,
-          auto_correct: true
-        config.vm.network "forwarded_port", guest: 16379, host: 6379,
-          auto_correct: true
-        config.vm.network "forwarded_port", guest: 18500, host: 8500,
-          auto_correct: true
-      end
-
       config.vm.provider "virtualbox" do |vb|
         vb.customize ["modifyvm", :id, "--natdnshostresolver1", "off"]
         vb.customize ["modifyvm", :id, "--natdnsproxy1", "off"]
         vb.name = vm_name
-        if $instances == 3
-          vb.memory = "16384"
-          vb.cpus = "4"
-        elsif $vm_name == "kibana-#{instance_id.to_s.rjust(2, '0')}"
-          vb.memory = "4096"
-          vb.cpus = "2"
-        else
-          vb.memory = "2048"
-          vb.cpus = "2"
-        end
-      end
+        vb.memory = "4096"
+        vb.cpus = "2"
+    end
 
       if instance_id == $instances
         config.vm.provision "ansible" do |ansible|
@@ -116,12 +93,12 @@ Vagrant.configure("2") do |config|
           end
           if $instances == 3
             ansible.groups = {
-              "esMasters" => ["es-master-[01:03]"],
+              "esMasters" => ["es-master-01"],
               "esHots" => "",
               "esWarms" => "",
               "redis" => "",
-              "logstash" => ["es-master-[01:03]"],
-              "kibana" => ["es-master-[01:03]"],
+              "logstash" => ["es-master-02"],
+              "kibana" => ["es-master-03"],
               "elasticsearch:children" => ["esMasters","esHots","esWarms"],
               "esDatas:children" => ["esHots","esWarms"]
             }

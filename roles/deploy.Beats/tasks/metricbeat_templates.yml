@@ -1,30 +1,37 @@
+- block:
+    - name: Enable metricbeat global modules
+      template:
+        src: "metricbeat_{{ item }}.yml.j2"
+        dest: "/etc/metricbeat/modules.d/{{ item }}.yml"
+      with_items:
+        - system
+      notify: Restart metricbeat
+    - name: Enable metricbeat modules
+      template:
+        src: "metricbeat_{{ item }}.yml.j2"
+        dest: "/etc/metricbeat/modules.d/{{ item }}.yml"
+      when: "item in group_names"
+      with_items:
+        - redis
+        - kibana
+        - elasticsearch
+        - logstash
+      notify: Restart metricbeat
+      register: templates
+  rescue:
+    - name: Create link from /usr/share/metricbeat/modules.d to /etc/metricbeat/modules.d
+      file:
+        src: /usr/share/metricbeat/modules.d
+        dest: /etc/metricbeat/modules.d
+        state: link
+    - include_tasks: metricbeat_templates.yml
+
 - name: Updating metricbeat.yml
   template:
     src: 'metricbeat.yml.j2'
     dest: '/etc/metricbeat/metricbeat.yml'
     mode: 0600
   notify: Restart metricbeat
-
-- name: Enable metricbeat global modules
-  template:
-    src: "metricbeat_{{ item }}.yml.j2"
-    dest: "/etc/metricbeat/modules.d/{{ item }}.yml"
-  with_items:
-    - system
-  notify: Restart metricbeat
-
-- name: Enable metricbeat modules
-  template:
-    src: "metricbeat_{{ item }}.yml.j2"
-    dest: "/etc/metricbeat/modules.d/{{ item }}.yml"
-  when: "item in group_names"
-  with_items:
-    - redis
-    - kibana
-    - elasticsearch
-    - logstash
-  notify: Restart metricbeat
-  register: templates
 
 - name: Listing current enabled metricbeat modules
   shell: "ls *.yml | grep -v system || exit 0"

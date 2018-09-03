@@ -49,10 +49,7 @@
     dest: '/etc/logstash/conf.d/{{ item }}'
   with_items:
     - 000-input.conf
-    - 001-logstash.conf
     - 002-monit.conf
-    - 003-syslog.conf
-    - 004-auditd.conf
     - 999-output.conf
   notify: Checking logstash configuration
   register: templates

@@ -13,7 +13,7 @@ elastic_plugins:
 
 indices_default_settings:
   number_of_shards: 3
-  number_of_replicas: 0
+  number_of_replicas: 1
   refresh_interval: 15s
   unassigned_node_left_delayed_timeout: 5m
 

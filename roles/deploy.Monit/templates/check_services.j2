@@ -37,7 +37,7 @@ check host KIBANA with address {{ bind_address }}
     for 5 cycles
   then restart
 
-check host ES-SHARDS-STATUS with address master.elastic.service.{{ consul_dc_name }}.consul
+check host ES-SHARDS-STATUS with address ingest.elastic.service.{{ consul_dc_name }}.consul
   if failed
     port 9200
     protocol http

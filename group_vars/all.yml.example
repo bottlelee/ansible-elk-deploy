@@ -1,14 +1,14 @@
-elk_version: '6.3.2'
+elk_version: '6.4.0'
 timezone: 'Asia/Shanghai'
 
 # Set 'true' when deploy on production.
 check_groups: true
 
-# Set the network interface name to get IP
-## CentOS
-RedHat_bind_interface: 'eth1'
-## Ubuntu
-Debian_bind_interface: 'enp0s8'
+# Which interface you want to bind?
+# Leave the 'bind_interface' in blank will use the ansible facts default value
+bind_interface: 'eth1'
+bind_address: "{{ hostvars[inventory_hostname]['ansible_' + bind_interface]['ipv4']['address'] | default(ansible_default_ipv4.address) }}"
+bind_network: "{{ hostvars[inventory_hostname]['ansible_' + bind_interface]['ipv4']['network'] | default(ansible_default_ipv4.network) }}"
 
 # DNS nameserver
 dns_servers:

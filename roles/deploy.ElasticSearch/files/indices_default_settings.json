@@ -4,10 +4,11 @@
   ],
   "settings": {
     "number_of_shards": 3,
-    "number_of_replicas": 0,
+    "number_of_replicas": 1,
     "index": {
       "unassigned.node_left.delayed_timeout": "5m",
-      "refresh_interval": "15s"
+      "refresh_interval": "15s",
+      "codec": "best_compression"
     }
   },
   "aliases": {
