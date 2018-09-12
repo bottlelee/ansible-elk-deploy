@@ -34,9 +34,11 @@ Vagrant.configure("2") do |config|
     config.vm.provision "shell", inline: "sudo apt-get remove -y snapd"
     config.vm.provision "shell", inline: "sudo apt-get autoremove -y"
     config.vm.provision "shell", inline: "sudo apt-get autoclean"
+    config.vm.provision "shell", inline: "byobu-launcher-install"
   elsif $vm_box == "centos/7" then
     config.vm.provision "shell", inline: "yum install -y epel-release"
     config.vm.provision "shell", inline: "yum install -y nano htop byobu nmon telnet net-tools bind-utils"
+    config.vm.provision "shell", inline: "byobu-launcher-install"
   end
 
   if Vagrant.has_plugin?("vagrant-proxyconf")
@@ -72,12 +74,24 @@ Vagrant.configure("2") do |config|
         vb.customize ["modifyvm", :id, "--natdnshostresolver1", "off"]
         vb.customize ["modifyvm", :id, "--natdnsproxy1", "off"]
         vb.name = vm_name
-        vb.memory = "4096"
+        vb.memory = "8192"
         vb.cpus = "2"
     end
 
       if instance_id == $instances
         config.vm.provision "ansible" do |ansible|
+          if $instances == 3
+            ansible.groups = {
+              "esMasters" => ["es-master-0[1:3]"],
+              "esHots" => "",
+              "esWarms" => "",
+              "redis" => "",
+              "logstash" => ["es-master-0[1:3]"],
+              "kibana" => ["es-master-0[1:3]"],
+              "elasticsearch:children" => ["esMasters","esHots","esWarms"],
+              "esDatas:children" => ["esHots","esWarms"]
+            }
+          end
           if $instances == 14
             ansible.groups = {
               "esMasters" => ["es-master-[01:03]"],
@@ -87,18 +101,6 @@ Vagrant.configure("2") do |config|
               "logstash" => ["logstash-[12:13]"],
               "kibana" => ["kibana-14"],
               "haproxy:children" => ["kibana"],
-              "elasticsearch:children" => ["esMasters","esHots","esWarms"],
-              "esDatas:children" => ["esHots","esWarms"]
-            }
-          end
-          if $instances == 3
-            ansible.groups = {
-              "esMasters" => ["es-master-01"],
-              "esHots" => "",
-              "esWarms" => "",
-              "redis" => "",
-              "logstash" => ["es-master-02"],
-              "kibana" => ["es-master-03"],
               "elasticsearch:children" => ["esMasters","esHots","esWarms"],
               "esDatas:children" => ["esHots","esWarms"]
             }

@@ -1,0 +1,15 @@
+[Unit]
+Description=Forwarding port 53 to port 8600 on localhost
+After=network-online.target
+Before=consul.service
+
+[Service]
+Type=oneshot
+PreExecStart=/sbin/iptables -t nat -A PREROUTING -p udp -m udp --dport 53 -j REDIRECT --to-ports 8600
+PreExecStart=/sbin/iptables -t nat -A PREROUTING -p tcp -m tcp --dport 53 -j REDIRECT --to-ports 8600
+PreExecStart=/sbin/iptables -t nat -A OUTPUT -d localhost -p udp -m udp --dport 53 -j REDIRECT --to-ports 8600
+PreExecStart=/sbin/iptables -t nat -A OUTPUT -d localhost -p tcp -m tcp --dport 53 -j REDIRECT --to-ports 8600
+ExecStart=/bin/sh -c '/bin/grep \"nameserver 127.0.0.1\" /etc/resolv.conf || /bin/echo -e \"nameserver 127.0.0.1\n\$(/bin/cat /etc/resolv.conf)\" > /etc/resolv.conf'
+
+[Install]
+WantedBy=multi-user.target

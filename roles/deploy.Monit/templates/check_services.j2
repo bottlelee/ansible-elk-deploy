@@ -1,7 +1,7 @@
 check host CONSUL-DNS with address 127.0.0.1
   if failed
     port 53
-  then exec "/usr/local/bin/dns_forwarding.sh"
+  then exec "/usr/sbin/service consul-dns start"
 
 check host CHRONY with address {{ bind_address }}
   start program = "/usr/sbin/service chronyd start"
@@ -15,8 +15,8 @@ check host CHRONY with address {{ bind_address }}
 check host CONSUL with address {{ bind_address }}
   start program = "/usr/sbin/service consul start"
   stop program = "/usr/sbin/service consul stop"
-  if failed port 8600 for 2 cycles then restart
-  if failed port 8301 for 2 cycles then restart
+  if failed port 8600 for 5 cycles then restart
+  if failed port 8301 for 5 cycles then restart
 
 {% if 'logstash' in group_names %}
 check host LOGSTASH with address 127.0.0.1
@@ -24,7 +24,7 @@ check host LOGSTASH with address 127.0.0.1
   stop program = "/usr/sbin/service logstash stop"
   if failed
     port 9600
-    for 5 cycles
+    for 10 cycles
   then restart
 {% endif %}
 
@@ -34,7 +34,7 @@ check host KIBANA with address {{ bind_address }}
   stop program = "/usr/sbin/service kibana stop"
   if failed
     port {{ kibana_port }}
-    for 5 cycles
+    for 10 cycles
   then restart
 
 check host ES-SHARDS-STATUS with address ingest.elastic.service.{{ consul_dc_name }}.consul
@@ -51,7 +51,7 @@ check host ES-SHARDS-STATUS with address ingest.elastic.service.{{ consul_dc_nam
 check host ELASTICSEARCH with address {{ bind_address }}
   start program = "/usr/sbin/service elasticsearch start"
   stop program = "/usr/sbin/service elasticsearch stop"
-  if failed port {{ elastic_http_port }} for 5 cycles then restart
+  if failed port {{ elastic_http_port }} for 10 cycles then restart
 {% endif %}
 
 {% if 'redis' in group_names %}

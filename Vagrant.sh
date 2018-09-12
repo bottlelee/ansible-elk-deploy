@@ -2,10 +2,12 @@
 
 if [[ $3 ]]; then
   export VM_BOX=$3
+  echo Seleted distro is ${VM_BOX}
 fi
 
 if [[ $2 == +([0-9]) ]]; then
   export ELK_INSTANCES=$2
+  echo ${ELK_INSTANCES} virtual machine\(s\) will be boot up.
 fi
 
 function create() {

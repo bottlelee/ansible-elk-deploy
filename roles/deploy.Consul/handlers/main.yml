@@ -4,10 +4,13 @@
 
 - name: Restart consul service
   service:
-    name: consul
+    name: "{{ item }}"
     state: restarted
     enabled: true
     daemon_reload: true
+  with_items:
+    - consul-dns
+    - consul
   listen: Restart consul
 
 - name: Restart resolvconf service

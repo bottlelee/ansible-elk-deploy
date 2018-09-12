@@ -19,11 +19,11 @@
     - { src: 'bin/monit', dest: '/usr/local/bin/monit', mode: 544 }
     - { src: 'man/man1/monit.1', dest: '/usr/share/man/man1/monit.1', mode: 644 }
 
-- name: Create DNS forwarding script
-  copy:
-    src: dns_forwarding.sh
-    dest: /usr/local/bin/dns_forwarding.sh
-    mode: 0744
+# - name: Create DNS forwarding script
+#   copy:
+#     src: dns_forwarding.sh
+#     dest: /usr/local/bin/dns_forwarding.sh
+#     mode: 0744
 
 - name: Create monit.service
   copy:

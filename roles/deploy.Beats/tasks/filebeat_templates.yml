@@ -7,11 +7,10 @@
 
 - name: Enable filebeat modules
   command: "filebeat modules enable {{ item }}"
-  # changed_when: false
+  changed_when: false
   with_items:
     - "{{ global_filebeat_modules | default(None) }}"
     - "{{ filebeat_modules | default(None) }}"
-  notify: Restart filebeat
   register: templates
 
 - name: Listing current enabled filebeat modules
@@ -21,9 +20,12 @@
   changed_when: false
   register: allTemplates
 
+- debug:
+    msg: "{{ allTemplates.stdout_lines }}"
+
 - name: Disable unmanaged filebeat modules
   command: "filebeat modules disable {{ item | replace('.yml', '') }}"
   with_items: "{{ allTemplates.stdout_lines }}"
   when:
     - "item|replace('.yml', '') not in (templates.results|selectattr('item', 'string')|map(attribute='item')|list)"
-    - allTemplates.results != ""
+    - allTemplates.stdout_lines != ""
