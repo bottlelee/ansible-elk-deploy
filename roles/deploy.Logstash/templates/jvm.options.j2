@@ -3,12 +3,12 @@
 # Xms represents the initial size of total heap space
 # Xmx represents the maximum size of total heap space
 
-{% if ansible_memtotal_mb >= 65536 %}
+{% if ansible_memtotal_mb >= 65536 and 'elasticsearch' not in group_names %}
 -Xms32g
 -Xmx32g
 {% else %}
--Xms{{ ansible_memory_mb.nocache.free // 2048 + 1 | int() }}g
--Xmx{{ ansible_memory_mb.nocache.free // 2048 + 1 | int() }}g
+-Xms{{ logstash_jvm_mem | default(ansible_memory_mb.nocache.free // 2048 + 1 | int) }}g
+-Xmx{{ logstash_jvm_mem | default(ansible_memory_mb.nocache.free // 2048 + 1 | int) }}g
 {% endif %}
 
 ################################################################

@@ -70,3 +70,11 @@ tags: [
   "{{ item }}"{%- if loop.nextitem is defined -%},{%- endif -%}
 {%- endfor -%}
 ]
+
+{% if '6.3.0' is version(elk_version, operator='lt', strict=True) %}
+#============================== Xpack Monitoring ===============================
+xpack.monitoring:
+  enabled: true
+  elasticsearch:
+    hosts: ["ingest.elastic.service.{{ consul_dc_name }}.consul:{{ elastic_http_port }}"]
+{% endif %}

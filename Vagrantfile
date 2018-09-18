@@ -11,7 +11,7 @@ else
   $vm_box = "centos/7"
 end
 
-$instances = ENV['ELK_INSTANCES'] || 3
+$instances = 3
 $apt_proxy = "http://192.168.205.12:3142"
 
 Vagrant.configure("2") do |config|
@@ -74,8 +74,13 @@ Vagrant.configure("2") do |config|
         vb.customize ["modifyvm", :id, "--natdnshostresolver1", "off"]
         vb.customize ["modifyvm", :id, "--natdnsproxy1", "off"]
         vb.name = vm_name
-        vb.memory = "8192"
-        vb.cpus = "2"
+        if $instances == 3 then
+          vb.memory = "8192"
+          vb.cpus = "4"
+        elsif $instances > 3 then
+          vb.memory = "2048"
+          vb.cpus = "1"
+        end
     end
 
       if instance_id == $instances

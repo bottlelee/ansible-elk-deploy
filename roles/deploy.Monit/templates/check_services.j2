@@ -25,7 +25,7 @@ check host LOGSTASH with address 127.0.0.1
   if failed
     port 9600
     for 10 cycles
-  then restart
+  then alert
 {% endif %}
 
 {% if 'kibana' in group_names %}
@@ -35,7 +35,13 @@ check host KIBANA with address {{ bind_address }}
   if failed
     port {{ kibana_port }}
     for 10 cycles
-  then restart
+  then alert
+
+check file KIBANA-LOG with path /var/log/kibana/kibana.log
+  start program = "/usr/sbin/service kibana start"
+  stop program = "/usr/sbin/service kibana stop"
+  if content != ".*getaddrinfo ENOTFOUND.*" for 10 cycles
+  then alert
 
 check host ES-SHARDS-STATUS with address ingest.elastic.service.{{ consul_dc_name }}.consul
   if failed
@@ -51,7 +57,7 @@ check host ES-SHARDS-STATUS with address ingest.elastic.service.{{ consul_dc_nam
 check host ELASTICSEARCH with address {{ bind_address }}
   start program = "/usr/sbin/service elasticsearch start"
   stop program = "/usr/sbin/service elasticsearch stop"
-  if failed port {{ elastic_http_port }} for 10 cycles then restart
+  if failed port {{ elastic_http_port }} for 10 cycles then alert
 {% endif %}
 
 {% if 'redis' in group_names %}

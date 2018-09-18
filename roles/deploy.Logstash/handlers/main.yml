@@ -1,5 +1,6 @@
 - name: Checking logstash configuration
   command: /usr/share/logstash/bin/logstash -t --path.settings=/etc/logstash
+  changed_when: false
   listen: Restart logstash
 
 - name: Restart logstash service

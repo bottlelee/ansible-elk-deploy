@@ -8,8 +8,6 @@
     - name: Checking if target is suitable for deploy
       assert:
         that:
-          - "ansible_memory_mb.nocache.free >= 1024"
-          - "ansible_processor_vcpus >= 2"
           - "ansible_architecture == 'x86_64'"
     - include_tasks: '{{ ansible_os_family }}.yml'
     # - include_tasks: "plugins.yml target={{ target }}"
@@ -45,13 +43,11 @@
 
 - name: Updating piplines
   template:
-    src: '{{ item }}.j2'
+    src: 'logstash/{{ item }}.j2'
     dest: '/etc/logstash/conf.d/{{ item }}'
   with_items:
-    - 000-input.conf
-    - 002-monit.conf
-    - 999-output.conf
-  notify: Checking logstash configuration
+    - "{{ logstash_piplines }}"
+  notify: Restart logstash
   register: templates
 
 - name: Listing current pipline files

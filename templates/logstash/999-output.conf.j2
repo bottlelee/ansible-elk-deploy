@@ -1,0 +1,20 @@
+output {
+  if [index_name] {
+    elasticsearch {
+      hosts => ["ingest.elastic.service.{{ consul_dc_name }}.consul:{{ elastic_http_port }}"]
+      index => "%{[index_name]}-%{+YYYY.MM.dd}"
+    }
+  } else if [@metadata][beat] {
+    elasticsearch {
+      hosts => ["ingest.elastic.service.{{ consul_dc_name }}.consul:{{ elastic_http_port }}"]
+      index => "%{[@metadata][beat]}-%{[@metadata][version]}-%{+YYYY.MM.dd}"
+      manage_template => false
+    }
+  } else {
+    elasticsearch {
+      hosts => ["ingest.elastic.service.{{ consul_dc_name }}.consul:{{ elastic_http_port }}"]
+      index => "logstash-%{+YYYY.MM.dd}"
+      manage_template => true
+    }
+  }
+}
