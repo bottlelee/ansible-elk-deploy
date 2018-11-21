@@ -1,4 +1,6 @@
-- include_tasks: download.yml format='deb'
+- include_tasks: download.yml
+  vars:
+    format: deb
 
 - name: "Uploading {{ target }}-{{ elk_version }}-amd64.deb"
   copy:

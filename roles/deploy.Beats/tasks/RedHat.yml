@@ -1,4 +1,6 @@
-- include_tasks: download.yml format=rpm
+- include_tasks: download.yml
+  vars:
+    format: rpm
 
 - name: "Uploading {{ target }}-{{ elk_version }}-x86_64.rpm"
   copy:

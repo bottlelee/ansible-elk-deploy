@@ -100,6 +100,9 @@
 
 ### 06-deploy_logstash.yml
 1. 部署 logstash 集群。主机数可根据负载弹性伸缩。
+##### 相关配置文件
+1. `vars/logstash.yml`，logstash 配置。详细请看 [Setting Up and Running Logstash » logstash.yml](https://www.elastic.co/guide/en/logstash/current/logstash-settings-file.html)
+1. `templates/logstash`，piplines 模板。具体参看 [Input plugins](https://www.elastic.co/guide/en/logstash/current/input-plugins.html)，[Filter plugins](https://www.elastic.co/guide/en/logstash/current/filter-plugins.html)，[Output plugins](https://www.elastic.co/guide/en/logstash/current/output-plugins.html)，[Logstash Configuration Examples](https://www.elastic.co/guide/en/logstash/current/config-examples.html)。
 
 ### 07-deploy_beats.yml *
 1. filebeat 默认采集本架构内相关服务的日志。

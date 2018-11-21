@@ -1,6 +1,6 @@
 - name: 'Updating packetbeat.yml'
   template:
-    src: 'packetbeat.yml.j2'
+    src: 'packetbeat/packetbeat.yml.j2'
     dest: '/etc/packetbeat/packetbeat.yml'
     mode: 0600
   notify: Restart packetbeat

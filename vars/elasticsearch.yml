@@ -12,7 +12,7 @@ elastic_plugins:
   - ingest-geoip
 
 indices_default_settings:
-  number_of_shards: 1
+  number_of_shards: "{% if (groups['esHots'] | count) > 0 and (groups['esHots'] | count) < 6 %}{{ groups['esHots'] | count }}{% elif (groups['esMasters'] | count) > 0 and (groups['esMasters'] | count) < 6 %}{{ groups['esMasters'] | count }}{% else %}1{% endif %}"
   number_of_replicas: 1
   refresh_interval: 15s
   unassigned_node_left_delayed_timeout: 5m

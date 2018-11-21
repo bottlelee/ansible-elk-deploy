@@ -10,8 +10,8 @@
         name: '/tmp/elasticsearch-{{ elk_version }}.rpm'
         state: present
 
-    - include_tasks: "plugins.yml target={{ target }}"
-      with_items: "{{ elastic_plugins }}"
+    - include_tasks: plugins.yml
+      loop: "{{ elastic_plugins }}"
       loop_control:
         loop_var: target
 
@@ -23,7 +23,9 @@
 
   rescue:
 
-    - include_tasks: download.yml format=rpm
+    - include_tasks: download.yml
+      vars:
+        format: rpm
     - include_tasks: '{{ ansible_os_family }}.yml'
     - meta: clear_host_errors
 

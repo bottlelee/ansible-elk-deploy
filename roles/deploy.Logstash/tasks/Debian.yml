@@ -7,7 +7,9 @@
       apt:
         deb: '/tmp/logstash-{{ elk_version }}.deb'
   rescue:
-    - include_tasks: download.yml format=deb
+    - include_tasks: download.yml
+      vars:
+        format: deb
     - include_tasks: '{{ ansible_os_family }}.yml'
     - meta: clear_host_errors
   always:

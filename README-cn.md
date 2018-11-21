@@ -7,7 +7,7 @@
 
 测试本架构，运行`vagrant up`（你需要 [vagrant](https://www.vagrantup.com/)）。这将会消耗 22GB 内存和 22 个 CPU 线程。
 
-## 本项目基于 [ansible 2.5.1](http://docs.ansible.com/ansible/latest/intro_installation.html) 在以下操作系统测试通过。
+## 本项目基于 [ansible 2.7.2](http://docs.ansible.com/ansible/latest/intro_installation.html) 在以下操作系统测试通过。
 * Ubuntu 16.04 LTS（xenial）
 * CentOS 7
 
@@ -16,6 +16,7 @@
 
 ## 执行步骤
 1. 按照 hosts.ini.sample 模板，同目录新建一个 hosts.ini 文件， 根据实际环境填写机器信息。
+1. 按照实际需求，编辑本目录下的 vars 和 templates 目录里相关文件。
 1. 执行 `ansible-playbook 00-download.yml` 确认安装所需的文件都已经下载好。
 1. 执行 `ansible-playbook play-all.yml` 进行全新部署。
 
@@ -23,7 +24,7 @@
 
 ## ELK 集群之外的机器，如果需要推送数据，需要满足以下条件：
 1. 可访问本次部署的 ELK 集群网络。
-1. 以 beats 为例，output 可以直接使用多个 logstash 节点的 IP。也可以在配置内部 DNS 后，使用 `logstash.service.consul` 来访问。
+1. 以 beats 为例，output 可以直接使用多个 logstash 节点的 IP。
 
 ## 维护更新
 ### 升级

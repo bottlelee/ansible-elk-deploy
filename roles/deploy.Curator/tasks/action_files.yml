@@ -5,7 +5,7 @@
         state: directory
     - name: "Updating action file {{ target }}.yml"
       template:
-        src: '{{ target }}.yml.j2'
+        src: 'curator/{{ target }}.yml.j2'
         dest: '{{ ansible_user_dir }}/.curator/{{ target }}.yml'
         owner: '{{ ansible_user_id }}'
         group: '{{ ansible_user_id }}'
@@ -19,7 +19,7 @@
         group: '{{ ansible_user_id }}'
     - name: Create curator.yml
       template:
-        src: 'curator.yml.j2'
+        src: 'curator/curator.yml.j2'
         dest: '{{ ansible_user_dir }}/.curator/curator.yml'
         owner: '{{ ansible_user_id }}'
         group: '{{ ansible_user_id }}'

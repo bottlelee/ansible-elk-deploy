@@ -74,10 +74,10 @@ Vagrant.configure("2") do |config|
         vb.customize ["modifyvm", :id, "--natdnshostresolver1", "off"]
         vb.customize ["modifyvm", :id, "--natdnsproxy1", "off"]
         vb.name = vm_name
-        if $instances == 3 then
+        if instance_id <= 3 then
           vb.memory = "8192"
           vb.cpus = "4"
-        elsif $instances > 3 then
+        elsif instance_id > 3 then
           vb.memory = "2048"
           vb.cpus = "1"
         end

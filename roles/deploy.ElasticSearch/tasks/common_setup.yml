@@ -27,7 +27,7 @@
 
 - name: Updating ElasticSearch configuration
   template:
-    src: '{{ item }}.j2'
+    src: 'elasticsearch/{{ item }}.j2'
     dest: '/etc/elasticsearch/{{ item }}'
   with_items:
     - jvm.options
@@ -35,7 +35,7 @@
 
 - name: Installing logrotate configure
   template:
-    src: logrotate_elasticsearch.j2
+    src: elasticsearch/logrotate_elasticsearch.j2
     dest: /etc/logrotate.d/elasticsearch
 
 - name: Starting ElasticSearch service

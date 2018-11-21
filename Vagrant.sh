@@ -12,9 +12,9 @@ fi
 
 function create() {
   vagrant up --provision --install-provider
-  if [[ $? == 0 ]]; then
-    vagrant reload --provision
-  fi
+  # if [[ $? == 0 ]]; then
+  #   vagrant reload --provision
+  # fi
 }
 
 case $1 in

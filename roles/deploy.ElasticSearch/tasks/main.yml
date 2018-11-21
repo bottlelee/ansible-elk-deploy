@@ -28,7 +28,7 @@
 
 - name: Updating ElasticSearch configuration
   template:
-    src: '{{ item }}.j2'
+    src: 'elasticsearch/{{ item }}.j2'
     dest: '/etc/elasticsearch/{{ item }}'
   with_items:
     - jvm.options

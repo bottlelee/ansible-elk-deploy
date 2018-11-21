@@ -1,5 +1,5 @@
 - name: Update chrony.conf
   template:
-    src: chrony.conf.j2
+    src: chrony/chrony.conf.j2
     dest: /etc/chrony.conf
   notify: Restart chronyd service

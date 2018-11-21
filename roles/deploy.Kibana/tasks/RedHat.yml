@@ -8,7 +8,9 @@
         name: '/tmp/kibana-{{ elk_version }}-x86_64.rpm'
         state: present
   rescue:
-    - include_tasks: download.yml format=rpm
+    - include_tasks: download.yml
+      vars:
+        format: rpm
     - include_tasks: '{{ ansible_os_family }}.yml'
     - meta: clear_host_errors
   always:

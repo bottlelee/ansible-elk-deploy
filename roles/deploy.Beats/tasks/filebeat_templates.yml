@@ -1,6 +1,6 @@
 - name: Updating filebeat.yml
   template:
-    src: "filebeat.yml.j2"
+    src: "filebeat/filebeat.yml.j2"
     dest: "/etc/filebeat/filebeat.yml"
     mode: 0600
   notify: Restart filebeat
@@ -27,5 +27,5 @@
   command: "filebeat modules disable {{ item | replace('.yml', '') }}"
   with_items: "{{ allTemplates.stdout_lines }}"
   when:
-    - "item|replace('.yml', '') not in (templates.results|selectattr('item', 'string')|map(attribute='item')|list)"
+    - "item | replace('.yml', '') not in (templates.results | selectattr('item', 'string') | map(attribute='item')|list)"
     - allTemplates.stdout_lines != ""

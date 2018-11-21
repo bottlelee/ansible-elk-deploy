@@ -1,13 +1,13 @@
 - name: Updating indices_default_settings.json
   template:
-    src: indices_default_settings.json.j2
+    src: elasticsearch/indices_default_settings.json.j2
     dest: roles/deploy.ElasticSearch/files/indices_default_settings.json
   delegate_to: localhost
   become: no
 
 - name: Setup index default settings
   uri:
-    url: "http://ingest.elastic.service.{{ consul_dc_name }}.consul:{{ elastic_http_port }}/_template/*"
+    url: "http://ingest.elastic.service.{{ consul_dc_name }}.consul:{{ elastic_http_port }}/_template/active-logs"
     method: PUT
     body: "{{ lookup('file', 'indices_default_settings.json') }}"
     body_format: json

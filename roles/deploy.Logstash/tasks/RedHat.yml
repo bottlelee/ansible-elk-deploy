@@ -7,7 +7,9 @@
       yum:
         name: '/tmp/logstash-{{ elk_version }}.rpm'
   rescue:
-    - include_tasks: download.yml format=rpm
+    - include_tasks: download.yml
+      vars:
+        format: rpm
     - include_tasks: '{{ ansible_os_family }}.yml'
     - meta: clear_host_errors
   always:

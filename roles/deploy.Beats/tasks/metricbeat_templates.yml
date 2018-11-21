@@ -1,14 +1,14 @@
 - block:
     - name: Enable metricbeat global modules
       template:
-        src: "metricbeat_{{ item }}.yml.j2"
+        src: "metricbeat/metricbeat_{{ item }}.yml.j2"
         dest: "/etc/metricbeat/modules.d/{{ item }}.yml"
       with_items:
         - system
       notify: Restart metricbeat
     - name: Enable metricbeat modules
       template:
-        src: "metricbeat_{{ item }}.yml.j2"
+        src: "metricbeat/metricbeat_{{ item }}.yml.j2"
         dest: "/etc/metricbeat/modules.d/{{ item }}.yml"
       when: "item in group_names"
       with_items:
@@ -28,7 +28,7 @@
 
 - name: Updating metricbeat.yml
   template:
-    src: 'metricbeat.yml.j2'
+    src: 'metricbeat/metricbeat.yml.j2'
     dest: '/etc/metricbeat/metricbeat.yml'
     mode: 0600
   notify: Restart metricbeat

@@ -5,11 +5,7 @@
       "address": "{{ bind_address }}",
       "port": {{ elastic_http_port }},
       "enable_tag_override": true,
-      "tags": [
-        {%- for item in elastic_instance_roles -%}
-          "{{ item }}"{%- if loop.nextitem is defined -%},{%- endif -%}
-        {%- endfor -%}
-      ],
+      "tags": ["{{ elastic_instance_roles | join('","') }}"],
       "checks": [
         {
           "http": "http://{{ bind_address }}:{{ elastic_http_port }}",

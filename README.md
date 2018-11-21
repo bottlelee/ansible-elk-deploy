@@ -23,13 +23,13 @@ For test only, you can run `vagrant up`. You need [vagrant](https://www.vagrantu
 
 ## Steps ##
 1. Copy `hosts.ini.sample` to `hosts.ini`, and edit it base on your real environment.
-1. Edit files under `vars` and `templates` of current directory to suit your requirements.
+1. Edit files under `vars` and `templates` to suit your requirements.
 1. Run `ansible-playbook 00-download.yml` if you haven't got any packages.
-1. Run `ansible-playbook play-all.yml` to start fresh deploy.
+1. Run `ansible-playbook play-all.yml` to start a fresh deploy.
 
 ## How to send data to ELK from outside hosts
 1. Make sure outside hosts can access the ELK network.
-1. Assume you are using beats as data collect client, use the `logstash` hosts' IP in output section, or you can use `logstash.service.consul` after you setup the [nameservers]
+1. Assume you are using beats as data collect client, use the `logstash` host IP in output section.
 
 ## Maintain
 ### Upgrade

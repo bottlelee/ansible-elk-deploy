@@ -3,8 +3,8 @@
       command: /usr/local/bin/curator --version
       changed_when: false
   rescue:
-    - include_tasks: 'install.yml target={{ item }}'
-      with_items:
+    - include_tasks: 'install.yml'
+      loop:
         - setuptools-38.5.2
         - certifi-2018.1.18
         - click-6.7
@@ -13,6 +13,8 @@
         - urllib3-1.22
         - elasticsearch-6.1.1
         - elasticsearch-curator-5.4.1
+      loop_control:
+        loop_var: target
     - name: Create soft link | RedHat
       file:
         src: /usr/bin/curator
@@ -21,10 +23,14 @@
       when: ansible_os_family == 'RedHat'
 
 - block:
-    - include_tasks: 'action_files.yml target={{ item }}'
-      with_items:
+    - include_tasks: action_files.yml
+      loop:
         - hot_to_warm
-    - include_tasks: 'cron.yml target={{ item }}'
-      with_items:
+      loop_control:
+        loop_var: target
+    - include_tasks: cron.yml
+      loop:
         - hot_to_warm
+      loop_control:
+        loop_var: target
   when: "( groups['esWarms'] | count ) > 0"

@@ -10,8 +10,8 @@
         that:
           - "ansible_architecture == 'x86_64'"
     - include_tasks: '{{ ansible_os_family }}.yml'
-    # - include_tasks: "plugins.yml target={{ target }}"
-    #   with_items: "{{ logstash_plugins }}"
+    # - include_tasks: "plugins.yml"
+    #   loop: "{{ logstash_plugins }}"
     #   loop_control:
     #     loop_var: target
     - name: Updating logstash systemd service configure
@@ -29,12 +29,12 @@
       notify: Restart logstash
     - name: Installing logrotate configure
       template:
-        src: logrotate_logstash.j2
+        src: logstash/logrotate_logstash.j2
         dest: /etc/logrotate.d/logstash
 
 - name: Updating logstash configuration
   template:
-    src: '{{ item }}.j2'
+    src: 'logstash/{{ item }}.j2'
     dest: '/etc/logstash/{{ item }}'
   with_items:
     - jvm.options
@@ -43,7 +43,7 @@
 
 - name: Updating piplines
   template:
-    src: 'logstash/{{ item }}.j2'
+    src: 'logstash/piplines/{{ item }}.j2'
     dest: '/etc/logstash/conf.d/{{ item }}'
   with_items:
     - "{{ logstash_piplines }}"
