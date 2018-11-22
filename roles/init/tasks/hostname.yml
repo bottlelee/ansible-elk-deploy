@@ -1,6 +1,6 @@
 - name: Setup /etc/hosts
   template:
-    src: hosts.j2
+    src: init/hosts.j2
     dest: /etc/hosts
 
 - name: Setup hostname

@@ -14,19 +14,11 @@ metricbeat.max_start_delay: 10s
 
 #================================ Outputs =====================================
 
-{% if (groups['redis'] | length) >= 3 %}
-output.redis:
-  hosts: ["redis.service.{{ consul_dc_name }}.consul"]
-  key: "metricbeat"
-  db: 1
-  timeout: 5
-{% else %}
-output.logstash:
-  hosts: ["logstash.service.{{ consul_dc_name }}.consul:{{ logstash_beats_port }}"]
+output.elasticsearch:
+  hosts: ["ingest.elastic.service.{{ consul_dc_name }}.consul:{{ elastic_http_port }}"]
   compression_level: 5
   timeout: 300
   slow_start: true
-{% endif %}
 
 {% if inventory_hostname == groups['all'][0] %}
 #============================== Dashboards =====================================
@@ -66,6 +58,4 @@ tags: [
 #============================== Xpack Monitoring ===============================
 xpack.monitoring:
   enabled: true
-  elasticsearch:
-    hosts: ["ingest.elastic.service.{{ consul_dc_name }}.consul:{{ elastic_http_port }}"]
 {% endif %}

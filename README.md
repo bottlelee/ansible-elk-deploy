@@ -14,9 +14,12 @@ For test only, you can run `vagrant up`. You need [vagrant](https://www.vagrantu
 1. [Consul](https://www.consul.io/) as internal DNS service. Scale your ELK without updating the beats output configuration.
 1. [Monit](https://mmonit.com/monit/documentation/monit.html) as monitoring service. Auto fix common issue, free you hands.
 
-## Tested on these OS with [ansible 2.7.2](http://docs.ansible.com/ansible/latest/intro_installation.html)
-* Ubuntu 16.04 LTS（xenial）
-* CentOS 7
+## Test results with [ansible 2.7.2](http://docs.ansible.com/ansible/latest/intro_installation.html)
+
+| Elastic version | Ubuntu Server 16.04 | CentOS 7 |
+| --------------- | ------------------- | -------- |
+| 6.5.1           | Yes                 | Yes      |
+| 6.4.0           | Yes                 | Yes      |
 
 ## Requirements
 1. At least 4 CPUs, 8GB ram, 148G free disk space.

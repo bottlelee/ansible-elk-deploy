@@ -1,11 +1,11 @@
-elk_version: '6.4.0'
+elk_version: '6.5.1'
 timezone: 'Asia/Shanghai'
+apt_mirror: 'mirrors.aliyun.com'
 
 # Set 'true' when deploy on production.
 check_groups: true
 
-# Which interface you want to bind?
-# Leave the 'bind_interface' in blank will use the ansible facts default value
+# Set the network interface name to get IP
 bind_interface: 'eth1'
 bind_address: "{{ hostvars[inventory_hostname]['ansible_' + bind_interface]['ipv4']['address'] | default(hostvars[inventory_hostname]['ansible_default_ipv4']['address']) }}"
 bind_network: "{{ hostvars[inventory_hostname]['ansible_' + bind_interface]['ipv4']['network'] | default(hostvars[inventory_hostname]['ansible_default_ipv4']['network']) }}"
@@ -20,17 +20,6 @@ elastic_http_port: '9200'
 logstash_beats_port: '5044'
 kibana_port: '5601'
 
-# LogStash configure
-logstash_data_path: '/var/lib/logstash'
-logstash_log_path: '/var/log/logstash'
-logstash_piplines:
-  - 000-input
-  - 001-logstash
-  - 002-monit
-  - 003-syslog
-  - 004-auditd
-  - 005-elasicsearch
-  - 999-output
 # Consul
 consul_version: '1.2.2'
 consul_dc_name: 'elk'

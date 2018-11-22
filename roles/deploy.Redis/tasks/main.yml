@@ -48,7 +48,7 @@
 
 - name: Updating script '/usr/local/bin/check_redis_master.sh'
   template:
-    src: check_redis_master.sh.j2
+    src: redis/check_redis_master.sh.j2
     dest: /usr/local/bin/check_redis_master.sh
     mode: 0755
 

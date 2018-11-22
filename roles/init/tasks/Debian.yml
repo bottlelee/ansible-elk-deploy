@@ -5,6 +5,7 @@
   with_items:
     - "nameserver {{ dns_servers[0] }}"
     - "nameserver {{ dns_servers[1] }}"
+    - "search node.{{ consul_dc_name }}.consul"
   register: resolvconf
 
 - name: Restarting resolvconf service

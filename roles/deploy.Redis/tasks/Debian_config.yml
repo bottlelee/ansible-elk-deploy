@@ -1,6 +1,6 @@
 - name: Updating redis.conf
   template:
-    src: "redis.conf.j2"
+    src: "redis/redis.conf.j2"
     dest: "/etc/redis/redis.conf"
     owner: redis
     group: root

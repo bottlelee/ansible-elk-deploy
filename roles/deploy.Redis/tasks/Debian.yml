@@ -9,7 +9,9 @@
         deb: "/tmp/{{ item | basename }}"
       loop: "{{ deb_redis_urls | sort }}"
   rescue:
-    - include_tasks: download.yml format=deb
+    - include_tasks: download.yml
+      vars:
+        format: deb
     - include_tasks: "{{ ansible_os_family }}.yml"
   always:
     - name: "Removing packages"

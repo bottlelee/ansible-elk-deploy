@@ -9,7 +9,9 @@
         name: 'file:///tmp/{{ item | basename }}'
       loop: "{{ rpm_redis_urls }}"
   rescue:
-    - include_tasks: download.yml format=rpm
+    - include_tasks: download.yml
+      vars:
+        format: rpm
     - include_tasks: '{{ ansible_os_family }}.yml'
   always:
     - name: 'Removing packages'

@@ -22,4 +22,5 @@
     - "DNS1={{ dns_servers[0] }}"
     - "DNS2={{ dns_servers[1] }}"
     - "PEERDNS=yes"
+    - "DOMAIN=node.{{ consul_dc_name }}.consul"
   notify: Restart network service

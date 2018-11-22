@@ -3,11 +3,10 @@ logstash_data_path: '/var/lib/logstash'
 logstash_log_path: '/var/log/logstash'
 logstash_piplines:
   - 000-input.conf
-  # - 001-logstash
+  - 001-auditd.conf
   - 002-monit.conf
-  # - 003-syslog
-  # - 004-auditd
-  # - 005-elasicsearch
+  - 003-system.conf
+  # - 009-redis.conf
   - 999-output.conf
 
 # jvm option, unit is g(GB) and at least 1 is needed.

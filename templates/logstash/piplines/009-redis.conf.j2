@@ -1,0 +1,33 @@
+filter {
+  if [fileset][module] == "redis" {
+    grok {
+      match => {
+         "message" => [
+            "(%{POSINT:[redis][log][pid]}:%{CHAR:[redis][log][role]} )?%{REDISTIMESTAMP:[redis][log][timestamp]} %{REDISLEVEL:[redis][log][level]} %{GREEDYDATA:[redis][log][message]}",
+            "%{POSINT:[redis][log][pid]}:signal-handler \(%{POSINT:[redis][log][timestamp]}\) %{GREEDYDATA:[redis][log][message]}"
+         ]
+      }
+      pattern_definitions => {
+         "CHAR" => "[a-zA-Z]"
+         "REDISLEVEL" => "[.\-*#]"
+      }
+      remove_field => "message"
+    }
+
+    mutate {
+      rename => {
+        "@timestamp" => "read_timestamp"
+      }
+    }
+
+    date {
+      match => [
+        "[redis][log][timestamp]",
+        "dd MMM H:m:s][SSS]",
+        "dd MMM H:m:s",
+        "UNIX"
+      ]
+      target => "@timestamp"
+    }
+  }
+}

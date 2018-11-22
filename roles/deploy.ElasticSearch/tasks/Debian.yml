@@ -9,8 +9,8 @@
       apt:
         deb: '/tmp/elasticsearch-{{ elk_version }}.deb'
 
-    - include_tasks: "plugins.yml target={{ target }}"
-      with_items: "{{ elastic_plugins }}"
+    - include_tasks: "plugins.yml"
+      loop: "{{ elastic_plugins }}"
       loop_control:
         loop_var: target
 
@@ -22,7 +22,9 @@
 
   rescue:
 
-    - include_tasks: download.yml format=deb
+    - include_tasks: download.yml
+      vars:
+        format: deb
     - include_tasks: '{{ ansible_os_family }}.yml'
     - meta: clear_host_errors
 

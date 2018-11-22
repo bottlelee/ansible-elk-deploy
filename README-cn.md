@@ -7,9 +7,12 @@
 
 测试本架构，运行`vagrant up`（你需要 [vagrant](https://www.vagrantup.com/)）。这将会消耗 22GB 内存和 22 个 CPU 线程。
 
-## 本项目基于 [ansible 2.7.2](http://docs.ansible.com/ansible/latest/intro_installation.html) 在以下操作系统测试通过。
-* Ubuntu 16.04 LTS（xenial）
-* CentOS 7
+## 本项目基于 [ansible 2.7.2](http://docs.ansible.com/ansible/latest/intro_installation.html) 测试通过以下版本和环境。
+
+| Elastic version | Ubuntu Server 16.04 | CentOS 7 |
+| --------------- | ------------------- | -------- |
+| 6.5.1           | Yes                 | Yes      |
+| 6.4.0           | Yes                 | Yes      |
 
 ## 前提条件
 1. 最小配置：4 CPUs, 8GB 内存, 148G 空闲磁盘空间.
