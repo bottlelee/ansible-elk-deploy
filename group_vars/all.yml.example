@@ -21,7 +21,7 @@ logstash_beats_port: '5044'
 kibana_port: '5601'
 
 # Consul
-consul_version: '1.2.2'
+consul_version: '1.4.0'
 consul_dc_name: 'elk'
 
 # Monit
