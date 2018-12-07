@@ -2,7 +2,7 @@
 
 - block:
     - name: Checking python2
-      raw: test -e /usr/bin/python
+      raw: python --version
       changed_when: false
     - name: Create/update host_vars files
       lineinfile:
@@ -18,7 +18,7 @@
     - setup:
   rescue:
     - name: Checking python3
-      raw: test -e /usr/bin/python3
+      raw: python3 --version
       changed_when: false
     - name: Create/update host_vars files
       lineinfile:

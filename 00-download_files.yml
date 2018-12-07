@@ -49,6 +49,7 @@
         loop_var: target
       tags: beats
     - include_role: name=deploy.Redis tasks_from=download
+      when: groups['redis'] | count > 0
       tags: redis
     - include_role: name=deploy.Haproxy tasks_from=download
       tags: haproxy
