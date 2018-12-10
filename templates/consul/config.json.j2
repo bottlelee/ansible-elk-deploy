@@ -8,12 +8,14 @@
       "{{ hostvars[item]['ansible_' + bind_interface]['ipv4']['address'] | default(hostvars[item]['ansible_default_ipv4']['address']) }}"{%- if loop.nextitem is defined -%},{%- endif -%}
     {%- endfor -%}
   ],
-  {% endif -%}
-  "ui": true,
-  "client_addr": "0.0.0.0",
   "performance": {
     "raft_multiplier": 1
   },
+  {% else %}
+  bootstrap: true,
+  {% endif -%}
+  "ui": true,
+  "client_addr": "0.0.0.0",
   "connect": {
     "enabled": true
   },
@@ -24,9 +26,6 @@
       "{{ hostvars[item]['ansible_' + bind_interface]['ipv4']['address'] | default(hostvars[item]['ansible_default_ipv4']['address']) }}"{%- if loop.nextitem is defined -%},{%- endif -%}
     {%- endfor -%}
   ],
-{% else %}
-  "server": true,
-  "bootstrap": true,
 {% endif %}
 {# ---------------- #}
   "datacenter": "{{ consul_dc_name }}",

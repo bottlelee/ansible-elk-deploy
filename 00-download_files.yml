@@ -4,6 +4,7 @@
   gather_facts: no
   vars_files:
     - vars/download_urls.yml
+    - vars/curator.yml
   vars_prompt:
     - name: "format"
       prompt: "What type of files do you need?[rpm|deb]"
@@ -51,5 +52,8 @@
     - include_role: name=deploy.Redis tasks_from=download
       when: groups['redis'] | count > 0
       tags: redis
-    - include_role: name=deploy.Haproxy tasks_from=download
-      tags: haproxy
+    - include_role: name=deploy.Curator tasks_from=download
+      vars:
+        pkg: "{{ target | basename }}"
+        target: "{{ pip_pkgs }}"
+      tags: curator

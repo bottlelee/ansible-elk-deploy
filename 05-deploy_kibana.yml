@@ -3,11 +3,12 @@
   serial:
     - 1
     - 33%
+  vars_files:
+    - vars/curator.yml
   roles:
     - deploy.Kibana
-    # - role: deploy.ElasticSearch
-    #   when: "'elasticsearch' not in group_names"
-    - deploy.Curator
+    - name: deploy.Curator
+      when: inventory_hostname == groups['kibana'][0]
   post_tasks:
     - block:
         - name: Waiting for service started

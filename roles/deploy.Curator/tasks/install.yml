@@ -1,17 +1,38 @@
-- name: 'Uploading {{ target }} files'
-  unarchive:
-    src: '{{ target }}.tar'
-    dest: /tmp/
-  changed_when: false
+- block:
+    - name: Unarchiving pkgs
+      unarchive:
+        src: 'downloaded_files/curator/{{ target | basename }}'
+        dest: /tmp/curator
+      delegate_to: localhost
+      run_once: yes
+      become: no
+    - name: "Uploading /tmp/curator/{{ target | basename | replace('.zip', '') | replace('.tar.gz', '') }} files"
+      synchronize:
+        src: "/tmp/curator/{{ target | basename | replace('.zip', '') | replace('.tar.gz', '') }}"
+        dest: /tmp/
+  rescue:
+    - name: Installing unarchive commands
+      package:
+        name:
+          - unzip
+          - bzip2
+          - tar
+      delegate_to: localhost
+      run_once: yes
+      become: no
+    - include_tasks: download.yml
+      vars:
+        pkg: "{{ target | basename }}"
+    - include_tasks: install.yml
 
-- name: 'Installing {{ target }}'
+- name: "Installing /tmp/{{ target | basename | replace('.zip', '') | replace('.tar.gz', '') }}"
   shell: "python setup.py install || python3 setup.py install"
   args:
-    chdir: '/tmp/{{ target }}/'
+    chdir: "/tmp/{{ target | basename | replace('.zip', '') | replace('.tar.gz', '') }}/"
   changed_when: false
 
-- name: 'Deleting /tmp/{{ target }}'
-  file:
-    path: '/tmp/{{ target }}/'
-    state: absent
-  changed_when: false
+# - name: "Deleting /tmp/{{ target | basename | replace('.zip', '') | replace('.tar.gz', '') }}/"
+#   file:
+#     path: "/tmp/{{ target | basename | replace('.zip', '') | replace('.tar.gz', '') }}/"
+#     state: absent
+#   changed_when: false
