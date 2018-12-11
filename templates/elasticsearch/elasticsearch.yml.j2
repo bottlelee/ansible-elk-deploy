@@ -25,8 +25,10 @@ node.name: {{ inventory_hostname }}
 # Add custom attributes to the node:
 #
 {% if ('esHots' in group_names) or (groups['esDatas']|length < 1) %}
+# Hot nodes store newest data, it should use local SSD storage for performance
 node.attr.box_type: hot
 {% elif 'esWarms' in group_names %}
+# Warm nodes store outdate data, it can use large but slow storage.
 node.attr.box_type: warm
 {% endif %}
 
@@ -124,5 +126,3 @@ gateway.recover_after_nodes: 1
 # Require explicit names when deleting indices:
 #
 #action.destructive_requires_name: true
-
-{# xpack.security.enabled: false #}

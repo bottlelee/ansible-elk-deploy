@@ -1,4 +1,4 @@
-elk_version: '6.5.1'
+elk_version: '6.5.2'
 timezone: 'Asia/Shanghai'
 apt_mirror: 'mirrors.aliyun.com'
 
