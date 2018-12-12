@@ -6,7 +6,7 @@ retry
 *.ini
 609-hosts
 .~lock.*
-temp.yml
+test.yml
 downloaded_files
 .vagrant
 *.log
