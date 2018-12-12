@@ -2,7 +2,7 @@
 
     - name: 'Uploading elasticsearch-{{ elk_version }}.deb'
       copy:
-        src: 'downloaded_files/elasticsearch-{{ elk_version }}.deb'
+        src: 'downloaded_files/elk-{{ elk_version }}/elasticsearch-{{ elk_version }}.deb'
         dest: /tmp/
 
     - name: 'Installing elasticsearch-{{ elk_version }}.deb'

@@ -1,7 +1,7 @@
 - block:
     - name: 'Uploading logstash-{{ elk_version }}.deb'
       copy:
-        src: 'downloaded_files/logstash-{{ elk_version }}.deb'
+        src: 'downloaded_files/elk-{{ elk_version }}/logstash-{{ elk_version }}.deb'
         dest: /tmp/
     - name: 'Installing logstash-{{ elk_version }}.deb'
       apt:

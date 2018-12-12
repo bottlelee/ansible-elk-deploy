@@ -4,7 +4,7 @@
 
 - name: "Uploading {{ target }}-{{ elk_version }}-amd64.deb"
   copy:
-    src: "downloaded_files/{{ target }}-{{ elk_version }}-amd64.deb"
+    src: "downloaded_files/elk-{{ elk_version }}/{{ target }}-{{ elk_version }}-amd64.deb"
     dest: "/tmp/{{ target }}-{{ elk_version }}-amd64.deb"
 
 - block:

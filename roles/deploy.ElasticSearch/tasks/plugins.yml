@@ -2,7 +2,7 @@
 
     - name: "Uploading plugin {{ target }}"
       copy:
-        src: "downloaded_files/{{ target }}-{{ elk_version }}.zip"
+        src: "downloaded_files/elk-{{ elk_version }}/{{ target }}-{{ elk_version }}.zip"
         dest: "/tmp/{{ target }}-{{ elk_version }}.zip"
 
     - name: "Installing plugin {{ target }}"

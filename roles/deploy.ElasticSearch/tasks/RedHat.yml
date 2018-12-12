@@ -2,7 +2,7 @@
 
     - name: 'Uploading elasticsearch-{{ elk_version }}.rpm'
       copy:
-        src: 'downloaded_files/elasticsearch-{{ elk_version }}.rpm'
+        src: 'downloaded_files/elk-{{ elk_version }}/elasticsearch-{{ elk_version }}.rpm'
         dest: /tmp/
 
     - name: 'Installing elasticsearch-{{ elk_version }}.rpm'

@@ -1,16 +1,23 @@
 - block:
     - stat:
-        path: "downloaded_files/elasticsearch-{{ elk_version }}.{{ format }}"
+        path: "downloaded_files/elk-{{ elk_version }}/elasticsearch-{{ elk_version }}.{{ format }}"
       register: p
       failed_when: p.stat.exists == false
       delegate_to: localhost
       become: no
       run_once: true
   rescue:
+    - name: "Create 'downloaded_files/elk-{{ elk_version }}/' directory"
+      file:
+        path: "downloaded_files/elk-{{ elk_version }}/"
+        state: directory
+      delegate_to: localhost
+      become: no
+      run_once: true
     - name: "Downloading elasticsearch-{{ elk_version }}.{{ format }}"
       get_url:
         url: "https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-{{ elk_version }}.{{ format }}"
-        dest: "downloaded_files/"
+        dest: "downloaded_files/elk-{{ elk_version }}/"
       register: download
       until: download is succeeded
       retries: 99

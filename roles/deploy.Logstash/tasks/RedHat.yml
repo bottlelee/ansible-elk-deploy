@@ -1,7 +1,7 @@
 - block:
     - name: 'Uploading logstash-{{ elk_version }}.rpm'
       copy:
-        src: 'downloaded_files/logstash-{{ elk_version }}.rpm'
+        src: 'downloaded_files/elk-{{ elk_version }}/logstash-{{ elk_version }}.rpm'
         dest: /tmp/
     - name: 'Installing logstash-{{ elk_version }}.rpm'
       yum:
