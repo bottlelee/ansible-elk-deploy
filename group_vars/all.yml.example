@@ -2,6 +2,10 @@ elk_version: '6.5.2'
 timezone: 'Asia/Shanghai'
 apt_mirror: 'mirrors.aliyun.com'
 
+# Search Guard gives you full security control over your entire Elasticsearch environment.
+# https://search-guard.com/
+searchguard_enabled: false
+
 # Set 'true' when deploy on production.
 check_groups: true
 

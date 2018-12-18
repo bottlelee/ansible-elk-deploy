@@ -18,7 +18,7 @@
     - name: "Downloading plugin {{ target }}"
       get_url:
         url: "https://artifacts.elastic.co/downloads/elasticsearch-plugins/{{ target }}/{{ target }}-{{ elk_version }}.zip"
-        dest: downloaded_files/{{ target }}-{{ elk_version }}.zip
+        dest: downloaded_files/elk-{{ elk_version }}/{{ target }}-{{ elk_version }}.zip
       delegate_to: localhost
       become: no
       run_once: true

@@ -17,7 +17,12 @@
   uri:
     url: "http://{{ bind_address }}:{{ elastic_http_port }}/_cluster/settings"
     method: PUT
-    body: "{{ lookup('file','disable_shard.json') }}"
+    body: |
+      '{
+        "persistent": {
+          "cluster.routing.allocation.enable": "NONE"
+        }
+      }'
     body_format: json
   when: "'data' in elastic_instance_roles"
 

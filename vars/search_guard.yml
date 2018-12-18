@@ -1,0 +1,32 @@
+sg_enabled: true
+
+# TLS generate tools. Provided by SearchGuard.
+tls_tool_ver: "1.5"
+tls_tool_url: "https://search.maven.org/remotecontent?filepath=com/floragunn/search-guard-tlstool/{{ tls_tool_ver }}/search-guard-tlstool-{{ tls_tool_ver }}.tar.gz"
+tls_password: ''
+tls_file_name: elk-ca
+tls_force_regen: false
+
+# SearchGuard for Elasticsearch
+# Check the right version from https://docs.search-guard.com/latest/search-guard-versions
+sg_es_ver: "6.5.2-23.2"
+sg_es_url: "https://oss.sonatype.org/service/local/repositories/releases/content/com/floragunn/search-guard-6/{{ sg_es_ver }}/search-guard-6-{{ sg_es_ver }}.zip"
+sg_es_config: |
+  searchguard.ssl.transport.pemcert_filepath: /etc/elasticsearch/tls/esnode.pem
+  searchguard.ssl.transport.pemkey_filepath: /etc/elasticsearch/tls/esnode.key
+  searchguard.ssl.transport.pemtrustedcas_filepath: /etc/elasticsearch/tls/{{ tls_file_name }}.pem
+  searchguard.ssl.transport.enforce_hostname_verification: false
+  searchguard.ssl.transport.resolve_hostname: false
+  searchguard.ssl.http.enabled: false
+  searchguard.authcz.admin_dn:
+    - CN=elastic.service.elk.consul,OU=Ops,O=Example Com\, Inc.,DC=example,DC=com
+  searchguard.cert.oid: 1.2.3.4.5.5
+  xpack.security.enabled: false
+
+## SearchGuard for Kibana
+sg_kb_ver: ""
+sg_kb_url: ""
+
+## SearchGuard for Logstash
+sg_ls_ver: ""
+sg_ls_url: ""

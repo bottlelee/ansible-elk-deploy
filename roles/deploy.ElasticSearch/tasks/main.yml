@@ -7,8 +7,8 @@
       wait_for:
         host: "{{ bind_address }}"
         port: "{{ item }}"
-        delay: 10
-        timeout: 180
+        delay: 30
+        timeout: 120
       with_items:
         - 9300
         - 9200
@@ -16,6 +16,12 @@
     - include_tasks: env_check.yml
     - include_tasks: '{{ ansible_os_family }}.yml'
     - include_tasks: common_setup.yml
+
+
+- block:
+    - include_role:
+        name: deploy.SearchGuard
+  when: searchguard_enabled | bool
 
 - name: Create ElasticSearch data dirs
   file:
@@ -63,8 +69,9 @@
 - block:
     - name: Checking ElasticSearch version
       uri:
-        url: "http://{{ bind_address }}:{{ elastic_http_port }}"
+        url: "{{ bind_address }}:{{ elastic_http_port }}"
         return_content: yes
+        validate_certs: no
       register: versionCheck
       changed_when: false
       failed_when: versionCheck.json.version.number is version(elk_version, operator='lt', strict=True)

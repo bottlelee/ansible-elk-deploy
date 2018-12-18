@@ -1,0 +1,8 @@
+- name: Checking compatible
+  fail:
+    msg: "The SearchGuard version '{{ sg_es_ver }}' is not work with current ELK version '{{ elk_version }}'"
+  when: elk_version not in sg_es_ver
+
+- block:
+    - include_tasks: elasticsearch.yml
+  when: "inventory_hostname in groups['elasticsearch']"

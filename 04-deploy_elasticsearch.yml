@@ -3,5 +3,6 @@
   serial: 1
   vars_files:
     - vars/elasticsearch.yml
+    - vars/search_guard.yml
   roles:
     - deploy.ElasticSearch
