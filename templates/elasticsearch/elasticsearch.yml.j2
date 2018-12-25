@@ -135,7 +135,7 @@ searchguard.ssl.transport.pemtrustedcas_filepath: /etc/elasticsearch/tls/{{ tls_
 searchguard.ssl.transport.enforce_hostname_verification: false
 searchguard.ssl.transport.resolve_hostname: false
 searchguard.authcz.admin_dn:
-  - CN=elastic.service.elk.consul,OU=Ops,O=Example Com\, Inc.,DC=example,DC=com
+  - CN=elastic.service.{{ consul_dc_name }}.consul,OU=Ops,O=NewTouch Com\, Inc.,DC=NewTouch,DC=com
 searchguard.cert.oid: 1.2.3.4.5.5
 
 searchguard.ssl.http.enabled: true

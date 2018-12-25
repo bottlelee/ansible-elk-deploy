@@ -5,4 +5,6 @@
 
 - block:
     - include_tasks: elasticsearch.yml
+    - include_tasks: config_sg.yml
+      when: "inventory_hostname == ansible_play_hosts[-1]"
   when: "inventory_hostname in groups['elasticsearch']"

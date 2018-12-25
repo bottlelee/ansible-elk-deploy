@@ -26,6 +26,8 @@
 #   notify: Start enable-thp.service
 
 - name: Updating ElasticSearch configuration
+  vars:
+    searchguard_enabled: false
   template:
     src: 'elasticsearch/{{ item }}.j2'
     dest: '/etc/elasticsearch/{{ item }}'

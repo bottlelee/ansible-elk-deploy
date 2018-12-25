@@ -3,26 +3,26 @@ defaults:
   pkPassword: none
   generatedPasswordLength: 12
   nodesDn:
-    - "CN=*.node.{{ consul_dc_name }}.consul,OU=Ops,O=Example Com\\, Inc.,DC=example,DC=com"
-    - "CN=*.service.{{ consul_dc_name }}.consul,OU=Ops,O=Example Com\\, Inc.,DC=example,DC=com"
+    - "CN=*.node.{{ consul_dc_name }}.consul,OU=Ops,O=NewTouch Com\\, Inc.,DC=NewTouch,DC=com"
+    - "CN=*.service.{{ consul_dc_name }}.consul,OU=Ops,O=NewTouch Com\\, Inc.,DC=NewTouch,DC=com"
   nodeOid: "1.2.3.4.5.5"
   #httpEnabled: true
   reuseTransportCertificatesForHttp: false
 
 ca:
    root:
-      dn: CN=*.service.{{ consul_dc_name }}.consul
+      dn: CN=elastic.service.{{ consul_dc_name }}.consul
       keysize: 2048
       validityDays: 3650
       pkPassword: {{ tls_password | default('none') }}
       file: {{ tls_file_name }}.pem
 
 clients:
-  - name: haibin
-    dn: "CN=elastic.service.{{ consul_dc_name }}.consul,OU=Ops,O=Example Com\\, Inc.,DC=example,DC=com"
+  - name: {{ tls_client_name }}
+    dn: "CN=elastic.service.{{ consul_dc_name }}.consul,OU=Ops,O=NewTouch Com\\, Inc.,DC=NewTouch,DC=com"
     admin: true
 
 nodes:
   - name: esnode
-    dn: CN=elastic.service.{{ consul_dc_name }}.consul,OU=Ops,O=Example Com\, Inc.,DC=example,DC=com
+    dn: CN=elastic.service.{{ consul_dc_name }}.consul,OU=Ops,O=NewTouch Com\, Inc.,DC=NewTouch,DC=com
     dns: elastic.service.{{ consul_dc_name }}.consul

@@ -1,0 +1,10 @@
+- name: Updating SearchGuard index
+  listen: update_sg_settings
+  command: "bash sgadmin.sh -cd ../sgconfig/ -cert {{ tls_client_name }}.pem -key {{ tls_client_name }}.key -cacert /etc/elasticsearch/tls/elk-ca.pem -nhnv --accept-red-cluster -icl"
+  args:
+    chdir: /usr/share/elasticsearch/plugins/search-guard-{{ sg_es_ver.split('.') | first }}/tools
+  changed_when: false
+  register: init
+  until: init is succeeded
+  retries: 10
+  delay: 10

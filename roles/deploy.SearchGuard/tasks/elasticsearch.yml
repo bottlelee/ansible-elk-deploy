@@ -1,11 +1,11 @@
-- name: Checking '/usr/share/elasticsearch/plugins/search-guard-6/search-guard-6-{{ sg_es_ver }}.jar'
+- name: Checking '/usr/share/elasticsearch/plugins/search-guard-{{ sg_es_ver.split('.') | first }}/search-guard-{{ sg_es_ver.split('.') | first }}-{{ sg_es_ver }}.jar'
   stat:
-    path: "/usr/share/elasticsearch/plugins/search-guard-6/search-guard-6-{{ sg_es_ver }}.jar"
+    path: "/usr/share/elasticsearch/plugins/search-guard-{{ sg_es_ver.split('.') | first }}/search-guard-{{ sg_es_ver.split('.') | first }}-{{ sg_es_ver }}.jar"
   register: sg_es
 
 - block:
     - include_tasks: tlstool.yml
-  when: inventory_hostname == ansible_play_hosts[0]
+  when: inventory_hostname == groups['elasticsearch'][0]
 
 # - block:
 #     - name: Disable elasticsearch shard allocation | http
@@ -46,12 +46,12 @@
         host: "{{ bind_address }}"
         port: "{{ elastic_http_port }}"
         state: stopped
-    - name: Uploading search guard files
+    - name: Uploading SearchGuard files
       copy:
-        src: "downloaded_files/searchguard/search-guard-6-{{ sg_es_ver }}.zip"
-        dest: "/tmp/search-guard-6-{{ sg_es_ver }}.zip"
-    - name: Installing search guard
-      command: "/usr/share/elasticsearch/bin/elasticsearch-plugin install -b file:///tmp/search-guard-6-{{ sg_es_ver }}.zip"
+        src: "downloaded_files/searchguard/search-guard-{{ sg_es_ver.split('.') | first }}-{{ sg_es_ver }}.zip"
+        dest: "/tmp/search-guard-{{ sg_es_ver.split('.') | first }}-{{ sg_es_ver }}.zip"
+    - name: Installing SearchGuard
+      command: "/usr/share/elasticsearch/bin/elasticsearch-plugin install -b file:///tmp/search-guard-{{ sg_es_ver.split('.') | first }}-{{ sg_es_ver }}.zip"
       changed_when: false
   when: sg_es.stat.exists == false
 
@@ -72,15 +72,45 @@
         - "{{ tls_file_name }}.pem"
         - esnode.key
         - esnode.pem
-    - name: Initial search guard index
-      command: bash sgadmin.sh -cd ../sgconfig/ \
-        -cert /root/sg_tlstool/out/haibin.pem \
-        -key /root/sg_tlstool/out/haibin.key \
-        -cacert /etc/elasticsearch/tls/elk-ca.pem \
-        -nhnv --accept-red-cluster -icl
+      register: keypair
+    - name: Updating ElasticSearch configuration
+      template:
+        src: 'elasticsearch/elasticsearch.yml.j2'
+        dest: '/etc/elasticsearch/elasticsearch.yml'
+      register: es_tpl
+    - name: Restarting ElasticSearch
+      service:
+        name: elasticsearch
+        state: restarted
+      when: |
+        keypair is changed
+        or es_tpl is changed
+
+- block:
+    - name: "Uploading tls client files to {{ ansible_play_hosts[-1] }}"
+      copy:
+        src: "downloaded_files/searchguard/out/{{ item }}"
+        dest: /usr/share/elasticsearch/plugins/search-guard-{{ sg_es_ver.split('.') | first }}/tools
+        mode: 0400
+        owner: elasticsearch
+        group: elasticsearch
+      with_items:
+        - "{{ tls_client_name }}.key"
+        - "{{ tls_client_name }}.pem"
+    - name: Re-enable shard allocation
+      command: "bash sgadmin.sh cert {{ tls_client_name }}.pem -key {{ tls_client_name }}.key -cacert /etc/elasticsearch/tls/elk-ca.pem -nhnv -cn {{ elastic_cluster_name }} --enable-shard-allocation"
       args:
-        chdir: /usr/share/elasticsearch/plugins/search-guard-6/tools
-      when: inventory_hostname == ansible_play_hosts[0]
+        chdir: /usr/share/elasticsearch/plugins/search-guard-{{ sg_es_ver.split('.') | first }}/tools
+      changed_when: false
+      register: shard_alloc
+      until: shard_alloc is succeeded
+      retries: 10
+      delay: 10
+  when: inventory_hostname == ansible_play_hosts[-1]
+
+    # - name: Creating hashed password for admin
+    #   shell: "sh ./tools/hash.sh -p {{ sg_admin_pass }} | tail -n1"
+    #   register:
     # - name: Add config block into /etc/elasticsearch/elasticsearch.yml
     #   blockinfile:
     #     path: /etc/elasticsearch/elasticsearch.yml

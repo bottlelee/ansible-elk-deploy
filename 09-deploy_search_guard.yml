@@ -2,7 +2,7 @@
   become: yes
   serial: 1
   vars_files:
-    # - vars/elasticsearch.yml
+    - vars/elasticsearch.yml
     - vars/search_guard.yml
   roles:
     - name: deploy.SearchGuard

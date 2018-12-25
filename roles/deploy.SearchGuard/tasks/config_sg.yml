@@ -1,0 +1,16 @@
+- name: Hashing internal users' password
+  shell: "bash hash.sh -p {{ item.pass }} | tail -n1"
+  args:
+    chdir: "/usr/share/elasticsearch/plugins/search-guard-{{ sg_es_ver.split('.') | first }}/tools"
+  loop: "{{ sg_users }}"
+  register: hashed_passwd
+
+- debug:
+    msg: "{{ item }}"
+  with_items: "{{ hashed_passwd.results | list | map(attribute='stdout') }}"
+
+# - name: Updating internal users config file
+#   template:
+#     src: searchguard/sg_internal_users.yml.j2
+#     dest: /usr/share/elasticsearch/plugins/search-guard-{{ sg_es_ver.split('.') | first }}/sgconfig/sg_internal_users.yml
+#   notify: update_sg_settings
