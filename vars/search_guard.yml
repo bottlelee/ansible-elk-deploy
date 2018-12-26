@@ -8,21 +8,6 @@ tls_file_name: elk-ca
 tls_client_name: elk-client
 tls_force_regen: false
 
-# SG users
-## Read more on https://docs.search-guard.com/resources/presentations/03_SG_Documents_configuration_basics.pdf
-## and https://docs.search-guard.com/latest/internal-users-database
-sg_users:
-  - name: admin
-    pass: newtouch
-    readonly: false
-    roles:
-      - admin
-  - name: haibin
-    pass: googoodolls
-    readonly: true
-    roles:
-      - admin
-
 # SearchGuard for Elasticsearch
 # Check the right version from https://docs.search-guard.com/latest/search-guard-versions
 sg_es_ver: "6.5.2-23.2"
@@ -33,15 +18,22 @@ sg_es_config: |
   searchguard.ssl.transport.pemtrustedcas_filepath: /etc/elasticsearch/tls/{{ tls_file_name }}.pem
   searchguard.ssl.transport.enforce_hostname_verification: false
   searchguard.ssl.transport.resolve_hostname: false
-  searchguard.ssl.http.enabled: false
   searchguard.authcz.admin_dn:
     - CN=elastic.service.elk.consul,OU=Ops,O=Example Com\, Inc.,DC=example,DC=com
   searchguard.cert.oid: 1.2.3.4.5.5
   xpack.security.enabled: false
+  # xpack.spaces.enabled: false
+  searchguard.ssl.http.enabled: true
+  searchguard.ssl.http.pemcert_filepath: /etc/elasticsearch/tls/esnode.pem
+  searchguard.ssl.http.pemkey_filepath: /etc/elasticsearch/tls/esnode.key
+  searchguard.ssl.http.pemtrustedcas_filepath: /etc/elasticsearch/tls/{{ tls_file_name }}.pem
 
 ## SearchGuard for Kibana
-sg_kb_ver: ""
-sg_kb_url: ""
+## https://search.maven.org/search?q=g:com.floragunn%20AND%20a:search-guard-kibana-plugin
+sg_kb_ver: "6.5.4-17"
+sg_kb_url: "https://search.maven.org/remotecontent?filepath=com/floragunn/search-guard-kibana-plugin/{{ sg_kb_ver }}/search-guard-kibana-plugin-{{ sg_kb_ver }}.zip"
+sg_kb_config: |
+
 
 ## SearchGuard for Logstash
 sg_ls_ver: ""

@@ -5,9 +5,21 @@
   delegate_to: localhost
   become: no
 
-- name: Setup index default settings
+- name: Setup index default settings | http
   uri:
     url: "http://ingest.elastic.service.{{ consul_dc_name }}.consul:{{ elastic_http_port }}/_template/active-logs"
     method: PUT
     body: "{{ lookup('file', 'indices_default_settings.json') }}"
     body_format: json
+  when: not searchguard_enabled
+
+- name: Setup index default settings | https
+  uri:
+    url: "https://ingest.elastic.service.{{ consul_dc_name }}.consul:{{ elastic_http_port }}/_template/active-logs"
+    method: PUT
+    user: "{{ sg_admin_id }}"
+    password: "{{ sg_admin_pass }}"
+    body: "{{ lookup('file', 'indices_default_settings.json') }}"
+    body_format: json
+    validate_certs: no
+  when: searchguard_enabled

@@ -1,6 +1,8 @@
 - name: Validate config
   command: /usr/local/bin/consul validate -quiet /etc/consul.d/
-  listen: Restart consul
+  listen:
+    - Restart consul
+    - Reload consul
 
 - name: Restart consul service
   service:
@@ -18,3 +20,8 @@
     name: resolvconf
     state: restarted
   when: ansible_os_family == 'Debian'
+
+- name: Reload consul
+  service:
+    name: consul
+    state: reloaded

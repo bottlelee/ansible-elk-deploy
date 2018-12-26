@@ -5,8 +5,10 @@
     - 33%
   vars_files:
     - vars/curator.yml
+    - vars/search_guard.yml
+    - vars/search_guard_auth.yml
   roles:
-    - deploy.Kibana
+    - name: deploy.Kibana
     - name: deploy.Curator
       when: inventory_hostname == groups['kibana'][0]
   post_tasks:

@@ -8,10 +8,9 @@
       "tags": ["{{ elastic_instance_roles | join('","') }}"],
       "checks": [
         {
-          "http": "{% if searchguard_enabled %}https{% else %}http{% endif %}://{{ bind_address }}:{{ elastic_http_port }}",
+          "args": ["sh", "/etc/consul.d/chk_scripts/elasticsearch.sh"],
           "interval": "10s",
-          "timeout": "3s",
-          "tls_skip_verify": true
+          "timeout": "3s"
         }
       ]
     }

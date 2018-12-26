@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+{% if searchguard_enabled %}
+curl -u kibanaserver:{{ sg_default_pass }} -sk https://{{ bind_address }}:{{ elastic_http_port }}/_cluster/health?pretty
+{% else %}
+curl -s http://{{ bind_address }}:{{ elastic_http_port }}/_cluster/health?pretty
+{% endif %}

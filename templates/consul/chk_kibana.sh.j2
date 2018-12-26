@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+{% if searchguard_enabled %}
+curl -u kibanaserver:{{ sg_default_pass }} -ik https://{{ bind_address }}:{{ kibana_port }}
+{% else %}
+curl -i http://{{ bind_address }}:{{ kibana_port }}
+{% endif %}

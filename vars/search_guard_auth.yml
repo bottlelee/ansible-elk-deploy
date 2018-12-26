@@ -1,0 +1,26 @@
+sg_default_pass: newtouch
+sg_admin_pass: googoodolls
+
+# SG users
+## Read more on https://docs.search-guard.com/resources/presentations/03_SG_Documents_configuration_basics.pdf
+## and https://docs.search-guard.com/latest/internal-users-database
+sg_users:
+  - id: admin
+    pass: "{{ sg_admin_pass }}"
+    roles:
+      - admim
+  - id: haibin
+    roles:
+      - admin
+  - id: logstash
+    roles:
+      - logstash
+  - id: kibanaserver
+    readonly: true
+  - id: kibanaro
+    roles:
+      - kibanauser
+      - readall
+  - id: readall
+    roles:
+      - readall

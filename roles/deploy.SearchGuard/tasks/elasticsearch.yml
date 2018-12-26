@@ -92,8 +92,6 @@
         src: "downloaded_files/searchguard/out/{{ item }}"
         dest: /usr/share/elasticsearch/plugins/search-guard-{{ sg_es_ver.split('.') | first }}/tools
         mode: 0400
-        owner: elasticsearch
-        group: elasticsearch
       with_items:
         - "{{ tls_client_name }}.key"
         - "{{ tls_client_name }}.pem"

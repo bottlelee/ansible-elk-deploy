@@ -129,7 +129,8 @@ gateway.recover_after_nodes: 1
 
 # ------------------------------- Search Guard ---------------------------------
 {% if searchguard_enabled %}
-searchguard.ssl.transport.pemcert_filepath: /etc/elasticsearch/tls/esnode.pem
+{{ sg_es_config }}
+{# searchguard.ssl.transport.pemcert_filepath: /etc/elasticsearch/tls/esnode.pem
 searchguard.ssl.transport.pemkey_filepath: /etc/elasticsearch/tls/esnode.key
 searchguard.ssl.transport.pemtrustedcas_filepath: /etc/elasticsearch/tls/{{ tls_file_name }}.pem
 searchguard.ssl.transport.enforce_hostname_verification: false
@@ -144,7 +145,7 @@ searchguard.ssl.http.pemkey_filepath: /etc/elasticsearch/tls/esnode.key
 searchguard.ssl.http.pemtrustedcas_filepath: /etc/elasticsearch/tls/{{ tls_file_name }}.pem
 
 searchguard.disabled: false
-xpack.security.enabled: false
+xpack.security.enabled: false #}
 {% else %}
 searchguard.disabled: true
 xpack.security.enabled: false

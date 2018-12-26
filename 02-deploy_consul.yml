@@ -1,6 +1,8 @@
 - hosts: all
   become: yes
   serial: 3
+  vars_files:
+    - vars/search_guard_auth.yml
   roles:
     - deploy.Consul
   post_tasks:
