@@ -130,23 +130,7 @@ gateway.recover_after_nodes: 1
 # ------------------------------- Search Guard ---------------------------------
 {% if searchguard_enabled %}
 {{ sg_es_config }}
-{# searchguard.ssl.transport.pemcert_filepath: /etc/elasticsearch/tls/esnode.pem
-searchguard.ssl.transport.pemkey_filepath: /etc/elasticsearch/tls/esnode.key
-searchguard.ssl.transport.pemtrustedcas_filepath: /etc/elasticsearch/tls/{{ tls_file_name }}.pem
-searchguard.ssl.transport.enforce_hostname_verification: false
-searchguard.ssl.transport.resolve_hostname: false
-searchguard.authcz.admin_dn:
-  - CN=elastic.service.{{ consul_dc_name }}.consul,OU=Ops,O=NewTouch Com\, Inc.,DC=NewTouch,DC=com
-searchguard.cert.oid: 1.2.3.4.5.5
-
-searchguard.ssl.http.enabled: true
-searchguard.ssl.http.pemcert_filepath: /etc/elasticsearch/tls/esnode.pem
-searchguard.ssl.http.pemkey_filepath: /etc/elasticsearch/tls/esnode.key
-searchguard.ssl.http.pemtrustedcas_filepath: /etc/elasticsearch/tls/{{ tls_file_name }}.pem
-
-searchguard.disabled: false
-xpack.security.enabled: false #}
 {% else %}
-searchguard.disabled: true
+{# searchguard.disabled: true #}
 xpack.security.enabled: false
 {% endif %}

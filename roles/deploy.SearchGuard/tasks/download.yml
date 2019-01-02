@@ -10,6 +10,7 @@
       with_items:
         - "{{ tls_tool_url }}"
         - "{{ sg_es_url }}"
+        - "{{ sg_kb_url }}"
   delegate_to: localhost
   become: no
   run_once: yes

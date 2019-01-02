@@ -3,15 +3,13 @@ defaults:
   pkPassword: none
   generatedPasswordLength: 12
   nodesDn:
-    - "CN=*.node.{{ consul_dc_name }}.consul,OU=Ops,O=NewTouch Com\\, Inc.,DC=NewTouch,DC=com"
-    - "CN=*.service.{{ consul_dc_name }}.consul,OU=Ops,O=NewTouch Com\\, Inc.,DC=NewTouch,DC=com"
+    - "CN=NewTouch,OU=Ops,O=NewTouch Com\\, Inc.,DC=NewTouch,DC=com"
   nodeOid: "1.2.3.4.5.5"
-  #httpEnabled: true
   reuseTransportCertificatesForHttp: false
 
 ca:
    root:
-      dn: CN=elastic.service.{{ consul_dc_name }}.consul
+      dn: CN=NewTouch
       keysize: 2048
       validityDays: 3650
       pkPassword: {{ tls_password | default('none') }}
@@ -19,10 +17,9 @@ ca:
 
 clients:
   - name: {{ tls_client_name }}
-    dn: "CN=elastic.service.{{ consul_dc_name }}.consul,OU=Ops,O=NewTouch Com\\, Inc.,DC=NewTouch,DC=com"
+    dn: "CN=NewTouch,OU=Ops,O=NewTouch Com\\, Inc.,DC=NewTouch,DC=com"
     admin: true
 
 nodes:
   - name: esnode
-    dn: CN=elastic.service.{{ consul_dc_name }}.consul,OU=Ops,O=NewTouch Com\, Inc.,DC=NewTouch,DC=com
-    dns: elastic.service.{{ consul_dc_name }}.consul
+    dn: "CN=NewTouch,OU=Ops,O=NewTouch Com\\, Inc.,DC=NewTouch,DC=com"

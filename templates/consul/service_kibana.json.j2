@@ -6,7 +6,7 @@
       "port": {{ kibana_port }},
       "checks": [
         {
-          "http": "http://{{ bind_address }}:{{ kibana_port }}",
+          "tcp": "{{ bind_address }}:{{ kibana_port }}",
           "interval": "10s",
           "timeout": "3s"
         }

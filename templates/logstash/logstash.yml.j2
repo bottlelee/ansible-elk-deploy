@@ -218,3 +218,13 @@ slowlog:
     info: 1s
     debug: 500ms
     trace: 100ms
+
+#============================== Xpack Monitoring ===============================
+xpack.monitoring:
+  enabled: true
+  elasticsearch:
+    url: ["elastic.service.{{ consul_dc_name }}.consul:{{ elastic_http_port }}"]
+    username: haibin
+    password: {{ sg_users | rejectattr('id', 'ne', 'haibin') | map(attribute='pass') | first }}
+    ssl:
+      ca: /tmp/elk-ca.pem

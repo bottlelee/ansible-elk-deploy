@@ -18,12 +18,16 @@ server.host: "0.0.0.0"
 server.name: "{{ ansible_hostname }}"
 
 # The URL of the Elasticsearch instance to use for all your queries.
-{# {% if 'elasticsearch' in group_names %}
-elasticsearch.url: "http://ingest.elastic.service.{{ consul_dc_name }}.consul:9200"
+{% if searchguard_enabled %}
+elasticsearch:
+  url: "https://ingest.elastic.service.{{ consul_dc_name }}.consul:9200"
+  username: kibanaserver
+  password: {{ sg_users | selectattr('id', 'eq', 'kibanaserver') | map(attribute='pass') | first }}
+elasticsearch.ssl.verificationMode: none
+xpack.spaces.enabled: false
 {% else %}
-elasticsearch.url: "http://tribe.elastic.service.{{ consul_dc_name }}.consul:9200"
-{% endif %} #}
 elasticsearch.url: "http://ingest.elastic.service.{{ consul_dc_name }}.consul:9200"
+{% endif %}
 
 # When this setting's value is true Kibana uses the hostname specified in the server.host
 # setting. When the value of this setting is false, Kibana uses the hostname of the host
@@ -94,7 +98,7 @@ logging.dest: /var/log/kibana/kibana.log
 #logging.silent: false
 
 # Set the value of this setting to true to suppress all logging output other than error messages.
-logging.quiet: true
+#logging.quiet: true
 
 # Set the value of this setting to true to log all events, including system usage information
 # and all requests.

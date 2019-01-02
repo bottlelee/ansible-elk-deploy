@@ -10,7 +10,7 @@ tls_force_regen: false
 
 # SearchGuard for Elasticsearch
 # Check the right version from https://docs.search-guard.com/latest/search-guard-versions
-sg_es_ver: "6.5.2-23.2"
+sg_es_ver: "{{ elk_version }}-24.0"
 sg_es_url: "https://oss.sonatype.org/service/local/repositories/releases/content/com/floragunn/search-guard-{{ sg_es_ver.split('.') | first }}/{{ sg_es_ver }}/search-guard-{{ sg_es_ver.split('.') | first }}-{{ sg_es_ver }}.zip"
 sg_es_config: |
   searchguard.ssl.transport.pemcert_filepath: /etc/elasticsearch/tls/esnode.pem
@@ -19,7 +19,7 @@ sg_es_config: |
   searchguard.ssl.transport.enforce_hostname_verification: false
   searchguard.ssl.transport.resolve_hostname: false
   searchguard.authcz.admin_dn:
-    - CN=elastic.service.elk.consul,OU=Ops,O=Example Com\, Inc.,DC=example,DC=com
+    - CN=NewTouch,OU=Ops,O=NewTouch Com\, Inc.,DC=NewTouch,DC=com
   searchguard.cert.oid: 1.2.3.4.5.5
   xpack.security.enabled: false
   # xpack.spaces.enabled: false
@@ -29,8 +29,8 @@ sg_es_config: |
   searchguard.ssl.http.pemtrustedcas_filepath: /etc/elasticsearch/tls/{{ tls_file_name }}.pem
 
 ## SearchGuard for Kibana
-## https://search.maven.org/search?q=g:com.floragunn%20AND%20a:search-guard-kibana-plugin
-sg_kb_ver: "6.5.4-17"
+## Check the right version from https://docs.search-guard.com/latest/search-guard-versions
+sg_kb_ver: "{{ elk_version }}-17"
 sg_kb_url: "https://search.maven.org/remotecontent?filepath=com/floragunn/search-guard-kibana-plugin/{{ sg_kb_ver }}/search-guard-kibana-plugin-{{ sg_kb_ver }}.zip"
 sg_kb_config: |
 

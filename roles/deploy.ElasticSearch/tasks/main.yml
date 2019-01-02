@@ -1,20 +1,9 @@
 - block:
-    # - name: Checking elasticsearch service status
-    #   service:
-    #     name: elasticsearch
-    #     state: started
-    # - name: Checking elasticsearch port
-    #   wait_for:
-    #     host: "{{ bind_address }}"
-    #     port: "{{ item }}"
-    #     delay: 30
-    #     timeout: 120
-    #   with_items:
-    #     - 9300
-    #     - 9200
-    - name: Checking ElasticSearch
-      command: /usr/share/elasticsearch/bin/elasticsearch -V
-      changed_when: false
+    - name: Checking elasticsearch
+      stat:
+        path: /usr/share/elasticsearch/bin/elasticsearch
+      register: bin
+      failed_when: not bin.stat.exists
   rescue:
     - include_tasks: env_check.yml
     - include_tasks: '{{ ansible_os_family }}.yml'
@@ -49,11 +38,13 @@
       with_items:
         - jvm.options
         - elasticsearch.yml
-      notify: Restarting elasticsearch
-    - meta: flush_handlers
+    - name: Restarting elasticsearch service
+      service:
+        name: elasticsearch
+        state: restarted
     - include_role:
         name: deploy.SearchGuard
-  when: searchguard_enabled | bool
+  when: searchguard_enabled
 
 - block:
     - wait_for:

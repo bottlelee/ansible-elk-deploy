@@ -11,3 +11,9 @@ logstash_piplines:
 
 # jvm option, unit is g(GB) and at least 1 is needed.
 logstash_jvm_mem: 1
+
+logstash_ssl_output: |
+  user => "logstash"
+  password => "{{ sg_users | rejectattr('id', 'ne', 'logstash') | map(attribute='pass') | first }}"
+  ssl => true
+  ssl_certificate_verification => false

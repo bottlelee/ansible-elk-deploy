@@ -2,6 +2,7 @@
   become: yes
   vars_files:
     - vars/logstash.yml
+    - vars/search_guard_auth.yml
   serial:
     - 1
     - 33%

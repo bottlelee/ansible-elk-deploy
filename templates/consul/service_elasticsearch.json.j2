@@ -8,7 +8,7 @@
       "tags": ["{{ elastic_instance_roles | join('","') }}"],
       "checks": [
         {
-          "args": ["sh", "/etc/consul.d/chk_scripts/elasticsearch.sh"],
+          "tcp": "{{ bind_address}}:{{ elastic_http_port }}",
           "interval": "10s",
           "timeout": "3s"
         }
