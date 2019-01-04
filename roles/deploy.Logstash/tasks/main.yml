@@ -62,3 +62,9 @@
     state: absent
   with_items: "{{ allTemplates.stdout_lines }}"
   when: "item not in (templates.results|selectattr('item', 'string')|map(attribute='item')|list)"
+
+- name: Updating Search Guard tls files
+  copy:
+    src: downloaded_files/searchguard/out/elk-ca.pem
+    dest: /etc/logstash/elk-ingest.pem
+    mode: 0444

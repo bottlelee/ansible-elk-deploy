@@ -32,4 +32,7 @@
     - kibana.yml
   notify: Restart kibana
 
+- include_tasks: searchguard/main.yml
+  when: searchguard_enabled
+
 - include_tasks: report.yml

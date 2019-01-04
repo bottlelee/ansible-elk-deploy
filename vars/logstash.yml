@@ -17,3 +17,4 @@ logstash_ssl_output: |
   password => "{{ sg_users | rejectattr('id', 'ne', 'logstash') | map(attribute='pass') | first }}"
   ssl => true
   ssl_certificate_verification => false
+  cacert => "/etc/logstash/elk-ca.pem"

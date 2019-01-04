@@ -59,6 +59,17 @@ output.elasticsearch:
 #============================== Dashboards =====================================
 setup.dashboards:
   enabled: true
+  elasticsearch:
+    {% if searchguard_enabled -%}
+    hosts: ["https://ingest.elastic.service.{{ consul_dc_name }}.consul:{{ elastic_http_port }}"]
+    username: kibanaserver
+    password: {{ sg_users | selectattr('id', 'eq', 'kibanaserver') | map(attribute='pass') | first }}
+    protocal: https
+    ssl:
+      verification_mode: none
+    {% else -%}
+    hosts: ["http://ingest.elastic.service.{{ consul_dc_name }}.consul:{{ elastic_http_port }}"]
+    {% endif -%}
   retry:
     enabled: true
     interval: 60s
@@ -97,5 +108,14 @@ tags: [
 xpack.monitoring:
   enabled: true
   elasticsearch:
-    hosts: ["ingest.elastic.service.{{ consul_dc_name }}.consul:{{ elastic_http_port }}"]
+    {% if searchguard_enabled -%}
+    hosts: ["https://ingest.elastic.service.{{ consul_dc_name }}.consul:{{ elastic_http_port }}"]
+    username: kibanaserver
+    password: {{ sg_users | selectattr('id', 'eq', 'kibanaserver') | map(attribute='pass') | first }}
+    protocal: https
+    ssl:
+      verification_mode: none
+    {% else -%}
+    hosts: ["http://ingest.elastic.service.{{ consul_dc_name }}.consul:{{ elastic_http_port }}"]
+    {% endif -%}
 {% endif %}

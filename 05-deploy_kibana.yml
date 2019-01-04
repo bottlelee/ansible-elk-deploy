@@ -5,6 +5,7 @@
     - 33%
   vars_files:
     - vars/curator.yml
+    - vars/elasticsearch.yml
     - vars/search_guard.yml
     - vars/search_guard_auth.yml
   roles:

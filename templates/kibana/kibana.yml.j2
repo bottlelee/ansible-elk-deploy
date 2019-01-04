@@ -24,7 +24,13 @@ elasticsearch:
   username: kibanaserver
   password: {{ sg_users | selectattr('id', 'eq', 'kibanaserver') | map(attribute='pass') | first }}
 elasticsearch.ssl.verificationMode: none
+#elasticsearch.ssl.certificateAuthorities: /etc/kibana/tls/elk-ca.pem
+#elasticsearch.ssl.certificate: /etc/kibana/tls/elk-client.pem
+#elasticsearch.ssl.key: /etc/kibana/tls/elk-client.key
 xpack.spaces.enabled: false
+xpack.reporting.enabled: false
+searchguard.cookie.secure: false
+#searchguard.allow_client_certificates: true
 {% else %}
 elasticsearch.url: "http://ingest.elastic.service.{{ consul_dc_name }}.consul:9200"
 {% endif %}
@@ -112,4 +118,5 @@ logging.dest: /var/log/kibana/kibana.log
 # translations.
 #i18n.defaultLocale: "en"
 
+xpack.monitoring.enabled: true
 xpack.security.enabled: false

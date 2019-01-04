@@ -39,3 +39,5 @@ For test only, you can run `vagrant up`. You need [vagrant](https://www.vagrantu
 1. Set the value of 'elk_version' in `group_vars/all.yml`, then run `ansible-playbook 98-upgrade_elk_cluster.yml` will rolling upgrade your services to the new version.
 
 ## Read more in [handbook](docs/handbook.md)
+
+## FAQ

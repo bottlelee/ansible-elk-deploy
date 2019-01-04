@@ -13,3 +13,16 @@
     - 9300
     - 9200
   listen: Restarting elasticsearch
+
+- name: Updating Search Guard index
+  command: "bash sgadmin.sh -cd ../sgconfig/ -cert elk-client.pem -key elk-client.key -cacert /etc/elasticsearch/tls/elk-ca.pem -nhnv {{ item }}"
+  with_items:
+    - '--accept-red-cluster -icl'
+    - '-rl -icl'
+  args:
+    chdir: /usr/share/elasticsearch/plugins/search-guard-{{ sg_es_ver.split('.') | first }}/tools
+  changed_when: false
+  register: init
+  until: init is succeeded
+  retries: 10
+  delay: 10

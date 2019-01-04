@@ -28,8 +28,7 @@
   notify: Restarting elasticsearch
 
 - block:
-    - include_role:
-        name: deploy.SearchGuard
+    - include_tasks: searchguard/main.yml
   rescue:
     - name: Updating ElasticSearch configuration
       template:
@@ -42,8 +41,7 @@
       service:
         name: elasticsearch
         state: restarted
-    - include_role:
-        name: deploy.SearchGuard
+    - include_tasks: searchguard/main.yml
   when: searchguard_enabled
 
 - block:

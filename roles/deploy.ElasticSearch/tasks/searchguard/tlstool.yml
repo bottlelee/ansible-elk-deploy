@@ -1,0 +1,43 @@
+- name: "Checking {{ ansible_user_dir }}/sg_tlstool/deps/search-guard-tlstool-{{ tls_tool_ver }}.jar"
+  stat:
+    path: "{{ ansible_user_dir }}/sg_tlstool/deps/search-guard-tlstool-{{ tls_tool_ver }}.jar"
+  register: jarSt
+
+- block:
+    - name: "Create {{ ansible_user_dir }}/sg_tlstool"
+      file:
+        path: "{{ ansible_user_dir }}/sg_tlstool"
+        state: directory
+    - name: "Upload and unarchive {{ tls_tool_url | basename }}"
+      unarchive:
+        src: "downloaded_files/searchguard/{{ tls_tool_url | basename }}"
+        dest: "{{ ansible_user_dir }}/sg_tlstool"
+  rescue:
+    - include_tasks: download.yml
+    - include_tasks: tlstool.yml
+  when: not jarSt.stat.exists
+
+- name: "Creating {{ ansible_user_dir }}/sg_tlstool/config/elk_ca.yml"
+  template:
+    src: searchguard/elk_ca.yml.j2
+    dest: "{{ ansible_user_dir }}/sg_tlstool/config/elk_ca.yml"
+  register: tls_template
+
+- block:
+    - name: "Remove {{ ansible_user_dir }}/sg_tlstool/out"
+      file:
+        path: "{{ ansible_user_dir }}/sg_tlstool/out"
+        state: absent
+    - name: Generating tls files
+      command: "sh ./tools/sgtlstool.sh -c config/elk_ca.yml -ca -crt"
+      args:
+        chdir: "{{ ansible_user_dir }}/sg_tlstool"
+  when: |
+    tls_template is changed
+    or tls_force_regen
+
+- name: Fetching tls files
+  synchronize:
+    mode: pull
+    src: "{{ ansible_user_dir }}/sg_tlstool/out"
+    dest: "downloaded_files/searchguard/"
