@@ -1,3 +1,9 @@
+---
+title: "Install"
+date: 2019-01-07T14:53:49+08:00
+draft: true
+---
+
 # 服务依赖关系
 ## 1. Elasticsearch 依赖关系
 ![es-cluster-arch](imgs/elasticsearch_cluster_relations.png)

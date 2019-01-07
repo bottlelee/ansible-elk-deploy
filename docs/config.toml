@@ -1,0 +1,4 @@
+baseURL = "http://bottlelee.gitee.io/ansible-elk-deploy/"
+languageCode = "zh-cn"
+title = "使用 Ansible 部署 ELK 和 Search Guard。"
+theme = "kraiklyn"
