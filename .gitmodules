@@ -1,3 +1,6 @@
 [submodule "docs/themes/kraiklyn"]
 	path = docs/themes/kraiklyn
 	url = https://github.com/jsnjack/kraiklyn
+[submodule "docs/themes/learn"]
+	path = docs/themes/learn
+	url = https://github.com/matcornic/hugo-theme-learn.git

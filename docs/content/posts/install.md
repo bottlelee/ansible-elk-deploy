@@ -1,7 +1,7 @@
 ---
 title: "Install"
 date: 2019-01-07T14:53:49+08:00
-draft: true
+draft: false
 ---
 
 # 服务依赖关系
