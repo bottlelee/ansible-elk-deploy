@@ -1,13 +1,12 @@
 ---
 title: "Ansible"
-date: 2019-01-08T15:18:28+08:00
-draft: false
+weight: 10
 chapter: true
 ---
 
 ### 安装 python pip 和 ansible
 
-1. 建立一个 shell 脚本。`nano /tmp/bootstrap-ansible.sh`，写入以下内容：
+1. 建立一个 shell 脚本。`nano /tmp/bootstrap-ansible.sh`，写入以下内容：<br>
 
 ```
 #!/usr/bin/env bash

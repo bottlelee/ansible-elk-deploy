@@ -15,10 +15,10 @@ draft: false
 * 集成 [Curator](https://www.elastic.co/guide/en/elasticsearch/client/curator/current/index.html) 对 indices 进行日常定时维护。
 * ES 可以划分多种角色，实现冷热数据等运维规划。
 * 包括升级脚本，可实现集群平滑版本升级。
+* 离线部署方式，生产环境无需访问外网。
 
 ## **环境准备**
-* [文档说明](preparing)
-* [安装 Ansible](ansible)
+{{% children depth="3" %}}
 
 ## 关于我
 

@@ -9,10 +9,11 @@ theme = "learn"
   showVisitedLinks = true
   disableBreadcrumb = false
   disableNextPrev = false
+  # themeVariant = "mine"
 
 [[menu.shortcuts]]
 name = "Git repo"
-url = "https://gitee.com/bottlelee/ansible-elk-deploy/tree/searchguard"
+url = "https://gitee.com/bottlelee/ansible-elk-deploy/"
 
 [[menu.shortcuts]]
 name = "Ansible Docs"
