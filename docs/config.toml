@@ -4,12 +4,19 @@ title = "使用 Ansible 部署 ELK 和 Search Guard。"
 theme = "learn"
 
 [params]
-author = "Haibin Lee"
-description = "Deploy Elastic Search, Logstash, Kibana and Search Guard in the Ansible way."
+  author = "Haibin Lee"
+  description = "Deploy Elastic Search, Logstash, Kibana and Search Guard in the Ansible way."
+  showVisitedLinks = true
+  disableBreadcrumb = false
+  disableNextPrev = false
 
 [[menu.shortcuts]]
 name = "Git repo"
 url = "https://gitee.com/bottlelee/ansible-elk-deploy/tree/searchguard"
+
+[[menu.shortcuts]]
+name = "Ansible Docs"
+url = "https://docs.ansible.com/ansible/latest/index.html"
 
 [[menu.shortcuts]]
 name = "Elastic Docs"
@@ -18,10 +25,6 @@ url = "https://www.elastic.co/guide/index.html"
 [[menu.shortcuts]]
 name = "Consul Docs"
 url = "https://www.consul.io/docs/index.html"
-
-[[menu.shortcuts]]
-name = "Ansible Docs"
-url = "https://docs.ansible.com/ansible/latest/index.html"
 
 # For search functionality
 [outputs]

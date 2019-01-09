@@ -10,14 +10,16 @@ draft: false
 
 ## 项目特性
 
-* 集成 Consul 服务自发现自注册，服务之间通过 DNS 访问，实现 ELK 各组件可水平扩缩而无需更改配以及重启。
-* ES 可以划分多种角色，实现冷热数据等运维规划
+* 集成 [Consul](https://www.consul.io/) 服务发现注册。
+* 集成 [Monit](https://mmonit.com/monit/) 监控，附带配套的 Kibana 看板。
+* 集成 [Curator](https://www.elastic.co/guide/en/elasticsearch/client/curator/current/index.html) 对 indices 进行日常定时维护。
+* ES 可以划分多种角色，实现冷热数据等运维规划。
+* 包括升级脚本，可实现集群平滑版本升级。
 
 ## **环境准备**
 * [文档说明](preparing)
-* [Ansible](ansible)
-
+* [安装 Ansible](ansible)
 
 ## 关于我
 
-擅长 Linux 运维的文科生
+喜欢折腾 Linux 运维的汉语言文学师范专科毕业生。
