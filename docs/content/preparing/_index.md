@@ -1,6 +1,7 @@
 ---
 title: "准备工作"
-weight: 0
+description: "你需要准备的"
+weight: 01
 ---
 
 ### 我假设你已经掌握以下知识：
@@ -13,8 +14,9 @@ weight: 0
 1. Xubuntu Linux 18.04
 2. Virtualbox 5.2.18
 3. Ansible 2.7.5
-4. Python: 2.7.15rc1
+4. Python 2.7.15rc1
 5. Vagrant 2.2.2
+6. wget 1.19.4
 
 ### 文内说明：
 

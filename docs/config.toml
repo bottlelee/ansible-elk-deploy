@@ -6,26 +6,27 @@ theme = "learn"
 [params]
   author = "Haibin Lee"
   description = "Deploy Elastic Search, Logstash, Kibana and Search Guard in the Ansible way."
-  showVisitedLinks = true
+  showVisitedLinks = false
   disableBreadcrumb = false
   disableNextPrev = false
-  # themeVariant = "mine"
+  themeVariant = "green"
 
-[[menu.shortcuts]]
-name = "Git repo"
-url = "https://gitee.com/bottlelee/ansible-elk-deploy/"
+[menu]
+  [[menu.shortcuts]]
+  name = "Git repo"
+  url = "https://gitee.com/bottlelee/ansible-elk-deploy/"
 
-[[menu.shortcuts]]
-name = "Ansible Docs"
-url = "https://docs.ansible.com/ansible/latest/index.html"
+  [[menu.shortcuts]]
+  name = "Ansible Docs"
+  url = "https://docs.ansible.com/ansible/latest/index.html"
 
-[[menu.shortcuts]]
-name = "Elastic Docs"
-url = "https://www.elastic.co/guide/index.html"
+  [[menu.shortcuts]]
+  name = "Elastic Docs"
+  url = "https://www.elastic.co/guide/index.html"
 
-[[menu.shortcuts]]
-name = "Consul Docs"
-url = "https://www.consul.io/docs/index.html"
+  [[menu.shortcuts]]
+  name = "Consul Docs"
+  url = "https://www.consul.io/docs/index.html"
 
 # For search functionality
 [outputs]

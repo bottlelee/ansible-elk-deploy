@@ -13,5 +13,4 @@ downloaded_files
 fact_caching
 host_vars/*.yml
 install_report
-group_vars/all.yml
 old_docs/
