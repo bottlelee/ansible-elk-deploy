@@ -1,0 +1,24 @@
+- block:
+    - name: Importing elasticsearch template | http
+      when:
+        - inventory_hostname == groups['all'][-1]
+        - not searchguard_enabled
+      shell: "{{ target }} setup --template -E output.logstash.enabled=false -E output.redis.enabled=false -E output.elasticsearch.hosts='ingest.elastic.service.{{ consul_dc_name }}.consul:{{ elastic_http_port }}'"
+    - name: Importing elasticsearch template | https
+      when:
+        - inventory_hostname == groups['all'][-1]
+        - searchguard_enabled
+      shell: "{{ target }} setup --template -E output.logstash.enabled=false -E output.redis.enabled=false -E output.elasticsearch.hosts='https://ingest.elastic.service.{{ consul_dc_name }}.consul:{{ elastic_http_port }}' -E output.elasticsearch.username=kibanaserver -E output.elasticsearch.password={{ sg_users | selectattr('id', 'eq', 'kibanaserver') | map(attribute='pass') | first }} -E output.elasticsearch.ssl.verification_mode=none"
+  rescue:
+    - name: Starting elasticsearch service
+      service:
+        name: elasticsearch
+        state: started
+      delegate_to: "{{ item }}"
+      loop: "{{ groups['elasticsearch'] }}"
+    - name: Waiting for elasticsearch started
+      wait_for:
+        port: "{{ elastic_http_port }}"
+      delegate_to: "{{ item }}"
+      loop: "{{ groups['elasticsearch'] }}"
+    - include_tasks: import_template.yml
