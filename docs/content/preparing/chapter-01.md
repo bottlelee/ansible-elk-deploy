@@ -12,6 +12,7 @@ chapter: true
 3. 已安装了以下工具：
   1. python
   2. git
+  3. wget
 
 {{% notice tip %}}
 你也可以选择 1 台目标服务器作为控制机。<br>

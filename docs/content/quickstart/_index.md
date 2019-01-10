@@ -1,5 +1,5 @@
 ---
-title: "快速开始"
+title: "快速体验"
 weight: 10
 chapter: true
 ---
@@ -22,14 +22,24 @@ chapter: true
 cd ~/Workspace/ansible-elk-deploy
 ```
 
+{{% notice info %}}
+注意：初次使用，建议把 `group_vars/all.yml` 里的 `searchguard_enabled: true` 改为 `searchguard_enabled: false`。 因为你需要了解 [Search Guard](https://docs.search-guard.com/latest/internal-users-database) 才能知道如何建立账号权限。
+{{% /notice %}}
+
 ## 启动虚拟机
 
 ``` bash
 vagrant up
 ```
+![vagrant up](Screenshot_01.png)
 
 {{% notice info %}}
 **注意**</br>
 第一次部署，需要下载虚拟机镜像。 这个时间会有点长。<br/>
 然后会自动执行 ansible playbook，进行 ELK 部署。
 {{% /notice %}}
+
+## 访问你的 ELK 服务
+| 服务   | URL                        | 账号密码(如果启用了 Search Guard) |
+| ------ | -------------------------- | --------------------------------- |
+| Kibana | http://172.28.128.101:5601 | haibin:newtouch                   |

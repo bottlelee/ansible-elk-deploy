@@ -28,9 +28,8 @@ packetbeat.procs:
 output.elasticsearch:
 {% if searchguard_enabled %}
   hosts: ["https://ingest.elastic.service.{{ consul_dc_name }}.consul:{{ elastic_http_port }}"]
-  username: kibanaserver
-  password: {{ sg_users | selectattr('id', 'eq', 'kibanaserver') | map(attribute='pass') | first }}
-  protocal: https
+  username: haibin
+  password: {{ sg_users | selectattr('id', 'eq', 'haibin') | map(attribute='pass') | first }}
   ssl:
     verification_mode: none
 {% else %}

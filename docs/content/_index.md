@@ -1,6 +1,7 @@
 ---
 title: "一键部署 ELK"
 weight: 00
+menu: ["main","footer"]
 ---
 
 # 一键部署
@@ -16,6 +17,14 @@ weight: 00
 * ES 可以划分多种角色，实现冷热数据等运维规划。
 * 包括升级脚本，可实现集群平滑版本升级。
 * 支持离线部署方式，生产环境无需访问外网。
+
+## 适用平台
+#### 本项目基于 ansible 2.7.2 测试通过以下版本和环境。
+
+| Elastic version | Ubuntu Server 16.04 | CentOS 7 |
+| --------------- | ------------------- | -------- |
+| 6.5.x           | Yes                 | Yes      |
+| 6.4.x           | Yes                 | Yes      |
 
 ## 目录
 {{% children sort="weight" depth="1" description="true" %}}

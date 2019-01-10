@@ -1,11 +1,11 @@
 baseURL = "http://bottlelee.gitee.io/ansible-elk-deploy/"
-languageCode = "zh-cn"
-title = "使用 Ansible 部署 ELK 和 Search Guard。"
+languageCode = "zh"
+title = "使用 Ansible 部署 ElasticSearch、Logstash、Kibana 和 Search Guard。"
 theme = "learn"
 
 [params]
   author = "Haibin Lee"
-  description = "Deploy Elastic Search, Logstash, Kibana and Search Guard in the Ansible way."
+  description = "Deploy ElasticSearch, Logstash, Kibana and 'Search Guard' in the Ansible way."
   showVisitedLinks = false
   disableBreadcrumb = false
   disableNextPrev = false
