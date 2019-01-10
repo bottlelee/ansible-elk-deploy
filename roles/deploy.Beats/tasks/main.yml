@@ -6,8 +6,7 @@
       failed_when: verChk.stdout is version(elk_version, operator='lt', strict=True)
   rescue:
     - include_tasks: '{{ ansible_os_family }}.yml'
-    - name: Importing elasticsearch template
-      shell: "{{ target }} setup --template -E output.logstash.enabled=false -E output.redis.enabled=false -E output.elasticsearch.hosts='ingest.elastic.service.{{ consul_dc_name }}.consul:{{ elastic_http_port }}'"
+    - include_tasks: import_template.yml
       when: inventory_hostname == groups['all'][0]
 
 - block:

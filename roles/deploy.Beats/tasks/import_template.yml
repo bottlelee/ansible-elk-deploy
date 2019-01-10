@@ -1,0 +1,24 @@
+- block:
+    - name: Importing elasticsearch template
+      shell: "{{ target }} setup --template -E output.logstash.enabled=false -E output.redis.enabled=false -E output.elasticsearch.hosts='ingest.elastic.service.{{ consul_dc_name }}.consul:{{ elastic_http_port }}'"
+  rescue:
+    - name: Starting elasticsearch service
+      service:
+        name: elasticsearch
+        state: started
+      delegate_to: "{{ item }}"
+      loop: "{{ groups['elasticsearch'] }}"
+    - name: Waiting for
+      uri:
+        url: "http://ingest.elastic.service.{{ consul_dc_name }}.consul:{{ elastic_http_port }}/_cluster/health"
+        return_content: yes
+      register: srv_st
+      until: "'green' in srv_st.stdout"
+      retries: 30
+      delay: 10
+    - name: Waiting for elasticsearch started
+      wait_for:
+        port: "{{ elastic_http_port }}"
+      delegate_to: "{{ item }}"
+      loop: "{{ groups['elasticsearch'] }}"
+    - include_tasks: import_template.yml
