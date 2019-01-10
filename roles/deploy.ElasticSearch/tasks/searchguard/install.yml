@@ -52,7 +52,7 @@
   when: not sg_es.stat.exists
 
 - block:
-    - include_tasks: download.yml
+    - include_tasks: searchguard/download.yml
     - name: Uploading Search Guard files
       copy:
         src: "downloaded_files/searchguard/search-guard-{{ sg_es_ver.split('.') | first }}-{{ sg_es_ver }}.zip"

@@ -1,4 +1,4 @@
-- hosts: esMasters:esDatas
+- hosts: elasticsearch
   become: yes
   serial: 1
   vars_files:
