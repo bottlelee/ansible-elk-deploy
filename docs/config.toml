@@ -9,7 +9,7 @@ theme = "learn"
   showVisitedLinks = false
   disableBreadcrumb = false
   disableNextPrev = false
-  themeVariant = "green"
+  themeVariant = "mine"
 
 [menu]
   [[menu.shortcuts]]

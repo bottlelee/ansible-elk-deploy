@@ -4,9 +4,9 @@ weight: 30
 chapter: true
 ---
 
-### 详解
+### 跟我一起了解整个项目
 
-# 1
+# 分步执行 playbooks
 
 #### 目录
-{{% children sort="weight" depth="1" description="true" %}}
+{{% children sort="weight" depth="1" %}}
