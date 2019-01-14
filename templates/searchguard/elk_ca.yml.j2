@@ -3,7 +3,7 @@ defaults:
   pkPassword: none
   generatedPasswordLength: 12
   nodesDn:
-    - "CN=NewTouch,OU=Ops,O=NewTouch Com\\, Inc.,DC=NewTouch,DC=com"
+    - "CN=ingest.elastic.service.{{ consul_dc_name }}.consul,OU=Ops,O=NewTouch Com\\, Inc.,DC=NewTouch,DC=com"
     - "CN=*.service.{{ consul_dc_name }}.consul,OU=Ops,O=NewTouch Com\\, Inc.,DC=NewTouch,DC=com"
   nodeOid: "1.2.3.4.5.5"
   reuseTransportCertificatesForHttp: false
@@ -18,9 +18,9 @@ ca:
 
 clients:
   - name: elk-client
-    dn: "CN=NewTouch,OU=Ops,O=NewTouch Com\\, Inc.,DC=NewTouch,DC=com"
+    dn: "CN=ingest.elastic.service.{{ consul_dc_name }}.consul,OU=Ops,O=NewTouch Com\\, Inc.,DC=NewTouch,DC=com"
     admin: true
 
 nodes:
   - name: esnode
-    dn: "CN=NewTouch,OU=Ops,O=NewTouch Com\\, Inc.,DC=NewTouch,DC=com"
+    dn: "CN=ingest.elastic.service.{{ consul_dc_name }}.consul,OU=Ops,O=NewTouch Com\\, Inc.,DC=NewTouch,DC=com"

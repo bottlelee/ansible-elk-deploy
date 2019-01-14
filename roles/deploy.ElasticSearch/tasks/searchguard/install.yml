@@ -69,13 +69,20 @@
     - name: Starting elasticsearch service
       service:
         name: elasticsearch
-        state: started
+        state: restarted
+      delegate_to: "{{ item }}"
+      loop: "{{ groups['elasticsearch'] }}"
     - name: Waiting for elasticsearch started
       wait_for:
         host: "{{ bind_address }}"
         port: "{{ elastic_http_port }}"
         state: started
-  when: not sg_es.stat.exists
+        timeout: 120
+      delegate_to: "{{ item }}"
+      loop: "{{ groups['elasticsearch'] }}"
+  when:
+    - not sg_es.stat.exists
+    - inventory_hostname == ansible_play_hosts[-1]
 
 - block:
     - name: Creating '/etc/elasticsearch/tls' directory

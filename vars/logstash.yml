@@ -13,8 +13,8 @@ logstash_piplines:
 logstash_jvm_mem: 1
 
 logstash_ssl_output: |
-  user => "logstash"
-  password => "{{ sg_users | rejectattr('id', 'ne', 'logstash') | map(attribute='pass') | first }}"
+  user => "haibin"
+  password => "{{ sg_users | rejectattr('id', 'ne', 'haibin') | map(attribute='pass') | first }}"
   ssl => true
   ssl_certificate_verification => false
-  cacert => "/etc/logstash/elk-ca.pem"
+  #cacert => "/etc/logstash/elk-ca.pem"

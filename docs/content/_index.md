@@ -2,6 +2,7 @@
 title: "一键部署 ELK"
 weight: 00
 menu: ["main","footer"]
+draft: false
 ---
 
 # 一键部署

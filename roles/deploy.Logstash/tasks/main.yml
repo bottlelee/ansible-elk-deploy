@@ -66,5 +66,5 @@
 - name: Updating Search Guard tls files
   copy:
     src: downloaded_files/searchguard/out/elk-ca.pem
-    dest: /etc/logstash/elk-ingest.pem
+    dest: /etc/logstash/elk-ca.pem
     mode: 0444

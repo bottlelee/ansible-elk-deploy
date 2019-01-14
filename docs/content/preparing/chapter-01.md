@@ -2,6 +2,7 @@
 title: "准备环境"
 weight: 02
 chapter: true
+draft: false
 ---
 
 # 你需要 1 台控制机
@@ -15,7 +16,7 @@ chapter: true
   3. wget
 
 {{% notice tip %}}
-你也可以选择 1 台目标服务器作为控制机。<br>
+你也可以选择 1 台目标服务器作为控制机。前提是它能访问外网。<br>
 本文档所有操作以 Ubuntu linux 系统为例。
 {{% /notice %}}
 

@@ -2,6 +2,7 @@
 title: "准备工作"
 weight: 01
 chapter: true
+draft: false
 ---
 
 # 你需要准备的

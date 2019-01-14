@@ -20,6 +20,6 @@
       args:
         chdir: /usr/share/kibana
       with_items:
-        - "/usr/share/kibana/bin/kibana-plugin remove searchguard"
+        - "/usr/share/kibana/bin/kibana-plugin remove searchguard || exit 0"
         - "bin/kibana-plugin install --no-optimize file:///tmp/{{ sg_kb_url | basename }}"
       notify: Restart kibana
