@@ -1,7 +1,6 @@
 ---
 title: "一键部署 ELK"
-weight: 00
-menu: ["main","footer"]
+weight: 100
 draft: false
 ---
 
@@ -33,3 +32,5 @@ draft: false
 ## 关于我
 
 喜欢折腾 Linux 运维的汉语言文学师范专科毕业生。
+
+现为 [新致云](https://cloud.newtouch.com/) 架构师。
