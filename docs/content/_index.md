@@ -28,7 +28,7 @@ draft: false
 | 6.4.x           | Yes                 | Yes      |
 
 ## 目录
-{{% children sort="weight" depth="1" description="true" %}}
+{{% children sort="weight" depth="1" %}}
 
 ## 关于我
 
