@@ -52,7 +52,7 @@ redis-1 ansible_host=172.23.56.215
 redis-2 ansible_host=172.23.56.216
 redis-3 ansible_host=172.23.56.217
 
-# Groups
+# The 'elasticsearch' group
 [elasticsearch:children]
 esMasters
 esIngest

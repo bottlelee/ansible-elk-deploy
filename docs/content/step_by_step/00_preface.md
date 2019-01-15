@@ -2,6 +2,7 @@
 title: "编写理念"
 weight: 31
 chapter: true
+draft: false
 ---
 
 ### 了解各目录与 Playbook 的关系
@@ -20,7 +21,7 @@ chapter: true
 
 ## ansible.cfg
 
-在项目根目录下有个 ansible.cfg 文件，执行 ansible 命令时会优先读取这个文件里的配置。
+在项目根目录下有个 ansible.cfg 文件，执行 ansible 命令时会优先读取这个文件里的配置。我根据一些经验做了优化。
 
 ```ini
 [defaults]
@@ -42,7 +43,7 @@ ssh_args                  = -o ControlMaster=auto -o ConnectionAttempts=100 -o U
 pipelining                = true
 ```
 
-## playbook 的组成
+## 一个 playbook 的组成
 
 例如我们即将先执行的 01-init.yml 剧本。它是由以下部分组成：
 
