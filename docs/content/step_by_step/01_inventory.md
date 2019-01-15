@@ -1,7 +1,9 @@
 ---
-title: "架构规划"
+title: "inventory 说明"
+description: "hosts.ini 里该怎么填写？"
 weight: 32
 chapter: true
+draft: false
 ---
 
 ### 定义你的 inventory
@@ -23,7 +25,7 @@ nano hosts.ini
 下文的 IP 都是样例数据，请根据你的实际情况修改。
 {{% /notice %}}
 
-# 必选项
+# 必填组
 
 ## 「esMasters」集群 master 节点。
 
@@ -42,7 +44,7 @@ es-master-3 ansible_host=172.23.56.108
 
 Master 角色是负责管控整个 ES 集群的内部状态的。3 个节点会选举出 1 个 master，由它来同步整个集群的信息状态。
 
-# 以下是可选项
+# 选填组（可留空）
 
 ## 「esIngest」ElasticSearch 的 ingest 角色。
 
