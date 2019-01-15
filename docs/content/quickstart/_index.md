@@ -12,10 +12,12 @@ draft: false
 {{% /notice %}}
 
 ## 安装 Vagrant
-#### 根据你的系统平台，访问 https://www.vagrantup.com/downloads.html 下载并安装对应版本的 Vagrant。
+
+根据你的系统平台，访问 https://www.vagrantup.com/downloads.html 下载并安装对应版本的 Vagrant。
 
 ## 安装 VirtualBox
-#### 根据你的系统平台，访问 https://www.virtualbox.org/wiki/Linux_Downloads 下载并安装对应版本的 VirtualBox
+
+根据你的系统平台，访问 https://www.virtualbox.org/wiki/Linux_Downloads 下载并安装对应版本的 VirtualBox
 
 ## 进入项目目录
 

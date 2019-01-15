@@ -22,7 +22,7 @@ draft: false
 
 ## 下载项目代码
 
-#### 创建一个工作目录，例如 ~/Workspace/
+创建一个工作目录，例如 ~/Workspace/
 
 ```shell
 mkdir ~/Workspace
