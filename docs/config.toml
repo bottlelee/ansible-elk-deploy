@@ -1,4 +1,4 @@
-baseURL = "http://bottlelee.gitee.io/ansible-elk-deploy/"
+baseURL = "http://www.ansible-elk.cn"
 languageCode = "zh"
 title = "使用 Ansible 部署 ElasticSearch、Logstash、Kibana 和 Search Guard。"
 theme = "theme-learn"
