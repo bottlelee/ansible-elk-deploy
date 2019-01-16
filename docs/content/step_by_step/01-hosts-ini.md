@@ -1,16 +1,16 @@
 ---
-title: "inventory 说明"
+title: "修改 hosts.ini"
 description: "hosts.ini 里该怎么填写？"
 weight: 32
 chapter: true
 draft: false
 ---
 
-### 定义你的 inventory
+### 定义你的 hosts.ini
 
 # 你要面对的架构
 
-这里我已经准备了一个 `hosts.ini.example`，请在项目根目录下找到它，复制为 `hosts.ini` 并编辑。例如：
+这里我已经准备了一个 `hosts.ini.example`，请在项目根目录下找到它，复制为 `hosts.ini` 并编辑。
 
 ```bash
 cp hosts.ini.example hosts.ini
@@ -137,7 +137,7 @@ redis-3 ansible_host=172.23.56.217
 如果你的日志并发量非常大，你可以建立一个 Redis 集群作为缓存。客户端先把日志写入 redis 里，由 Logstash 去读取，处理后发送到 ES 集群里。
 
 {{% notice info %}}
-本项目的 Redis 集群采取 1 主 2 从的高可用架构，由 redis-sentinel 来监控。外部访问需要通过部署 haproxy 代理，这个不在本项目的解决范围内。
+本项目的 Redis 集群采取 1 主 2 从的高可用架构，由 redis-sentinel 来监控。外部可以通过 haproxy 代理访问，参考 [HAProxy Advanced Redis Health Check](https://www.haproxy.com/blog/haproxy-advanced-redis-health-check/)。
 {{% /notice %}}
 
 ## 配置你的 ssh 访问信息。

@@ -1,7 +1,8 @@
 baseURL = "https://www.ansible-elk.cn"
-languageCode = "zh"
 title = "使用 Ansible 部署 ElasticSearch、Logstash、Kibana 和 Search Guard。"
 theme = "theme-learn"
+languageCode = "zh"
+DefaultContentLanguage = "zh"
 
 [params]
   author = "Haibin Lee"
@@ -13,19 +14,19 @@ theme = "theme-learn"
 
 [menu]
   [[menu.shortcuts]]
-  name = "Git repo"
+  name = "ansible-elk-deploy"
   url = "https://gitee.com/bottlelee/ansible-elk-deploy/"
 
   [[menu.shortcuts]]
-  name = "Ansible Docs"
+  name = "Ansible 文档"
   url = "https://docs.ansible.com/ansible/latest/index.html"
 
   [[menu.shortcuts]]
-  name = "Elastic Docs"
+  name = "Elastic 文档"
   url = "https://www.elastic.co/guide/index.html"
 
   [[menu.shortcuts]]
-  name = "Consul Docs"
+  name = "Consul 文档"
   url = "https://www.consul.io/docs/index.html"
 
 # For search functionality

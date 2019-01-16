@@ -19,7 +19,7 @@ bind_network: "{{ hostvars[inventory_hostname]['ansible_' + bind_interface]['ipv
 # DNS nameserver
 dns_servers:
   - 127.0.0.1
-  - 8.8.8.8
+  - 223.5.5.5
 
 # Do NOT edit the following lines unless you know why.
 elastic_http_port: '9200'
@@ -50,4 +50,4 @@ global_metricbeat_modules:
 global_packetbeat_modules: ""
 
 # Redis
-redis_version: 4.0.9
+redis_version: "4.0.9"
