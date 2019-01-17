@@ -21,11 +21,11 @@ draft: false
 | searchguard_enabled |        true        | 启用 Search Guard 安全增强组件                                                                                | https://search-guard.com/            |
 | bind_interface      |        eth1        | 如果你的服务器具有多张网卡，可以指定服务的监听 IP。如果留空，就使用 {{ ansible_default_ipv4.address }} 的值。 |                                      |
 | dns_servers         |     127.0.0.1      | 必须保证 127.0.0.1 是第 1 个 DNS 解析服务地址。次要 DNS 解析 IP 可以自定义。                                  |                                      |
-| consul_version      |       1.4.0        | 自服务发现注册，请到官网查看最新版本号。                                                                   | https://www.consul.io/downloads.html |
+| consul_version      |       1.4.0        | 自服务发现注册，请到官网查看最新版本号。                                                                      | https://www.consul.io/downloads.html |
 | consul_dc_name      |        elk         | Consul 的 Data Center 名称。                                                                                  |                                      |
 | monit_version       |       5.25.2       | Monit 监控工具的版本号。                                                                                      | https://mmonit.com/monit/            |
 | smtp_host           |         无         | 发送告警邮件的服务器地址。                                                                                    |                                      |
 | smtp_user           |         无         | smtp 登录账号                                                                                                 |                                      |
 | smtp_pass           |         无         | smtp 登录密码                                                                                                 |                                      |
 | recipients          |         无         | 接收告警邮件的邮箱                                                                                            |                                      |
-| redis_version       |       4.0.9        | redis 版本                                                                                                              |                                      |
+| redis_version       |       4.0.9        | redis 版本                                                                                                    |                                      |
