@@ -2,7 +2,7 @@
 title: "快速体验"
 weight: 10
 chapter: true
-draft: false
+pre: "<b>2. </b>"
 ---
 
 # Vagrant + Virtualbox

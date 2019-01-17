@@ -1,13 +1,13 @@
 ---
-title: "一键部署 ELK"
+title: "自动化部署 ELK"
 weight: 100
 draft: false
 ---
 
-# 一键部署
+# 自动化部署
 # ElasticSearch + Logstash + Kibana
 
-本项目使用 [Ansible](https://www.ansible.com/) 作为自动化部署工具，实现“一键部署” [ELK](https://www.elastic.co/)（Elastic Search + Logstash + Kibana）生产集群。
+本项目使用 [Ansible](https://www.ansible.com/) 作为自动化部署工具，实现“自动化部署” [ELK](https://www.elastic.co/)（Elastic Search + Logstash + Kibana）生产集群。
 
 ## 项目特性
 

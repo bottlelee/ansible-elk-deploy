@@ -1,8 +1,8 @@
 ---
-title: "准备环境"
+title: "控制机准备"
 weight: 02
 chapter: true
-draft: false
+pre: "<b>1.1 </b>"
 ---
 
 # 你需要 1 台控制机
@@ -39,7 +39,7 @@ cd ~/Workspace/ansible-elk-deploy
 ├── group_vars                    # ansible group_vars 目录
 ├── host_vars                     # 目标服务器的特定变量文件
 ├── roles                         # ansible roles 目录
-│   ├── deploy.Beats              
+│   ├── deploy.Beats
 │   ├── deploy.Chrony
 │   ├── deploy.Consul
 │   ├── deploy.Curator

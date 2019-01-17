@@ -2,7 +2,7 @@
 title: "详细步骤"
 weight: 30
 chapter: true
-draft: false
+pre: "<b>3. </b>"
 ---
 
 ### 跟我一起了解整个项目

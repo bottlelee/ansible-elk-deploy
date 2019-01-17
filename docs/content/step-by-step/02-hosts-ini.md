@@ -3,7 +3,7 @@ title: "修改 hosts.ini"
 description: "hosts.ini 里该怎么填写？"
 weight: 32
 chapter: true
-draft: false
+pre: "<b>3.2 </b>"
 ---
 
 ### 定义你的 hosts.ini

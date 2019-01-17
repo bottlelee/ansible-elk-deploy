@@ -2,7 +2,7 @@
 title: "设置全局变量"
 weight: 34
 chapter: true
-draft: false
+pre: "<b>3.4 </b>"
 ---
 
 ### 设置全局变量

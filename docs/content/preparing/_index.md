@@ -3,6 +3,7 @@ title: "准备工作"
 weight: 01
 chapter: true
 draft: false
+pre: "<b>1. </b>"
 ---
 
 # 你需要准备的

@@ -3,7 +3,7 @@ title: "架构规划"
 description: "你需要多少机器，每台机器是什么角色？"
 weight: 33
 chapter: true
-draft: false
+pre: "<b>3.3 </b>"
 ---
 
 ### 根据业务场景

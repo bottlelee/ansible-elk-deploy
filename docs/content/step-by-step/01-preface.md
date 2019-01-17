@@ -2,7 +2,7 @@
 title: "编写理念"
 weight: 31
 chapter: true
-draft: false
+pre: "<b>3.1 </b>"
 ---
 
 ### 了解各目录与 Playbook 的关系
