@@ -25,6 +25,7 @@
   serial: 33%
   vars_files:
     - vars/download_urls.yml
+    - vars/sysctl_rules.yml
   roles:
     - init
     - deploy.Chrony

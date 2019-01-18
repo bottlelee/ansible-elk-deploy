@@ -30,3 +30,7 @@ EXT4 常见的 Linux 文件系统格式。如果是在大型生产环境，使�
 {{% notice tip %}}
 一般云存储都会有副本，所以 ES 的 indices 不需要 replica，只保存 primary 就可以了。这个在 ES 部署章节里会指出如何设置。
 {{% /notice %}}
+
+## 挂载路径
+
+这个没有标准要求，只要你所有的 ES 数据存储路径都一致，这样就容易管理。然后你可以在 `vars/elasticsearch.yml` 里找到 `elastic_data_paths` 这个变量，修改或增加新的路径即可。后面关于部署 ES 的章节里会详细说明。

@@ -11,11 +11,11 @@ pre: "<b>3.1 </b>"
 
 ## ansible 的概念比喻：
 
-1. playbook: 总剧本。
-2. roles: 演员。
-3. inventory: 舞台。
-4. tasks：分剧本。
-4. vars/templates: 道具。
+1. playbook:       总剧本
+2. roles:          演员
+3. inventory:      舞台
+4. tasks:          分剧本
+4. vars/templates: 道具
 
 因此，每次执行一个 playbook，就是要求 roles（演员）去到指定的舞台（inventory），使用 vars/templates 道具，表演一个个的 tasks（分剧本）。
 
@@ -49,7 +49,7 @@ pipelining                = true
 
 {{<mermaid align="left">}}
 graph LR;
-    Playbook(01-init.yml)
+    Playbook(01-env_init.yml)
     role[角色 roles/init] --> Playbook
     hosts[目标主机 hosts.ini] --> Playbook
     template[模板文件 templates/init] --> Playbook

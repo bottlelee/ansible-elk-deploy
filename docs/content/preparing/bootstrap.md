@@ -25,11 +25,11 @@ pre: "<b>1.1 </b>"
 创建一个工作目录，例如 ~/Workspace/
 
 ```shell
-mkdir ~/Workspace
+$ mkdir ~/Workspace
 
-git clone -b searchguard https://gitee.com/bottlelee/ansible-elk-deploy ~/Workspace/ansible-elk-deploy
+$ git clone -b searchguard https://gitee.com/bottlelee/ansible-elk-deploy ~/Workspace/ansible-elk-deploy
 
-cd ~/Workspace/ansible-elk-deploy
+$ cd ~/Workspace/ansible-elk-deploy
 ```
 
 #### 目录说明
@@ -73,7 +73,7 @@ cd ~/Workspace/ansible-elk-deploy
 
 #### 安装 ansible
 ```bash
-bash bootstrap-ansible.sh
+$ bash bootstrap-ansible.sh
 ```
 
 #### 如果看到类似于以下信息的输出，表明 ansible 安装成功。

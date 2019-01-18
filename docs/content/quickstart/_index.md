@@ -22,7 +22,7 @@ pre: "<b>2. </b>"
 ## 进入项目目录
 
 ```bash
-cd ~/Workspace/ansible-elk-deploy
+$ cd ~/Workspace/ansible-elk-deploy
 ```
 
 {{% notice info %}}
@@ -32,7 +32,7 @@ cd ~/Workspace/ansible-elk-deploy
 ## 启动虚拟机
 
 ``` bash
-vagrant up
+$ vagrant up
 ```
 ![vagrant up](Screenshot_01.png)
 

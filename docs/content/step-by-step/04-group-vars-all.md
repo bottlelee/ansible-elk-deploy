@@ -18,8 +18,8 @@ pre: "<b>3.4 </b>"
 | elk_version         |       6.5.4        | ELK 版本号，具体可以上官网查询。                                                                              | https://www.elastic.co/downloads     |
 | timezone            |   Asia/Shanghai    | 服务器的时区设置                                                                                              |                                      |
 | apt_mirror          | mirrors.aliyun.com | 如果是使用 Ubuntu Server 系统，使用 aliyun 的源会比较快                                                       | https://opsx.alibaba.com/mirror      |
-| searchguard_enabled |        true        | 启用 Search Guard 安全增强组件                                                                                | https://search-guard.com/            |
-| bind_interface      |        eth1        | 如果你的服务器具有多张网卡，可以指定服务的监听 IP。如果留空，就使用 {{ ansible_default_ipv4.address }} 的值。 |                                      |
+| searchguard_enabled |        true        | 启用 Search Guard 安全增强组件。如果你没权限需求或不了解它，请设为 false。                                                                                | https://search-guard.com/            |
+| bind_interface      |        eth1        | 如果你的服务器具有多张网卡，请指定业务网络所使用的网卡名称。如果留空，就使用 {{ ansible_default_ipv4.address }} 的值。 |                                      |
 | dns_servers         |     127.0.0.1      | 必须保证 127.0.0.1 是第 1 个 DNS 解析服务地址。次要 DNS 解析 IP 可以自定义。                                  |                                      |
 | consul_version      |       1.4.0        | 自服务发现注册，请到官网查看最新版本号。                                                                      | https://www.consul.io/downloads.html |
 | consul_dc_name      |        elk         | Consul 的 Data Center 名称。                                                                                  |                                      |

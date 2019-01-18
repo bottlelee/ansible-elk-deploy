@@ -13,8 +13,8 @@ pre: "<b>3.2 </b>"
 这里我已经准备了一个 `hosts.ini.example`，请在项目根目录下找到它，复制为 `hosts.ini` 并编辑。
 
 ```bash
-cp hosts.ini.example hosts.ini
-nano hosts.ini
+$ cp hosts.ini.example hosts.ini
+$ nano hosts.ini
 ```
 
 接下来我们要设定每个 group 的成员。

@@ -27,3 +27,4 @@ pre: "<b>1. </b>"
 1. 我习惯使用 `nano` 编辑器，喜欢 vi/vim 的同学请自行替换后文出现的相关命令:)
 2. 整个 demo 是在 Virtualbox 虚拟机里测试完成，与你面对的真实环境可能存在差别。所以如果有问题，请到 [这里](https://gitee.com/bottlelee/ansible-elk-deploy/issues) 查看是否有类似问题的解决方法。或者 [报告](https://gitee.com/bottlelee/ansible-elk-deploy/issues/new) 给我，我们一起研究。当然，本项目也在真实环境中成功部署过的。
 3. Elastic Search 在文中简称是 ES。
+4. {{ }} 里的表示是 ansible 的变量。例如 {{ inventory_hostname }}
