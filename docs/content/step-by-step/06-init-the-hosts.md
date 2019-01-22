@@ -7,18 +7,18 @@ pre: "<b>3.6 </b>"
 
 ## 初始化系统环境
 
-playbook 的组成
+#### playbook 的组成
 
 {{<mermaid align="left">}}
 graph LR;
     Playbook(01-env_init.yml)
-    role[roles/init]-- role --> Playbook
-    template[templates/init/]-- templates --> Playbook
-    var1[vars/sysctl_rules.yml]-- vars --> Playbook
-    var2[vars/download_urls.yml] -- vars --> Playbook
+    role[roles/init] --> Playbook
+    template[templates/init/] --> Playbook
+    var1[vars/sysctl_rules.yml] --> Playbook
+    var2[vars/download_urls.yml] --> Playbook
 {{< /mermaid >}}
 
-执行
+#### 执行
 
 ```bash
 $ ansible-playbook 01-env_init.yml

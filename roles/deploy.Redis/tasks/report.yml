@@ -10,9 +10,9 @@
         - redis-server.conf
         - redis-sentinel.conf
   rescue:
-    - name: "Create local directory install_report/monit"
+    - name: "Create local directory install_report/redis"
       file:
-        path: "install_report/monit"
+        path: "install_report/redis"
         state: directory
       delegate_to: localhost
       become: no
