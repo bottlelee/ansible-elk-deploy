@@ -9,5 +9,7 @@ pre: "<b>3. </b>"
 
 # 分步执行 playbooks
 
+相关 Playbooks 都以数字开头命名，初次部署请严格按照数字顺序逐个执行。
+
 #### 目录
 {{% children sort="weight" depth="1" %}}

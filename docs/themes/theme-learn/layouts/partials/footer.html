@@ -72,6 +72,7 @@
     <script src="{{"mermaid/mermaid.js" | relURL}}{{ if not .Site.Params.disableAssetsBusting }}?{{ now.Unix }}{{ end }}"></script>
     <script>
         mermaid.initialize({ startOnLoad: true });
+        mermaid.flowchartConfig({ width: 100% });
     </script>
     {{ partial "custom-footer.html" . }}
   </body>

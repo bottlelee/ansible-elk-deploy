@@ -13,8 +13,8 @@ playbook 的组成
 
 {{<mermaid align="left">}}
 graph LR;
-    Playbook(00-download_files.yml)
-    var1[vars/download_urls.yml] --> Playbook
+  Playbook(00-download_files.yml)
+  var1[vars/download_urls.yml] --> Playbook
 {{< /mermaid >}}
 
 执行

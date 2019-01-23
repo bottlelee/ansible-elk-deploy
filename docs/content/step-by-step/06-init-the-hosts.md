@@ -10,7 +10,7 @@ pre: "<b>3.6 </b>"
 #### playbook 的组成
 
 {{<mermaid align="left">}}
-graph LR;
+graph BT
     Playbook(01-env_init.yml)
     role[roles/init] --> Playbook
     template[templates/init/] --> Playbook

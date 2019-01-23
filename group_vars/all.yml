@@ -13,8 +13,8 @@ check_groups: true
 
 # Set the network interface name to get IP
 bind_interface: 'eth1'
-bind_address: "{{ hostvars[inventory_hostname]['ansible_' + bind_interface]['ipv4']['address'] | default(hostvars[inventory_hostname]['ansible_default_ipv4']['address']) }}"
-bind_network: "{{ hostvars[inventory_hostname]['ansible_' + bind_interface]['ipv4']['network'] | default(hostvars[inventory_hostname]['ansible_default_ipv4']['network']) }}"
+bind_address: "{{ hostvars[inventory_hostname]['ansible_' + bind_interface|replace('-','_')]['ipv4']['address'] | default(hostvars[inventory_hostname]['ansible_default_ipv4']['address']) }}"
+bind_network: "{{ hostvars[inventory_hostname]['ansible_' + bind_interface|replace('-','_')]['ipv4']['network'] | default(hostvars[inventory_hostname]['ansible_default_ipv4']['network']) }}"
 
 # DNS nameserver
 dns_servers:

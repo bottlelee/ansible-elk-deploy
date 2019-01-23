@@ -14,9 +14,9 @@ draft: false
 * 集成 [Consul](https://www.consul.io/) 服务发现注册。
 * 集成 [Monit](https://mmonit.com/monit/) 监控，附带配套的 Kibana 看板。
 * 集成 [Curator](https://www.elastic.co/guide/en/elasticsearch/client/curator/current/index.html) 对 indices 进行日常定时维护。
-* ES 可以划分多种角色，实现冷热数据等运维规划。
-* 包括升级脚本，可实现集群平滑版本升级。
-* 支持离线部署方式，生产环境无需访问外网。
+* **ES 可以划分多种角色，实现冷热数据等架构规划。**
+* **包括升级脚本，可实现集群平滑版本升级。**
+* **支持离线部署方式，生产环境无需访问外网。**
 * 修改过的服务器配置文件，会下载到本地 install_report 目录下，方便核对结果。
 
 ## 适用平台
