@@ -10,10 +10,10 @@ tls_force_regen: false
 
 # Search Guard for Elasticsearch
 # Check the right version from https://docs.search-guard.com/latest/search-guard-versions
-sg_es_ver: "{{ elk_version }}-24.0"
+sg_es_ver: "{{ elk_version }}-24.1"
 sg_es_url: "https://oss.sonatype.org/service/local/repositories/releases/content/com/floragunn/search-guard-{{ sg_es_ver.split('.') | first }}/{{ sg_es_ver }}/search-guard-{{ sg_es_ver.split('.') | first }}-{{ sg_es_ver }}.zip"
 
 ## Search Guard for Kibana
 ## Check the right version from https://docs.search-guard.com/latest/search-guard-versions
-sg_kb_ver: "{{ elk_version }}-17"
+sg_kb_ver: "{{ elk_version }}-18.1"
 sg_kb_url: "https://search.maven.org/remotecontent?filepath=com/floragunn/search-guard-kibana-plugin/{{ sg_kb_ver }}/search-guard-kibana-plugin-{{ sg_kb_ver }}.zip"
