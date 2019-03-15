@@ -1,5 +1,0 @@
-filebeat_modules:
-  - logstash
-
-metricbeat_modules:
-  - logstash

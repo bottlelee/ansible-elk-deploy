@@ -69,18 +69,28 @@
 - include_tasks: set_template.yml
   when: (groups['elasticsearch']|last) == inventory_hostname
 
-# - block:
-#     - name: Checking ElasticSearch version
-#       uri:
-#         url: "{{ bind_address }}:{{ elastic_http_port }}"
-#         return_content: yes
-#         validate_certs: no
-#       register: versionCheck
-#       changed_when: false
-#       failed_when: versionCheck.json.version.number is version(elk_version, operator='lt', strict=True)
-#   rescue:
-#     - include_tasks: pre_upgrade.yml
-#     - include_tasks: '{{ ansible_os_family }}.yml'
-#     - include_tasks: post_upgrade.yml
+- block:
+    - name: Checking ElasticSearch version | http
+      uri:
+        url: "http://{{ bind_address }}:{{ elastic_http_port }}"
+        return_content: yes
+        validate_certs: no
+      register: versionCheck
+      changed_when: false
+      failed_when: versionCheck.json.version.number is version(elk_version, operator='lt', strict=True)
+      when: not searchguard_enabled
+    - name: Checking ElasticSearch version | https
+      uri:
+        url: "https://{{ bind_address }}:{{ elastic_http_port }}"
+        return_content: yes
+        validate_certs: no
+      register: versionCheck
+      changed_when: false
+      failed_when: versionCheck.json.version.number is version(elk_version, operator='lt', strict=True)
+      when: searchguard_enabled
+  rescue:
+    - include_tasks: pre_upgrade.yml
+    - include_tasks: '{{ ansible_os_family }}.yml'
+    - include_tasks: post_upgrade.yml
 
 - include_tasks: report.yml

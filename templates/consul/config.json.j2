@@ -8,9 +8,10 @@
       "{{ hostvars[item]['ansible_' + bind_interface]['ipv4']['address'] | default(hostvars[item]['ansible_default_ipv4']['address']) }}"{%- if loop.nextitem is defined -%},{%- endif -%}
     {%- endfor -%}
   ],
-  "performance": {
-    "raft_multiplier": 1
-  },
+  "recursors": [
+    "114.114.114.114",
+    "8.8.8.8"
+  ],
   {% else %}
   bootstrap: true,
   {% endif -%}

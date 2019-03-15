@@ -4,9 +4,9 @@
     - name: Checking python2
       raw: python --version
       changed_when: false
-    - name: Create/update host_vars files
+    - name: "Create/update {{ inventory_dir }}/host_vars/{{ inventory_hostname }}.yml files"
       lineinfile:
-        path: "host_vars/{{ inventory_hostname }}.yml"
+        path: "{{ inventory_dir }}/host_vars/{{ inventory_hostname }}.yml"
         regexp: "^ansible_python_interpreter"
         line: "ansible_python_interpreter: /usr/bin/python"
         create: yes
@@ -14,15 +14,15 @@
       become: no
     - meta: clear_host_errors
     - meta: refresh_inventory
-    - include_vars: "host_vars/{{ inventory_hostname }}.yml"
+    - include_vars: "{{ inventory_dir }}/host_vars/{{ inventory_hostname }}.yml"
     - setup:
   rescue:
     - name: Checking python3
       raw: python3 --version
       changed_when: false
-    - name: Create/update host_vars files
+    - name: "Create/update {{ inventory_dir }}/host_vars/{{ inventory_hostname }}.yml files"
       lineinfile:
-        path: "host_vars/{{ inventory_hostname }}.yml"
+        path: "{{ inventory_dir }}/host_vars/{{ inventory_hostname }}.yml"
         regexp: "^ansible_python_interpreter"
         line: "ansible_python_interpreter: /usr/bin/python3"
         create: yes
@@ -30,18 +30,17 @@
       become: no
     - meta: clear_host_errors
     - meta: refresh_inventory
-    - include_vars: "host_vars/{{ inventory_hostname }}.yml"
+    - include_vars: "{{ inventory_dir }}/host_vars/{{ inventory_hostname }}.yml"
     - setup:
   when: (ansible_python_interpreter is not defined) or (ansible_python_interpreter == "/usr/bin/python")
-
 
 - block:
     - name: Checking python3
       raw: test -e /usr/bin/python3
       changed_when: false
-    - name: Create/update host_vars files
+    - name: "Create/update {{ inventory_dir }}/host_vars/{{ inventory_hostname }}.yml files"
       lineinfile:
-        path: "host_vars/{{ inventory_hostname }}.yml"
+        path: "{{ inventory_dir }}/host_vars/{{ inventory_hostname }}.yml"
         regexp: "^ansible_python_interpreter"
         line: "ansible_python_interpreter: /usr/bin/python3"
         create: yes
@@ -49,15 +48,15 @@
       become: no
     - meta: clear_host_errors
     - meta: refresh_inventory
-    - include_vars: "host_vars/{{ inventory_hostname }}.yml"
+    - include_vars: "{{ inventory_dir }}/host_vars/{{ inventory_hostname }}.yml"
     - setup:
   rescue:
     - name: Checking python
       raw: test -e /usr/bin/python
       changed_when: false
-    - name: Create/update host_vars files
+    - name: "Create/update {{ inventory_dir }}/host_vars/{{ inventory_hostname }}.yml files"
       lineinfile:
-        path: "host_vars/{{ inventory_hostname }}.yml"
+        path: "{{ inventory_dir }}/host_vars/{{ inventory_hostname }}.yml"
         regexp: "^ansible_python_interpreter"
         line: "ansible_python_interpreter: /usr/bin/python"
         create: yes
@@ -65,6 +64,6 @@
       become: no
     - meta: clear_host_errors
     - meta: refresh_inventory
-    - include_vars: "host_vars/{{ inventory_hostname }}.yml"
+    - include_vars: "{{ inventory_dir }}/host_vars/{{ inventory_hostname }}.yml"
     - setup:
   when: (ansible_python_interpreter is not defined) or (ansible_python_interpreter == "/usr/bin/python3")

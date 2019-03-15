@@ -1,5 +1,1 @@
-{
-  "persistent": {
-    "cluster.routing.allocation.enable": "ALL"
-  }
-}
+{"persistent": {"cluster.routing.allocation.enable": "all"}}

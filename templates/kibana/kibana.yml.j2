@@ -78,7 +78,7 @@ elasticsearch.url: "http://ingest.elastic.service.{{ consul_dc_name }}.consul:92
 
 # Time in milliseconds to wait for responses from the back end or Elasticsearch. This value
 # must be a positive integer.
-elasticsearch.requestTimeout: 120000
+elasticsearch.requestTimeout: 300000
 
 # List of Kibana client-side headers to send to Elasticsearch. To send *no* client-side
 # headers, set this value to [] (an empty list).
@@ -120,3 +120,9 @@ logging.dest: /var/log/kibana/kibana.log
 
 xpack.monitoring.enabled: true
 xpack.security.enabled: false
+xpack.ml.enabled: {{ xpack.machine_learning }}
+xpack.apm.enabled: {{ xpack.apm }}
+xpack.graph.enabled: {{ xpack.graph }}
+xpack.infra.enabled: {{ xpack.infra }}
+xpack.reporting.enabled: {{ xpack.reporting }}
+xpack.spaces.enabled: {{ xpack.spaces }}

@@ -1,0 +1,5 @@
+- hosts: logstash
+  become: yes
+  serial: 1
+  roles:
+    - deploy.Keepalived

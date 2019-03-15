@@ -1,5 +1,8 @@
+server 0.cn.pool.ntp.org iburst
+server 1.cn.pool.ntp.org iburst
+server 2.cn.pool.ntp.org iburst
+server 3.cn.pool.ntp.org iburst
 {% if 'esMasters' in group_names %}
-
 {%- for item in groups['esMasters'] if item != inventory_hostname %}
 server {{ item }}.node.{{ consul_dc_name }}.consul
 {% endfor %}

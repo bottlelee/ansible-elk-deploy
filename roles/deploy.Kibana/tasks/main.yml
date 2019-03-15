@@ -1,5 +1,5 @@
 - block:
-    - name: Checking command 'kibana'
+    - name: Checking kibana version
       command: "/usr/share/kibana/bin/kibana version"
       changed_when: false
       register: verChk

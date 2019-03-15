@@ -1,0 +1,25 @@
+- block:
+    - name: Checking keepalived status
+      service:
+        name: keepalived
+        state: started
+
+  rescue:
+
+    - name: Installing keepalived
+      package:
+        name: keepalived
+
+  always:
+
+    - name: Config keepalived
+      template:
+        src: keepalived/keepalived.conf.j2
+        dest: /etc/keepalived/keepalived.conf
+      notify: Restart keepalived
+
+    - name: Fetch /etc/keepalived/keepalived.conf
+      fetch:
+        src: /etc/keepalived/keepalived.conf
+        dest: "deploy_report/keepalived/{{ inventory_hostname }}_keepalived.conf"
+        flat: yes

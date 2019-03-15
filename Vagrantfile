@@ -83,37 +83,37 @@ Vagrant.configure("2") do |config|
         end
     end
 
-      if instance_id == $instances
-        config.vm.provision "ansible" do |ansible|
-          if $instances == 3
-            ansible.groups = {
-              "esMasters" => ["es-master-0[1:3]"],
-              "esHots" => "",
-              "esWarms" => "",
-              "redis" => "",
-              "logstash" => ["es-master-0[1:3]"],
-              "kibana" => ["es-master-0[1:3]"],
-              "elasticsearch:children" => ["esMasters","esHots","esWarms"],
-              "esDatas:children" => ["esHots","esWarms"]
-            }
-          end
-          if $instances == 14
-            ansible.groups = {
-              "esMasters" => ["es-master-[01:03]"],
-              "esHots" => ["es-hot-[04:06]"],
-              "esWarms" => ["es-warm-[07:08]"],
-              "redis" => ["redis-[09:11]"],
-              "logstash" => ["logstash-[12:13]"],
-              "kibana" => ["kibana-14"],
-              "haproxy:children" => ["kibana"],
-              "elasticsearch:children" => ["esMasters","esHots","esWarms"],
-              "esDatas:children" => ["esHots","esWarms"]
-            }
-          end
-          ansible.limit = "all"
-          ansible.playbook = "play-all.yml"
-        end
-      end
+      # if instance_id == $instances
+      #   config.vm.provision "ansible" do |ansible|
+      #     if $instances == 3
+      #       ansible.groups = {
+      #         "esMasters" => ["es-master-0[1:3]"],
+      #         "esHots" => "",
+      #         "esWarms" => "",
+      #         "redis" => "",
+      #         "logstash" => ["es-master-0[1:3]"],
+      #         "kibana" => ["es-master-0[1:3]"],
+      #         "elasticsearch:children" => ["esMasters","esHots","esWarms"],
+      #         "esDatas:children" => ["esHots","esWarms"]
+      #       }
+      #     end
+      #     if $instances == 14
+      #       ansible.groups = {
+      #         "esMasters" => ["es-master-[01:03]"],
+      #         "esHots" => ["es-hot-[04:06]"],
+      #         "esWarms" => ["es-warm-[07:08]"],
+      #         "redis" => ["redis-[09:11]"],
+      #         "logstash" => ["logstash-[12:13]"],
+      #         "kibana" => ["kibana-14"],
+      #         "haproxy:children" => ["kibana"],
+      #         "elasticsearch:children" => ["esMasters","esHots","esWarms"],
+      #         "esDatas:children" => ["esHots","esWarms"]
+      #       }
+      #     end
+      #     ansible.limit = "all"
+      #     ansible.playbook = "play-all.yml"
+      #   end
+      # end
     end
   end
 end

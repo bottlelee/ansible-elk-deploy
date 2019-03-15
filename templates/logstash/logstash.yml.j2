@@ -61,7 +61,7 @@ path.data: {{ logstash_data_path | default('/var/lib/logstash') }}
 #
 # Where to fetch the pipeline configuration for the main pipeline
 #
-path.config: /etc/logstash/conf.d/*.conf
+# path.config: /etc/logstash/conf.d/*.conf
 #
 # Pipeline configuration string for the main pipeline
 #
@@ -204,7 +204,7 @@ config.reload.interval: 30s
 #   * debug
 #   * trace
 #
-log.level: warn
+log.level: {{ logstash_log_level }}
 path.logs: {{ logstash_log_path | default('/var/log/logstash') }}
 #
 # ------------ Other Settings --------------
@@ -224,7 +224,9 @@ xpack.monitoring:
   enabled: true
   elasticsearch:
     url: ["ingest.elastic.service.{{ consul_dc_name }}.consul:{{ elastic_http_port }}"]
+    {% if searchguard_enabled -%}
     username: haibin
     password: {{ sg_users | rejectattr('id', 'ne', 'haibin') | map(attribute='pass') | first }}
     ssl:
       ca: /etc/logstash/elk-ca.pem
+    {% endif -%}

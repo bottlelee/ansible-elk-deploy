@@ -11,6 +11,7 @@ downloaded_files
 .vagrant
 *.log
 fact_caching
-host_vars/*.yml
+host_vars/*
 install_report
-old_docs/
+inventories/*
+!inventories/example

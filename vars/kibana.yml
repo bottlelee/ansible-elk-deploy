@@ -1,0 +1,8 @@
+# Xpack modules settings
+xpack:
+  apm: false
+  graph: false
+  infra: true
+  machine_learning: false
+  reporting: true
+  spaces: false

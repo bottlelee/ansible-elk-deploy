@@ -1,0 +1,13 @@
+filebeat_modules:
+  - logstash
+
+metricbeat_modules:
+  - logstash
+
+logstash_piplines:
+  - 000-input.conf
+  - 001-auditd.conf
+  - 002-monit.conf
+  - 003-system.conf
+  # - 009-redis.conf
+  - 999-output.conf
