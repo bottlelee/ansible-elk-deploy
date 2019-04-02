@@ -7,8 +7,8 @@
 -Xms32g
 -Xmx32g
 {% else %}
--Xms{{ logstash_jvm_mem | default(ansible_memory_mb.nocache.free // 2048 + 1 | int) }}g
--Xmx{{ logstash_jvm_mem | default(ansible_memory_mb.nocache.free // 2048 + 1 | int) }}g
+-Xms{{ logstash_jvm_mem }}
+-Xmx{{ logstash_jvm_mem }}
 {% endif %}
 
 ################################################################

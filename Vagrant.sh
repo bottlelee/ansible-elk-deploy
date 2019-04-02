@@ -12,6 +12,7 @@ fi
 
 function create() {
   vagrant up --provision --install-provider
+  ansible-playbook play-all.yml
   # if [[ $? == 0 ]]; then
   #   vagrant reload --provision
   # fi

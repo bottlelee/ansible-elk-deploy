@@ -1,3 +1,6 @@
+ansible_user: 'vagrant'
+ansible_ssh_private_key_file: '/home/haibin/.vagrant.d/insecure_private_key'
+
 elk_version: '6.6.2'
 timezone: 'Asia/Shanghai'
 apt_mirror: 'mirrors.aliyun.com'
@@ -12,7 +15,7 @@ searchguard_enabled: false
 check_groups: true
 
 # Set the network interface name to get IP
-# bind_interface: 'eth1'
+bind_interface: 'eth1'
 bind_address: "{{ hostvars[inventory_hostname]['ansible_' + bind_interface|replace('-','_')]['ipv4']['address'] | default(hostvars[inventory_hostname]['ansible_default_ipv4']['address']) }}"
 bind_network: "{{ hostvars[inventory_hostname]['ansible_' + bind_interface|replace('-','_')]['ipv4']['network'] | default(hostvars[inventory_hostname]['ansible_default_ipv4']['network']) }}"
 
@@ -27,7 +30,7 @@ logstash_beats_port: '5044'
 kibana_port: '5601'
 
 # Consul
-consul_version: '1.4.0'
+consul_version: '1.4.4'
 consul_dc_name: 'elk'
 
 # Monit
