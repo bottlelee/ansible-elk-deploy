@@ -9,8 +9,9 @@ filebeat.config.modules:
   # Period on which files under path should be checked for changes
   reload.period: 30s
 
-#------------------------------ Log prospector --------------------------------
-filebeat.prospectors:
+#------------------------------ Log inputs --------------------------------
+filebeat.inputs:
+{{ filebeat_extra_input | default('') }}
 {# ------------------- nodes ------------------- #}
 - type: log
   enabled: true

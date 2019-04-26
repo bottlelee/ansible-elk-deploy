@@ -223,7 +223,7 @@ slowlog:
 xpack.monitoring:
   enabled: true
   elasticsearch:
-    url: ["ingest.elastic.service.{{ consul_dc_name }}.consul:{{ elastic_http_port }}"]
+    hosts: ["ingest.elastic.service.{{ consul_dc_name }}.consul:{{ elastic_http_port }}"]
     {% if searchguard_enabled -%}
     username: haibin
     password: {{ sg_users | rejectattr('id', 'ne', 'haibin') | map(attribute='pass') | first }}

@@ -7,13 +7,25 @@
   sysctl:
     name: '{{ item.name }}'
     value: '{{ item.value }}'
+    state: '{{ item.state | default("present") }}'
     ignoreerrors: yes
   with_items: "{{ sysctl_rules | sort }}"
 
 - name: Disable swap
   command: swapoff -a
-  when: "'elasticsearch' in group_names"
   changed_when: false
+  when:
+    - ansible_swaptotal_mb > 0
+    - "'elasticsearch' in group_names"
+
+- name: Remove swapfile from /etc/fstab
+  mount:
+    name: "{{ item }}"
+    fstype: swap
+    state: absent
+  with_items:
+    - swap
+    - none
 
 - name: "Setup timezone to {{ timezone }}"
   timezone:

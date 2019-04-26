@@ -1,7 +1,7 @@
 ansible_user: 'vagrant'
 ansible_ssh_private_key_file: '/home/haibin/.vagrant.d/insecure_private_key'
 
-elk_version: '6.6.2'
+elk_version: '6.7.0'
 timezone: 'Asia/Shanghai'
 apt_mirror: 'mirrors.aliyun.com'
 

@@ -18,7 +18,7 @@ global_defs {
 }
 
 vrrp_script check_logstash {
-  script                      "ps xua | grep -v grep | grep logstash"
+  script                      "/usr/bin/ps xua | /usr/bin/grep logstash"
   interval                    15
 }
 

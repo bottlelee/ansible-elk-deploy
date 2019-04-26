@@ -14,6 +14,7 @@
       loop: "{{ elastic_plugins }}"
       loop_control:
         loop_var: target
+      when: elk_version is version('6.7.0', operator='lt', strict=True)
 
     - name: Starting elasticsearch service
       service:
