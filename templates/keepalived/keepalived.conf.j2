@@ -1,0 +1,42 @@
+global_defs {
+
+  notification_email {
+    {{ notification_email | default('root@{{ ansible_hostname }}') }}
+  }
+
+  notification_email_from     keepalived@{{ ansible_hostname }}
+  smtp_connect_timeout        3
+  smtp_server                 127.0.0.1
+  vrrp_garp_lower_prio_delay  10
+  router_id                   LVS_DEVEL
+  vrrp_skip_check_adv_addr
+  vrrp_strict
+  vrrp_garp_interval          0
+  vrrp_gna_interval           0
+
+
+}
+
+vrrp_script check_logstash {
+  script                      "/usr/bin/ps xua | /usr/bin/grep logstash"
+  interval                    15
+}
+
+vrrp_instance VI_1 {
+  interface                   {{ bind_interface }}
+  priority                    {{ bind_address.split('.')[-1] }}
+  virtual_router_id           {{ bind_address.split('.')[0] }}
+
+  virtual_ipaddress {
+    {{ keepalived_vip }}/24 dev {{ bind_interface }} label {{ bind_interface }}:1
+  }
+
+  track_interface {
+    {{ bind_interface }}
+  }
+
+  track_script {
+    check_logstash
+  }
+
+}

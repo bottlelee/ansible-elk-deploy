@@ -1,23 +1,28 @@
-- name: Checking cluster health status
-  uri:
-    url: http://{{ bind_address }}:{{ elastic_http_port }}/_cluster/health
-    method: GET
-    return_content: yes
-    body_format: json
-  register: health
-  retries: 180
-  delay: 10
-  until: health.json.status == "green"
-
-- fail:
-    msg: "Current cluster status is not 'green', please fix it before upgrade."
-  when: health.json.status != "green"
+# - name: Checking cluster health status
+#   uri:
+#     url: http://{{ bind_address }}:{{ elastic_http_port }}/_cluster/health
+#     method: GET
+#     return_content: yes
+#     body_format: json
+#   register: health
+#   retries: 180
+#   delay: 10
+#   until: health.json.status == "green"
+#
+# - fail:
+#     msg: "Current cluster status is not 'green', please fix it before upgrade."
+#   when: health.json.status != "green"
 
 - name: Stopping shards
   uri:
     url: "http://{{ bind_address }}:{{ elastic_http_port }}/_cluster/settings"
     method: PUT
-    body: "{{ lookup('file','disable_shard.json') }}"
+    body: |
+      '{
+        "persistent": {
+          "cluster.routing.allocation.enable": "NONE"
+        }
+      }'
     body_format: json
   when: "'data' in elastic_instance_roles"
 

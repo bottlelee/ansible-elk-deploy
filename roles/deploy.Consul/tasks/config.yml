@@ -28,7 +28,7 @@
     - logstash
     - kibana
     - redis
-  notify: Restart consul
+  notify: Reload consul
   register: templates
 
 - name: Listing current config files

@@ -1,4 +1,5 @@
 # Elasticsearch configure
+es_jvm_mem: 1g
 elastic_cluster_name: 'quanduan'
 elastic_log_path: '/var/log/elasticsearch'
 

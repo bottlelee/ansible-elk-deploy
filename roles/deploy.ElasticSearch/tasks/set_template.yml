@@ -5,9 +5,23 @@
   delegate_to: localhost
   become: no
 
-- name: Setup index default settings
+- meta: flush_handlers
+
+- name: Setup index default settings | http
   uri:
-    url: "http://ingest.elastic.service.{{ consul_dc_name }}.consul:{{ elastic_http_port }}/_template/active-logs"
+    url: "http://elastic.service.{{ consul_dc_name }}.consul:{{ elastic_http_port }}/_template/active-logs"
     method: PUT
     body: "{{ lookup('file', 'indices_default_settings.json') }}"
     body_format: json
+  when: not searchguard_enabled
+
+- name: Setup index default settings | https
+  uri:
+    url: "https://elastic.service.{{ consul_dc_name }}.consul:{{ elastic_http_port }}/_template/active-logs"
+    method: PUT
+    user: kibanaserver
+    password: "{{ sg_users | selectattr('id', 'eq', 'kibanaserver') | map(attribute='pass') | first }}"
+    validate_certs: no
+    body: "{{ lookup('file', 'indices_default_settings.json') }}"
+    body_format: json
+  when: searchguard_enabled

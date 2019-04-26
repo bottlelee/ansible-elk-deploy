@@ -1,6 +1,12 @@
+# Gather facts from all hosts before next tasks
+- hosts: all
+
+# Run tasks in serial mode
 - hosts: all
   become: yes
-  serial: 3
+  serial: 1
+  vars_files:
+    - vars/search_guard_auth.yml
   roles:
     - deploy.Consul
   post_tasks:

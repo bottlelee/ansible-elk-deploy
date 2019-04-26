@@ -4,12 +4,14 @@
     state: restarted
 
 - name: Restart network service
+  ignore_errors: yes
   service:
     name: network
     state: restarted
     enabled: yes
 
 - name: Restart networking service
+  ignore_errors: yes
   service:
     name: networking
     state: restarted

@@ -1,0 +1,25 @@
+- block:
+    - name: Checking searchguard plugin
+      shell: "grep '{{ sg_kb_ver }}' /usr/share/kibana/plugins/searchguard/package.json"
+      changed_when: false
+  rescue:
+    - name: Downloading searchguard plugin
+      get_url:
+        url: "{{ sg_kb_url }}"
+        dest: "/tmp/{{ sg_kb_url | basename }}"
+      register: dl
+      until: dl is succeeded
+      retries: 10
+      delay: 3
+    - name: Stop kibana service
+      systemd:
+        name: kibana
+        state: stopped
+    - name: Installing searchguard plugin. This may take a while when optimizing and caching browser bundles...
+      shell: "{{ item }}"
+      args:
+        chdir: /usr/share/kibana
+      with_items:
+        - "/usr/share/kibana/bin/kibana-plugin remove searchguard || exit 0"
+        - "bin/kibana-plugin install --no-optimize file:///tmp/{{ sg_kb_url | basename }}"
+      notify: Restart kibana

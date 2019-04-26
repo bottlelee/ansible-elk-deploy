@@ -1,0 +1,21 @@
+- name: Checking compatible
+  fail:
+    msg: "The SearchGuard version '{{ sg_kb_ver }}' is not work with current ELK version '{{ elk_version }}'"
+  when: elk_version not in sg_kb_ver
+
+- name: Creating directory '/etc/kibana/tls'
+  file:
+    path: /etc/kibana/tls
+    state: directory
+
+- name: Uploading tls files
+  copy:
+    src: "downloaded_files/searchguard/out/{{ item }}"
+    dest: "/etc/kibana/tls/{{ item }}"
+    mode: 0444
+  with_items:
+    - "elk-ca.pem"
+    - "elk-client.pem"
+    - "elk-client.key"
+
+- include_tasks: install.yml

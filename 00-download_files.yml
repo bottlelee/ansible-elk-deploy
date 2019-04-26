@@ -52,8 +52,8 @@
     - include_role: name=deploy.Redis tasks_from=download
       when: groups['redis'] | count > 0
       tags: redis
-    - include_role: name=deploy.Curator tasks_from=download
-      vars:
-        pkg: "{{ target | basename }}"
-        target: "{{ pip_pkgs }}"
-      tags: curator
+    # - include_role: name=deploy.Curator tasks_from=download
+    #   vars:
+    #     pkg: "{{ target | basename }}"
+    #     target: "{{ pip_pkgs }}"
+    #   tags: curator

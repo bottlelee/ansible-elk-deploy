@@ -1,6 +1,6 @@
 - block:
     - stat:
-        path: "downloaded_files/{{ item | basename }}"
+        path: "downloaded_files/redis/{{ item | basename }}"
       with_items: "{{ rpm_redis_urls }}"
       register: p
       failed_when: p.stat.exists == false
@@ -8,9 +8,9 @@
       become: no
       run_once: true
   rescue:
-    - name: Creating local directory 'downloaded_files'
+    - name: Creating local directory 'downloaded_files/redis'
       file:
-        path: downloaded_files
+        path: downloaded_files/redis
         state: directory
       delegate_to: localhost
       become: no
@@ -18,7 +18,7 @@
     - name: "Downloading rpm packages"
       get_url:
         url: "{{ item }}"
-        dest: downloaded_files
+        dest: downloaded_files/redis
       with_items: "{{ rpm_redis_urls }}"
       register: download
       until: download is succeeded
@@ -39,9 +39,9 @@
       run_once: true
       with_items: "{{ deb_redis_urls }}"
   rescue:
-    - name: Creating local directory 'downloaded_files'
+    - name: Creating local directory 'downloaded_files/redis'
       file:
-        path: downloaded_files
+        path: downloaded_files/redis
         state: directory
       delegate_to: localhost
       become: no
@@ -49,7 +49,7 @@
     - name: "Downloading deb packages"
       get_url:
         url: "{{ item }}"
-        dest: "downloaded_files/"
+        dest: "downloaded_files/redis/"
       with_items: "{{ deb_redis_urls }}"
       register: download
       until: download is succeeded

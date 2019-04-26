@@ -1,6 +1,6 @@
 - block:
     - stat:
-        path: "downloaded_files/{{ target }}-{{ elk_version }}-amd64.deb"
+        path: "downloaded_files/elk-{{ elk_version }}/{{ target }}-{{ elk_version }}-amd64.deb"
       register: result
       failed_when: result.stat.exists == false
       when: format == 'deb'
@@ -11,7 +11,7 @@
     - name: "Downloading https://artifacts.elastic.co/downloads/beats/{{ target }}/{{ target }}-{{ elk_version }}-amd64.deb"
       get_url:
         url: "https://artifacts.elastic.co/downloads/beats/{{ target }}/{{ target }}-{{ elk_version }}-amd64.deb"
-        dest: "downloaded_files/"
+        dest: "downloaded_files/elk-{{ elk_version }}/"
       register: download
       until: download is succeeded
       retries: 99
@@ -22,7 +22,7 @@
 
 - block:
     - stat:
-        path: "downloaded_files/{{ target }}-{{ elk_version }}-x86_64.rpm"
+        path: "downloaded_files/elk-{{ elk_version }}/{{ target }}-{{ elk_version }}-x86_64.rpm"
       register: result
       failed_when: result.stat.exists == false
       when: format == 'rpm'
@@ -33,7 +33,7 @@
     - name: "Downloading https://artifacts.elastic.co/downloads/beats/{{ target }}/{{ target }}-{{ elk_version }}-x86_64.rpm"
       get_url:
         url: "https://artifacts.elastic.co/downloads/beats/{{ target }}/{{ target }}-{{ elk_version }}-x86_64.rpm"
-        dest: "downloaded_files/"
+        dest: "downloaded_files/elk-{{ elk_version }}/"
       register: download
       until: download is succeeded
       retries: 99

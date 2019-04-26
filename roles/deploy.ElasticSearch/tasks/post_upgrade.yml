@@ -1,4 +1,4 @@
-- name: Checking if the node has been back to cluster or not.
+- name: Checking if the node has been connected to the cluster.
   uri:
     url: "http://{{ bind_address }}:{{ elastic_http_port }}/_cat/nodes"
     return_content: yes
@@ -7,23 +7,24 @@
   retries: 300
   delay: 10
 
-- name: Enable shard allocation.
-  uri:
-    url: "http://{{ bind_address }}:{{ elastic_http_port }}/_cluster/settings"
-    method: PUT
-    body: "{{ lookup('file','enable_shard.json') }}"
-    body_format: json
-
-- name: Checking cluster health status
-  uri:
-    url: http://{{ bind_address }}:{{ elastic_http_port }}/_cluster/health
-    method: GET
-    return_content: yes
-    body_format: json
-  register: health
-  retries: 180
-  delay: 10
-  until: health.json.status == "green"
+- block:
+    - name: Enable shard allocation.
+      uri:
+        url: "http://{{ bind_address }}:{{ elastic_http_port }}/_cluster/settings"
+        method: PUT
+        body: "{{ lookup('file','enable_shard.json') }}"
+        body_format: json
+    - name: Checking cluster health status
+      uri:
+        url: http://{{ bind_address }}:{{ elastic_http_port }}/_cluster/health
+        method: GET
+        return_content: yes
+        body_format: json
+      register: health
+      retries: 180
+      delay: 10
+      until: health.json.status == "green"
+  when: inventory_hostname == ansible_play_hosts[-1]
 
 - name: Start monitoring
   command: /usr/local/bin/monit start elasticsearch

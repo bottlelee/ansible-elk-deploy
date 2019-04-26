@@ -18,12 +18,22 @@ server.host: "0.0.0.0"
 server.name: "{{ ansible_hostname }}"
 
 # The URL of the Elasticsearch instance to use for all your queries.
-{# {% if 'elasticsearch' in group_names %}
-elasticsearch.url: "http://ingest.elastic.service.{{ consul_dc_name }}.consul:9200"
+{% if searchguard_enabled %}
+elasticsearch:
+  url: "https://ingest.elastic.service.{{ consul_dc_name }}.consul:9200"
+  username: kibanaserver
+  password: {{ sg_users | selectattr('id', 'eq', 'kibanaserver') | map(attribute='pass') | first }}
+elasticsearch.ssl.verificationMode: none
+#elasticsearch.ssl.certificateAuthorities: /etc/kibana/tls/elk-ca.pem
+#elasticsearch.ssl.certificate: /etc/kibana/tls/elk-client.pem
+#elasticsearch.ssl.key: /etc/kibana/tls/elk-client.key
+#xpack.spaces.enabled: false
+#xpack.reporting.enabled: false
+searchguard.cookie.secure: false
+#searchguard.allow_client_certificates: true
 {% else %}
-elasticsearch.url: "http://tribe.elastic.service.{{ consul_dc_name }}.consul:9200"
-{% endif %} #}
 elasticsearch.url: "http://ingest.elastic.service.{{ consul_dc_name }}.consul:9200"
+{% endif %}
 
 # When this setting's value is true Kibana uses the hostname specified in the server.host
 # setting. When the value of this setting is false, Kibana uses the hostname of the host
@@ -68,7 +78,7 @@ elasticsearch.url: "http://ingest.elastic.service.{{ consul_dc_name }}.consul:92
 
 # Time in milliseconds to wait for responses from the back end or Elasticsearch. This value
 # must be a positive integer.
-elasticsearch.requestTimeout: 120000
+elasticsearch.requestTimeout: 300000
 
 # List of Kibana client-side headers to send to Elasticsearch. To send *no* client-side
 # headers, set this value to [] (an empty list).
@@ -94,7 +104,7 @@ logging.dest: /var/log/kibana/kibana.log
 #logging.silent: false
 
 # Set the value of this setting to true to suppress all logging output other than error messages.
-logging.quiet: true
+#logging.quiet: true
 
 # Set the value of this setting to true to log all events, including system usage information
 # and all requests.
@@ -108,4 +118,11 @@ logging.quiet: true
 # translations.
 #i18n.defaultLocale: "en"
 
+xpack.monitoring.enabled: true
 xpack.security.enabled: false
+xpack.ml.enabled: {{ xpack.machine_learning }}
+xpack.apm.enabled: {{ xpack.apm }}
+xpack.graph.enabled: {{ xpack.graph }}
+xpack.infra.enabled: {{ xpack.infra }}
+xpack.reporting.enabled: {{ xpack.reporting }}
+xpack.spaces.enabled: {{ xpack.spaces }}

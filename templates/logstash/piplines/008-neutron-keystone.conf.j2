@@ -1,0 +1,30 @@
+filter {
+  if "neutron" in [source] or "keystone" in [source] {
+    grok {
+      match => {
+        "message" => [
+          "%{TIMESTAMP_ISO8601:[log][timestamp]} %{NUMBER} %{LOGLEVEL:[log][level]} %{DATA:proc}( \[.*\]|) %{IP:ip} - -( \[.*\]|) %{GREEDYDATA:[log][msg]}",
+          "%{TIMESTAMP_ISO8601:[log][timestamp]} %{NUMBER} %{LOGLEVEL:[log][level]} %{DATA:proc}( \[.*\]|) %{GREEDYDATA:[log][msg]}"
+        ]
+      }
+      remove_field => "message"
+    }
+
+    if [log][level] == "ERROR" {
+      throttle {
+        before_count => 9 # 最小值
+        after_count => 11 # 最大值
+        period => 1800 # 统计周期
+        max_age => 3600 # 有效周期, 这个时间内不再触发同一个条件。
+        key => "%{message}" # 要统计的字段
+        add_tag => "neutron_throttle"
+      }
+    }
+
+    date {
+      match => [ "[log][timestamp]", "ISO8601" ]
+      remove_field => "[log][timestamp]"
+      timezone => "UTC"
+    }
+  }
+}

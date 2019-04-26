@@ -1,0 +1,141 @@
+- name: Checking '/usr/share/elasticsearch/plugins/search-guard-{{ sg_es_ver.split('.') | first }}/search-guard-{{ sg_es_ver.split('.') | first }}-{{ sg_es_ver }}.jar'
+  stat:
+    path: "/usr/share/elasticsearch/plugins/search-guard-{{ sg_es_ver.split('.') | first }}/search-guard-{{ sg_es_ver.split('.') | first }}-{{ sg_es_ver }}.jar"
+  register: sg_es
+
+- block:
+    - include_tasks: tlstool.yml
+  when: inventory_hostname == groups['elasticsearch'][0]
+
+- block:
+    - name: Disable elasticsearch shard allocation | http
+      uri:
+        url: http://elastic.service.{{ consul_dc_name }}.consul:9200/_cluster/settings
+        method: PUT
+        body_format: json
+        body: |
+          {
+            "persistent": {
+              "cluster.routing.allocation.enable": "none"
+            }
+          }
+  rescue:
+    - name: Disable elasticsearch shard allocation | https
+      uri:
+        url: https://elastic.service.{{ consul_dc_name }}.consul:9200/_cluster/settings
+        method: PUT
+        user: haibin
+        password: "{{ sg_default_pass }}"
+        validate_certs: no
+        body_format: json
+        body: |
+          {
+            "persistent": {
+              "cluster.routing.allocation.enable": "none"
+            }
+          }
+      ignore_errors: true
+  when:
+    - inventory_hostname == ansible_play_hosts[0]
+    - sg_es.stat.exists == false
+
+- block:
+    - name: Stopping elasticsearch nodes
+      service:
+        name: elasticsearch
+        state: stopped
+      delegate_to: "{{ item }}"
+      loop: "{{ groups['elasticsearch'] }}"
+    - name: Waiting for elasticsearch stopped
+      wait_for:
+        host: "{{ bind_address }}"
+        port: "{{ elastic_http_port }}"
+        state: stopped
+      delegate_to: "{{ item }}"
+      loop: "{{ groups['elasticsearch'] }}"
+  when:
+    - "inventory_hostname == groups['elasticsearch'][0]"
+    - not sg_es.stat.exists
+
+- block:
+    - include_tasks: download.yml
+    - name: Uploading SearchGuard files
+      copy:
+        src: "downloaded_files/searchguard/search-guard-{{ sg_es_ver.split('.') | first }}-{{ sg_es_ver }}.zip"
+        dest: "/tmp/search-guard-{{ sg_es_ver.split('.') | first }}-{{ sg_es_ver }}.zip"
+    - name: Installing SearchGuard
+      shell: "{{ item }}"
+      with_items:
+        - "/usr/share/elasticsearch/bin/elasticsearch-plugin remove search-guard-{{ sg_es_ver.split('.') | first }} || exit 0"
+        - "/usr/share/elasticsearch/bin/elasticsearch-plugin install -b file:///tmp/search-guard-{{ sg_es_ver.split('.') | first }}-{{ sg_es_ver }}.zip"
+      changed_when: false
+  when: not sg_es.stat.exists
+
+- block:
+    - name: Starting elasticsearch nodes
+      service:
+        name: elasticsearch
+        state: started
+      delegate_to: "{{ item }}"
+      loop: "{{ groups['elasticsearch'] }}"
+    - name: Waiting for elasticsearch started
+      wait_for:
+        host: "{{ bind_address }}"
+        port: "{{ elastic_http_port }}"
+        state: started
+      delegate_to: "{{ item }}"
+      loop: "{{ groups['elasticsearch'] }}"
+  when:
+    - "inventory_hostname == groups['elasticsearch'][-1]"
+    - not sg_es.stat.exists
+
+- block:
+    - name: Creating '/etc/elasticsearch/tls' directory
+      file:
+        path: /etc/elasticsearch/tls
+        state: directory
+    - name: Uploading tls files to /etc/elasticsearch/tls
+      copy:
+        src: "downloaded_files/searchguard/out/{{ item }}"
+        dest: /etc/elasticsearch/tls
+        mode: 0400
+        owner: elasticsearch
+        group: elasticsearch
+      with_items:
+        - "{{ tls_file_name }}.key"
+        - "{{ tls_file_name }}.pem"
+        - esnode.key
+        - esnode.pem
+      register: keypair
+    - name: Updating ElasticSearch configuration
+      template:
+        src: 'elasticsearch/elasticsearch.yml.j2'
+        dest: '/etc/elasticsearch/elasticsearch.yml'
+      register: es_tpl
+    - name: Restarting ElasticSearch
+      service:
+        name: elasticsearch
+        state: restarted
+      when: |
+        keypair is changed
+        or es_tpl is changed
+
+- block:
+    - name: "Uploading tls client files to {{ ansible_play_hosts[-1] }}"
+      copy:
+        src: "downloaded_files/searchguard/out/{{ item }}"
+        dest: /usr/share/elasticsearch/plugins/search-guard-{{ sg_es_ver.split('.') | first }}/tools
+        mode: 0400
+      with_items:
+        - "{{ tls_client_name }}.key"
+        - "{{ tls_client_name }}.pem"
+    - name: Re-enable shard allocation
+      command: "bash sgadmin.sh cert {{ tls_client_name }}.pem -key {{ tls_client_name }}.key -cacert /etc/elasticsearch/tls/elk-ca.pem -nhnv -cn {{ elastic_cluster_name }} --enable-shard-allocation"
+      args:
+        chdir: /usr/share/elasticsearch/plugins/search-guard-{{ sg_es_ver.split('.') | first }}/tools
+      changed_when: false
+      register: shard_alloc
+      until: shard_alloc is succeeded
+      retries: 10
+      delay: 10
+  when: inventory_hostname == ansible_play_hosts[-1]

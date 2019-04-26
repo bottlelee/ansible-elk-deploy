@@ -1,0 +1,16 @@
+- block:
+    - name: Creating local directory 'downloaded_files/searchguard'
+      file:
+        path: downloaded_files/searchguard
+        state: directory
+    - name: "Downloading search guard tools"
+      get_url:
+        url: "{{ item }}"
+        dest: "downloaded_files/searchguard/{{ item | basename }}"
+      with_items:
+        - "{{ tls_tool_url }}"
+        - "{{ sg_es_url }}"
+        - "{{ sg_kb_url }}"
+  delegate_to: localhost
+  become: no
+  run_once: yes

@@ -1,0 +1,26 @@
+filter {
+  if "falcon" in [index_name] {
+    grok {
+      match => {
+        "message" => [
+          "time=\"%{TIMESTAMP_ISO8601:[log][timestamp]}\" level=%{WORD:[log][level]} msg=\"%{GREEDYDATA:[log][msg]}\""
+        ]
+      }
+      remove_field => "message"
+    }
+    if [log][level] == "error" {
+      throttle {
+        before_count => 9 # 最小值
+        after_count => 11 # 最大值
+        period => 1800 # 统计周期
+        max_age => 3600 # 有效周期, 这个时间内不再触发同一个条件。
+        key => "%{[host_from]}" # 要统计的字段
+        add_tag => "falcon_throttle"
+      }
+    }
+    date {
+      match => [ "[log][timestamp]", "ISO8601" ]
+      remove_field => "[log][timestamp]"
+    }
+  }
+}

@@ -1,0 +1,14 @@
+- hosts: logstash
+  become: yes
+  vars_files:
+    - vars/logstash.yml
+    - vars/search_guard_auth.yml
+  serial:
+    - 1
+    - 33%
+  roles:
+    - deploy.Logstash
+  post_tasks:
+    - include_role:
+        name: deploy.Logstash
+        tasks_from: report.yml

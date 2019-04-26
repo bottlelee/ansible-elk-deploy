@@ -1,0 +1,26 @@
+defaults:
+  validityDays: 3650
+  pkPassword: none
+  generatedPasswordLength: 12
+  nodesDn:
+    - "CN=ingest.elastic.service.{{ consul_dc_name }}.consul,OU=Ops,O=NewTouch Com\\, Inc.,DC=NewTouch,DC=com"
+    - "CN=*.service.{{ consul_dc_name }}.consul,OU=Ops,O=NewTouch Com\\, Inc.,DC=NewTouch,DC=com"
+  nodeOid: "1.2.3.4.5.5"
+  reuseTransportCertificatesForHttp: false
+
+ca:
+  root:
+    dn: CN=ingest.elastic.service.{{ consul_dc_name }}.consul,OU=CA,O=NewTouch Com\, Inc.,DC=NewTouch,DC=com
+    keysize: 2048
+    validityDays: 3650
+    pkPassword: {{ tls_password | default('none') }}
+    file: elk-ca.pem
+
+clients:
+  - name: elk-client
+    dn: "CN=ingest.elastic.service.{{ consul_dc_name }}.consul,OU=Ops,O=NewTouch Com\\, Inc.,DC=NewTouch,DC=com"
+    admin: true
+
+nodes:
+  - name: esnode
+    dn: "CN=ingest.elastic.service.{{ consul_dc_name }}.consul,OU=Ops,O=NewTouch Com\\, Inc.,DC=NewTouch,DC=com"

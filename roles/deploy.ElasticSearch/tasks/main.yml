@@ -1,17 +1,9 @@
 - block:
-    - name: Checking elasticsearch service status
-      service:
-        name: elasticsearch
-        state: started
-    - name: Checking elasticsearch port
-      wait_for:
-        host: "{{ bind_address }}"
-        port: "{{ item }}"
-        delay: 10
-        timeout: 180
-      with_items:
-        - 9300
-        - 9200
+    - name: Checking elasticsearch
+      stat:
+        path: /usr/share/elasticsearch/bin/elasticsearch
+      register: bin
+      failed_when: not bin.stat.exists
   rescue:
     - include_tasks: env_check.yml
     - include_tasks: '{{ ansible_os_family }}.yml'
@@ -34,6 +26,23 @@
     - jvm.options
     - elasticsearch.yml
   notify: Restarting elasticsearch
+
+- block:
+    - include_tasks: searchguard/main.yml
+  rescue:
+    - name: Updating ElasticSearch configuration
+      template:
+        src: 'elasticsearch/{{ item }}.j2'
+        dest: '/etc/elasticsearch/{{ item }}'
+      with_items:
+        - jvm.options
+        - elasticsearch.yml
+    - name: Restarting elasticsearch service
+      service:
+        name: elasticsearch
+        state: restarted
+    - include_tasks: searchguard/main.yml
+  when: searchguard_enabled
 
 - block:
     - wait_for:
@@ -61,13 +70,24 @@
   when: (groups['elasticsearch']|last) == inventory_hostname
 
 - block:
-    - name: Checking ElasticSearch version
+    - name: Checking ElasticSearch version | http
       uri:
         url: "http://{{ bind_address }}:{{ elastic_http_port }}"
         return_content: yes
+        validate_certs: no
       register: versionCheck
       changed_when: false
       failed_when: versionCheck.json.version.number is version(elk_version, operator='lt', strict=True)
+      when: not searchguard_enabled
+    - name: Checking ElasticSearch version | https
+      uri:
+        url: "https://{{ bind_address }}:{{ elastic_http_port }}"
+        return_content: yes
+        validate_certs: no
+      register: versionCheck
+      changed_when: false
+      failed_when: versionCheck.json.version.number is version(elk_version, operator='lt', strict=True)
+      when: searchguard_enabled
   rescue:
     - include_tasks: pre_upgrade.yml
     - include_tasks: '{{ ansible_os_family }}.yml'

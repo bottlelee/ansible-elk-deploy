@@ -3,15 +3,15 @@
   serial: 33%
   gather_facts: no
   tasks:
-    - name: Checking group_vars/all.yml
+    - name: "Checking {{ inventory_dir }}/group_vars/all.yml"
       stat:
-        path: group_vars/all.yml
+        path: "{{ inventory_dir }}/group_vars/all.yml"
       delegate_to: localhost
       run_once: yes
       become: no
       register: result
     - fail:
-        msg: "Please create group_vars/all.yml from group_vars/all.yml.example, and edit it to suit your environment before your deploy."
+        msg: "Please create {{ inventory_dir }}/group_vars/all.yml from inventories/example/group_vars/all.yml, and edit it to suit your environment before your deploy."
       when: result.stat.exists == false
       delegate_to: localhost
       run_once: yes
@@ -25,6 +25,7 @@
   serial: 33%
   vars_files:
     - vars/download_urls.yml
+    - vars/sysctl_rules.yml
   roles:
     - init
     - deploy.Chrony

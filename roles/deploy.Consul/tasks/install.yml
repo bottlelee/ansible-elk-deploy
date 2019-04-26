@@ -12,9 +12,9 @@
     - name: Creating user 'consul'
       user:
         name: consul
-    - name: Creating /etc/consul.d
+    - name: Creating /etc/consul.d/chk_scripts
       file:
-        path: /etc/consul.d/
+        path: /etc/consul.d/chk_scripts
         state: directory
         owner: consul
         group: consul

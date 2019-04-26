@@ -35,3 +35,6 @@
 
 ## 鸣谢
 本脚本在“新致云”提供的云主机上测试通过。[新致云](https://cloud.newtouch.com)，助你真正用好云计算。
+
+## 常见问题
+1. 如果 Kibana 和 Elasticsearch 部署在同一机器，并且启用 Search Guard，那么 Kibana 安装了 SG 插件后会有一个 Optimize 过程。此过程极内存，会导致 ES 崩溃退出。

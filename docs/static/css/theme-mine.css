@@ -1,0 +1,19 @@
+#chapter p {
+  text-align: left;
+}
+
+th {
+  text-align: center;
+}
+
+div.notices.info p:first-child:after {
+    content: '注意';
+}
+
+div.notices.warning p:first-child:after {
+    content: '警告';
+}
+
+div.notices.tip p:first-child:after {
+    content: '提示';
+}

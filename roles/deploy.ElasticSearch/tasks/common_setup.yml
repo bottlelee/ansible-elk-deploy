@@ -26,6 +26,8 @@
 #   notify: Start enable-thp.service
 
 - name: Updating ElasticSearch configuration
+  vars:
+    searchguard_enabled: false
   template:
     src: 'elasticsearch/{{ item }}.j2'
     dest: '/etc/elasticsearch/{{ item }}'
@@ -49,7 +51,7 @@
   wait_for:
     host: "{{ bind_address }}"
     port: "{{ item }}"
-    timeout: 120
+    timeout: 60
   with_items:
     - 9300
     - 9200

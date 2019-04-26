@@ -1,7 +1,7 @@
 - block:
     - name: 'Uploading kibana-{{ elk_version }}-x86_64.rpm'
       copy:
-        src: 'downloaded_files/kibana-{{ elk_version }}-x86_64.rpm'
+        src: 'downloaded_files/elk-{{ elk_version }}/kibana-{{ elk_version }}-x86_64.rpm'
         dest: /tmp/
     - name: 'Installing kibana-{{ elk_version }}-x86_64.rpm'
       yum:

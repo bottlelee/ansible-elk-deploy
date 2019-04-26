@@ -1,6 +1,9 @@
 - hosts: all
   become: yes
   serial: 33%
+  vars_files:
+    - vars/search_guard.yml
+    - vars/search_guard_auth.yml
   roles:
     - {
       role: deploy.Beats,
@@ -11,6 +14,9 @@
 - hosts: all
   become: yes
   serial: 33%
+  vars_files:
+    - vars/search_guard.yml
+    - vars/search_guard_auth.yml
   roles:
     - {
       role: deploy.Beats,
@@ -21,6 +27,9 @@
 - hosts: all
   become: yes
   serial: 33%
+  vars_files:
+    - vars/search_guard.yml
+    - vars/search_guard_auth.yml
   roles:
     - {
       role: deploy.Beats,

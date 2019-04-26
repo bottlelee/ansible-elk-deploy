@@ -1,0 +1,46 @@
+filter {
+  if "nova" in [source] {
+    grok {
+      match => {
+        "message" => [
+          "%{TIMESTAMP_ISO8601:[log][timestamp]} %{NUMBER} %{LOGLEVEL:[log][level]} %{DATA:proc} \[%{DATA}\] Final resource view: name=%{DATA:node_name} phys_ram=%{NUMBER:phys_ram_mb}MB used_ram=%{NUMBER:used_ram_mb}MB phys_disk=%{NUMBER:phys_disk_gb}GB used_disk=%{NUMBER:used_disk_gb}GB total_vcpus=%{NUMBER:total_vcpus} used_vcpus=%{NUMBER:used_vcpus} %{GREEDYDATA}",
+          "%{TIMESTAMP_ISO8601:[log][timestamp]} %{NUMBER} %{LOGLEVEL:[log][level]} %{DATA:proc}( \[%{DATA}\]|) %{GREEDYDATA:[log][msg]}"
+        ]
+      }
+      remove_field => "message"
+    }
+
+    if [log][level] == "INFO" {
+      drop {
+        percentage => 60
+      }
+    }
+
+    mutate {
+      convert => {
+        "phys_ram_mb" => "integer"
+        "used_ram_mb" => "integer"
+        "phys_disk_gb" => "integer"
+        "used_disk_gb" => "integer"
+        "total_vcpus" => "integer"
+        "used_vcpus" => "integer"
+      }
+    }
+
+    if [log][level] != "INFO" {
+      throttle {
+        before_count => 2 # 最小值
+        after_count => 4 # 最大值
+        period => 600 # 统计周期
+        max_age => 1200 # 有效周期, 这个时间内不再触发同一个条件。
+        key => "%{[beat][hostname]}" # 要统计的字段
+        add_tag => "nova-throttle"
+      }
+    }
+
+    date {
+      match => [ "[log][timestamp]", "ISO8601" ]
+      remove_field => "[log][timestamp]"
+    }
+  }
+}

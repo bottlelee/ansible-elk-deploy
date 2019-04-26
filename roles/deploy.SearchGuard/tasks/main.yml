@@ -1,0 +1,16 @@
+- name: Checking compatible
+  fail:
+    msg: "The SearchGuard version '{{ sg_es_ver }}' is not work with current ELK version '{{ elk_version }}'"
+  when: elk_version not in sg_es_ver
+
+- include_tasks: "{{ grp }}.yml"
+  when: "inventory_hostname in groups[grp]"
+  with_items:
+    - elasticsearch
+    - kibana
+  loop_control:
+    loop_var: grp
+
+- include_tasks: config_sg.yml
+  when: "inventory_hostname == groups['elasticsearch'][-1]"
+  tags: users

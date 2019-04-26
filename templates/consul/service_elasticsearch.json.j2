@@ -8,7 +8,7 @@
       "tags": ["{{ elastic_instance_roles | join('","') }}"],
       "checks": [
         {
-          "http": "http://{{ bind_address }}:{{ elastic_http_port }}",
+          "tcp": "{{ bind_address}}:{{ elastic_http_port }}",
           "interval": "10s",
           "timeout": "3s"
         }

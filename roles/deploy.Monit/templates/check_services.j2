@@ -1,7 +1,7 @@
 check host CONSUL-DNS with address 127.0.0.1
   if failed
     port 53
-  then exec "/usr/sbin/service consul-dns start"
+  then exec "/usr/sbin/service consul-dns restart"
 
 check host CHRONY with address {{ bind_address }}
   start program = "/usr/sbin/service chronyd start"
@@ -35,12 +35,6 @@ check host KIBANA with address {{ bind_address }}
   if failed
     port {{ kibana_port }}
     for 10 cycles
-  then alert
-
-check file KIBANA-LOG with path /var/log/kibana/kibana.log
-  start program = "/usr/sbin/service kibana start"
-  stop program = "/usr/sbin/service kibana stop"
-  if content != ".*getaddrinfo ENOTFOUND.*" for 10 cycles
   then alert
 
 check host ES-SHARDS-STATUS with address ingest.elastic.service.{{ consul_dc_name }}.consul

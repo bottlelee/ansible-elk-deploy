@@ -1,0 +1,8 @@
+# This is the internal user database
+# The hash value is a bcrypt hash and can be generated with plugin/tools/hash.sh
+{% for user in hashed_passwd %}
+{{ user.item.id }}:
+  readonly: {{ user.item.readonly | default('false') }}
+  hash: {{ user.stdout }}
+  roles: {{ user.item.roles | default('') | to_yaml }}
+{% endfor %}

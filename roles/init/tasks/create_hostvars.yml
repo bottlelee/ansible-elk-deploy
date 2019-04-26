@@ -9,7 +9,7 @@
 - block:
     - name: Generating host vars files
       lineinfile:
-        path: "host_vars/{{ inventory_hostname }}.yml"
+        path: "{{ inventory_dir }}/host_vars/{{ inventory_hostname }}.yml"
         regexp: "{{ item.regexp }}"
         line: "{{ item.line }}"
         create: yes

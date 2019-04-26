@@ -1,0 +1,7 @@
+filter {
+  if [fileset][module] == 'suricata' {
+    mutate {
+      rename => ["json", "suricata.eve"]
+    }
+  }
+}

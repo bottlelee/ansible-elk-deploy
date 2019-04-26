@@ -4,7 +4,7 @@
 
 - name: "Uploading {{ target }}-{{ elk_version }}-x86_64.rpm"
   copy:
-    src: "downloaded_files/{{ target }}-{{ elk_version }}-x86_64.rpm"
+    src: "downloaded_files/elk-{{ elk_version }}/{{ target }}-{{ elk_version }}-x86_64.rpm"
     dest: "/tmp/{{ target }}-{{ elk_version }}-x86_64.rpm"
 
 - name: "Installing {{ target }}-{{ elk_version }}-x86_64.rpm"

@@ -2,7 +2,7 @@
 
     - name: "Uploading plugin {{ target }}"
       copy:
-        src: "downloaded_files/{{ target }}-{{ elk_version }}.zip"
+        src: "downloaded_files/elk-{{ elk_version }}/{{ target }}-{{ elk_version }}.zip"
         dest: "/tmp/{{ target }}-{{ elk_version }}.zip"
 
     - name: "Installing plugin {{ target }}"
@@ -12,13 +12,13 @@
   rescue:
 
     - name: "Uninstalling plugin {{ target }}"
-      command: "/usr/share/elasticsearch/bin/elasticsearch-plugin remove -ps {{ target }}"
-      ignore_errors: True
+      shell: "/usr/share/elasticsearch/bin/elasticsearch-plugin remove -ps {{ target }} || exit 0"
+      # ignore_errors: True
 
     - name: "Downloading plugin {{ target }}"
       get_url:
         url: "https://artifacts.elastic.co/downloads/elasticsearch-plugins/{{ target }}/{{ target }}-{{ elk_version }}.zip"
-        dest: downloaded_files/{{ target }}-{{ elk_version }}.zip
+        dest: downloaded_files/elk-{{ elk_version }}/{{ target }}-{{ elk_version }}.zip
       delegate_to: localhost
       become: no
       run_once: true

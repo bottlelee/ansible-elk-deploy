@@ -1,7 +1,7 @@
 - block:
     - name: 'Uploading kibana-{{ elk_version }}-amd64.deb'
       copy:
-        src: 'downloaded_files/kibana-{{ elk_version }}-amd64.deb'
+        src: 'downloaded_files/elk-{{ elk_version }}/kibana-{{ elk_version }}-amd64.deb'
         dest: /tmp/
     - name: 'Installing kibana-{{ elk_version }}-amd64.deb'
       apt:
