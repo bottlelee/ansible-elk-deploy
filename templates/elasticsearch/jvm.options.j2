@@ -23,8 +23,8 @@
 -Xms32g
 -Xmx32g
 {% else %}
--Xms{{ es_jvm_mem }}
--Xmx{{ es_jvm_mem }}
+-Xms{{ es_jvm_mem | default(ansible_memtotal_mb / 1024 / 2) | int }}g
+-Xmx{{ es_jvm_mem | default(ansible_memtotal_mb / 1024 / 2) | int }}g
 {% endif %}
 
 ################################################################

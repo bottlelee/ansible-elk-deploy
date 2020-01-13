@@ -220,7 +220,7 @@ slowlog:
     trace: 100ms
 
 #============================== Xpack Monitoring ===============================
-xpack.monitoring:
+{# xpack.monitoring:
   enabled: true
   elasticsearch:
     hosts: ["ingest.elastic.service.{{ consul_dc_name }}.consul:{{ elastic_http_port }}"]
@@ -229,4 +229,4 @@ xpack.monitoring:
     password: {{ sg_users | rejectattr('id', 'ne', 'haibin') | map(attribute='pass') | first }}
     ssl:
       ca: /etc/logstash/elk-ca.pem
-    {% endif -%}
+    {% endif -%} #}

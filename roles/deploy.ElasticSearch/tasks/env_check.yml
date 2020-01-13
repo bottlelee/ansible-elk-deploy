@@ -13,14 +13,3 @@
     state: stopped
     timeout: 3
   register: portSt
-
-- name: Config limit.conf
-  lineinfile:
-    path: /etc/security/limits.conf
-    line: '{{ item }}'
-  with_items:
-    - 'elasticsearch soft memlock unlimited'
-    - 'elasticsearch hard memlock unlimited'
-    - 'elasticsearch - nofile 65535'
-    - 'ulimit -n 65535'
-    # - 'fsize unlimited'

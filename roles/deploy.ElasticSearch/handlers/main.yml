@@ -26,3 +26,9 @@
   until: init is succeeded
   retries: 10
   delay: 10
+
+- name:  Start enable-thp
+  sysvinit:
+    name: enable-thp
+    state: started
+    enabled: yes

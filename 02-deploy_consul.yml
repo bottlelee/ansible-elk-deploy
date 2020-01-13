@@ -7,6 +7,7 @@
   serial: 1
   vars_files:
     - vars/search_guard_auth.yml
+    - vars/consul.yml
   roles:
     - deploy.Consul
   post_tasks:

@@ -8,22 +8,13 @@
     - section: Service
       option: LimitMEMLOCK
       value: infinity
-    # - section: Unit
-    #   option: After
-    #   value: enable-thp.service
 
-# - name: Installing enable-thp.service
-#   copy:
-#     src: "{{ item.src }}"
-#     dest: "{{ item.dest }}"
-#     mode: "{{ item.mode | default(omit) }}"
-#   with_items:
-#     - src: enable-transparent-hugepages
-#       dest: /usr/bin/enable-transparent-hugepages
-#       mode: 554
-#     - src: enable-thp.service
-#       dest: /etc/systemd/system/enable-thp.service
-#   notify: Start enable-thp.service
+- name: Enable transparent hugepages
+  copy:
+    src: enable-transparent-hugepages
+    dest: /etc/init.d/enable-thp
+    mode: 554
+  notify: Start enable-thp
 
 - name: Updating ElasticSearch configuration
   vars:

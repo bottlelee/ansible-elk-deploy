@@ -20,16 +20,14 @@ check host CONSUL with address {{ bind_address }}
 
 {% if 'logstash' in group_names %}
 check host LOGSTASH with address 127.0.0.1
-  start program = "/usr/sbin/service logstash start"
-  stop program = "/usr/sbin/service logstash stop"
   if failed
     port 9600
     for 10 cycles
-  then alert
+  then restart
 {% endif %}
 
 {% if 'kibana' in group_names %}
-check host KIBANA with address {{ bind_address }}
+check process KIBANA with pidfile /var/run/kibana.pid
   start program = "/usr/sbin/service kibana start"
   stop program = "/usr/sbin/service kibana stop"
   if failed
@@ -48,7 +46,8 @@ check host ES-SHARDS-STATUS with address ingest.elastic.service.{{ consul_dc_nam
 {% endif %}
 
 {% if 'elasticsearch' in group_names %}
-check host ELASTICSEARCH with address {{ bind_address }}
+check process ELASTICSEARCH with pidfile /var/run/elasticsearch/elasticsearch.pid
+  every 2 cycles
   start program = "/usr/sbin/service elasticsearch start"
   stop program = "/usr/sbin/service elasticsearch stop"
   if failed port {{ elastic_http_port }} for 10 cycles then alert
